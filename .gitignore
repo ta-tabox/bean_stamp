@@ -79,3 +79,6 @@ yarn-debug.log*
 /tmp/pids/*
 !/tmp/pids/
 !/tmp/pids/.keep
+
+# vscode設定ファイル
+.vscode/
