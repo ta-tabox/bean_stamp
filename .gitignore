@@ -82,3 +82,4 @@ yarn-debug.log*
 
 # vscode設定ファイル
 .vscode/
+.solargraph.yml 
