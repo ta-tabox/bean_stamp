@@ -17,3 +17,11 @@
 .alert {
   @apply bg-red-100 border-l-4 border-red-500 text-red-700 p-4;
 }
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  border-top: black solid 1px;
+}
