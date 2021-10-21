@@ -8,21 +8,26 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-  <body>
-    <header>
-      <nav>
+  <body class="bg-white">
+    <header class="h-28 bg-gray-100 border-b-2 border-gray-200 py-15 flex items-center">
+        <h1 class="ml-28">Beans!</h1>
+      <nav class="ml-5">
         <% if user_signed_in? %>
           <strong><%= link_to current_user.email, home_path %></strong>
-          <%= link_to 'プロフィール変更', edit_user_registration_path %>
-          <%= link_to 'ログアウト', destroy_user_session_path %>
+          <ul>
+            <li class="mx-5"><%= link_to 'ログアウト', destroy_user_session_path %></li>
+            <li class="mx-5"><%= link_to 'プロフィール変更', edit_user_registration_path %></li>
+          </ul>
         <% else %>
-          <%= link_to 'サインアップ', new_user_registration_path %>
-          <%= link_to 'ログイン', new_user_session_path %>
+          <ul>
+            <li class="mx-5"><%= link_to 'サインアップ', new_user_registration_path %></li>
+            <li class="mx-5"><%= link_to 'ログイン', new_user_session_path %></li>
+          </ul>
         <% end %>
       </nav>
+    </header>
         <p class="notice"><%= notice %></p>
         <p class="alert"><%= alert %></p>
         <%= yield %>
-    </header>
   </body>
 </html>
