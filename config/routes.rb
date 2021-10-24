@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   get 'help', to: 'static_pages#help', as: 'help'
   get 'about', to: 'static_pages#help', as: 'about'
   devise_for :users, path: 'users', module: 'users'
-  resources :users, only: %i[show]
-  get 'users/home'
+  devise_scope :user do
+    get 'users/home', to: 'users/users#home'
+  end
+  resources :users, only: [:show], module: 'users'
 end
