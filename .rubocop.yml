@@ -14,7 +14,7 @@ AllCops:
     - "lib/**/*"
     - "config/**/*"
     - "config.ru"
-    - "db/migrate/20211020111529_devise_create_users.rb"
+    - "db/migrate/**"
   DisplayCopNames: true
   TargetRubyVersion: 3.0
 

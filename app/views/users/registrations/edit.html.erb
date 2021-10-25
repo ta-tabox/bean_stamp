@@ -4,8 +4,23 @@
   <%= render "users/shared/error_messages", resource: resource %>
 
   <div class="field">
+    <%= f.label :name%><br />
+    <%= f.text_field :name, autofocus: true, class: "input-field" %>
+  </div>
+
+  <div class="field">
     <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input-field" %>
+    <%= f.email_field :email, autocomplete: "email", class: "input-field" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :area %><br />
+    <%= f.text_field :area, class: "input-field" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :describe %><br />
+    <%= f.text_area :describe, class: "input-field" %>
   </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
@@ -32,7 +47,7 @@
   </div>
 
   <div class="actions">
-    <%= f.submit "Update", class: "btn-primary" %>
+    <%= f.submit "更新", class: "btn-primary" %>
   </div>
 <% end %>
 
