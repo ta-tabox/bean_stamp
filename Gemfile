@@ -47,6 +47,7 @@ group :development do
   gem 'rack-mini-profiler', '~> 2.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'bullet'
+  gem 'letter_opener_web', '~> 1.0'
   gem 'pre-commit', require: false
   gem 'spring'
 end
