@@ -7,4 +7,9 @@ class User < ApplicationRecord
          :rememberable,
          :validatable,
          :timeoutable
+  validates :describe,
+            length: {
+              maximum: 140,
+              too_long: ':140文字まで投稿できます。',
+            }
 end

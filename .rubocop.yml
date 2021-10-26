@@ -52,6 +52,16 @@ Style/RedundantSelf:
 ClassAndModuleChildren:
   Enabled: false
 
+# 末尾コンマを許可する
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
 ##################### Lint ##################################
 
 ##################### Metrics ##################################
