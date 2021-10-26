@@ -1,2 +1,7 @@
-<h1>Users::Users#show</h1>
-<p>Find me in app/views/users/users/show.html.erb</p>
+<% provide(:title, "ユーザー詳細") %>
+<h1>ユーザー詳細ページ</h1>
+
+<p>ユーザー名：<%= current_user.name %></p>
+<p>メールアドレス：<%= current_user.email %></p>
+<p>エリア：<%= current_user.area %></p>
+<p>自己紹介：<%= current_user.describe %></p>
