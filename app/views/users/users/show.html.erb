@@ -1,6 +1,7 @@
 <% provide(:title, "ユーザー詳細") %>
 <h1>ユーザー詳細ページ</h1>
 
+<%= image_tag current_user.image_url, size: '300x200' %>
 <p>ユーザー名：<%= current_user.name %></p>
 <p>メールアドレス：<%= current_user.email %></p>
 <p>エリア：<%= current_user.area %></p>

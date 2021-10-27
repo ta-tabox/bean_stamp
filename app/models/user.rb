@@ -12,4 +12,5 @@ class User < ApplicationRecord
               maximum: 140,
               too_long: ':140文字まで投稿できます。',
             }
+  mount_uploader :image, ImageUploader
 end

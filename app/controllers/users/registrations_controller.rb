@@ -52,7 +52,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def configure_account_update_params
     devise_parameter_sanitizer.permit(
       :account_update,
-      keys: %i[name area describe],
+      keys: %i[name area describe image image_chache],
     )
   end
 

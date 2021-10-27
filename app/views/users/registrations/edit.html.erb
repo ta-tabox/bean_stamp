@@ -6,6 +6,12 @@
   <%= render "users/shared/error_messages", resource: resource %>
 
   <div class="field">
+    <%= f.label :image %><br/>
+    <%= f.file_field :image, accept:"image/*", class: "input-field" %>
+    <%= f.hidden_field :image_cache %>
+  </div>
+
+  <div class="field">
     <%= f.label :name%><br />
     <%= f.text_field :name, autofocus: true, class: "input-field" %>
   </div>

@@ -60,8 +60,8 @@ group :test do
   gem 'webdrivers'
 end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'carrierwave', '~> 2.2'
 gem 'devise'
-# deviseの日本語化
-# gem 'devise-i18n'
+gem 'mini_magick', '~> 4.11'
 gem 'rails-i18n', '~> 6.0.0'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
