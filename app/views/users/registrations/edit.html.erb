@@ -6,6 +6,9 @@
   <%= render "users/shared/error_messages", resource: resource %>
 
   <div class="field">
+    <% if resource.image? %>
+      <%= image_tag resource.image_url, size: 100 %>
+    <% end %>
     <%= f.label :image %><br/>
     <%= f.file_field :image, accept:"image/*", class: "input-field" %>
     <%= f.hidden_field :image_cache %>
@@ -47,6 +50,11 @@
   <div class="field">
     <%= f.label :password_confirmation %><br />
     <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input-field" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+    <%= f.password_field :current_password, autocomplete: "current-password", class: "input-field" %>
   </div>
 
   <div class="actions">

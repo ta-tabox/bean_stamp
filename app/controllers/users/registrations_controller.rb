@@ -52,7 +52,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def configure_account_update_params
     devise_parameter_sanitizer.permit(
       :account_update,
-      keys: %i[name area describe image image_chache],
+      keys: %i[name area describe image image_cache],
     )
   end
 
@@ -72,7 +72,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   # パスワードなしでupdateできるようにする
-  def update_resource(resource, params)
-    resource.update_without_password(params)
-  end
+  # def update_resource(resource, params)
+  #   resource.update_without_password(params)
+  # end
 end
