@@ -7,7 +7,7 @@
 
   <div class="field">
     <% if resource.image? %>
-      <%= image_tag resource.image_url, size: 100 %>
+      <%= image_tag resource.image.thumb.url %>
     <% end %>
     <%= f.label :image %><br/>
     <%= f.file_field :image, accept:"image/*", class: "input-field" %>
