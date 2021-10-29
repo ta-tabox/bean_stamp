@@ -3,9 +3,18 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   # rubocop:disable all
   before_action :configure_sign_up_params, only: [:create]
-  before_action :configure_account_update_params, only: [:update]
+  before_action :configure_account_update_params,
+                only: %i[update change_password]
+
+  # prepend_before_action :require_no_authentication, only: %i[new create cancel]
+  # prepend_before_action :authenticate_scope!,
+  #                       only: %i[edit update destroy change_password]
+  # prepend_before_action :set_minimum_password_length,
+  #                       only: %i[new edit change_password]
 
   # rubocop:disable all
+
+  def change_password; end
 
   # GET /resource/sign_up
   # def new
@@ -24,7 +33,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # PUT /resource
   # def update
-  #    super
   # end
 
   # DELETE /resource
@@ -72,7 +80,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   # パスワードなしでupdateできるようにする
-  # def update_resource(resource, params)
-  #   resource.update_without_password(params)
-  # end
+  def update_resource(resource, params)
+    unless params[:password].blank?
+      resource.update_with_password(params)
+    else
+      params.delete(:current_password)
+      resource.update_without_password(params)
+    end
+  end
 end
