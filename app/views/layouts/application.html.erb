@@ -10,18 +10,25 @@
   </head>
   <body class="bg-white">
     <header class="h-28 bg-gray-100 border-b-2 border-gray-200 py-15 flex items-center">
-        <h1 class="ml-28"><%= link_to 'Beans!', root_path %></h1>
+        <h1 class="ml-28"><strong><%= link_to 'Beans!', root_path %></strong></h1>
       <nav class="ml-5">
         <% if user_signed_in? %>
-          <strong><%= link_to current_user.name, current_user %></strong>
-          <ul>
-            <li class="mx-5 nav-link"><%= link_to 'ログアウト', destroy_user_session_path %></li>
-            <li class="mx-5"><%= link_to 'プロフィール変更', edit_user_registration_path %></li>
+          <ul class="flex">
+            <li class="mx-5 nav-item"><strong><%= link_to current_user.name, users_home_path %></strong></li>
+            <li class="mx-5 nav-item"><%= link_to 'my page', current_user %></li>
+            <li class="mx-5 nav-item"><%= link_to 'follow', '#' %></li>
+            <li class="mx-5 nav-item"><%= link_to 'wants', '#' %></li>
+            <li class="mx-5 nav-item"><%= link_to 'likes', '#' %></li>
+            <li class="mx-5 nav-item"><%= link_to 'search', '#' %></li>
+            <li class="mx-5 nav-item"><%= link_to 'help', help_path %></li>
+            <li class="mx-5 nav-item"><%= link_to 'log out', destroy_user_session_path %></li>
           </ul>
         <% else %>
-          <ul>
-            <li class="mx-5"><%= link_to 'サインアップ', new_user_registration_path %></li>
-            <li class="mx-5"><%= link_to 'ログイン', new_user_session_path %></li>
+          <ul class="flex">
+            <li class="mx-5 nav-item"><%= link_to 'singup', new_user_registration_path %></li>
+            <li class="mx-5 nav-item"><%= link_to 'singin', new_user_session_path %></li>
+            <li class="mx-5 nav-item"><%= link_to 'about', about_path %></li>
+            <li class="mx-5 nav-item"><%= link_to 'help', help_path %></li>
           </ul>
         <% end %>
       </nav>

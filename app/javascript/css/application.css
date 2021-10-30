@@ -25,3 +25,7 @@
   margin-top: 45px;
   border-top: black solid 1px;
 }
+
+.nav-item {
+  @apply text-blue-500 hover:text-blue-800;
+}
