@@ -2,7 +2,42 @@
 <h1>ユーザー詳細ページ</h1>
 
 <%= image_tag @user.image.thumb.url, size: 100 %>
+
+<%# 画像変更ボタンを押したらポップアップにより画像変更できるようにしたい%>
+<% if current_user == @user %>
+  <%= form_for(@user, as: @user, url: registration_path(@user), html: { method: :put }) do |f| %>
+    <%= render "users/shared/error_messages", resource: @user %>
+
+    <div class="field">
+      <%= f.label :image %><br/>
+      <%= f.file_field :image, accept:"image/*", class: "input-field" %>
+      <%= f.hidden_field :image_cache %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "更新", class: "btn-primary" %>
+    </div>
+  <% end %>
+<% end %>
+
 <p>ユーザー名：<%= @user.name %></p>
 <p>メールアドレス：<%= @user.email %></p>
 <p>エリア：<%= @user.area %></p>
 <p>自己紹介：<%= @user.describe %></p>
+
+<%# 自己紹介変更ボタンを押したらポップアップにより変更できるようにしたい
+バリデーション時はコントローラー前でかける→showページから遷移させたくない%>
+<% if current_user == @user %>
+  <%= form_for(@user, as: @user, url: registration_path(@user), html: { method: :put }) do |f| %>
+    <%= render "users/shared/error_messages", resource: @user %>
+
+    <div class="field">
+        <%= f.label :describe %><br />
+        <%= f.text_area :describe, class: "input-field" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "更新", class: "btn-primary" %>
+    </div>
+  <% end %>
+<% end %>
