@@ -3,18 +3,15 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   # rubocop:disable all
   before_action :configure_sign_up_params, only: [:create]
-  before_action :configure_account_update_params,
-                only: %i[update change_password]
+  before_action :configure_account_update_params, only: %i[update]
 
   # prepend_before_action :require_no_authentication, only: %i[new create cancel]
   # prepend_before_action :authenticate_scope!,
-  #                       only: %i[edit update destroy change_password]
+  #                       only: %i[edit update destroy]
   # prepend_before_action :set_minimum_password_length,
-  #                       only: %i[new edit change_password]
+  #                       only: %i[new edit]
 
   # rubocop:disable all
-
-  def change_password; end
 
   # GET /resource/sign_up
   # def new
@@ -32,8 +29,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # PUT /resource
-  # def update
-  # end
+  # def update; end
 
   # DELETE /resource
   # def destroy
