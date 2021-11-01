@@ -6,7 +6,10 @@ Rails.application.routes.draw do
   get 'about', to: 'static_pages#about', as: 'about'
   devise_for :users, path: 'users', module: 'users'
   devise_scope :user do
-    get 'users/home', to: 'users/users#home'
+    get 'users/home', to: 'users/users#home', as: 'user_home'
+    get 'users/cancel_account',
+        to: 'users/registrations#cancel_account',
+        as: 'cancel_account'
   end
   resources :users, only: [:show], module: 'users'
 end

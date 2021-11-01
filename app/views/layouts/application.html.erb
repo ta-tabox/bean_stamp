@@ -14,7 +14,7 @@
       <nav class="ml-5">
         <% if user_signed_in? %>
           <ul class="flex">
-            <li class="mx-5 nav-item"><strong><%= link_to current_user.name, users_home_path %></strong></li>
+            <li class="mx-5 nav-item"><strong><%= link_to current_user.name, user_home_path %></strong></li>
             <li class="mx-5 nav-item"><%= link_to 'my page', current_user %></li>
             <li class="mx-5 nav-item"><%= link_to 'follow', '#' %></li>
             <li class="mx-5 nav-item"><%= link_to 'wants', '#' %></li>

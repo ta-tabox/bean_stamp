@@ -1,22 +1,11 @@
 <% provide(:title, "Top") %>
-<h1>Beansのトップページ</h1>
 <p><%= l Time.now, format: :long%></p>
 
-<div
-  class="
-    max-w-lg
-    mx-auto
-    mt-16
-    text-center
-    max-w-sm
-    rounded
-    overflow-hidden
-    shadow-lg
-    p-10
-  "
->
-  <h1 class="mb-4 text-3xl font-black">Here are all our users!</h1>
-  <p class="text-lg leading-snug">
-    If this looks nice, it means Tailwind is set up properly.
-  </p>
-</div>
+<h1 class="text-center">Beans</h1>
+<img src="#" alt="ホーム画像">
+
+<h2>あなたにとっての<br>一杯のコーヒー<br>探していきませんか？</h2>
+<p>Beansに参加しよう</p>
+<%= link_to 'メールアドレスで登録', new_user_registration_path , class: "btn-primary" %>
+<p>アカウントをお持ちの方は<%= link_to 'ログイン', new_user_session_path, class: "link" %></p>
+<p>ゲストユーザーとして<%= link_to 'ログイン', "#", class: "link" %></p>
