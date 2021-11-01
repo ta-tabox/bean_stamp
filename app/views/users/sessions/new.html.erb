@@ -1,0 +1,33 @@
+<% provide(:title, "ログイン") %> <%= render "users/shared/error_messages",
+resource: resource %>
+<div class="form-container">
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name),
+  html: { class: "form" } ) do |f| %>
+    <h1 class="text-center">ログイン</h1>
+    <div class="field">
+      <%= f.label :email, class: "label" %> <%= f.email_field :email, autofocus:
+      true, autocomplete: "email",class: "input-field" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password, class: "label" %> <%= f.password_field :password,
+      autocomplete: "current-password",class: "input-field" %>
+    </div>
+
+    <% if devise_mapping.rememberable? %>
+      <div class="field">
+        <%= f.check_box :remember_me %> <%= f.label :remember_me, class:
+        "text-gray-700 text-sm mb-2" %>
+      </div>
+    <% end %>
+
+    <div class="actions"><%= f.submit "Log in", class: "btn-primary" %></div>
+
+    <p class="mt-4">
+      パスワードを忘れた場合は<%= link_to 'こちら', new_user_password_path,
+      class: "link" %>
+    </p>
+
+    <p>ゲストユーザーとして<%= link_to 'ログイン', "#", class: "link" %></p>
+  <% end %>
+</div>
