@@ -14,4 +14,5 @@ class User < ApplicationRecord
             }
   validates :name, presence: true
   mount_uploader :image, ImageUploader
+  belongs_to :roaster, optional: true
 end
