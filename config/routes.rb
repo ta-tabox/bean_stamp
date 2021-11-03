@@ -12,4 +12,5 @@ Rails.application.routes.draw do
         as: 'cancel_account'
   end
   resources :users, only: [:show], module: 'users'
+  resources :roasters
 end
