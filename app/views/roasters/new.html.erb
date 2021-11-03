@@ -1,2 +1,34 @@
-<h1>Roasters#new</h1>
-<p>Find me in app/views/roasters/new.html.erb</p>
+<% provide(:title, "ロースター登録") %>
+<%= render "users/shared/error_messages", resource: @roaster %>
+<div class="form-container">
+  <%= form_for(@roaster, url: roasters_path, method: :post, html:{ class: "form" } ) do |f| %>
+    <h1 class="text-center">新規登録</h1>
+
+    <div class="field">
+      <%= f.label :name, class: "label" %>
+      <%= f.text_field :name, autofocus: true, placeholder: "例）豆本舗", class: "input-field" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :phone_number, class: "label" %>
+      <%= f.telephone_field :phone_number, placeholder: "080-1234-5678", class: "input-field" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :address, class: "label" %>
+      <%= f.text_field :address, placeholder: "例）東京都**区**丁目**-**", class: "input-field" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :describe, class: "label" %>
+      <%= f.text_area :describe, class: "input-field" %>
+    </div>
+
+    <div class="flex">
+      <%= link_to "キャンセル", :back, class: "mr-3 btn-primary", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>
+      <div class="actions">
+        <%= f.submit "登録", class: "btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+</div>
