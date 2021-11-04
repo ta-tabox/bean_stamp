@@ -13,23 +13,9 @@
         <h1 class="ml-28"><strong><%= link_to 'Beans!', root_path %></strong></h1>
       <nav class="ml-5">
         <% if user_signed_in? %>
-          <ul class="flex">
-            <li class="mx-5 nav-item"><strong><%= link_to current_user.name, user_home_path %></strong></li>
-            <li class="mx-5 nav-item"><%= link_to 'my page', current_user %></li>
-            <li class="mx-5 nav-item"><%= link_to 'follow', '#' %></li>
-            <li class="mx-5 nav-item"><%= link_to 'wants', '#' %></li>
-            <li class="mx-5 nav-item"><%= link_to 'likes', '#' %></li>
-            <li class="mx-5 nav-item"><%= link_to 'search', '#' %></li>
-            <li class="mx-5 nav-item"><%= link_to 'help', help_path %></li>
-            <li class="mx-5 nav-item"><%= link_to 'log out', destroy_user_session_path %></li>
-          </ul>
+          <%= render 'layouts/signed_in_nav' %>
         <% else %>
-          <ul class="flex">
-            <li class="mx-5 nav-item"><%= link_to 'singup', new_user_registration_path %></li>
-            <li class="mx-5 nav-item"><%= link_to 'singin', new_user_session_path %></li>
-            <li class="mx-5 nav-item"><%= link_to 'about', about_path %></li>
-            <li class="mx-5 nav-item"><%= link_to 'help', help_path %></li>
-          </ul>
+          <%= render 'layouts/signed_out_nav' %>
         <% end %>
       </nav>
     </header>
