@@ -11,7 +11,7 @@
 
     <div class="field">
       <%= f.label :phone_number, class: "label" %>
-      <%= f.telephone_field :phone_number, placeholder: "080-1234-5678", class: "input-field" %>
+      <%= f.telephone_field :phone_number, placeholder: "08012345678", pattern: '\d{10,11}', title: "半角数字で記入してください", maxlength:"11", class: "input-field" %>
     </div>
 
     <div class="field">
