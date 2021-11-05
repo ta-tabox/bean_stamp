@@ -33,10 +33,16 @@
     </div>
 
     <div class="flex">
-      <%= link_to "キャンセル", :back, class: "mr-3 btn-primary", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>
+      <%= link_to "キャンセル", :back, class: "mr-4 btn-primary", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>
       <div class="actions">
         <%= f.submit yield(:button_text), class: "btn-primary" %>
       </div>
+    </div>
+
+    <div>
+      <% if @roaster.id? %>
+        <%= link_to "ロースターを削除する", cancel_roasters_path, class: "link mt-4" %>
+      <% end %>
     </div>
   <% end %>
 </div>

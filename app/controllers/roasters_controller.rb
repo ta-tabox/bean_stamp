@@ -1,4 +1,5 @@
 class RoastersController < ApplicationController
+  before_action :user_signed_in_required
   before_action :correct_roaster, only: %i[edit update destroy]
 
   def index; end
@@ -36,7 +37,16 @@ class RoastersController < ApplicationController
     end
   end
 
-  def destroy; end
+  def destroy
+    roaster = Roaster.find(params[:id])
+    roaster.destroy
+    flash[:notice] = "ロースター「#{roaster.name}」を削除しました"
+    redirect_to user_home_path
+  end
+
+  def cancel
+    @roaster = current_user.roaster
+  end
 
   private
 
