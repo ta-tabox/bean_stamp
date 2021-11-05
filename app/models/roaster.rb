@@ -12,6 +12,7 @@ class Roaster < ApplicationRecord
             }
   validates :address, presence: true
   validates :describe, length: { maximum: 300 }
+  mount_uploader :image, ImageUploader
 
   private
 
