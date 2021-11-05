@@ -1,48 +1,48 @@
 <div class="form-container">
   <%= form_with(model: @roaster, html:{ class: "form" } ) do |f| %>
-    <%= render "shared/error_messages", resource: f.object %>
-    <h1 class="text-center"><%= yield(:form_title) %></h1>
+  <%= render "shared/error_messages", resource: f.object %>
+  <h1 class="text-center"><%= yield(:form_title) %></h1>
 
-    <div class="field">
-      <% if @roaster.image? %>
-        <%= image_tag @roaster.image.thumb.url, class: "thumbnail" %>
-      <% end %>
-      <%= f.label :image, class: "label" %>
-      <%= f.file_field :image, accept:"image/*", class: "input-field" %>
-      <%= f.hidden_field :image_cache %>
-    </div>
+  <div class="field">
+    <% if @roaster.image? %>
+    <%= image_tag @roaster.image.thumb.url, class: "thumbnail" %>
+    <% end %>
+    <%= f.label :image, class: "label" %>
+    <%= f.file_field :image, accept:"image/*", class: "input-field" %>
+    <%= f.hidden_field :image_cache %>
+  </div>
 
-    <div class="field">
-      <%= f.label :name, class: "label" %>
-      <%= f.text_field :name, autofocus: true, placeholder: "例）豆本舗", class: "input-field" %>
-    </div>
+  <div class="field">
+    <%= f.label :name, class: "label" %>
+    <%= f.text_field :name, autofocus: true, placeholder: "例）豆本舗", class: "input-field" %>
+  </div>
 
-    <div class="field">
-      <%= f.label :phone_number, class: "label" %>
-      <%= f.telephone_field :phone_number, placeholder: "08012345678", pattern: '\d{10,11}', title: "半角数字で記入してください", maxlength:"11", class: "input-field" %>
-    </div>
+  <div class="field">
+    <%= f.label :phone_number, class: "label" %>
+    <%= f.telephone_field :phone_number, placeholder: "08012345678", pattern: '\d{10,11}', title: "半角数字で記入してください", maxlength:"11", class: "input-field" %>
+  </div>
 
-    <div class="field">
-      <%= f.label :address, class: "label" %>
-      <%= f.text_field :address, placeholder: "例）東京都**区**丁目**-**", class: "input-field" %>
-    </div>
+  <div class="field">
+    <%= f.label :address, class: "label" %>
+    <%= f.text_field :address, placeholder: "例）東京都**区**丁目**-**", class: "input-field" %>
+  </div>
 
-    <div class="field">
-      <%= f.label :describe, class: "label" %>
-      <%= f.text_area :describe, class: "input-field" %>
-    </div>
+  <div class="field">
+    <%= f.label :describe, class: "label" %>
+    <%= f.text_area :describe, class: "input-field" %>
+  </div>
 
-    <div class="flex">
-      <%= link_to "キャンセル", :back, class: "mr-4 btn-primary", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>
-      <div class="actions">
-        <%= f.submit yield(:button_text), class: "btn-primary" %>
-      </div>
+  <div class="flex">
+    <%= link_to "キャンセル", :back, class: "mr-4 btn-primary", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>
+    <div class="actions">
+      <%= f.submit yield(:button_text), class: "btn-primary" %>
     </div>
+  </div>
 
-    <div>
-      <% if @roaster.id? %>
-        <%= link_to "ロースターを削除する", cancel_roasters_path, class: "link mt-4" %>
-      <% end %>
-    </div>
+  <div>
+    <% if @roaster.id? %>
+    <%= link_to "ロースターを削除する", cancel_roasters_path, class: "link mt-4" %>
+    <% end %>
+  </div>
   <% end %>
 </div>
