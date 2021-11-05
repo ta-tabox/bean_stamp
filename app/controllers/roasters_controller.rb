@@ -1,5 +1,5 @@
 class RoastersController < ApplicationController
-  before_action :correct_roaster, only: :update
+  before_action :correct_roaster, only: %i[edit update destroy]
 
   def index; end
 
@@ -48,6 +48,6 @@ class RoastersController < ApplicationController
 
   def correct_roaster
     @roaster = Roaster.find(params[:id])
-    redirect_to @roaster unless current_user.roaster == @roaster
+    redirect_to @roaster unless current_user.roaster?(@roaster)
   end
 end

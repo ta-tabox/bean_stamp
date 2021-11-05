@@ -15,4 +15,9 @@ class User < ApplicationRecord
   validates :name, presence: true
   mount_uploader :image, ImageUploader
   belongs_to :roaster, optional: true
+
+  # ユーザーが所属するロースターと一致しているか？
+  def roaster?(roaster)
+    self.roaster == roaster
+  end
 end
