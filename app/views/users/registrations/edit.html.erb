@@ -1,12 +1,76 @@
 <% provide(:title, "ユーザー情報編集") %>
-<% provide(:form_title, "ユーザー情報編集") %>
-<% provide(:button_text, "更新") %>
-<%= render 'form' %>
-<div>
-  <% if current_user.roaster_id? %>
-    <p class="mt-4">ロースター情報の編集は<%= link_to 'こちら', edit_roaster_path(current_user.roaster), class: "link" %></p>
-  <% else%>
-    <p class="mt-4">ロースターとして登録する場合は<%= link_to 'こちら', new_roaster_path, class: "link" %></p>
+<div class="form-container">
+  <%= form_with(model: resource, as: resource_name, url: registration_path(resource_name), html: { class:"form" }) do |f| %>
+    <%= render "shared/error_messages", resource: f.object %>
+    <h1 class="text-center"><%= yield(:form_title) %></h1>
+
+    <div class="field">
+      <% if resource.image? %>
+        <%= image_tag resource.image.thumb.url, class: "thumbnail" %>
+      <% end %>
+      <%= f.label :image, class: "label" %>
+      <%= f.file_field :image, accept:"image/*", class: "input-field" %>
+      <%= f.hidden_field :image_cache %>
+    </div>
+
+    <div class="field">
+      <%= f.label :name, class: "label" %>
+      <%= f.text_field :name, autofocus: true, class: "input-field" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :email, class: "label" %>
+      <%= f.email_field :email, autocomplete: "email", class: "input-field" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :area, class: "label" %>
+      <%= f.text_field :area, class: "input-field" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :describe, class: "label" %>
+      <%= f.text_area :describe, class: "input-field" %>
+    </div>
+
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :current_password, class: "label" %>
+      <%= f.password_field :current_password, autocomplete: "current-password",
+      class: "input-field" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password, class: "label" %> <i>(新しいパスワード)</i>
+      <em>(<%= @minimum_password_length %> 文字以上)</em>
+      <%= f.password_field :password, autocomplete: "new-password", class: "input-field" %>
+      <% if @minimum_password_length %>
+      <% end %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password_confirmation, class: "label" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password",
+      class: "input-field" %>
+    </div>
+
+    <div class="flex">
+      <%= link_to "キャンセル", :back, class: "mr-3 btn-primary", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>
+      <div class="actions">
+        <%= f.submit "更新", class: "btn-primary" %>
+      </div>
+    </div>
+
+    <div>
+      <% if current_user.roaster_id? %>
+        <p class="mt-4">ロースター情報の編集は<%= link_to 'こちら', edit_roaster_path(current_user.roaster), class: "link" %></p>
+      <% else%>
+        <p class="mt-4">ロースターとして登録する場合は<%= link_to 'こちら', new_roaster_path, class: "link" %></p>
+      <% end %>
+      <%= link_to "退会する", cancel_account_path, class: "link mt-4" %>
+    </div>
   <% end %>
-  <%= link_to "退会する", cancel_account_path, class: "link mt-4" %>
 </div>
