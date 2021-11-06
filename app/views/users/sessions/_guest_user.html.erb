@@ -1,0 +1,5 @@
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+<%= f.email_field :email, value: 'user@example.com' ,class: "hidden" %>
+<%= f.password_field :password, value: 'password' ,class: "hidden" %>
+<p>ゲストユーザーとして<%= f.submit "ログイン", class: "link bg-transparent"%></p>
+<% end %>
