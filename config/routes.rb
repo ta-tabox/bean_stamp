@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   devise_scope :user do
     get 'users/home', to: 'users/users#home', as: 'user_home'
     get 'users/cancel', to: 'users/registrations#cancel'
+    post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
   end
   resources :users, only: [:show], module: 'users'
   resources :roasters do

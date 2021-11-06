@@ -1,6 +1,7 @@
 class RoastersController < ApplicationController
   before_action :user_signed_in_required
   before_action :correct_roaster, only: %i[edit update destroy]
+  before_action :ensure_normal_roaster, only: %i[update destroy]
 
   def index; end
 
@@ -59,5 +60,11 @@ class RoastersController < ApplicationController
   def correct_roaster
     @roaster = Roaster.find(params[:id])
     redirect_to @roaster unless current_user.roaster?(@roaster)
+  end
+
+  # ゲストロースターかチェックする
+  def ensure_normal_roaster
+    roaster = Roaster.find(params[:id])
+    redirect_to root_path, alert: 'ゲストロースターの更新・削除はできません' if roaster.name == 'ゲストロースター'
   end
 end

@@ -2,6 +2,15 @@
 
 class Users::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
+
+  # ゲストログイン
+  def guest_sign_in
+    user = User.guest
+    user.guest_roaster(user) unless user.roaster_id?
+    sign_in user
+    redirect_to root_path, notion: 'ゲストユーザーとしてログインしました。'
+  end
+
   # GET /resource/sign_in
   # def new
   #   super

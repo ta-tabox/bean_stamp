@@ -28,6 +28,6 @@
       パスワードを忘れた場合は<%= link_to 'こちら', new_user_password_path,
       class: "link" %>
     </p>
-    <%= render 'guest_user' %>
+    <p><%= link_to 'ゲストログイン（閲覧用）', users_guest_sign_in_path, method: :post, class: "link" %></p>
   </div>
 </div>
