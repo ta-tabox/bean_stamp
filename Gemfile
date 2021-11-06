@@ -39,14 +39,17 @@ group :development, :test do
 end
 
 group :development do
-  gem 'bullet'
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 4.1.0'
+
   # Display performance information such as SQL time and flame graphs for each request in your browser.
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   gem 'listen', '~> 3.3'
   gem 'rack-mini-profiler', '~> 2.0'
+
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'bullet'
+  gem 'letter_opener_web', '~> 1.0'
   gem 'pre-commit', require: false
   gem 'spring'
 end
@@ -55,8 +58,13 @@ group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 3.26'
   gem 'selenium-webdriver'
+
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
 end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'carrierwave', '~> 2.2'
+gem 'devise'
+gem 'mini_magick', '~> 4.11'
+gem 'rails-i18n', '~> 6.0.0'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

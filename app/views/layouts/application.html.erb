@@ -1,16 +1,31 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>BeansApp</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+<head>
+  <title><%= yield(:title) %> | BeansApp</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
 
-  <body>
+<body class="bg-white">
+  <header class="h-28 bg-gray-100 border-b-2 border-gray-200 py-15 flex items-center">
+    <h1 class="ml-28"><strong><%= link_to 'Beans!', root_path %></strong></h1>
+    <nav class="ml-5">
+      <% if user_signed_in? %>
+      <%= render 'layouts/signed_in_nav' %>
+      <% else %>
+      <%= render 'layouts/signed_out_nav' %>
+      <% end %>
+    </nav>
+  </header>
+  <div class="container bg-blue-50 mx-auto">
+    <%= render 'layouts/flash_messages' %>
     <%= yield %>
-  </body>
+  </div>
+  <%= debug(params) if Rails.env.development? %>
+</body>
+
 </html>
