@@ -5,9 +5,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: %i[update]
 
-  prepend_before_action :require_no_authentication, only: %i[new create cancel]
+  prepend_before_action :require_no_authentication, only: %i[new create]
   prepend_before_action :authenticate_scope!,
-                        only: %i[edit update destroy cancel_account]
+                        only: %i[edit update destroy cancel]
+  before_action :ensure_normal_user, only: %i[update destroy]
 
   # prepend_before_action :set_minimum_password_length,
   #                       only: %i[new edit]
@@ -46,7 +47,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  def cancel_account; end
+  def cancel; end
 
   protected
 
@@ -59,7 +60,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def configure_account_update_params
     devise_parameter_sanitizer.permit(
       :account_update,
-      keys: %i[name area describe image image_cache],
+      keys: %i[name area describe roaster_id image image_cache],
     )
   end
 
@@ -85,6 +86,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
     else
       params.delete(:current_password)
       resource.update_without_password(params)
+    end
+  end
+
+  # ゲストユーザーかチェックする
+  def ensure_normal_user
+    if resource.email == 'guest@example.com'
+      redirect_to root_path, alert: 'ゲストユーザーの更新・削除はできません'
     end
   end
 end

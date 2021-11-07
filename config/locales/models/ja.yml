@@ -2,9 +2,16 @@ ja:
   activerecord:
     models:
       user: ユーザー
+      roaster: ロースター
     attributes:
       user:
         name: 名前
         area: エリア
         describe: 自己紹介
+        image: サムネイル
+      roaster:
+        name: 店舗名
+        phone_number: 電話番号
+        address: 住所
+        describe: 店舗紹介
         image: サムネイル
