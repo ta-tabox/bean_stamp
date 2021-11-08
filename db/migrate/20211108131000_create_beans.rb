@@ -6,5 +6,6 @@ class CreateBeans < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
+    add_index :beans, %i[roaster_id created_at]
   end
 end
