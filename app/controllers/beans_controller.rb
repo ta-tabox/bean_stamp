@@ -14,6 +14,7 @@ class BeansController < ApplicationController
   end
 
   def create
+    params[:bean][:cropped_at] = "#{params[:bean][:cropped_at]}-01"
     @bean = @roaster.beans.build(bean_params)
     if @bean.save
       flash[:notice] = 'コーヒー豆を登録しました'
