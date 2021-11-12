@@ -24,7 +24,27 @@ class BeansController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    @bean = @roaster.beans.find(params[:id])
+  end
+
+  def update
+    params[:bean][:cropped_at] = "#{params[:bean][:cropped_at]}-01"
+    @bean = @roaster.beans.find(params[:id])
+    if @bean.update(bean_params)
+      flash[:notice] = 'コーヒー豆情報を更新しました'
+      redirect_to @bean
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    @bean = @roaster.beans.find(params[:id])
+    @bean.destroy
+    flash[:notive] = "コーヒー豆「#{@bean.name}」を削除しました"
+    redirect_to beans_path
+  end
 
   private
 

@@ -1,0 +1,106 @@
+<div class="form-container">
+  <div class="form">
+    <%= form_with(model: @bean) do |f| %>
+    <%= render "shared/error_messages", resource: f.object %>
+    <h1 class="text-center"><%= yield(:form_title) %></h1>
+
+    <%# <h1 class="text-center"><%= yield(:form_title) %></h1> %>
+
+    <%# <div class="field"> %>
+    <%# <% if @bean.image? %> %>
+    <%# <%= image_tag @bean.image.thumb.url, class: "thumbnail" %> %>
+    <%# <% end %> %>
+    <%# <%= f.label :image, class: "label" %> %>
+    <%# <%= f.file_field :image, accept:"image/*", class: "input-field" %> %>
+    <%# <%= f.hidden_field :image_cache %> %>
+    <%# </div> %>
+
+    <div class="field">
+      <%= f.label :name, class: "label" %>
+      <%= f.text_field :name, autofocus: true, placeholder: "タイトル", class: "input-field" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :country, class: "label" %>
+      <%= f.text_field :country, placeholder: "生産国", class: "input-field" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :subregion, class: "label" %>
+      <%= f.text_field :subregion, placeholder: "地域", class: "input-field" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :farm, class: "label" %>
+      <%= f.text_field :farm, placeholder: "農園", class: "input-field" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :variety, class: "label" %>
+      <%= f.text_field :variety, placeholder: "品種", class: "input-field" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :elevation, class: "label" %>
+      <%= f.number_field :elevation, placeholder: "標高", maxlength:"4", class: "input-field" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :process, class: "label" %>
+      <%= f.text_field :process, placeholder: "精製方法", class: "input-field" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :cropped_at, class: "label" %>
+      <%= f.month_field :cropped_at, placeholder: "収穫期", class: "input-field" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :describe, class: "label" %>
+      <%= f.text_area :describe, class: "input-field" %>
+    </div>
+
+    <p>風味の評価</p>
+    <div class="class">
+      <%= f.label :acidity, class: "label" %>
+      <%= f.range_field :acidity, min: "1", max: "5" %>
+    </div>
+
+    <div class="class">
+      <%= f.label :flavor, class: "label" %>
+      <%= f.range_field :flavor, min: "1", max: "5" %>
+    </div>
+
+    <div class="class">
+      <%= f.label :body, class: "label" %>
+      <%= f.range_field :body, min: "1", max: "5" %>
+    </div>
+
+    <div class="class">
+      <%= f.label :bitterness, class: "label" %>
+      <%= f.range_field :bitterness, min: "1", max: "5" %>
+    </div>
+
+    <div class="class">
+      <%= f.label :sweetness, class: "label" %>
+      <%= f.range_field :sweetness, min: "1", max: "5" %>
+    </div>
+
+    <div class="flex">
+      <%= link_to "キャンセル", :back, class: "mr-4 btn-primary", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>
+      <div class="actions">
+        <%# <%= f.submit yield(:button_text), class: "btn-primary" %> %>
+        <%= f.submit yield(:button_text), class: "btn-primary" %>
+      </div>
+    </div>
+
+    <div>
+      <% if @bean.id? %>
+      <p>コーヒー豆を
+        <%= link_to '削除する', bean_path(@bean), data: { confirm: "本当に削除しますか？"}, method: :delete , class: "link mt-4"%>
+      </p>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
+</div>
