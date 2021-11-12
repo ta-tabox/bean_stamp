@@ -39,7 +39,7 @@ class BeansController < ApplicationController
   def destroy
     @bean = @roaster.beans.find(params[:id])
     @bean.destroy
-    flash[:notive] = "コーヒー豆「#{@bean.name}」を削除しました"
+    flash[:notice] = "コーヒー豆「#{@bean.name}」を削除しました"
     redirect_to beans_path
   end
 
