@@ -46,7 +46,7 @@ class RoastersController < ApplicationController
   end
 
   def cancel
-    @roaster = current_user.roaster
+    @roaster = current_roaster
   end
 
   private

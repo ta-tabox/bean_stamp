@@ -5,11 +5,11 @@
   <li class="mx-5 nav-item"><%= link_to 'wants', '#' %></li>
   <li class="mx-5 nav-item"><%= link_to 'likes', '#' %></li>
   <li class="mx-5 nav-item"><%= link_to 'search', '#' %></li>
-<% if current_user.roaster_id? %>
+  <% if current_user.roaster_id? %>
   <li class="mx-5 nav-item"><%= link_to 'roaster', roaster_path(current_user.roaster) %></li>
   <li class="mx-5 nav-item"><%= link_to 'beans', '#' %></li>
   <li class="mx-5 nav-item"><%= link_to 'offers', '#' %></li>
-<% end %>
+  <% end %>
   <li class="mx-5 nav-item"><%= link_to 'help', help_path %></li>
   <li class="mx-5 nav-item"><%= link_to 'log out', destroy_user_session_path %></li>
 </ul>

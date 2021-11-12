@@ -1,20 +1,20 @@
 class BeansController < ApplicationController
-  before_action :set_roaster
+  before_action :user_signed_in_required
+  before_action :belonged_to_roaster_required
+  before_action :set_bean, only: %i[show edit update]
 
   def index
     @beans = @roaster.beans
   end
 
-  def show
-    @bean = @roaster.beans.find(params[:id])
-  end
+  def show; end
 
   def new
     @bean = @roaster.beans.build
   end
 
   def create
-    params[:bean][:cropped_at] = "#{params[:bean][:cropped_at]}-01"
+    set_cropped_at
     @bean = @roaster.beans.build(bean_params)
     if @bean.save
       flash[:notice] = 'コーヒー豆を登録しました'
@@ -24,13 +24,10 @@ class BeansController < ApplicationController
     end
   end
 
-  def edit
-    @bean = @roaster.beans.find(params[:id])
-  end
+  def edit; end
 
   def update
-    params[:bean][:cropped_at] = "#{params[:bean][:cropped_at]}-01"
-    @bean = @roaster.beans.find(params[:id])
+    set_cropped_at
     if @bean.update(bean_params)
       flash[:notice] = 'コーヒー豆情報を更新しました'
       redirect_to @bean
@@ -69,7 +66,12 @@ class BeansController < ApplicationController
       )
   end
 
-  def set_roaster
-    @roaster = current_user.roaster
+  def set_bean
+    @bean = current_roaster.beans.find_by(id: params[:id])
+    redirect_to(root_url) unless @bean
+  end
+
+  def set_cropped_at
+    params[:bean][:cropped_at] = "#{params[:bean][:cropped_at]}-01"
   end
 end
