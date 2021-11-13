@@ -2,7 +2,7 @@
 <h1 class="mb-1">ユーザー</h1>
 <hr class="mb-3">
 
-<p><%= @user.name %><span class="ml-3">＠<%= @user.area %></span></p>
+<p><%= @user.name %><span class="ml-3">＠<%= @user.prefecture.name %></span></p>
 <div class="flex my-4">
   <%= image_tag @user.image.thumb.url, class: "thumbnail" %>
   <div class="bg-white rounded px-8 pt-6 pb-8 mb-4 ml-4 w-full max-w-md ">
@@ -11,5 +11,5 @@
 </div>
 
 <% if current_user == @user %>
-  <%= link_to '編集', edit_user_registration_path , class: "btn-primary" %>
+<%= link_to '編集', edit_user_registration_path , class: "btn-primary" %>
 <% end %>

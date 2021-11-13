@@ -53,14 +53,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: %i[name area])
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[name prefecture_code])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
     devise_parameter_sanitizer.permit(
       :account_update,
-      keys: %i[name area describe roaster_id image image_cache],
+      keys: %i[name prefecture_code describe roaster_id image image_cache],
     )
   end
 

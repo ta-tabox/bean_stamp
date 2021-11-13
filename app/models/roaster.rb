@@ -1,4 +1,5 @@
 class Roaster < ApplicationRecord
+  include JpPrefecture
   before_validation :before_validations
   has_many :users, dependent: :nullify
   validates :name, presence: true
@@ -10,9 +11,10 @@ class Roaster < ApplicationRecord
             length: {
               in: 10..11,
             }
-  validates :address, presence: true
+  validates :prefecture_code, presence: true
   validates :describe, length: { maximum: 300 }
   mount_uploader :image, ImageUploader
+  jp_prefecture :prefecture_code
 
   private
 

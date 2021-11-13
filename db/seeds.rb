@@ -2,7 +2,7 @@
 Roaster.create!(
   name: '豆屋',
   phone_number: '0123456789',
-  address: '東京都渋谷区*-*-*',
+  prefecture_code: '12',
   describe: 'ここは豆太郎のロースターです',
 )
 
@@ -10,7 +10,7 @@ Roaster.create!(
 User.create!(
   name: '豆太郎',
   email: 'user@example.com',
-  area: '東京都',
+  prefecture_code: '12',
   password: 'password',
   password_confirmation: 'password',
   describe: '私は豆太郎です。',

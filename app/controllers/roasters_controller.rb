@@ -54,12 +54,19 @@ class RoastersController < ApplicationController
   def roaster_params
     params
       .require(:roaster)
-      .permit(:name, :phone_number, :address, :describe, :image, :image_cache)
+      .permit(
+        :name,
+        :phone_number,
+        :prefecture_code,
+        :describe,
+        :image,
+        :image_cache,
+      )
   end
 
   def correct_roaster
     @roaster = Roaster.find(params[:id])
-    redirect_to @roaster unless current_user.roaster?(@roaster)
+    redirect_to @roaster unless current_user.belonged_roaster?(@roaster)
   end
 
   # ゲストロースターかチェックする
