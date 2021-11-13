@@ -12,4 +12,10 @@ class Bean < ApplicationRecord
     validates :bitterness
     validates :sweetness
   end
+  validates :images,
+            length: {
+              maximum: 4,
+              too_long: '画像は４枚まで投稿できます',
+            }
+  mount_uploaders :images, ImageUploader
 end

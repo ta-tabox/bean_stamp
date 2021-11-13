@@ -63,6 +63,8 @@ class BeansController < ApplicationController
         :body,
         :bitterness,
         :sweetness,
+        { images: [] },
+        :images_cache,
       )
   end
 

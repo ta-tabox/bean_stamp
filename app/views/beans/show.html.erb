@@ -3,13 +3,19 @@
 <hr class="mb-3">
 <div class="form form-container">
   <p>タイトル：<%= @bean.name %></p>
-  <%# <%= image_tag @bean.image.thumb.url, class: "thumbnail" %> %>
+  <div class="flex">
+    <% if @bean.images? %>
+    <% @bean.images.each do |image| %>
+    <%= image_tag image.thumb.url, class: "thumbnail" %>
+    <% end %>
+    <% end %>
+  </div>
   <p>生産国：<%= @bean.country if @bean.country? %></p>
   <p>地域：<%= @bean.subregion if @bean.subregion? %></p>
   <p>農園：<%= @bean.farm if @bean.farm? %></p>
   <p>品種：<%= @bean.variety if @bean.variety? %></p>
   <p>精製方法：<%= @bean.process if @bean.process? %></p>
-  <p>標高：<%= @bean.elevation if @bean.elevation? %>m</p>
+  <p>標高：<%= "#{@bean.elevation} m" if @bean.elevation? %></p>
 
   <p>収穫：<%= "#{@bean.cropped_at.year}年 #{@bean.cropped_at.month}月" if @bean.cropped_at? %></p>
   <p>説明：<%= @bean.describe if @bean.describe? %></p>

@@ -4,16 +4,18 @@
     <%= render "shared/error_messages", resource: f.object %>
     <h1 class="text-center"><%= yield(:form_title) %></h1>
 
-    <%# <h1 class="text-center"><%= yield(:form_title) %></h1> %>
-
-    <%# <div class="field"> %>
-    <%# <% if @bean.image? %> %>
-    <%# <%= image_tag @bean.image.thumb.url, class: "thumbnail" %> %>
-    <%# <% end %> %>
-    <%# <%= f.label :image, class: "label" %> %>
-    <%# <%= f.file_field :image, accept:"image/*", class: "input-field" %> %>
-    <%# <%= f.hidden_field :image_cache %> %>
-    <%# </div> %>
+    <div class="field">
+      <div class="flex">
+        <% if @bean.images? %>
+        <% @bean.images.each do |image| %>
+        <%= image_tag image.thumb.url, class: "thumbnail" %>
+        <% end %>
+        <% end %>
+      </div>
+      <%= f.label :images, class: "label" %>
+      <%= f.file_field :images, multiple: true,  accept:"image/*", class: "input-field" %>
+      <%= f.hidden_field :images_cache %>
+    </div>
 
     <div class="field">
       <%= f.label :name, class: "label" %>
@@ -89,7 +91,6 @@
     <div class="flex">
       <%= link_to "キャンセル", :back, class: "mr-4 btn-primary", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>
       <div class="actions">
-        <%# <%= f.submit yield(:button_text), class: "btn-primary" %> %>
         <%= f.submit yield(:button_text), class: "btn-primary" %>
       </div>
     </div>
