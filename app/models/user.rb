@@ -17,7 +17,7 @@ class User < ApplicationRecord
   belongs_to :roaster, optional: true
 
   # ユーザーが所属するロースターと一致しているか？
-  def roaster?(roaster)
+  def belonged_roaster?(roaster)
     self.roaster == roaster
   end
 
