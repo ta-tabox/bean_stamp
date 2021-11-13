@@ -4,7 +4,7 @@
 
 <p><%= @user.name %><span class="ml-3">＠<%= @user.prefecture.name %></span></p>
 <div class="flex my-4">
-  <%= image_tag @user.image.thumb.url, class: "thumbnail" %>
+  <%= show_thumbnail(@user) %>
   <div class="bg-white rounded px-8 pt-6 pb-8 mb-4 ml-4 w-full max-w-md ">
     <p><%= @user.describe %></p>
   </div>

@@ -16,12 +16,12 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # デフォルト画像の設定/app/assets/images/fallback/default.pngとして配置する
-  def default_url(*_args)
-    # For Rails 3.1+ asset pipeline compatibility:
-    ActionController::Base.helpers.asset_path(
-      "fallback/#{[version_name, 'default.png'].compact.join('_')}",
-    )
-  end
+  # def default_url(*_args)
+  #   # For Rails 3.1+ asset pipeline compatibility:
+  #   ActionController::Base.helpers.asset_path(
+  #     "fallback/#{[version_name, 'default.png'].compact.join('_')}",
+  #   )
+  # end
 
   # リサイズ
   process resize_to_fit: [800, 800]
