@@ -5,8 +5,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # ゲストログイン
   def guest_sign_in
-    user = User.guest
-    user.guest_roaster(user) unless user.roaster_id?
+    user = User.find(1)
     sign_in user
     redirect_to root_path, notion: 'ゲストユーザーとしてログインしました。'
   end

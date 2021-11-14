@@ -91,7 +91,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # ゲストユーザーかチェックする
   def ensure_normal_user
-    if resource.email == 'guest@example.com'
+    if resource.id == 1
       redirect_to root_path, alert: 'ゲストユーザーの更新・削除はできません'
     end
   end

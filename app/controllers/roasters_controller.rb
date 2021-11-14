@@ -73,6 +73,6 @@ class RoastersController < ApplicationController
   # ゲストロースターかチェックする
   def ensure_normal_roaster
     roaster = Roaster.find(params[:id])
-    redirect_to root_path, alert: 'ゲストロースターの更新・削除はできません' if roaster.name == 'ゲストロースター'
+    redirect_to root_path, alert: 'ゲストロースターの更新・削除はできません' if roaster.id == 1
   end
 end

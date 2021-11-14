@@ -1,19 +1,19 @@
-# default sample roaster
+# guest roaster
 Roaster.create!(
-  name: '豆屋',
+  name: 'ゲストロースター',
   phone_number: '0123456789',
-  prefecture_code: '12',
-  address: '東京都〇〇丁目××-××',
-  describe: 'ここは豆太郎のロースターです',
+  prefecture_code: '13',
+  address: '**区**丁目**-**',
+  describe: '閲覧用のロースターです',
 )
 
-# default sample user
+# guest user
 User.create!(
-  name: '豆太郎',
-  email: 'user@example.com',
-  prefecture_code: '12',
+  name: 'ゲストユーザー',
+  email: 'guest@example.com',
+  prefecture_code: '13',
   password: 'password',
   password_confirmation: 'password',
-  describe: '私は豆太郎です。',
+  describe: '閲覧用のロースターです',
   roaster_id: 1,
 )
