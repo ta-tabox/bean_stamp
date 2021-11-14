@@ -67,7 +67,10 @@ class RoastersController < ApplicationController
 
   def correct_roaster
     @roaster = Roaster.find(params[:id])
-    redirect_to @roaster unless current_user.belonged_roaster?(@roaster)
+    return if current_user.belonged_roaster?(@roaster)
+
+    redirect_to @roaster,
+                alert: '所属していないロースターの更新・削除はできません'
   end
 
   # ゲストロースターかチェックする
