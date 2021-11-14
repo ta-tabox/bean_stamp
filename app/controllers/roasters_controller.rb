@@ -58,6 +58,7 @@ class RoastersController < ApplicationController
         :name,
         :phone_number,
         :prefecture_code,
+        :address,
         :describe,
         :image,
         :image_cache,

@@ -3,6 +3,7 @@ Roaster.create!(
   name: '豆屋',
   phone_number: '0123456789',
   prefecture_code: '12',
+  address: '東京都〇〇丁目××-××',
   describe: 'ここは豆太郎のロースターです',
 )
 

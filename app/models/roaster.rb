@@ -12,6 +12,7 @@ class Roaster < ApplicationRecord
               in: 10..11,
             }
   validates :prefecture_code, presence: true
+  validates :address, presence: true
   validates :describe, length: { maximum: 300 }
   mount_uploader :image, ImageUploader
   jp_prefecture :prefecture_code

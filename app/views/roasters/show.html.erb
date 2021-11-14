@@ -2,7 +2,7 @@
 <h1 class="mb-1">ロースター</h1>
 <hr class="mb-3">
 
-<p><%= @roaster.name %><span class="ml-3">＠<%= @roaster.prefecture.name %></span></p>
+<p><%= @roaster.name %><span class="ml-3">＠<%=  "#{@roaster.prefecture.name} #{@roaster.address}" %></span></p>
 <div class="flex my-4">
   <%= image_tag @roaster.image.thumb.url, class: "thumbnail" %>
   <div class="bg-white rounded px-8 pt-6 pb-8 mb-4 ml-4 w-full max-w-md ">
