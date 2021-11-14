@@ -62,12 +62,9 @@ Style/TrailingCommaInArrayLiteral:
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: comma
 
-# 引数のインデントを検証しない(prettierに委ねる)
-Layout/ArgumentAlignment:
-  Enabled: false
-
-Layout/FirstArgumentIndentation:
-  Enabled: false
+# prettierのrubyプラグインとの競合を避ける
+inherit_from:
+  - node_modules/@prettier/plugin-ruby/rubocop.yml
 
 ##################### Lint ##################################
 
