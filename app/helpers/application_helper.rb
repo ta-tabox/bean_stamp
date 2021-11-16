@@ -1,4 +1,7 @@
 module ApplicationHelper
+  # ビュー用Pagyモジュールの読み込み→ Vue.js導入時に変更する必要あり
+  include Pagy::Frontend
+
   # 渡されたインスタンスのサムネイルを表示する
   def show_thumbnail(obj)
     if obj.instance_of?(Bean)
