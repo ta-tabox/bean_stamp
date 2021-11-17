@@ -7,10 +7,10 @@
   <div class="w-200 pt-12 mx-auto">
 
     <% if @beans.any? %>
-    <%== pagy_nav(@pagy) %>
     <ol>
       <%= render @beans %>
     </ol>
+    <%== pagy_nav_js(@pagy) %>
     <% end %>
   </div>
 </div>
