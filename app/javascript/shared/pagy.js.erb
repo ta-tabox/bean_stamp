@@ -1,2 +1,9 @@
 <%= Pagy.root.join('javascripts', 'pagy.js').read %>
-window.addEventListener("turbolinks:load", Pagy.init)
+  const pagyNav = document.getElementsByClassName('page');
+  document.addEventListener("turbolinks:load", function() {
+  // ブラウザバックによりpagyのナビリンクが重複するので削除する
+    while (pagyNav.length) {
+        pagyNav.item(0).remove();
+      }
+    Pagy.init();
+  });
