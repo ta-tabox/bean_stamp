@@ -73,9 +73,9 @@ class RoastersController < ApplicationController
                 alert: '所属していないロースターの更新・削除はできません'
   end
 
-  # ゲストロースターかチェックする
+  # ゲストロースターの編集・削除を制限する
   def ensure_normal_roaster
     roaster = Roaster.find(params[:id])
-    redirect_to root_path, alert: 'ゲストロースターの更新・削除はできません' if roaster.id == 1
+    redirect_to root_path, alert: 'ゲストロースターの更新・削除はできません' if roaster.guest?
   end
 end

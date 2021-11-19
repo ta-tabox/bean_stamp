@@ -5,9 +5,10 @@ class Users::SessionsController < Devise::SessionsController
 
   # ゲストログイン
   def guest_sign_in
-    user = User.find(1)
-    sign_in user
-    redirect_to root_path, notion: 'ゲストユーザーとしてログインしました。'
+    guest_user_id = 1
+    guest_user = User.find(guest_user_id)
+    sign_in guest_user
+    redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
   end
 
   # GET /resource/sign_in

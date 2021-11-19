@@ -5,6 +5,7 @@ Roaster.create!(
   prefecture_code: '13',
   address: '**区**丁目**-**',
   describe: '閲覧用のロースターです',
+  guest: true,
 )
 
 # guest user
@@ -16,4 +17,5 @@ User.create!(
   password_confirmation: 'password',
   describe: '閲覧用のロースターです',
   roaster_id: 1,
+  guest: true,
 )
