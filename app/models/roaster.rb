@@ -1,5 +1,5 @@
 class Roaster < ApplicationRecord
-  before_validation :before_validations
+  include JpPrefecture
   has_many :users, dependent: :nullify
   validates :name, presence: true
   validates :phone_number,
@@ -10,14 +10,9 @@ class Roaster < ApplicationRecord
             length: {
               in: 10..11,
             }
+  validates :prefecture_code, presence: true
   validates :address, presence: true
   validates :describe, length: { maximum: 300 }
   mount_uploader :image, ImageUploader
-
-  private
-
-  def before_validations
-    # phone_numberの文字列から先頭と文末のスペースを除去
-    phone_number.strip!
-  end
+  jp_prefecture :prefecture_code
 end
