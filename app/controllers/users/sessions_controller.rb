@@ -5,8 +5,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # ゲストログイン
   def guest_sign_in
-    guest_user_id = 1
-    guest_user = User.find(guest_user_id)
+    guest_user = User.find_by(guest: true)
     sign_in guest_user
     redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
   end
