@@ -9,6 +9,9 @@ import * as ActiveStorage from "@rails/activestorage";
 import "channels";
 import "../css/application.css";
 
+// JavaScriptファイルの読み込み
+import "../shared/input_image_preview";
+
 Rails.start();
 Turbolinks.start();
 ActiveStorage.start();

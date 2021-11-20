@@ -8,8 +8,12 @@
       <% if @roaster.image? %>
       <%= image_tag @roaster.image.thumb.url, class: "thumbnail" %>
       <% end %>
+
+      <!-- プレビュースタイル考える -->
+      <div id="preview"></div>
+
       <%= f.label :image, class: "label" %>
-      <%= f.file_field :image, accept:"image/*", class: "input-field" %>
+      <%= f.file_field :image, accept:"image/*", class: "input-field", id: 'input-image' %>
       <%= f.hidden_field :image_cache %>
     </div>
 
