@@ -54,17 +54,28 @@ class RoastersController < ApplicationController
   def roaster_params
     params
       .require(:roaster)
-      .permit(:name, :phone_number, :address, :describe, :image, :image_cache)
+      .permit(
+        :name,
+        :phone_number,
+        :prefecture_code,
+        :address,
+        :describe,
+        :image,
+        :image_cache,
+      )
   end
 
   def correct_roaster
     @roaster = Roaster.find(params[:id])
-    redirect_to @roaster unless current_user.roaster?(@roaster)
+    return if current_user.belonged_roaster?(@roaster)
+
+    redirect_to @roaster,
+                alert: '所属していないロースターの更新・削除はできません'
   end
 
-  # ゲストロースターかチェックする
+  # ゲストロースターの編集・削除を制限する
   def ensure_normal_roaster
     roaster = Roaster.find(params[:id])
-    redirect_to root_path, alert: 'ゲストロースターの更新・削除はできません' if roaster.name == 'ゲストロースター'
+    redirect_to root_path, alert: 'ゲストロースターの更新・削除はできません' if roaster.guest?
   end
 end

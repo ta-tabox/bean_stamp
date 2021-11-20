@@ -6,12 +6,13 @@ ja:
     attributes:
       user:
         name: 名前
-        area: エリア
+        prefecture_code: エリア
         describe: 自己紹介
         image: サムネイル
       roaster:
         name: 店舗名
         phone_number: 電話番号
+        prefecture_code: 都道府県
         address: 住所
         describe: 店舗紹介
         image: サムネイル
