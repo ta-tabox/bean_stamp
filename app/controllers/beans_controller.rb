@@ -1,7 +1,7 @@
 class BeansController < ApplicationController
   before_action :user_signed_in_required
   before_action :user_belonged_to_roaster_required
-  before_action :set_bean, only: %i[show edit update]
+  before_action :set_bean, only: %i[show edit update destroy]
 
   def index
     @beans = current_roaster.beans
@@ -37,7 +37,6 @@ class BeansController < ApplicationController
   end
 
   def destroy
-    @bean = current_roaster.beans.find(params[:id])
     @bean.destroy
     flash[:notice] = "コーヒー豆「#{@bean.name}」を削除しました"
     redirect_to beans_path
