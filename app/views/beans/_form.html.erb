@@ -12,8 +12,12 @@
         <% end %>
         <% end %>
       </div>
+
+      <!-- プレビュースタイル考える -->
+      <div id="preview"></div>
+
       <%= f.label :images, class: "label" %>
-      <%= f.file_field :images, multiple: true,  accept:"image/*", class: "input-field" %>
+      <%= f.file_field :images, multiple: true,  accept:"image/*", class: "input-field", id: 'input-image' %>
       <%= f.hidden_field :images_cache %>
     </div>
 
