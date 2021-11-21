@@ -1,21 +1,21 @@
 class BeansController < ApplicationController
   before_action :user_signed_in_required
-  before_action :belonged_to_roaster_required
+  before_action :user_belonged_to_roaster_required
   before_action :set_bean, only: %i[show edit update]
 
   def index
-    @beans = @roaster.beans
+    @beans = current_roaster.beans
   end
 
   def show; end
 
   def new
-    @bean = @roaster.beans.build
+    @bean = current_roaster.beans.build
   end
 
   def create
     set_cropped_at
-    @bean = @roaster.beans.build(bean_params)
+    @bean = current_roaster.beans.build(bean_params)
     if @bean.save
       flash[:notice] = 'コーヒー豆を登録しました'
       redirect_to @bean
@@ -37,7 +37,7 @@ class BeansController < ApplicationController
   end
 
   def destroy
-    @bean = @roaster.beans.find(params[:id])
+    @bean = current_roaster.beans.find(params[:id])
     @bean.destroy
     flash[:notice] = "コーヒー豆「#{@bean.name}」を削除しました"
     redirect_to beans_path
