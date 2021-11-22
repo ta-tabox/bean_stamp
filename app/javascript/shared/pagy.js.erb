@@ -1,0 +1,9 @@
+<%= Pagy.root.join('javascripts', 'pagy.js').read %>
+
+document.addEventListener("turbolinks:load", function () {
+  // turbolinksのキャッシュでページネーション要素が存在していた場合は処理をスキップする
+  const pageNav = document.getElementsByClassName("page");
+  if (pageNav.length === 0) {
+    Pagy.init();
+  }
+});

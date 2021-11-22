@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+  # Pagyによるpagination
+  include Pagy::Backend
+
   private
 
   # ユーザーのサインインを求める

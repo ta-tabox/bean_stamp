@@ -4,7 +4,7 @@ class BeansController < ApplicationController
   before_action :set_bean, only: %i[show edit update destroy]
 
   def index
-    @beans = current_roaster.beans
+    @pagy, @beans = pagy(current_roaster.beans)
   end
 
   def show; end
