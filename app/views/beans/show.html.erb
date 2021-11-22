@@ -1,0 +1,31 @@
+<% provide(:title, "コーヒー豆詳細") %>
+<h1 class="mb-1">コーヒー豆詳細</h1>
+<hr class="mb-3">
+<div class="form form-container">
+  <p>タイトル：<%= @bean.name %></p>
+  <div class="flex">
+    <% if @bean.images? %>
+    <% @bean.images.each do |image| %>
+    <%= image_tag image.thumb.url, class: "thumbnail" %>
+    <% end %>
+    <% end %>
+  </div>
+  <p>生産国：<%= @bean.country if @bean.country? %></p>
+  <p>地域：<%= @bean.subregion if @bean.subregion? %></p>
+  <p>農園：<%= @bean.farm if @bean.farm? %></p>
+  <p>品種：<%= @bean.variety if @bean.variety? %></p>
+  <p>精製方法：<%= @bean.process if @bean.process? %></p>
+  <p>標高：<%= "#{@bean.elevation} m" if @bean.elevation? %></p>
+
+  <p>収穫：<%= "#{@bean.cropped_at.year}年 #{@bean.cropped_at.month}月" if @bean.cropped_at? %></p>
+  <p>説明：<%= @bean.describe if @bean.describe? %></p>
+  <p>酸味：<%= @bean.acidity %></p>
+  <p>香り：<%= @bean.flavor %></p>
+  <p>ボディ：<%= @bean.body %></p>
+  <p>苦味：<%= @bean.bitterness %></p>
+  <p>甘味：<%= @bean.sweetness %></p>
+
+  <% if current_user.had_bean?(@bean) %>
+  <%= link_to '編集', edit_bean_path , class: "btn-primary" %>
+  <% end %>
+</div>

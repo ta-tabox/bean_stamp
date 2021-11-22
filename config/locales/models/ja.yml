@@ -3,6 +3,7 @@ ja:
     models:
       user: ユーザー
       roaster: ロースター
+      bean: コーヒー豆
     attributes:
       user:
         name: 名前
@@ -16,3 +17,14 @@ ja:
         address: 住所
         describe: 店舗紹介
         image: サムネイル
+      bean:
+        name: タイトル
+        country: 生産国
+        subregion: 地域
+        farm: 農園
+        variety: 品種
+        elevation: 標高
+        process: 精製方法
+        cropped_at: 収穫時期
+        describe: コーヒー紹介
+        images: 紹介画像

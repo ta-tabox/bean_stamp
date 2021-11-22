@@ -1,21 +1,18 @@
 class RoastersController < ApplicationController
   before_action :user_signed_in_required
+  before_action :set_roaster, only: %i[show edit update destroy]
   before_action :correct_roaster, only: %i[edit update destroy]
   before_action :ensure_normal_roaster, only: %i[update destroy]
 
   def index; end
 
-  def show
-    @roaster = Roaster.find(params[:id])
-  end
+  def show; end
 
   def new
     @roaster = current_user.build_roaster
   end
 
-  def edit
-    @roaster = Roaster.find(params[:id])
-  end
+  def edit; end
 
   def create
     @roaster = current_user.build_roaster(roaster_params)
@@ -29,7 +26,6 @@ class RoastersController < ApplicationController
   end
 
   def update
-    @roaster = Roaster.find(params[:id])
     if @roaster.update(roaster_params)
       flash[:notice] = 'ロースター情報を更新しました'
       redirect_to @roaster
@@ -39,14 +35,13 @@ class RoastersController < ApplicationController
   end
 
   def destroy
-    roaster = Roaster.find(params[:id])
-    roaster.destroy
-    flash[:notice] = "ロースター「#{roaster.name}」を削除しました"
+    @roaster.destroy
+    flash[:notice] = "ロースター「#{@roaster.name}」を削除しました"
     redirect_to user_home_path
   end
 
   def cancel
-    @roaster = current_user.roaster
+    @roaster = current_roaster
   end
 
   private
@@ -65,17 +60,19 @@ class RoastersController < ApplicationController
       )
   end
 
-  def correct_roaster
+  def set_roaster
     @roaster = Roaster.find(params[:id])
-    return if current_user.belonged_roaster?(@roaster)
+  end
 
+  def correct_roaster
+    return if current_user.belonged_roaster?(@roaster)
     redirect_to @roaster,
                 alert: '所属していないロースターの更新・削除はできません'
   end
 
   # ゲストロースターの編集・削除を制限する
   def ensure_normal_roaster
-    roaster = Roaster.find(params[:id])
-    redirect_to root_path, alert: 'ゲストロースターの更新・削除はできません' if roaster.guest?
+    return unless @roaster.guest?
+    redirect_to root_path, alert: 'ゲストロースターの更新・削除はできません'
   end
 end
