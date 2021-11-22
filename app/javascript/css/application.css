@@ -16,7 +16,11 @@
 }
 
 .thumbnail {
-  @apply w-32 h-32 rounded-full;
+  @apply w-16 h-16 rounded-full;
+}
+
+.image {
+  @apply w-32 h-32 rounded-md;
 }
 
 /* form design  */

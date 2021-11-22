@@ -1,6 +1,7 @@
 class Roaster < ApplicationRecord
   include JpPrefecture
   has_many :users, dependent: :nullify
+  has_many :beans, dependent: :destroy
   validates :name, presence: true
   validates :phone_number,
             presence: true,

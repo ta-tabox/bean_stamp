@@ -14,4 +14,5 @@ Rails.application.routes.draw do
   resources :roasters do
     collection { get 'cancel' }
   end
+  resources :beans
 end

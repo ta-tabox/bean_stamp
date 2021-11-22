@@ -22,4 +22,9 @@ class User < ApplicationRecord
   def belonged_roaster?(roaster)
     self.roaster == roaster
   end
+
+  # ユーザーが所属するロースターのコーヒー豆と一致しているか？
+  def had_bean?(bean)
+    self.roaster == bean.roaster
+  end
 end
