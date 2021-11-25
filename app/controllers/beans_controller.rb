@@ -6,7 +6,7 @@ class BeansController < ApplicationController
   before_action :set_new_images, only: %i[create update]
 
   def index
-    @pagy, @beans = pagy(current_roaster.beans)
+    @pagy, @beans = pagy(current_roaster.beans.includes([:bean_images]))
   end
 
   def show
