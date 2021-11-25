@@ -1,25 +1,28 @@
 <div class="form-container">
   <div class="form">
+
     <%= form_with(model: @bean) do |f| %>
     <%= render "shared/error_messages", resource: f.object %>
     <h1 class="text-center"><%= yield(:form_title) %></h1>
 
     <div class="field">
       <div class="flex">
-        <% if @bean.images? %>
-        <% @bean.images.each do |image| %>
-        <%= image_tag image.thumb.url, class: "thumbnail" %>
+        <% if @bean.bean_images.any? %>
+        <% @bean.bean_images.each do |bean_image| %>
+        <%= image_tag bean_image.image.thumb.url, class: "thumbnail" if bean_image.image? %>
         <% end %>
         <% end %>
       </div>
-
-      <!-- プレビュースタイル考える -->
-      <div id="preview"></div>
-
-      <%= f.label :images, class: "label" %>
-      <%= f.file_field :images, multiple: true,  accept:"image/*", class: "input-field", id: 'input-image' %>
-      <%= f.hidden_field :images_cache %>
     </div>
+
+    <div id="preview"></div>
+
+    <%= f.fields_for :bean_images do |i|%>
+    <div class="field">
+      <%= i.label :image, class: "label" %>
+      <%= i.file_field :image, multiple: true, accept:"image/*", class: "input-field", id: 'input-image', name: "bean_images[image][]" %>
+    </div>
+    <% end %>
 
     <div class="field">
       <%= f.label :name, class: "label" %>
