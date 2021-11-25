@@ -3,7 +3,6 @@ class BeansController < ApplicationController
   before_action :user_signed_in_required
   before_action :user_belonged_to_roaster_required
   before_action :set_bean, only: %i[show edit update destroy]
-  before_action :set_new_images, only: %i[create update]
 
   def index
     @pagy, @beans = pagy(current_roaster.beans.includes([:bean_images]))
@@ -20,10 +19,10 @@ class BeansController < ApplicationController
 
   def create
     set_cropped_at
-    @bean = current_roaster.beans.build(bean_params)
-
+    set_new_images
     return if max_bean_images_count_render_for('new')
 
+    @bean = current_roaster.beans.build(bean_params)
     if @bean.save
       @new_images.each do |img|
         @bean_image = @bean.bean_images.create(image: img, bean_id: @bean.id)
@@ -41,7 +40,7 @@ class BeansController < ApplicationController
 
   def update
     set_cropped_at
-
+    set_new_images
     return if max_bean_images_count_render_for('edit')
 
     if @bean.update(bean_params)
