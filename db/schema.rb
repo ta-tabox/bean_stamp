@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_23_125553) do
+ActiveRecord::Schema.define(version: 2021_11_26_134317) do
 
   create_table "bean_images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "image"
@@ -38,7 +38,6 @@ ActiveRecord::Schema.define(version: 2021_11_23_125553) do
     t.integer "body"
     t.integer "bitterness"
     t.integer "sweetness"
-    t.json "images"
     t.index ["country"], name: "index_beans_on_country"
     t.index ["roaster_id", "created_at"], name: "index_beans_on_roaster_id_and_created_at"
     t.index ["roaster_id"], name: "index_beans_on_roaster_id"
