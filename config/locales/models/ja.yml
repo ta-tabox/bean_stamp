@@ -28,6 +28,7 @@ ja:
         process: 精製方法
         cropped_at: 収穫時期
         describe: コーヒー紹介
+        bean_images: イメージ
       # label :image の翻訳に反映されない
       bean/bean_images:
         image: イメージ

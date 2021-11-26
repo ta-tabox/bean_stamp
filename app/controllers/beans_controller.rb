@@ -20,9 +20,8 @@ class BeansController < ApplicationController
   def create
     set_cropped_at
     set_new_images
-    return if max_bean_images_count_render_for('new')
-
     @bean = current_roaster.beans.build(bean_params)
+    return if max_bean_images_count_render_for('new')
     if @bean.save
       @new_images.each do |img|
         @bean_image = @bean.bean_images.create(image: img, bean_id: @bean.id)
@@ -106,9 +105,13 @@ class BeansController < ApplicationController
     end
   end
 
+  # 登録する画像数を制限し、制限を超える場合viewにレンダリングする
   def max_bean_images_count_render_for(view)
     return unless @new_images && @new_images.length > MAX_BEANIMAGE_COUNT
-    flash.now[:alert] = "登録できるイメージは #{MAX_BEANIMAGE_COUNT}までです"
+    @bean.errors.add(
+      :bean_images,
+      "は #{MAX_BEANIMAGE_COUNT}枚まで登録できます",
+    )
     render view
   end
 end
