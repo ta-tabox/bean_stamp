@@ -19,6 +19,7 @@
 
     <%= f.fields_for :bean_images do |i|%>
     <div class="field">
+      <!-- label :image の翻訳が反映されない -->
       <%= i.label :image, class: "label" %>
       <%= i.file_field :image, multiple: true, accept:"image/*", class: "input-field", id: 'input-image', name: "bean_images[image][]" %>
     </div>

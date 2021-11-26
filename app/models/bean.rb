@@ -1,8 +1,6 @@
 class Bean < ApplicationRecord
   belongs_to :roaster
   has_many :bean_images, dependent: :destroy
-
-  # accepts_nested_attributes_for :bean_images, allow_destroy: true
   default_scope -> { order(created_at: :desc) }
   validates :roaster_id, presence: true
   validates :name, presence: true
