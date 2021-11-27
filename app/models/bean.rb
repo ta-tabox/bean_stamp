@@ -3,6 +3,7 @@ class Bean < ApplicationRecord
   attr_accessor :upload_images
   belongs_to :roaster
   has_many :bean_images, dependent: :destroy
+  belongs_to :roaste_level, class_name: 'MstRoasteLevel'
   default_scope -> { order(created_at: :desc) }
   validates :roaster_id, presence: true
   validates :name, presence: true
@@ -32,7 +33,9 @@ class Bean < ApplicationRecord
 
   # アップロードする画像数がMAX_UPLOAD_IMAGES_COUNT以下であるか検証する
   def upload_images_cannot_be_greater_than_max_upload_images_count
-    return unless upload_images && upload_images.length > MAX_UPLOAD_IMAGES_COUNT
+    unless upload_images && upload_images.length > MAX_UPLOAD_IMAGES_COUNT
+      return
+    end
     errors.add(
       :bean_images,
       "は#{MAX_UPLOAD_IMAGES_COUNT}枚までしか登録できません",
