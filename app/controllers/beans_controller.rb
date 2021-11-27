@@ -76,6 +76,7 @@ class BeansController < ApplicationController
         :body,
         :bitterness,
         :sweetness,
+        :roaste_level_id,
       )
   end
 

@@ -21,6 +21,8 @@ ja:
       bean:
         name: タイトル
         country: 生産国
+        roaste_level_id: 焙煎度
+        roaste_level: 焙煎度
         subregion: 地域
         farm: 農園
         variety: 品種
