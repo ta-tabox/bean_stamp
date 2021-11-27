@@ -3,7 +3,7 @@ class Bean < ApplicationRecord
   attr_accessor :upload_images
   belongs_to :roaster
   has_many :bean_images, dependent: :destroy
-  belongs_to :roaste_level, class_name: 'MstRoasteLevel'
+  belongs_to :roast_level, class_name: 'MstRoastLevel'
   default_scope -> { order(created_at: :desc) }
   validates :roaster_id, presence: true
   validates :name, presence: true

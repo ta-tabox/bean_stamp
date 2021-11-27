@@ -1,4 +1,4 @@
-MstRoasteLevel.seed(
+MstRoastLevel.seed(
   :id,
   { id: 1, name: '浅煎り' },
   { id: 2, name: '中浅煎り' },

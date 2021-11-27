@@ -17,6 +17,6 @@
     s.body = Faker::Number.within(range: 1..5)
     s.bitterness = Faker::Number.within(range: 1..5)
     s.sweetness = Faker::Number.within(range: 1..5)
-    s.roaste_level_id = Faker::Number.within(range: 1..5)
+    s.roast_level_id = Faker::Number.within(range: 1..5)
   end
 end
