@@ -38,14 +38,25 @@ ActiveRecord::Schema.define(version: 2021_11_28_024423) do
     t.integer "body"
     t.integer "bitterness"
     t.integer "sweetness"
+<<<<<<< HEAD
     t.bigint "roast_level_id", default: 0
     t.index ["country"], name: "index_beans_on_country"
     t.index ["roast_level_id"], name: "index_beans_on_roast_level_id"
+=======
+    t.json "images"
+    t.bigint "roaste_level_id", null: false
+    t.index ["country"], name: "index_beans_on_country"
+    t.index ["roaste_level_id"], name: "index_beans_on_roaste_level_id"
+>>>>>>> cc26598 (feat(mst_roaste_level): seed-fuの導入とmst_roaste_levelテーブルの作成、beanモデルとの関連付け)
     t.index ["roaster_id", "created_at"], name: "index_beans_on_roaster_id_and_created_at"
     t.index ["roaster_id"], name: "index_beans_on_roaster_id"
   end
 
+<<<<<<< HEAD
   create_table "mst_roast_levels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+=======
+  create_table "mst_roaste_levels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+>>>>>>> cc26598 (feat(mst_roaste_level): seed-fuの導入とmst_roaste_levelテーブルの作成、beanモデルとの関連付け)
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
