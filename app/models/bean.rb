@@ -4,6 +4,10 @@ class Bean < ApplicationRecord
   belongs_to :roaster
   has_many :bean_images, dependent: :destroy
   belongs_to :roast_level, class_name: 'MstRoastLevel'
+
+  # bean_tagsのアソシエーション
+  has_many :bean_taste_tags, dependent: :destroy
+  has_many :taste_tags, through: :bean_taste_tags, source: :mst_taste_tag
   default_scope -> { order(created_at: :desc) }
   validates :roaster_id, presence: true
   validates :name, presence: true

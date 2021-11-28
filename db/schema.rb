@@ -44,6 +44,22 @@ ActiveRecord::Schema.define(version: 2021_11_28_024423) do
     t.integer 'bitterness'
     t.integer 'sweetness'
 
+    create_table 'bean_taste_tags',
+                 charset: 'utf8mb4',
+                 collation: 'utf8mb4_0900_ai_ci',
+                 force: :cascade do |t|
+      t.bigint 'bean_id', null: false
+      t.bigint 'mst_taste_tag_id', null: false
+      t.datetime 'created_at', precision: 6, null: false
+      t.datetime 'updated_at', precision: 6, null: false
+      t.index %w[bean_id mst_taste_tag_id],
+              name: 'index_bean_taste_tags_on_bean_id_and_mst_taste_tag_id',
+              unique: true
+      t.index ['bean_id'], name: 'index_bean_taste_tags_on_bean_id'
+      t.index ['mst_taste_tag_id'],
+              name: 'index_bean_taste_tags_on_mst_taste_tag_id'
+    end
+
     t.bigint 'roast_level_id', default: 0
     t.index ['country'], name: 'index_beans_on_country'
     t.index ['roast_level_id'], name: 'index_beans_on_roast_level_id'
@@ -53,6 +69,15 @@ ActiveRecord::Schema.define(version: 2021_11_28_024423) do
   end
 
   create_table 'mst_roast_levels',
+               charset: 'utf8mb4',
+               collation: 'utf8mb4_0900_ai_ci',
+               force: :cascade do |t|
+    t.string 'name'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+  end
+
+  create_table 'mst_taste_tags',
                charset: 'utf8mb4',
                collation: 'utf8mb4_0900_ai_ci',
                force: :cascade do |t|
@@ -102,6 +127,8 @@ ActiveRecord::Schema.define(version: 2021_11_28_024423) do
   end
 
   add_foreign_key 'bean_images', 'beans'
+  add_foreign_key 'bean_taste_tags', 'beans'
+  add_foreign_key 'bean_taste_tags', 'mst_taste_tags'
   add_foreign_key 'beans', 'mst_roast_levels', column: 'roast_level_id'
   add_foreign_key 'beans', 'roasters'
   add_foreign_key 'users', 'roasters'
