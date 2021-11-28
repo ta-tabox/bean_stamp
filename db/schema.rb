@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 2021_11_23_125553) do
     t.index ["roaster_id"], name: "index_beans_on_roaster_id"
 =======
     t.json "images"
-    t.bigint "roast_level_id", null: false
+    t.bigint "roast_level_id", default: 0
     t.index ["country"], name: "index_beans_on_country"
     t.index ["roast_level_id"], name: "index_beans_on_roast_level_id"
     t.index ["roaster_id", "created_at"], name: "index_beans_on_roaster_id_and_created_at"
