@@ -1,0 +1,163 @@
+MstTasteTag.seed(
+  :id,
+  { id: 0, name: '選択されていません' },
+  { id: 1, name: '浅煎り' },
+  { id: 2, name: '中浅煎り' },
+  { id: 3, name: '中煎り' },
+  { id: 4, name: '中深煎り' },
+  { id: 5, name: '深煎り' },
+)
+# MEATY
+# BROTHY
+# PHENOLIC
+# BITTE
+# S
+# R
+# ALTY
+# MEDICINAL
+# PETROLEU
+# S
+# M
+# KUNKY
+# RUBBER
+# ACRID
+# ASHY
+# SMOKY
+# BROWN, ROAST
+# GRAIN
+# MALT
+# ANISE
+# NUTMEG
+# CINNAMON
+# CLOVE
+# PEANUTS
+# CHAMOMILE
+# ROSE
+# JAS
+# MI
+# NE
+# BLACKBERRY
+# RASPBERRY
+# BLUEBERRY
+# STRAWBERRY
+# RAISIN
+# PRUNE
+# COCONUT
+# CHERRY
+# POMEGRANATE
+# PINEAPPLE
+# ACETIC ACID
+# GRAPE
+# APPLE
+# PEACH
+# PEAR
+# GRAPEFRUIT
+# ORANGE
+# LEMON
+# LIME
+# SOUR AROMATICS
+# BUTYRIC ACID
+# ISOVALERIC ACID
+# CITRIC ACID
+# MALIC ACID
+# WINEY
+# WHISKEY
+# FERMENT
+# OV
+# ED
+# ERRIPE
+# UNDER-RIPE
+# PEAPOD
+# FRESH
+# DARK GREEN
+# VEGETATIVE
+# HAY-LIKE
+# HERB-LIKE
+# STAL
+# E
+# C
+# A
+# R
+# DBOARD
+# PA
+# PER
+# Y
+# WO
+# O
+# DY
+# MOLDY/DAM
+# P
+# MUSTY/DUSTY
+# MUSTY/EARTHY
+# ANIMALIC
+# HAZELNUT
+# ALMOND
+# CHOCOLATE
+# DARK CHOCOLATE
+# MOLASSES
+# MAPLE SYRUP
+# CARAMELIZED
+# HONEY
+# FLORA
+# L
+# BERRY
+# DRIED FRUIT
+# OTHER FRUIT
+# CITRUS FRUIT
+# SOUR
+# ALCOHOL/FERMENTED
+# OLIVE OIL
+# RAW
+# GREEN/VEGETATIV
+# B
+# E
+# EANY
+# PAPERY/M
+# USTY
+# CHEMICAL
+# PIPE TOBACCO
+# TOBACCO
+# BURNT
+# CEREAL
+# PUNGENT
+# PEPPER
+# BROWN SPICE
+# NUTTY
+# COCOA
+# BROWN SUGAR
+# VANILLA
+# VANILLIN
+# OVERALL
+# SWEET
+# SW
+# EET
+# A
+# RO
+# MAT
+# IC
+# S
+# BLA
+# C
+# K
+# TEA
+# FRUITY
+# S
+# PICES
+# SWEET
+# NUTTY/
+# COCOA
+# FLORAL
+# OTHER
+# R
+# OASTED
+# VEGETATIVE
+# GREEN/
+# FERMENT
+# E
+# D
+# SOUR/
+# Coffee Taster’s Flavor Wheel created using the Sensory
+# Lexicon developed by World Coffee Research
+# © 2017 SCA and WCR
+# V.1
+# SCA Coffee Taster’s Flavor Wheel

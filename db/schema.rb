@@ -20,6 +20,15 @@ ActiveRecord::Schema.define(version: 2021_11_28_024423) do
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
     t.index ['bean_id'], name: 'index_bean_images_on_bean_id'
+
+  create_table "bean_taste_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "bean_id", null: false
+    t.bigint "mst_taste_tag_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["bean_id", "mst_taste_tag_id"], name: "index_bean_taste_tags_on_bean_id_and_mst_taste_tag_id", unique: true
+    t.index ["bean_id"], name: "index_bean_taste_tags_on_bean_id"
+    t.index ["mst_taste_tag_id"], name: "index_bean_taste_tags_on_mst_taste_tag_id"
   end
 
   create_table 'beans',
@@ -77,13 +86,12 @@ ActiveRecord::Schema.define(version: 2021_11_28_024423) do
     t.datetime 'updated_at', precision: 6, null: false
   end
 
-  create_table 'mst_taste_tags',
-               charset: 'utf8mb4',
-               collation: 'utf8mb4_0900_ai_ci',
-               force: :cascade do |t|
-    t.string 'name'
-    t.datetime 'created_at', precision: 6, null: false
-    t.datetime 'updated_at', precision: 6, null: false
+  create_table "mst_taste_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "taste_group_id", null: false
+    t.index ["taste_group_id"], name: "index_mst_taste_tags_on_taste_group_id"
   end
 
   create_table 'roasters',
