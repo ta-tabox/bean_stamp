@@ -1,5 +1,4 @@
 class BeansController < ApplicationController
-  MAX_BEANIMAGE_COUNT = 4
   before_action :user_signed_in_required
   before_action :user_belonged_to_roaster_required
   before_action :set_bean, only: %i[show edit update destroy]
@@ -19,11 +18,11 @@ class BeansController < ApplicationController
 
   def create
     set_cropped_at
-    @new_images = params.dig(:bean_images, :image)
+    @bean.upload_images = params.dig(:bean_images, :image)
     @bean = current_roaster.beans.build(bean_params)
-    return if max_bean_images_count_render_for('new')
+
     if @bean.save
-      @new_images.each do |img|
+      @bean.upload_images.each do |img|
         @bean_image = @bean.bean_images.create(image: img, bean_id: @bean.id)
       end
       flash[:notice] = 'コーヒー豆を登録しました'
@@ -39,11 +38,10 @@ class BeansController < ApplicationController
 
   def update
     set_cropped_at
-    @new_images = params.dig(:bean_images, :image)
-    return if max_bean_images_count_render_for('edit')
+    @bean.upload_images = params.dig(:bean_images, :image)
 
     if @bean.update(bean_params)
-      update_bean_images if @new_images
+      update_bean_images if @bean.upload_images
       flash[:notice] = 'コーヒー豆情報を更新しました'
       redirect_to @bean
     else
@@ -92,26 +90,11 @@ class BeansController < ApplicationController
     params[:bean][:cropped_at] = "#{params[:bean][:cropped_at]}-01"
   end
 
-  # def set_new_images
-  #   return unless params.include?(:bean_images)
-  #   @new_images = params[:bean_images]['image']
-  # end
-
   def update_bean_images
     bean_images = @bean.bean_images
     bean_images.each(&:destroy)
-    @new_images.each do |img|
+    @bean.upload_images.each do |img|
       @bean.bean_images.create(image: img, bean_id: @bean.id)
     end
-  end
-
-  # 登録する画像数を制限し、制限を超える場合viewにレンダリングする
-  def max_bean_images_count_render_for(view)
-    return unless @new_images && @new_images.length > MAX_BEANIMAGE_COUNT
-    @bean.errors.add(
-      :bean_images,
-      "は #{MAX_BEANIMAGE_COUNT}枚まで登録できます",
-    )
-    render view
   end
 end
