@@ -19,7 +19,7 @@ class BeansController < ApplicationController
 
   def create
     set_cropped_at
-    set_new_images
+    @new_images = params.dig(:bean_images, :image)
     @bean = current_roaster.beans.build(bean_params)
     return if max_bean_images_count_render_for('new')
     if @bean.save
@@ -39,7 +39,7 @@ class BeansController < ApplicationController
 
   def update
     set_cropped_at
-    set_new_images
+    @new_images = params.dig(:bean_images, :image)
     return if max_bean_images_count_render_for('edit')
 
     if @bean.update(bean_params)
@@ -92,10 +92,10 @@ class BeansController < ApplicationController
     params[:bean][:cropped_at] = "#{params[:bean][:cropped_at]}-01"
   end
 
-  def set_new_images
-    return unless params.include?(:bean_images)
-    @new_images = params[:bean_images]['image']
-  end
+  # def set_new_images
+  #   return unless params.include?(:bean_images)
+  #   @new_images = params[:bean_images]['image']
+  # end
 
   def update_bean_images
     bean_images = @bean.bean_images
