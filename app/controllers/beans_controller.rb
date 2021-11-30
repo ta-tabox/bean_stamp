@@ -13,13 +13,13 @@ class BeansController < ApplicationController
 
   def new
     @bean = current_roaster.beans.build
-    @bean_image = @bean.bean_images.build
+    @upload_image = @bean.bean_images.build
   end
 
   def create
     set_cropped_at
-    @bean.upload_images = params.dig(:bean_images, :image)
     @bean = current_roaster.beans.build(bean_params)
+    @bean.upload_images = params.dig(:bean_images, :image)
 
     if @bean.save
       @bean.upload_images.each do |img|
@@ -33,7 +33,7 @@ class BeansController < ApplicationController
   end
 
   def edit
-    @bean_images = @bean.bean_images.all
+    @upload_image = @bean.bean_images.build
   end
 
   def update
