@@ -15,6 +15,7 @@ class Bean < ApplicationRecord
     validates :bitterness
     validates :sweetness
   end
+  validate :bean_images_shuld_save_at_least_one
   validate :upload_images_cannot_be_greater_than_max_upload_images_count
 
   def update_with_bean_images(bean_params)
@@ -36,6 +37,13 @@ class Bean < ApplicationRecord
       :bean_images,
       "は#{MAX_UPLOAD_IMAGES_COUNT}枚までしか登録できません",
     )
+  end
+
+  # 最低1枚以上の画像の登録を要求する
+  # upload_images->POSTされた画像, bean_images-> 保存済みの画像
+  def bean_images_shuld_save_at_least_one
+    return if upload_images || bean_images.any?
+    errors.add(:bean_images, 'は最低1枚登録してください')
   end
 
   # upload_imagesがある場合は登録ずみの画像を削除し新たにcreateする

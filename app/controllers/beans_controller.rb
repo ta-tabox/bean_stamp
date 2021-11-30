@@ -22,7 +22,6 @@ class BeansController < ApplicationController
     @bean.upload_images = params.dig(:bean_images, :image)
 
     if @bean.save
-      # 画像がないときにエラーが生じる
       @bean.upload_images.each do |img|
         @bean_image = @bean.bean_images.create(image: img, bean_id: @bean.id)
       end
