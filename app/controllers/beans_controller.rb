@@ -22,12 +22,14 @@ class BeansController < ApplicationController
     @bean.upload_images = params.dig(:bean_images, :image)
 
     if @bean.save
+      # 画像がないときにエラーが生じる
       @bean.upload_images.each do |img|
         @bean_image = @bean.bean_images.create(image: img, bean_id: @bean.id)
       end
       flash[:notice] = 'コーヒー豆を登録しました'
       redirect_to @bean
     else
+      @upload_image = @bean.bean_images.build
       render 'new'
     end
   end
@@ -40,11 +42,11 @@ class BeansController < ApplicationController
     set_cropped_at
     @bean.upload_images = params.dig(:bean_images, :image)
 
-    if @bean.update(bean_params)
-      update_bean_images if @bean.upload_images
+    if @bean.update_with_bean_images(bean_params)
       flash[:notice] = 'コーヒー豆情報を更新しました'
       redirect_to @bean
     else
+      @upload_image = @bean.bean_images.build
       render 'edit'
     end
   end
@@ -75,9 +77,6 @@ class BeansController < ApplicationController
         :body,
         :bitterness,
         :sweetness,
-        # { images: [] },
-        # :images_cache,
-        # bean_images_attributes: %i[id bean_id image image_cache],
       )
   end
 
@@ -86,15 +85,9 @@ class BeansController < ApplicationController
     redirect_to(root_url) unless @bean
   end
 
+  # input type=monthフィールドのデータをdateカラムに保存できる形に変換する
+  # e.g. "2021-01" => "2021-01-01"
   def set_cropped_at
     params[:bean][:cropped_at] = "#{params[:bean][:cropped_at]}-01"
-  end
-
-  def update_bean_images
-    bean_images = @bean.bean_images
-    bean_images.each(&:destroy)
-    @bean.upload_images.each do |img|
-      @bean.bean_images.create(image: img, bean_id: @bean.id)
-    end
   end
 end
