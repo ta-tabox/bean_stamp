@@ -1,163 +1,73 @@
 MstTasteTag.seed(
   :id,
-  { id: 0, name: '選択されていません' },
-  { id: 1, name: '浅煎り' },
-  { id: 2, name: '中浅煎り' },
-  { id: 3, name: '中煎り' },
-  { id: 4, name: '中深煎り' },
-  { id: 5, name: '深煎り' },
+  { id: 1, name: 'FLORAL', taste_group_id: 1 },
+  { id: 2, name: 'BLACK TEA', taste_group_id: 1 },
+  { id: 3, name: 'CHAMOMILE', taste_group_id: 1 },
+  { id: 4, name: 'ROSE', taste_group_id: 1 },
+  { id: 5, name: 'JASMINE', taste_group_id: 1 },
+  { id: 6, name: 'BERRY', taste_group_id: 6 },
+  { id: 7, name: 'BLACKBERRY', taste_group_id: 6 },
+  { id: 8, name: 'RASPBERRY', taste_group_id: 6 },
+  { id: 9, name: 'BULUBERRY', taste_group_id: 6 },
+  { id: 10, name: 'STRAWBERRY', taste_group_id: 6 },
+  { id: 11, name: 'DRIED FRUIT', taste_group_id: 11 },
+  { id: 12, name: 'RAISIN', taste_group_id: 11 },
+  { id: 13, name: 'PRUNE', taste_group_id: 11 },
+  { id: 14, name: 'FRUIT', taste_group_id: 14 },
+  { id: 15, name: 'COCONUT', taste_group_id: 14 },
+  { id: 16, name: 'CHERRY', taste_group_id: 14 },
+  { id: 17, name: 'PINEAPPLE', taste_group_id: 14 },
+  { id: 18, name: 'GRAPE', taste_group_id: 14 },
+  { id: 19, name: 'APPLE', taste_group_id: 14 },
+  { id: 20, name: 'PEACH', taste_group_id: 14 },
+  { id: 21, name: 'PEAR', taste_group_id: 14 },
+  { id: 22, name: 'CITRUS', taste_group_id: 22 },
+  { id: 23, name: 'GRAPEFRUIT', taste_group_id: 22 },
+  { id: 24, name: 'ORANGE', taste_group_id: 22 },
+  { id: 25, name: 'LEMON', taste_group_id: 22 },
+  { id: 26, name: 'LIME', taste_group_id: 22 },
+  { id: 27, name: 'FERMENTED', taste_group_id: 27 },
+  { id: 28, name: 'WINEY', taste_group_id: 27 },
+  { id: 29, name: 'WHISKEY', taste_group_id: 27 },
+  { id: 30, name: 'GREEN', taste_group_id: 30 },
+  { id: 31, name: 'OLIVE OIL', taste_group_id: 30 },
+  { id: 32, name: 'PEAPOD', taste_group_id: 30 },
+  { id: 33, name: 'FRESH', taste_group_id: 30 },
+  { id: 34, name: 'DARK GREEN', taste_group_id: 30 },
+  { id: 35, name: 'VEGETABLE', taste_group_id: 30 },
+  { id: 36, name: 'HAY-LIKE', taste_group_id: 30 },
+  { id: 37, name: 'HERB-LIKE', taste_group_id: 30 },
+  { id: 38, name: 'BEANY', taste_group_id: 30 },
+  { id: 39, name: 'EARTHY', taste_group_id: 39 },
+  { id: 40, name: 'WOODY', taste_group_id: 39 },
+  { id: 41, name: 'ROASTED', taste_group_id: 41 },
+  { id: 42, name: 'PIPE TOBACCO', taste_group_id: 41 },
+  { id: 43, name: 'TOBACCO', taste_group_id: 41 },
+  { id: 44, name: 'BURNT', taste_group_id: 41 },
+  { id: 45, name: 'SMOKY', taste_group_id: 41 },
+  { id: 46, name: 'CEREAL', taste_group_id: 46 },
+  { id: 47, name: 'GRAIN', taste_group_id: 46 },
+  { id: 48, name: 'MALT', taste_group_id: 46 },
+  { id: 49, name: 'SPICE', taste_group_id: 49 },
+  { id: 50, name: 'PUNGENT', taste_group_id: 49 },
+  { id: 51, name: 'PEPPER', taste_group_id: 49 },
+  { id: 52, name: 'ANISE', taste_group_id: 49 },
+  { id: 53, name: 'NUTMEG', taste_group_id: 49 },
+  { id: 54, name: 'CINNAMON', taste_group_id: 49 },
+  { id: 55, name: 'CLOVE', taste_group_id: 49 },
+  { id: 56, name: 'NUTTY', taste_group_id: 56 },
+  { id: 57, name: 'PEANUTS', taste_group_id: 56 },
+  { id: 58, name: 'HAZELNUT', taste_group_id: 56 },
+  { id: 59, name: 'ALOMOND', taste_group_id: 56 },
+  { id: 60, name: 'COCOA', taste_group_id: 60 },
+  { id: 61, name: 'CHOCOLATE', taste_group_id: 60 },
+  { id: 62, name: 'DARK CHOCOLATE', taste_group_id: 60 },
+  { id: 63, name: 'BROWN SUGAR', taste_group_id: 63 },
+  { id: 64, name: 'MALASSES', taste_group_id: 63 },
+  { id: 65, name: 'MAPLE SYPUP', taste_group_id: 63 },
+  { id: 66, name: 'CARAMEL', taste_group_id: 63 },
+  { id: 67, name: 'HONEY', taste_group_id: 63 },
+  { id: 68, name: 'SWEET', taste_group_id: 68 },
+  { id: 69, name: 'VANILLA', taste_group_id: 68 },
+  { id: 70, name: 'SWEET AROMATICS', taste_group_id: 68 },
 )
-# MEATY
-# BROTHY
-# PHENOLIC
-# BITTE
-# S
-# R
-# ALTY
-# MEDICINAL
-# PETROLEU
-# S
-# M
-# KUNKY
-# RUBBER
-# ACRID
-# ASHY
-# SMOKY
-# BROWN, ROAST
-# GRAIN
-# MALT
-# ANISE
-# NUTMEG
-# CINNAMON
-# CLOVE
-# PEANUTS
-# CHAMOMILE
-# ROSE
-# JAS
-# MI
-# NE
-# BLACKBERRY
-# RASPBERRY
-# BLUEBERRY
-# STRAWBERRY
-# RAISIN
-# PRUNE
-# COCONUT
-# CHERRY
-# POMEGRANATE
-# PINEAPPLE
-# ACETIC ACID
-# GRAPE
-# APPLE
-# PEACH
-# PEAR
-# GRAPEFRUIT
-# ORANGE
-# LEMON
-# LIME
-# SOUR AROMATICS
-# BUTYRIC ACID
-# ISOVALERIC ACID
-# CITRIC ACID
-# MALIC ACID
-# WINEY
-# WHISKEY
-# FERMENT
-# OV
-# ED
-# ERRIPE
-# UNDER-RIPE
-# PEAPOD
-# FRESH
-# DARK GREEN
-# VEGETATIVE
-# HAY-LIKE
-# HERB-LIKE
-# STAL
-# E
-# C
-# A
-# R
-# DBOARD
-# PA
-# PER
-# Y
-# WO
-# O
-# DY
-# MOLDY/DAM
-# P
-# MUSTY/DUSTY
-# MUSTY/EARTHY
-# ANIMALIC
-# HAZELNUT
-# ALMOND
-# CHOCOLATE
-# DARK CHOCOLATE
-# MOLASSES
-# MAPLE SYRUP
-# CARAMELIZED
-# HONEY
-# FLORA
-# L
-# BERRY
-# DRIED FRUIT
-# OTHER FRUIT
-# CITRUS FRUIT
-# SOUR
-# ALCOHOL/FERMENTED
-# OLIVE OIL
-# RAW
-# GREEN/VEGETATIV
-# B
-# E
-# EANY
-# PAPERY/M
-# USTY
-# CHEMICAL
-# PIPE TOBACCO
-# TOBACCO
-# BURNT
-# CEREAL
-# PUNGENT
-# PEPPER
-# BROWN SPICE
-# NUTTY
-# COCOA
-# BROWN SUGAR
-# VANILLA
-# VANILLIN
-# OVERALL
-# SWEET
-# SW
-# EET
-# A
-# RO
-# MAT
-# IC
-# S
-# BLA
-# C
-# K
-# TEA
-# FRUITY
-# S
-# PICES
-# SWEET
-# NUTTY/
-# COCOA
-# FLORAL
-# OTHER
-# R
-# OASTED
-# VEGETATIVE
-# GREEN/
-# FERMENT
-# E
-# D
-# SOUR/
-# Coffee Taster’s Flavor Wheel created using the Sensory
-# Lexicon developed by World Coffee Research
-# © 2017 SCA and WCR
-# V.1
-# SCA Coffee Taster’s Flavor Wheel
