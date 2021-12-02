@@ -1,5 +1,6 @@
 MstTasteTag.seed(
   :id,
+  { id: 0, name: '選択されていません', taste_group_id: 0 },
   { id: 1, name: 'FLORAL', taste_group_id: 1 },
   { id: 2, name: 'BLACK TEA', taste_group_id: 1 },
   { id: 3, name: 'CHAMOMILE', taste_group_id: 1 },

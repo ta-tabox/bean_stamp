@@ -81,30 +81,44 @@
     </div>
 
     <p>風味の評価</p>
-    <div class="class">
+    <div class="">
       <%= f.label :acidity, class: "label" %>
       <%= f.range_field :acidity, min: "1", max: "5" %>
     </div>
 
-    <div class="class">
+    <div class="">
       <%= f.label :flavor, class: "label" %>
       <%= f.range_field :flavor, min: "1", max: "5" %>
     </div>
 
-    <div class="class">
+    <div class="">
       <%= f.label :body, class: "label" %>
       <%= f.range_field :body, min: "1", max: "5" %>
     </div>
 
-    <div class="class">
+    <div class="">
       <%= f.label :bitterness, class: "label" %>
       <%= f.range_field :bitterness, min: "1", max: "5" %>
     </div>
 
-    <div class="class">
+    <div class="">
       <%= f.label :sweetness, class: "label" %>
       <%= f.range_field :sweetness, min: "1", max: "5" %>
     </div>
+
+    <div class="field">
+      <%= f.label :taste_tags, class: "label" %>
+      <%= f.fields_for :bean_taste_tags do |tag| %>
+      <div class="select-field relative mb-4">
+        <%= tag.collection_select :mst_taste_tag_id, MstTasteTag.all, :id, :name, { default: 0 }, class: "select-box" %>
+        <div class="pointer-events-none absolute inset-y-2 right-0 flex items-center px-2 text-gray-700">
+          <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+        </div>
+      </div>
+      <% end %>
+    </div>
+
 
     <div class="flex">
       <%= link_to "一覧に戻る", beans_path , class: "mr-4 btn-primary", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>
