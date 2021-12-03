@@ -4,34 +4,48 @@ class BeansController < ApplicationController
   before_action :set_bean, only: %i[show edit update destroy]
 
   def index
-    @pagy, @beans = pagy(current_roaster.beans)
+    @pagy, @beans = pagy(current_roaster.beans.includes([:bean_images]))
   end
 
-  def show; end
+  def show
+    @bean_images = @bean.bean_images.all
+  end
 
   def new
     @bean = current_roaster.beans.build
+    @upload_image = @bean.bean_images.build
   end
 
   def create
     set_cropped_at
     @bean = current_roaster.beans.build(bean_params)
+    @bean.upload_images = params.dig(:bean_images, :image)
+
     if @bean.save
+      @bean.upload_images.each do |img|
+        @bean_image = @bean.bean_images.create(image: img, bean_id: @bean.id)
+      end
       flash[:notice] = 'コーヒー豆を登録しました'
       redirect_to @bean
     else
+      @upload_image = @bean.bean_images.build
       render 'new'
     end
   end
 
-  def edit; end
+  def edit
+    @upload_image = @bean.bean_images.build
+  end
 
   def update
     set_cropped_at
-    if @bean.update(bean_params)
+    @bean.upload_images = params.dig(:bean_images, :image)
+
+    if @bean.update_with_bean_images(bean_params)
       flash[:notice] = 'コーヒー豆情報を更新しました'
       redirect_to @bean
     else
+      @upload_image = @bean.bean_images.build
       render 'edit'
     end
   end
@@ -62,8 +76,6 @@ class BeansController < ApplicationController
         :body,
         :bitterness,
         :sweetness,
-        { images: [] },
-        :images_cache,
       )
   end
 
@@ -72,6 +84,8 @@ class BeansController < ApplicationController
     redirect_to(root_url) unless @bean
   end
 
+  # input type=monthフィールドのデータをdateカラムに保存できる形に変換する
+  # e.g. "2021-01" => "2021-01-01"
   def set_cropped_at
     params[:bean][:cropped_at] = "#{params[:bean][:cropped_at]}-01"
   end

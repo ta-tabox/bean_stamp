@@ -4,9 +4,9 @@
 <div class="form form-container">
   <p>タイトル：<%= @bean.name %></p>
   <div class="flex">
-    <% if @bean.images? %>
-    <% @bean.images.each do |image| %>
-    <%= image_tag image.thumb.url, class: "thumbnail" %>
+    <% if @bean_images.any? %>
+    <% @bean_images.each do |bean_image| %>
+    <%= image_tag bean_image.image.thumb.url, class: "thumbnail" if bean_image.image? %>
     <% end %>
     <% end %>
   </div>

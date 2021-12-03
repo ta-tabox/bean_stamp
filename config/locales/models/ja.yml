@@ -4,6 +4,7 @@ ja:
       user: ユーザー
       roaster: ロースター
       bean: コーヒー豆
+      bean_image: コーヒー豆イメージ
     attributes:
       user:
         name: 名前
@@ -27,4 +28,6 @@ ja:
         process: 精製方法
         cropped_at: 収穫時期
         describe: コーヒー紹介
-        images: 紹介画像
+        bean_images: イメージ
+      bean_image:
+        image: イメージ
