@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_23_125553) do
+ActiveRecord::Schema.define(version: 2021_11_28_024423) do
 
   create_table "bean_images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "image"
@@ -38,12 +38,6 @@ ActiveRecord::Schema.define(version: 2021_11_23_125553) do
     t.integer "body"
     t.integer "bitterness"
     t.integer "sweetness"
-<<<<<<< HEAD
-    t.index ["country"], name: "index_beans_on_country"
-    t.index ["roaster_id", "created_at"], name: "index_beans_on_roaster_id_and_created_at"
-    t.index ["roaster_id"], name: "index_beans_on_roaster_id"
-=======
-    t.json "images"
     t.bigint "roast_level_id", default: 0
     t.index ["country"], name: "index_beans_on_country"
     t.index ["roast_level_id"], name: "index_beans_on_roast_level_id"
@@ -55,7 +49,6 @@ ActiveRecord::Schema.define(version: 2021_11_23_125553) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
->>>>>>> cc26598 (feat(mst_roaste_level): seed-fuの導入とmst_roaste_levelテーブルの作成、beanモデルとの関連付け)
   end
 
   create_table "roasters", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -90,12 +83,8 @@ ActiveRecord::Schema.define(version: 2021_11_23_125553) do
     t.index ["roaster_id"], name: "index_users_on_roaster_id"
   end
 
-<<<<<<< HEAD
   add_foreign_key "bean_images", "beans"
-  add_foreign_key "beans", "mst_roaste_levels", column: "roaste_level_id"
-=======
   add_foreign_key "beans", "mst_roast_levels", column: "roast_level_id"
->>>>>>> 7fc6421 (fix(mst_roast_level): 単語ミスの修正 roaste_level -> roast_level)
   add_foreign_key "beans", "roasters"
   add_foreign_key "users", "roasters"
 end
