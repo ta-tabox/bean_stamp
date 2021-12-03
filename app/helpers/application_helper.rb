@@ -15,9 +15,9 @@ module ApplicationHelper
 
   # beanの画像を表示する（複数画像のうち最初のもの）
   def show_bean_thumbnail(obj)
-    if obj.images?
+    if obj.bean_images.any? && obj.bean_images[0].image?
       link_to image_tag(
-                obj.images[0].thumb.url.to_s,
+                obj.bean_images[0].image.thumb.url.to_s,
                 class: 'thumbnail',
                 alt: "#{obj.name}の画像",
               ),
