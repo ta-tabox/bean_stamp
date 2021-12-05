@@ -62,6 +62,10 @@ Style/TrailingCommaInArrayLiteral:
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: comma
 
+# 条件式の方を意識させたい場合には後置の if/unless を使わない方が分かりやすい
+Style/IfUnlessModifier:
+  Enabled: false
+
 # prettierのrubyプラグインとの競合を避ける
 inherit_from:
   - node_modules/@prettier/plugin-ruby/rubocop.yml

@@ -1,5 +1,7 @@
 class Bean < ApplicationRecord
   MAX_UPLOAD_IMAGES_COUNT = 4
+  MIN_TASTE_TAGS_COUNT = 2
+  MAX_TASTE_TAGS_COUNT = 3
   attr_accessor :upload_images
   belongs_to :roaster
   has_many :bean_images, dependent: :destroy
@@ -24,9 +26,7 @@ class Bean < ApplicationRecord
   end
   validate :bean_images_shuld_save_at_least_one
   validate :upload_images_cannot_be_greater_than_max_upload_images_count
-  validate :taste_tags_cannot_be_duplicated
-
-  # validates :taste_tags, uniqueness: { scope: %i[user_id mst_taste_tag_id] }
+  validate :taste_tags_be_required_correct_styles
 
   def update_with_bean_images(bean_params)
     self.transaction do
@@ -42,7 +42,9 @@ class Bean < ApplicationRecord
 
   # アップロードする画像数がMAX_UPLOAD_IMAGES_COUNT以下であるか検証する
   def upload_images_cannot_be_greater_than_max_upload_images_count
-    return unless upload_images && upload_images.length > MAX_UPLOAD_IMAGES_COUNT
+    unless upload_images && upload_images.length > MAX_UPLOAD_IMAGES_COUNT
+      return
+    end
     errors.add(
       :bean_images,
       "は#{MAX_UPLOAD_IMAGES_COUNT}枚までしか登録できません",
@@ -56,12 +58,25 @@ class Bean < ApplicationRecord
     errors.add(:bean_images, 'は最低1枚登録してください')
   end
 
-  # taste_tagsに重複がないか検証する
-  def taste_tags_cannot_be_duplicated
+  # taste_tagsのスタイルを検証する
+  def taste_tags_be_required_correct_styles
     tastes = self.bean_taste_tags
     taste_ids = []
     tastes.each { |taste| taste_ids << taste[:mst_taste_tag_id] }
 
+    # taste_tagsがMAX_TASTE_TAGS_COUNT以下であるか検証する
+    if taste_ids.count > MAX_TASTE_TAGS_COUNT
+      errors.add(:taste_tags, 'は最大3つまでしか登録できません')
+    end
+
+    # 有効なtaste_tagsがMIN_TASTE_TAGS_COUNT以上であるか検証する
+    # id=0 "選択されていません" e.g. [1, 0 ,0 ] -> [1].countが2以上であること
+    taste_ids.delete(0)
+    if taste_ids.count < MIN_TASTE_TAGS_COUNT
+      errors.add(:taste_tags, 'は2つ以上登録してください')
+    end
+
+    # taste_tagsに重複がないか検証する
     #e.g. [1, 1, 2].count != [1,2].count の場合エラーを追加する
     return if taste_ids.count == taste_ids.uniq.count
     errors.add(:taste_tags, 'が重複しています')
