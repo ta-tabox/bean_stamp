@@ -24,6 +24,9 @@ class Bean < ApplicationRecord
   end
   validate :bean_images_shuld_save_at_least_one
   validate :upload_images_cannot_be_greater_than_max_upload_images_count
+  validate :taste_tags_cannot_be_duplicated
+
+  # validates :taste_tags, uniqueness: { scope: %i[user_id mst_taste_tag_id] }
 
   def update_with_bean_images(bean_params)
     self.transaction do
@@ -39,9 +42,7 @@ class Bean < ApplicationRecord
 
   # アップロードする画像数がMAX_UPLOAD_IMAGES_COUNT以下であるか検証する
   def upload_images_cannot_be_greater_than_max_upload_images_count
-    unless upload_images && upload_images.length > MAX_UPLOAD_IMAGES_COUNT
-      return
-    end
+    return unless upload_images && upload_images.length > MAX_UPLOAD_IMAGES_COUNT
     errors.add(
       :bean_images,
       "は#{MAX_UPLOAD_IMAGES_COUNT}枚までしか登録できません",
@@ -53,6 +54,17 @@ class Bean < ApplicationRecord
   def bean_images_shuld_save_at_least_one
     return if upload_images || bean_images.any?
     errors.add(:bean_images, 'は最低1枚登録してください')
+  end
+
+  # taste_tagsに重複がないか検証する
+  def taste_tags_cannot_be_duplicated
+    tastes = self.bean_taste_tags
+    taste_ids = []
+    tastes.each { |taste| taste_ids << taste[:mst_taste_tag_id] }
+
+    #e.g. [1, 1, 2].count != [1,2].count の場合エラーを追加する
+    return if taste_ids.count == taste_ids.uniq.count
+    errors.add(:taste_tags, 'が重複しています')
   end
 
   # upload_imagesがある場合は登録ずみの画像を削除し新たにcreateする
