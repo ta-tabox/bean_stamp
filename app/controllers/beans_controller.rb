@@ -14,7 +14,7 @@ class BeansController < ApplicationController
   def new
     @bean = current_roaster.beans.build
     @upload_image = @bean.bean_images.build
-    4.times { @bean.bean_taste_tags.build }
+    3.times { @bean.bean_taste_tags.build }
   end
 
   def create
