@@ -1,9 +1,17 @@
 class Bean < ApplicationRecord
   MAX_UPLOAD_IMAGES_COUNT = 4
+  MIN_TASTE_TAGS_COUNT = 2
+  MAX_TASTE_TAGS_COUNT = 3
   attr_accessor :upload_images
   belongs_to :roaster
   has_many :bean_images, dependent: :destroy
   belongs_to :roast_level, class_name: 'MstRoastLevel'
+
+  # bean_tagsのアソシエーション
+  has_many :bean_taste_tags, dependent: :destroy
+  has_many :taste_tags, through: :bean_taste_tags, source: :mst_taste_tag
+  accepts_nested_attributes_for :bean_taste_tags, allow_destroy: true
+
   default_scope -> { order(created_at: :desc) }
   validates :roaster_id, presence: true
   validates :name, presence: true
@@ -18,6 +26,7 @@ class Bean < ApplicationRecord
   end
   validate :bean_images_shuld_save_at_least_one
   validate :upload_images_cannot_be_greater_than_max_upload_images_count
+  validate :taste_tags_be_required_correct_styles
 
   def update_with_bean_images(bean_params)
     self.transaction do
@@ -47,6 +56,30 @@ class Bean < ApplicationRecord
   def bean_images_shuld_save_at_least_one
     return if upload_images || bean_images.any?
     errors.add(:bean_images, 'は最低1枚登録してください')
+  end
+
+  # taste_tagsのスタイルを検証する
+  def taste_tags_be_required_correct_styles
+    tastes = self.bean_taste_tags
+    taste_ids = []
+    tastes.each { |taste| taste_ids << taste[:mst_taste_tag_id] }
+
+    # taste_tagsがMAX_TASTE_TAGS_COUNT以下であるか検証する
+    if taste_ids.count > MAX_TASTE_TAGS_COUNT
+      errors.add(:taste_tags, 'は最大3つまでしか登録できません')
+    end
+
+    # 有効なtaste_tagsがMIN_TASTE_TAGS_COUNT以上であるか検証する
+    # id=0 "選択されていません" e.g. [1, 0 ,0 ] -> [1].countが2以上であること
+    taste_ids.delete(0)
+    if taste_ids.count < MIN_TASTE_TAGS_COUNT
+      errors.add(:taste_tags, 'は2つ以上登録してください')
+    end
+
+    # taste_tagsに重複がないか検証する
+    #e.g. [1, 1, 2].count != [1,2].count の場合エラーを追加する
+    return if taste_ids.count == taste_ids.uniq.count
+    errors.add(:taste_tags, 'が重複しています')
   end
 
   # upload_imagesがある場合は登録ずみの画像を削除し新たにcreateする

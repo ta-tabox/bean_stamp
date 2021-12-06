@@ -26,6 +26,17 @@
   <p>苦味：<%= @bean.bitterness %></p>
   <p>甘味：<%= @bean.sweetness %></p>
 
+  <!-- 処理の分岐が多い、タグ領域(pタグ)の生成をもっとシンプルにできないか？ -->
+  <div class="flex">
+    <% if @bean.taste_tags.any? %>
+    <% @bean.taste_tags.each do |tag| %>
+    <% if tag.id? %>
+    <p class="mr-4 px-4 border border-1 border-gray-100 rounded-md"> <%= tag.name %></p>
+    <% end %>
+    <% end %>
+    <% end %>
+  </div>
+
   <% if current_user.had_bean?(@bean) %>
   <%= link_to '編集', edit_bean_path , class: "btn-primary" %>
   <% end %>

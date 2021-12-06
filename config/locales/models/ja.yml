@@ -31,5 +31,7 @@ ja:
         cropped_at: 収穫時期
         describe: コーヒー紹介
         bean_images: イメージ
+        taste_tags: Tastes
       bean_image:
         image: イメージ
+        images: 紹介画像
