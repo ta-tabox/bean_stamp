@@ -3,6 +3,7 @@ class Bean < ApplicationRecord
   MIN_TASTE_TAGS_COUNT = 2
   MAX_TASTE_TAGS_COUNT = 3
   attr_accessor :upload_images
+
   belongs_to :roaster
   has_many :bean_images, dependent: :destroy
   belongs_to :roast_level, class_name: 'MstRoastLevel'
@@ -26,7 +27,9 @@ class Bean < ApplicationRecord
   end
   validate :bean_images_shuld_save_at_least_one
   validate :upload_images_cannot_be_greater_than_max_upload_images_count
-  validate :taste_tags_be_required_correct_styles
+  validate :taste_tags_cannot_be_greater_than_max_taste_tags_count
+  validate :taste_tags_cannot_be_less_than_min_taste_tags_count
+  validate :taste_tags_cannot_be_duplicated
 
   def update_with_bean_images(bean_params)
     self.transaction do
@@ -45,6 +48,7 @@ class Bean < ApplicationRecord
     unless upload_images && upload_images.length > MAX_UPLOAD_IMAGES_COUNT
       return
     end
+
     errors.add(
       :bean_images,
       "は#{MAX_UPLOAD_IMAGES_COUNT}枚までしか登録できません",
@@ -55,30 +59,35 @@ class Bean < ApplicationRecord
   # upload_images->POSTされた画像, bean_images-> 保存済みの画像
   def bean_images_shuld_save_at_least_one
     return if upload_images || bean_images.any?
+
     errors.add(:bean_images, 'は最低1枚登録してください')
   end
 
-  # taste_tagsのスタイルを検証する
-  def taste_tags_be_required_correct_styles
-    tastes = self.bean_taste_tags
-    taste_ids = []
-    tastes.each { |taste| taste_ids << taste[:mst_taste_tag_id] }
+  # taste_tagsがMAX_TASTE_TAGS_COUNT以下であるか検証する
+  def taste_tags_cannot_be_greater_than_max_taste_tags_count
+    taste_ids = bean_taste_tags.map { |x| x[:mst_taste_tag_id] }
+    return unless taste_ids.count > MAX_TASTE_TAGS_COUNT
 
-    # taste_tagsがMAX_TASTE_TAGS_COUNT以下であるか検証する
-    if taste_ids.count > MAX_TASTE_TAGS_COUNT
-      errors.add(:taste_tags, 'は最大3つまでしか登録できません')
-    end
+    errors.add(:taste_tags, 'は最大3つまでしか登録できません')
+  end
 
-    # 有効なtaste_tagsがMIN_TASTE_TAGS_COUNT以上であるか検証する
-    # id=0 "選択されていません" e.g. [1, 0 ,0 ] -> [1].countが2以上であること
+  # 有効なtaste_tagsがMIN_TASTE_TAGS_COUNT以上であるか検証する
+  # id=0 "選択されていません" e.g. [1, 0 ,0 ] -> [1].countが2以上であること
+  def taste_tags_cannot_be_less_than_min_taste_tags_count
+    taste_ids = bean_taste_tags.map { |x| x[:mst_taste_tag_id] }
     taste_ids.delete(0)
-    if taste_ids.count < MIN_TASTE_TAGS_COUNT
-      errors.add(:taste_tags, 'は2つ以上登録してください')
-    end
+    return unless taste_ids.count < MIN_TASTE_TAGS_COUNT
 
-    # taste_tagsに重複がないか検証する
-    #e.g. [1, 1, 2].count != [1,2].count の場合エラーを追加する
+    errors.add(:taste_tags, 'は2つ以上登録してください')
+  end
+
+  # taste_tagsに重複がないか検証する
+  # e.g. [1, 1, 2].count != [1,2].count の場合エラーを追加する
+  def taste_tags_cannot_be_duplicated
+    taste_ids = bean_taste_tags.map { |x| x[:mst_taste_tag_id] }
+    taste_ids.delete(0)
     return if taste_ids.count == taste_ids.uniq.count
+
     errors.add(:taste_tags, 'が重複しています')
   end
 
