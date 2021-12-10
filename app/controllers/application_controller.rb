@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   # ユーザーにロースター所属を求める
   def user_belonged_to_roaster_required
     return if current_user.roaster_id?
+
     flash[:alert] = 'ロースターを登録をしてください'
     redirect_to(root_url)
   end

@@ -67,8 +67,8 @@ Style/IfUnlessModifier:
   Enabled: false
 
 # prettierのrubyプラグインとの競合を避ける
-inherit_from:
-  - node_modules/@prettier/plugin-ruby/rubocop.yml
+# inherit_from:
+#   - node_modules/@prettier/plugin-ruby/rubocop.yml
 
 ##################### Lint ##################################
 

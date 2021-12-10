@@ -66,6 +66,7 @@ class RoastersController < ApplicationController
 
   def correct_roaster
     return if current_user.belonged_roaster?(@roaster)
+
     redirect_to @roaster,
                 alert: '所属していないロースターの更新・削除はできません'
   end
@@ -73,6 +74,7 @@ class RoastersController < ApplicationController
   # ゲストロースターの編集・削除を制限する
   def ensure_normal_roaster
     return unless @roaster.guest?
+
     redirect_to root_path, alert: 'ゲストロースターの更新・削除はできません'
   end
 end
