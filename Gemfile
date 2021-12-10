@@ -32,11 +32,13 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails'
+  gem 'factory_bot_rails'
   gem 'faker'
   gem 'rspec-rails', '~> 5.0'
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
   gem 'solargraph', require: false
+  gem 'spring-commands-rspec'
 end
 
 group :development do
@@ -50,6 +52,7 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'bullet'
+  gem 'htmlbeautifier'
   gem 'letter_opener_web', '~> 1.0'
   gem 'pre-commit', require: false
   gem 'spring'
@@ -63,6 +66,7 @@ group :test do
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
 end
+
 gem 'carrierwave', '~> 2.2'
 gem 'devise'
 gem 'jp_prefecture', '~> 1.0'
