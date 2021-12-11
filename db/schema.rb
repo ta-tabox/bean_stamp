@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_28_024423) do
+ActiveRecord::Schema.define(version: 2021_11_28_123113) do
 
   create_table "bean_images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "image"
@@ -18,6 +18,16 @@ ActiveRecord::Schema.define(version: 2021_11_28_024423) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["bean_id"], name: "index_bean_images_on_bean_id"
+  end
+
+  create_table "bean_taste_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "bean_id", null: false
+    t.bigint "mst_taste_tag_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["bean_id", "mst_taste_tag_id"], name: "index_bean_taste_tags_on_bean_id_and_mst_taste_tag_id", unique: true
+    t.index ["bean_id"], name: "index_bean_taste_tags_on_bean_id"
+    t.index ["mst_taste_tag_id"], name: "index_bean_taste_tags_on_mst_taste_tag_id"
   end
 
   create_table "beans", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -49,6 +59,14 @@ ActiveRecord::Schema.define(version: 2021_11_28_024423) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "mst_taste_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "taste_group_id", null: false
+    t.index ["taste_group_id"], name: "index_mst_taste_tags_on_taste_group_id"
   end
 
   create_table "roasters", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -84,6 +102,8 @@ ActiveRecord::Schema.define(version: 2021_11_28_024423) do
   end
 
   add_foreign_key "bean_images", "beans"
+  add_foreign_key "bean_taste_tags", "beans"
+  add_foreign_key "bean_taste_tags", "mst_taste_tags"
   add_foreign_key "beans", "mst_roast_levels", column: "roast_level_id"
   add_foreign_key "beans", "roasters"
   add_foreign_key "users", "roasters"

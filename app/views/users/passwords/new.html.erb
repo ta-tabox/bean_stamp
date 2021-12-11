@@ -1,23 +1,20 @@
 <% provide(:title, "パスワード再設定") %>
-
 <div class="form-container">
   <div class="form">
     <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-    <%= render "shared/error_messages", resource: f.object %>
-    <h1 class="text-center">パスワードを忘れましたか?</h1>
-    <p class="text-center text-xs ">
-      パスワードを再設定するには<br>
-      登録したメールアドレスを入力してください
-    </p>
-
-    <div class="field">
-      <%= f.label :email, class: "label" %>
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "例）beans@example.com", class: "input-field" %>
-    </div>
-
-    <div class="actions">
-      <%= f.submit "メールを送信", class: "btn-primary" %>
-    </div>
+      <%= render "shared/error_messages", resource: f.object %>
+      <h1 class="text-center">パスワードを忘れましたか?</h1>
+      <p class="text-center text-xs ">
+        パスワードを再設定するには<br>
+        登録したメールアドレスを入力してください
+      </p>
+      <div class="field">
+        <%= f.label :email, class: "label" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "例）beans@example.com", class: "input-field" %>
+      </div>
+      <div class="actions">
+        <%= f.submit "メールを送信", class: "btn-primary" %>
+      </div>
     <% end %>
   </div>
 </div>

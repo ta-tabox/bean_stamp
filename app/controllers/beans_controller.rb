@@ -14,6 +14,7 @@ class BeansController < ApplicationController
   def new
     @bean = current_roaster.beans.build
     @upload_image = @bean.bean_images.build
+    3.times { @bean.bean_taste_tags.build }
   end
 
   def create
@@ -58,6 +59,7 @@ class BeansController < ApplicationController
 
   private
 
+  # rubocop:disable all
   def bean_params
     params
       .require(:bean)
@@ -77,8 +79,11 @@ class BeansController < ApplicationController
         :bitterness,
         :sweetness,
         :roast_level_id,
+        bean_taste_tags_attributes: %i[id user_id mst_taste_tag_id],
       )
   end
+
+  # rubocop:disable all
 
   def set_bean
     @bean = current_roaster.beans.find_by(id: params[:id])

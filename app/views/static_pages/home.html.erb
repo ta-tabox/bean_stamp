@@ -1,10 +1,10 @@
 <% provide(:title, "Top") %>
 <p><%= l Time.now, format: :long%></p>
-
 <h1 class="text-center">Beans</h1>
 <img src="#" alt="ホーム画像">
-
-<h2>あなたにとっての<br>一杯のコーヒー<br>探していきませんか？</h2>
+<h2>あなたにとっての<br>
+  一杯のコーヒー<br>
+  探していきませんか？</h2>
 <p>Beansに参加しよう</p>
 <%= link_to 'メールアドレスで登録', new_user_registration_path , class: "btn-primary" %>
 <p>アカウントをお持ちの方は<%= link_to 'ログイン', new_user_session_path, class: "link" %></p>

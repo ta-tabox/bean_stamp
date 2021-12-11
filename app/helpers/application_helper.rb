@@ -17,17 +17,17 @@ module ApplicationHelper
   def show_bean_thumbnail(obj)
     if obj.bean_images.any? && obj.bean_images[0].image?
       link_to image_tag(
-                obj.bean_images[0].image.thumb.url.to_s,
-                class: 'thumbnail',
-                alt: "#{obj.name}の画像",
-              ),
+        obj.bean_images[0].image.thumb.url.to_s,
+        class: 'thumbnail',
+        alt: "#{obj.name}の画像",
+      ),
               obj
     else
       link_to image_tag(
-                "default_#{obj.class.name.downcase}.png",
-                class: 'thumbnail',
-                alt: "#{obj.name}の画像",
-              ),
+        "default_#{obj.class.name.downcase}.png",
+        class: 'thumbnail',
+        alt: "#{obj.name}の画像",
+      ),
               obj
     end
   end
@@ -36,17 +36,17 @@ module ApplicationHelper
   def show_user_roaster_thumbnail(obj)
     if obj.image?
       link_to image_tag(
-                obj.image.thumb.url.to_s,
-                class: 'thumbnail',
-                alt: "#{obj.name}の画像",
-              ),
+        obj.image.thumb.url.to_s,
+        class: 'thumbnail',
+        alt: "#{obj.name}の画像",
+      ),
               obj
     else
       link_to image_tag(
-                "default_#{obj.class.name.downcase}.png",
-                class: 'thumbnail',
-                alt: "#{obj.name}の画像",
-              ),
+        "default_#{obj.class.name.downcase}.png",
+        class: 'thumbnail',
+        alt: "#{obj.name}の画像",
+      ),
               obj
     end
   end
