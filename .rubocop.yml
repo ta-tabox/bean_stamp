@@ -98,3 +98,4 @@ Metrics/MethodLength:
 Metrics/BlockLength:
   Exclude:
     - "spec/**/*.rb"
+    - "db/schema.rb"
