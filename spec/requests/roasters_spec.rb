@@ -1,22 +1,28 @@
 require 'rails_helper'
 
 RSpec.describe 'Roasters', type: :request do
+  let!(:roaster) { create(:roaster) }
+  let!(:user) { create(:user, roaster: roaster) }
+
   describe 'GET /index' do
     it 'returns http success' do
-      get '/roasters/index'
+      sign_in user
+      get '/roasters'
       expect(response).to have_http_status(:success)
     end
   end
 
   describe 'GET /show' do
     it 'returns http success' do
-      get '/roasters/show'
+      sign_in user
+      get "/roasters/#{roaster.id}"
       expect(response).to have_http_status(:success)
     end
   end
 
   describe 'GET /new' do
     it 'returns http success' do
+      sign_in user
       get '/roasters/new'
       expect(response).to have_http_status(:success)
     end
@@ -24,7 +30,8 @@ RSpec.describe 'Roasters', type: :request do
 
   describe 'GET /edit' do
     it 'returns http success' do
-      get '/roasters/edit'
+      sign_in user
+      get "/roasters/#{roaster.id}/edit"
       expect(response).to have_http_status(:success)
     end
   end

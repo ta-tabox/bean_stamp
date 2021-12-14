@@ -6,6 +6,7 @@ FactoryBot.define do
     password { password }
     password_confirmation { password }
     prefecture_code { '13' }
-    describe { '閲覧用のロースターです' }
+    describe { 'テストユーザーです' }
+    roaster
   end
 end
