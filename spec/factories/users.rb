@@ -7,6 +7,6 @@ FactoryBot.define do
     password_confirmation { password }
     prefecture_code { '13' }
     describe { 'テストユーザーです' }
-    roaster
+    association :roaster
   end
 end
