@@ -349,6 +349,7 @@ DEPENDENCIES
   htmlbeautifier
   jbuilder (~> 2.7)
   jp_prefecture (~> 1.0)
+  launchy
   letter_opener_web (~> 1.0)
   listen (~> 3.3)
   mini_magick (~> 4.11)

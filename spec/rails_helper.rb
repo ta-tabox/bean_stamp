@@ -66,3 +66,11 @@ RSpec.configure do |config|
   # sign_inヘルパーを提供
   config.include Devise::Test::IntegrationHelpers, type: :request
 end
+
+# Shoulda Matchersの設定
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
