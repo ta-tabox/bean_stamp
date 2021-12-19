@@ -96,4 +96,11 @@ RSpec.configure do |config|
   #   # test failures related to randomization by passing the same `--seed` value
   #   # as the one that triggered the failure.
   #   Kernel.srand config.seed
+
+  # focusタグがついたexampleが見つかればタグを利用する、なければテストスイート全体を実行
+  config.filter_run focus: true
+  config.run_all_when_everything_filtered = true
+
+  # slowタグが見つかれば常にスキップする
+  config.filter_run_excluding slow: true
 end
