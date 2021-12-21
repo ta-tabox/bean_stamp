@@ -65,6 +65,12 @@ RSpec.configure do |config|
 
   # sign_inヘルパーを提供
   config.include Devise::Test::IntegrationHelpers, type: :request
+
+  # マスタデータの投入
+  config.before(:suite) do
+    fixture_path = Rails.root.join('spec/initial_data')
+    SeedFu.seed(fixture_path)
+  end
 end
 
 # Shoulda Matchersの設定

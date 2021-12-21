@@ -1,13 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Bean, type: :model, focus: true do
-  # name, phone_number, prefecture_code, addressがあれば有効な状態であること
-  # roaste_id, roaster, image, tasteの登録を行う必要がある
-  skip 'is valid with a roaster_id, name, country' do
-    bean = build(:bean)
-    expect(bean).to be_valid
-  end
-
+RSpec.describe Bean, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:roaster) }
     it { is_expected.to belong_to(:roast_level).class_name('MstRoastLevel') }
@@ -27,5 +20,19 @@ RSpec.describe Bean, type: :model, focus: true do
     it { is_expected.to validate_inclusion_of(:body).in_range(1..5) }
     it { is_expected.to validate_inclusion_of(:bitterness).in_range(1..5) }
     it { is_expected.to validate_inclusion_of(:sweetness).in_range(1..5) }
+  end
+
+  # name, phone_number, prefecture_code, addressがあれば有効な状態であること
+  # roaste_id, roaster, image, tasteの登録を行う必要がある
+  # it 'is valid with a roaster_id, name, country', focus: true do
+  #   bean = create(:bean, roast_level: 2)
+  #   expect(bean).to be_valid
+  # end
+  # image登録のテスト
+  describe '#create', focus: true do
+    it 'is valid with a roaster_id, name, country, bean_images, taste_tags' do
+      bean = create(:bean)
+      expect(bean).to be_valid
+    end
   end
 end

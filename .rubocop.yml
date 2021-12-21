@@ -93,6 +93,7 @@ Metrics/MethodLength:
   Max: 20
   Exclude:
     - "db/migrate/*.rb"
+    - "spec/**/*.rb"
 
 # ブロックの行数
 Metrics/BlockLength:
