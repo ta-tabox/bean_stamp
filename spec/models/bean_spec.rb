@@ -28,5 +28,13 @@ RSpec.describe Bean, type: :model do
       bean = create(:bean)
       expect(bean).to be_valid
     end
+
+    # アップロードできる画像数が制限以下であることを検証する
+    # アップロードできる画像サイズが制限以下であることを検証する
+    # 画像が1枚もなければ無効な状態であること
+    # taste_tagsがなければ無効な状態であること
+    # taste＿tagsが最大数以上なら無効な状態であること
+    # taste_tagsが重複していたら無効な状態であること
+    # update_bean_imagesのテストってどうすればよい？画像が2枚登録されている状態で新しい画像を登録し、枚数が1枚になっていることを確認する
   end
 end
