@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Beans', type: :request do
   let(:roaster) { create(:roaster) }
   let(:user) { create(:user, roaster: roaster) }
-  let(:bean) { create(:bean, roaster: roaster) }
+  let(:bean) { create(:bean, :with_image, :with_taste_3tags, roaster: roaster) }
 
   describe 'GET /index' do
     it 'returns http success' do
