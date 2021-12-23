@@ -18,7 +18,7 @@ RSpec.describe User, type: :model do
       expect(user).to be_valid
     end
 
-    # 画像登録ができる
+    # 画像登録ができるテストを記述する
   end
 
   describe 'belonged_roaster?(roaster)' do

@@ -87,12 +87,10 @@ RSpec.describe Bean, type: :model do
       @bean.valid?
       expect(@bean.errors[:taste_tags]).to include('が重複しています')
     end
-
-    # update_bean_imagesのテストってどうすればよい？画像が2枚登録されている状態で新しい画像を登録し、枚数が1枚になっていることを確認する
   end
 
-  # roaster_id, name, country, bean_images, taste_tagsがあれば有効な状態であること
   describe '#create' do
+    # roaster_id, name, country, bean_images, taste_tagsがあれば有効な状態であること
     it 'is valid with a roaster_id, name, country, bean_images, taste_tags' do
       bean = create(:bean, :with_image, :with_taste_3tags)
       expect(bean).to be_valid
@@ -117,7 +115,6 @@ RSpec.describe Bean, type: :model do
       it 'is not changed for image' do
         bean = create(:bean, :with_image, :with_taste_3tags)
         bean.upload_images = nil
-        # uploadする画像を2枚にする
         bean.update_with_bean_images({})
         expect(bean.bean_images.count).to eq 1
       end
