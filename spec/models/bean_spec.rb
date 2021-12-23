@@ -98,4 +98,29 @@ RSpec.describe Bean, type: :model do
       expect(bean).to be_valid
     end
   end
+
+  describe '#update' do
+    context 'when with upload_images' do
+      it 'is changed to the images for update' do
+        bean = create(:bean, :with_image, :with_taste_3tags)
+        bean.upload_images = []
+        # uploadする画像を2枚にする
+        2.times do
+          bean.upload_images << build(:bean_image, bean: @bean)
+        end
+        bean.update_with_bean_images({})
+        expect(bean.bean_images.count).to eq 2
+      end
+    end
+
+    context 'when with no upload_images' do
+      it 'is not changed for image' do
+        bean = create(:bean, :with_image, :with_taste_3tags)
+        bean.upload_images = nil
+        # uploadする画像を2枚にする
+        bean.update_with_bean_images({})
+        expect(bean.bean_images.count).to eq 1
+      end
+    end
+  end
 end
