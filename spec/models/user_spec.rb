@@ -18,10 +18,14 @@ RSpec.describe User, type: :model do
       expect(user).to be_valid
     end
 
-    # 画像登録ができるテストを記述する
+    # 画像登録ができること
+    it 'attach a image to user' do
+      user = create(:user, :with_image)
+      expect(user.image?).to be true
+    end
   end
 
-  describe 'belonged_roaster?(roaster)' do
+  describe '#belonged_roaster?(roaster)' do
     let(:user) { create(:user, roaster: belonged_roaster) }
     let(:belonged_roaster) { create(:roaster, name: 'belongd_roaster') }
     let(:another_roaster) { create(:roaster, name: 'another_roaster') }
@@ -35,7 +39,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'had_bean?(bean)' do
+  describe '#had_bean?(bean)' do
     let(:user) { create(:user, roaster: belonged_roaster) }
     let(:belonged_roaster) { create(:roaster, name: 'belongd_roaster') }
     let(:another_roaster) { create(:roaster, name: 'another_roaster') }

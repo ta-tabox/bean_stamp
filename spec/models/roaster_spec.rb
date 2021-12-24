@@ -1,12 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Roaster, type: :model do
-  # name, phone_number, prefecture_code, addressがあれば有効な状態であること
-  it 'is valid with a name, phone_number, prefecture_code and address' do
-    roaster = build(:roaster)
-    expect(roaster).to be_valid
-  end
-
   describe 'associations' do
     it { is_expected.to have_many(:users).dependent(:nullify) }
     it { is_expected.to have_many(:beans).dependent(:destroy) }
@@ -20,5 +14,19 @@ RSpec.describe Roaster, type: :model do
     it { is_expected.to validate_presence_of :prefecture_code }
     it { is_expected.to validate_presence_of :address }
     it { is_expected.to validate_length_of(:describe).is_at_most(300) }
+  end
+
+  describe '#create' do
+    # name, phone_number, prefecture_code, addressがあれば有効な状態であること
+    it 'is valid with a name, phone_number, prefecture_code and address' do
+      roaster = build(:roaster)
+      expect(roaster).to be_valid
+    end
+
+    # 画像登録ができる
+    it 'attach a image to roaster' do
+      user = create(:roaster, :with_image)
+      expect(user.image?).to be true
+    end
   end
 end

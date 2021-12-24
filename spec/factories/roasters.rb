@@ -5,5 +5,9 @@ FactoryBot.define do
     prefecture_code { '13' }
     address { '**区**丁目**-**' }
     describe { 'テストロースターです' }
+
+    trait :with_image do
+      image { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/sample.jpg'), 'image/jpg') }
+    end
   end
 end
