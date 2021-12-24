@@ -1,5 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe MstRoastLevel, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'associations' do
+    it { is_expected.to have_many(:beans).with_foreign_key('roast_level_id').inverse_of(:roast_level) }
+  end
 end
