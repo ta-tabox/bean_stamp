@@ -25,8 +25,10 @@ RSpec.describe Roaster, type: :model do
     end
 
     # 画像登録ができる
-    it 'attach a image to roaster' do
-      expect(roaster_with_image.image?).to be true
+    context 'when roaster with image' do
+      it 'attach a image to roaster' do
+        expect(roaster_with_image.image?).to be true
+      end
     end
   end
 end
