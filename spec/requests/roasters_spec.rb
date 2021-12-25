@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Roasters', type: :request do
-  let!(:roaster) { create(:roaster) }
-  let!(:user) { create(:user, roaster: roaster) }
+  let(:roaster) { create(:roaster) }
+  let(:user) { create(:user, roaster: roaster) }
   before do
     sign_in user
   end
