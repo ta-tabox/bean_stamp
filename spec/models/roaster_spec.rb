@@ -16,17 +16,17 @@ RSpec.describe Roaster, type: :model do
     it { is_expected.to validate_length_of(:describe).is_at_most(300) }
   end
 
-  describe '#create' do
+  describe '#create', focus: true do
+    let(:roaster) { build(:roaster) }
+    let(:roaster_with_image) { create(:roaster, :with_image) }
     # name, phone_number, prefecture_code, addressがあれば有効な状態であること
     it 'is valid with a name, phone_number, prefecture_code and address' do
-      roaster = build(:roaster)
       expect(roaster).to be_valid
     end
 
     # 画像登録ができる
     it 'attach a image to roaster' do
-      user = create(:roaster, :with_image)
-      expect(user.image?).to be true
+      expect(roaster_with_image.image?).to be true
     end
   end
 end
