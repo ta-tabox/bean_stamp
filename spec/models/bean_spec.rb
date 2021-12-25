@@ -84,16 +84,16 @@ RSpec.describe Bean, type: :model do
   end
 
   describe '#create' do
-    let(:bean_with_3_taste_tags) { create(:bean, :with_image, :with_3_taste_tags) }
-    let(:bean_with_2_taste_tags) { create(:bean, :with_image, :with_2_taste_tags) }
     # roaster_id, name, country, bean_images, taste_tagsがあれば有効な状態であること
-    it 'is valid with a roaster_id, name, country, bean_images, taste_tags' do
-      expect(bean_with_3_taste_tags).to be_valid
+    context 'when with three taste_tags' do
+      let(:bean) { create(:bean, :with_image, :with_3_taste_tags) }
+      it { expect(bean).to be_valid }
     end
 
     # taste_tagsが最小数以上、最大数以下であれば有効な状態であること
-    it 'is valid with between min and max counts of taste_tags' do
-      expect(bean_with_2_taste_tags).to be_valid
+    context 'when with two taste_tags' do
+      let(:bean) { create(:bean, :with_image, :with_2_taste_tags) }
+      it { expect(bean).to be_valid }
     end
   end
 
