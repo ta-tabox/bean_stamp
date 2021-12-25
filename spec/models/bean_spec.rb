@@ -23,88 +23,88 @@ RSpec.describe Bean, type: :model do
   end
 
   describe 'custom validations' do
-    before do
-      @bean = build(:bean)
-    end
+    let(:roaster) { create(:roaster) }
+    let(:bean) { build(:bean) }
+    subject { bean.valid? }
 
     # アップロードできる画像サイズが制限以下であることを検証する
     it 'is invalid with a too big size image' do
-      @bean.bean_images << build(:too_big_bean_image, bean: @bean)
-      @bean.valid?
-      expect(@bean.errors[:bean_images]).to include('は不正な値です')
+      bean.bean_images << build(:too_big_bean_image, bean: bean)
+      subject
+      expect(bean.errors[:bean_images]).to include('は不正な値です')
     end
 
     # アップロードできる画像数が制限以下であることを検証する
     it 'is invalid with too many upload images' do
-      @bean.upload_images = []
+      bean.upload_images = []
       # uploadする画像を5枚にする
       5.times do
-        @bean.upload_images << build(:bean_image, bean: @bean)
+        bean.upload_images << build(:bean_image, bean: bean)
       end
-      @bean.valid?
-      expect(@bean.errors[:bean_images]).to include('は4枚までしか登録できません')
+      subject
+      expect(bean.errors[:bean_images]).to include('は4枚までしか登録できません')
     end
 
     # 画像が1枚もなければ無効な状態であること
     it 'is invalid with no images' do
-      @bean.valid?
-      expect(@bean.errors[:bean_images]).to include('は最低1枚登録してください')
+      subject
+      expect(bean.errors[:bean_images]).to include('は最低1枚登録してください')
     end
 
     # taste_tagsがなければ無効な状態であること
     it 'is invalid with no taste_tags' do
-      @bean.valid?
-      expect(@bean.errors[:taste_tags]).to include('は2つ以上登録してください')
+      subject
+      expect(bean.errors[:taste_tags]).to include('は2つ以上登録してください')
     end
 
     # taste_tagsが最小値以下であれば無効な状態であること
     it 'is invalid with less then min counts of taste_tags' do
-      @bean.taste_tags << MstTasteTag.find(1)
-      @bean.valid?
-      expect(@bean.errors[:taste_tags]).to include('は2つ以上登録してください')
-    end
-
-    # taste_tagsが最小数以上、最大数以下であれば有効な状態であること
-    it 'is valid with between min and max counts of taste_tags' do
-      bean = create(:bean, :with_image, :with_taste_2tags)
-      expect(bean).to be_valid
+      bean.taste_tags << MstTasteTag.find(1)
+      subject
+      expect(bean.errors[:taste_tags]).to include('は2つ以上登録してください')
     end
 
     # taste＿tagsが最大数以上なら無効な状態であること
     it 'is invalid with too many taste_tags' do
       4.times do |n|
-        @bean.taste_tags << MstTasteTag.find(n + 1)
+        bean.taste_tags << MstTasteTag.find(n + 1)
       end
-      @bean.valid?
-      expect(@bean.errors[:taste_tags]).to include('は最大3つまでしか登録できません')
+      subject
+      expect(bean.errors[:taste_tags]).to include('は最大3つまでしか登録できません')
     end
 
     # taste_tagsが重複していたら無効な状態であること
     it 'is invalid with duplication of taste_tags' do
       2.times do
-        @bean.taste_tags << MstTasteTag.find(1)
+        bean.taste_tags << MstTasteTag.find(1)
       end
-      @bean.valid?
-      expect(@bean.errors[:taste_tags]).to include('が重複しています')
+      subject
+      expect(bean.errors[:taste_tags]).to include('が重複しています')
     end
   end
 
   describe '#create' do
+    let(:bean_with_3_taste_tags) { create(:bean, :with_image, :with_3_taste_tags) }
+    let(:bean_with_2_taste_tags) { create(:bean, :with_image, :with_2_taste_tags) }
     # roaster_id, name, country, bean_images, taste_tagsがあれば有効な状態であること
     it 'is valid with a roaster_id, name, country, bean_images, taste_tags' do
-      bean = create(:bean, :with_image, :with_taste_3tags)
-      expect(bean).to be_valid
+      expect(bean_with_3_taste_tags).to be_valid
+    end
+
+    # taste_tagsが最小数以上、最大数以下であれば有効な状態であること
+    it 'is valid with between min and max counts of taste_tags' do
+      expect(bean_with_2_taste_tags).to be_valid
     end
   end
 
   describe '#update' do
+    let(:bean) { create(:bean, :with_image, :with_3_taste_tags) }
     context 'when with upload_images' do
       it 'is changed to the images for update' do
-        bean = create(:bean, :with_image, :with_taste_3tags)
         bean.upload_images = []
         # uploadする画像を2枚にする
         2.times do
-          bean.upload_images << build(:bean_image, bean: @bean)
+          bean.upload_images << build(:bean_image, bean: bean)
         end
         bean.update_with_bean_images({})
         expect(bean.bean_images.count).to eq 2
@@ -113,7 +113,6 @@ RSpec.describe Bean, type: :model do
 
     context 'when with no upload_images' do
       it 'is not changed for image' do
-        bean = create(:bean, :with_image, :with_taste_3tags)
         bean.upload_images = nil
         bean.update_with_bean_images({})
         expect(bean.bean_images.count).to eq 1

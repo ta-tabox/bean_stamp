@@ -23,7 +23,7 @@ FactoryBot.define do
       end
     end
 
-    trait :with_taste_3tags do
+    trait :with_3_taste_tags do
       after(:build) do |bean|
         bean.taste_tags << MstTasteTag.find(1)
         bean.taste_tags << MstTasteTag.find(2)
@@ -31,7 +31,7 @@ FactoryBot.define do
       end
     end
 
-    trait :with_taste_2tags do
+    trait :with_2_taste_tags do
       after(:build) do |bean|
         bean.taste_tags << MstTasteTag.find(1)
         bean.taste_tags << MstTasteTag.find(2)
