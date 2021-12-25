@@ -9,7 +9,7 @@ RSpec.describe 'StaticPages', type: :request do
       it 'gets home' do
         get home_url
         expect(response).to have_http_status(:success)
-        expect(response.body).to match(%r{<title>TOP | #{base_title}</title>}i)
+        expect(response.body).to include("<title>Top | #{base_title}</title>")
       end
     end
 
@@ -26,7 +26,7 @@ RSpec.describe 'StaticPages', type: :request do
     it 'gets help' do
       get help_url
       expect(response).to have_http_status(:success)
-      expect(response.body).to match(%r{<title>HELP | #{base_title}</title>}i)
+      expect(response.body).to include("<title>Help | #{base_title}</title>")
     end
   end
 
@@ -34,7 +34,7 @@ RSpec.describe 'StaticPages', type: :request do
     it 'gets about' do
       get about_url
       expect(response).to have_http_status(:success)
-      expect(response.body).to match(%r{<title>ABOUT | #{base_title}</title>}i)
+      expect(response.body).to include("<title>About | #{base_title}</title>")
     end
   end
 end
