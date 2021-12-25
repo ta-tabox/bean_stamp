@@ -16,7 +16,7 @@ RSpec.describe Roaster, type: :model do
     it { is_expected.to validate_length_of(:describe).is_at_most(300) }
   end
 
-  describe '#create', focus: true do
+  describe '#create' do
     let(:roaster) { build(:roaster) }
     let(:roaster_with_image) { create(:roaster, :with_image) }
     # name, phone_number, prefecture_code, addressがあれば有効な状態であること

@@ -12,46 +12,47 @@ RSpec.describe User, type: :model do
   end
 
   describe '#create' do
+    let(:user) { build(:user) }
+    let(:user_with_image) { create(:user, :with_image) }
     # name, email, passwordがあれば有効な状態であること
     it 'is valid with a name, email and password' do
-      user = build(:user)
       expect(user).to be_valid
     end
 
     # 画像登録ができること
     it 'attach a image to user' do
-      user = create(:user, :with_image)
-      expect(user.image?).to be true
+      expect(user_with_image.image?).to be true
     end
   end
 
-  describe '#belonged_roaster?(roaster)' do
-    let(:user) { create(:user, roaster: belonged_roaster) }
-    let(:belonged_roaster) { create(:roaster, name: 'belongd_roaster') }
-    let(:another_roaster) { create(:roaster, name: 'another_roaster') }
+  describe '#belonged_roaster?' do
+    subject { user.belonged_roaster?(roaster) }
+    let(:roaster) { create(:roaster) }
 
-    it 'return true if user belong to roaster' do
-      expect(user.belonged_roaster?(belonged_roaster)).to be true
+    context 'when user belongs_to the roaster' do
+      let(:user) { create(:user, roaster: roaster) }
+      it { is_expected.to be_truthy }
     end
 
-    it 'return false if user not belong to roaster' do
-      expect(user.belonged_roaster?(another_roaster)).to be false
+    context 'when user does not belongs_to the roaster' do
+      let(:user) { create(:user) }
+      it { is_expected.to be_falsey }
     end
   end
 
-  describe '#had_bean?(bean)' do
-    let(:user) { create(:user, roaster: belonged_roaster) }
-    let(:belonged_roaster) { create(:roaster, name: 'belongd_roaster') }
-    let(:another_roaster) { create(:roaster, name: 'another_roaster') }
-    let(:my_bean) { create(:bean, :with_image, :with_3_taste_tags, roaster: belonged_roaster) }
-    let(:another_bean) { create(:bean, :with_image, :with_3_taste_tags, roaster: another_roaster) }
+  describe '#had_bean?' do
+    subject { user.had_bean?(bean) }
+    let(:roaster) { create(:roaster) }
+    let(:bean) { create(:bean, :with_image, :with_3_taste_tags, roaster: roaster) }
 
-    it 'return true if user have the bean' do
-      expect(user.had_bean?(my_bean)).to be true
+    context 'when user belongs_to the roaster' do
+      let(:user) { create(:user, roaster: roaster) }
+      it { is_expected.to be_truthy }
     end
 
-    it 'return false if user not have the bean' do
-      expect(user.had_bean?(another_bean)).to be false
+    context 'when user does not belongs_to the roaster' do
+      let(:user) { create(:user) }
+      it { is_expected.to be_falsey }
     end
   end
 end
