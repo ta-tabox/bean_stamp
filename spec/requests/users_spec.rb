@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Users', type: :request do
-  let(:user) { create(:user) }
   let(:base_title) { 'BeansApp' }
+  let(:user) { create(:user) }
 
   context 'when user is signed in' do
     before do

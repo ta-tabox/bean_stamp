@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'StaticPages', type: :request do
-  let(:user) { create(:user) }
   let(:base_title) { 'BeansApp' }
+  let(:user) { create(:user) }
 
   describe 'GET #home' do
     context 'when user is signed out' do
