@@ -13,5 +13,13 @@ FactoryBot.define do
     trait :guest do
       guest { true }
     end
+
+    trait :invalid do
+      name { nil }
+    end
+
+    trait :update do
+      name { 'アップデートロースター' }
+    end
   end
 end
