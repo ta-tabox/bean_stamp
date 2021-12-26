@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'StaticPages', type: :request do
-  let(:base_title) { 'BeansApp' }
+  let(:base_title) { ' | BeansApp' }
   let(:user) { create(:user) }
 
   describe 'GET #home' do
@@ -9,7 +9,7 @@ RSpec.describe 'StaticPages', type: :request do
       it 'gets home' do
         get home_path
         expect(response).to have_http_status(:success)
-        expect(response.body).to include("<title>Top | #{base_title}</title>")
+        expect(response.body).to include("<title>Top#{base_title}</title>")
       end
     end
 
@@ -26,7 +26,7 @@ RSpec.describe 'StaticPages', type: :request do
     it 'gets help' do
       get help_path
       expect(response).to have_http_status(:success)
-      expect(response.body).to include("<title>Help | #{base_title}</title>")
+      expect(response.body).to include("<title>Help#{base_title}</title>")
     end
   end
 
@@ -34,7 +34,7 @@ RSpec.describe 'StaticPages', type: :request do
     it 'gets about' do
       get about_path
       expect(response).to have_http_status(:success)
-      expect(response.body).to include("<title>About | #{base_title}</title>")
+      expect(response.body).to include("<title>About#{base_title}</title>")
     end
   end
 end

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Users', type: :request do
-  let(:base_title) { 'BeansApp' }
+  let(:base_title) { ' | BeansApp' }
   let(:user) { create(:user) }
 
   context 'when user is signed in' do
@@ -13,7 +13,7 @@ RSpec.describe 'Users', type: :request do
       it 'gets users/home' do
         get user_home_path
         expect(response).to have_http_status(:success)
-        expect(response.body).to include("<title>ホーム | #{base_title}</title>")
+        expect(response.body).to include("<title>ホーム#{base_title}</title>")
       end
     end
 
@@ -23,7 +23,7 @@ RSpec.describe 'Users', type: :request do
       end
       it 'gets users/show' do
         expect(response).to have_http_status(:success)
-        expect(response.body).to include("<title>ユーザー詳細 | #{base_title}</title>")
+        expect(response.body).to include("<title>ユーザー詳細#{base_title}</title>")
       end
       it 'shows user name' do
         expect(response.body).to include(user.name.to_s)
@@ -43,7 +43,7 @@ RSpec.describe 'Users', type: :request do
       end
       it 'gets users/registrations/edit' do
         expect(response).to have_http_status(:success)
-        expect(response.body).to include("<title>ユーザー情報編集 | #{base_title}</title>")
+        expect(response.body).to include("<title>ユーザー情報編集#{base_title}</title>")
       end
       it 'shows user name' do
         expect(response.body).to include(user.name.to_s)
@@ -53,7 +53,7 @@ RSpec.describe 'Users', type: :request do
       it 'gets users/registration/cancel' do
         get users_cancel_path
         expect(response).to have_http_status(:success)
-        expect(response.body).to include("<title>アカウントの削除 | #{base_title}</title>")
+        expect(response.body).to include("<title>アカウントの削除#{base_title}</title>")
       end
     end
     # deviseが提供する以下メソッドについてはテストが困難（paramsにauthenticity_tokenが必要？）
@@ -66,7 +66,7 @@ RSpec.describe 'Users', type: :request do
       it 'gets users/registrations/new' do
         get new_user_registration_path
         expect(response).to have_http_status(:success)
-        expect(response.body).to include("<title>サインアップ | #{base_title}</title>")
+        expect(response.body).to include("<title>サインアップ#{base_title}</title>")
       end
     end
 
@@ -88,7 +88,7 @@ RSpec.describe 'Users', type: :request do
           end.to_not change(User, :count)
 
           expect(response).to have_http_status(:success)
-          expect(response.body).to include("<title>サインアップ | #{base_title}</title>")
+          expect(response.body).to include("<title>サインアップ#{base_title}</title>")
         end
 
         it 'shows a error message' do
