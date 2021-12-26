@@ -107,6 +107,7 @@ RSpec.describe 'Users', type: :request do
     it 'provides of signed in on guest user and redirects to root_path' do
       post users_guest_sign_in_path
       expect(response).to redirect_to(root_path)
+      # follow_redirect!1回目→302、2回目→200レスポンスが返ってくる
       2.times { follow_redirect! }
       expect(response.body).to include 'ゲストユーザーとしてログインしました'
     end

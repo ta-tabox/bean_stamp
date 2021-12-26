@@ -106,16 +106,16 @@ RSpec.describe Bean, type: :model do
         2.times do
           bean.upload_images << build(:bean_image, bean: bean)
         end
-        bean.update_with_bean_images({})
-        expect(bean.bean_images.count).to eq 2
+        # updateによりbean.bean_imagesが1→2に変更される
+        expect { bean.update_with_bean_images({}) }.to change(bean.bean_images, :count).from(1).to(2)
       end
     end
 
     context 'when with no upload_images' do
       it 'is not changed for image' do
         bean.upload_images = nil
-        bean.update_with_bean_images({})
-        expect(bean.bean_images.count).to eq 1
+        # updateによりbean.bean_imagesが変更されない
+        expect { bean.update_with_bean_images({}) }.to_not change(bean.bean_images, :count)
       end
     end
   end

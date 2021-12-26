@@ -22,7 +22,7 @@ RSpec.describe User, type: :model do
     # 画像登録ができること
     context 'when user with image' do
       it 'attach a image to user' do
-        expect(user_with_image.image?).to be true
+        expect(user_with_image).to be_image
       end
     end
   end
