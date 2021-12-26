@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Roasters', type: :request do
   let(:base_title) { ' | BeansApp' }
-  let(:roaster) { create(:roaster) }
+  let!(:roaster) { create(:roaster) }
   let(:user_belonging_a_roaster) { create(:user, roaster: roaster) }
   let(:user_not_belonging_a_roaster) { create(:user) }
 
@@ -15,7 +15,7 @@ RSpec.describe 'Roasters', type: :request do
     describe 'GET #new' do
       it 'redirects to root_path' do
         get new_roaster_path
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to root_path
       end
     end
 
@@ -24,13 +24,13 @@ RSpec.describe 'Roasters', type: :request do
         expect do
           post roasters_path, params: { roaster: attributes_for(:roaster) }
         end.to_not change(Roaster, :count)
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to root_path
       end
     end
 
     describe 'GET #edit' do
       before do
-        get edit_roaster_path(roaster)
+        get edit_roaster_path roaster
       end
       it 'gets roasters/edit' do
         expect(response).to have_http_status(:success)
@@ -45,23 +45,23 @@ RSpec.describe 'Roasters', type: :request do
       context 'with valid parameter' do
         it 'updates the roaster and redirect_to roster_path' do
           expect do
-            put roaster_path(roaster), params: { roaster: attributes_for(:roaster, :update) }
+            put roaster_path roaster, params: { roaster: attributes_for(:roaster, :update) }
           end.to change { Roaster.find(roaster.id).name }.from('テストロースター').to('アップデートロースター')
-          expect(response).to redirect_to(roaster_path(roaster))
+          expect(response).to redirect_to roaster_path roaster
         end
       end
 
       context 'with invalid parameter' do
         it 'does not updated the roaster and renders roasters/edit' do
           expect do
-            put roaster_path(roaster), params: { roaster: attributes_for(:roaster, :invalid) }
+            put roaster_path roaster, params: { roaster: attributes_for(:roaster, :invalid) }
           end.to_not change(Roaster.find(roaster.id), :name)
           expect(response).to have_http_status(:success)
           expect(response.body).to include("<title>ロースター情報編集#{base_title}</title>")
         end
 
         it 'shows a error message' do
-          put roaster_path(roaster), params: { roaster: attributes_for(:roaster, :invalid) }
+          put roaster_path roaster, params: { roaster: attributes_for(:roaster, :invalid) }
           expect(response.body).to include '1 件のエラーが発生したため ロースター は保存されませんでした'
         end
       end
@@ -69,8 +69,8 @@ RSpec.describe 'Roasters', type: :request do
 
     describe 'DELETE #destory' do
       it 'deletes a Roaster and redirects to root_path' do
-        expect { delete roaster_path(roaster) }.to change(Roaster, :count).by(-1)
-        expect(response).to redirect_to(user_home_path)
+        expect { delete roaster_path roaster }.to change(Roaster, :count).by(-1)
+        expect(response).to redirect_to user_home_path
       end
     end
 
@@ -103,7 +103,7 @@ RSpec.describe 'Roasters', type: :request do
 
     describe 'GET #show' do
       it 'gets roasters/show' do
-        get roaster_path(roaster)
+        get roaster_path roaster
         expect(response).to have_http_status(:success)
         expect(response.body).to include("<title>ロースター詳細#{base_title}</title>")
       end
@@ -122,35 +122,35 @@ RSpec.describe 'Roasters', type: :request do
         expect do
           post roasters_path, params: { roaster: attributes_for(:roaster) }
         end.to change(Roaster, :count).by(1)
-        expect(response).to redirect_to(roaster_path(Roaster.last))
+        expect(response).to redirect_to roaster_path(Roaster.last)
       end
     end
 
     describe 'GET #edit' do
       it 'redirects to root_path ' do
-        get edit_roaster_path(roaster)
-        expect(response).to redirect_to(root_path)
+        get edit_roaster_path roaster
+        expect(response).to redirect_to root_path
       end
     end
 
     describe 'PUT #update' do
       it 'redirects to root_path ' do
-        put roaster_path(roaster), params: { roaster: attributes_for(:roaster, :update) }
-        expect(response).to redirect_to(root_path)
+        put roaster_path roaster, params: { roaster: attributes_for(:roaster, :update) }
+        expect(response).to redirect_to root_path
       end
     end
 
     describe 'DELETE #destory' do
       it 'redirects to root_path ' do
-        delete roaster_path(roaster)
-        expect(response).to redirect_to(root_path)
+        expect { delete roaster_path roaster }.not_to change(Roaster, :count)
+        expect(response).to redirect_to root_path
       end
     end
 
     describe 'GET #cancel' do
       it 'redirects to root_path ' do
         get cancel_roasters_path
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to root_path
       end
     end
   end
@@ -166,7 +166,7 @@ RSpec.describe 'Roasters', type: :request do
 
     describe 'GET #show' do
       it 'gets roasters/show' do
-        get roaster_path(roaster)
+        get roaster_path roaster
         expect(response).to have_http_status(:success)
         expect(response.body).to include(roaster.name)
       end
@@ -174,29 +174,29 @@ RSpec.describe 'Roasters', type: :request do
 
     describe 'GET #edit' do
       it 'redirects to roaster_path' do
-        get edit_roaster_path(roaster)
-        expect(response).to redirect_to(roaster)
+        get edit_roaster_path roaster
+        expect(response).to redirect_to roaster
       end
     end
 
     describe 'PUT #update' do
       it 'redirects to roaster_path' do
-        put roaster_path(roaster), params: { roaster: attributes_for(:roaster, :update) }
-        expect(response).to redirect_to(roaster)
+        put roaster_path roaster, params: { roaster: attributes_for(:roaster, :update) }
+        expect(response).to redirect_to roaster
       end
     end
 
     describe 'DELETE #destory' do
       it 'redirects to roaster_path ' do
-        delete roaster_path(roaster)
-        expect(response).to redirect_to(roaster)
+        expect { delete roaster_path roaster }.not_to change(Roaster, :count)
+        expect(response).to redirect_to roaster
       end
     end
 
     describe 'before_action #correct_roaster' do
       it 'redirects to roaster_path and shows flash message' do
-        get edit_roaster_path(roaster)
-        expect(response).to redirect_to(roaster)
+        get edit_roaster_path roaster
+        expect(response).to redirect_to roaster
         follow_redirect!
         expect(response.body).to include('所属していないロースターの更新・削除はできません')
       end
@@ -211,13 +211,13 @@ RSpec.describe 'Roasters', type: :request do
       sign_in guest_user
     end
 
-    # ゲストロースター編集、削除のテスト ensure_normal_roaster
+    # ゲストロー���ター編集、削除のテスト ensure_normal_roaster
     describe 'POST #update' do
       it 'does not updated the guest roaster and redirects to root_path' do
         expect do
-          put roaster_path(guest_roaster), params: { roaster: attributes_for(:roaster, :update) }
+          put roaster_path guest_roaster, params: { roaster: attributes_for(:roaster, :update) }
         end.to_not change(Roaster.find(guest_roaster.id), :name)
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to root_path
         # follow_redirect!1回目→302、2回目→200レスポンスが返ってくる
         2.times { follow_redirect! }
         expect(response.body).to include 'ゲストロースターの更新・削除はできません'
@@ -227,9 +227,9 @@ RSpec.describe 'Roasters', type: :request do
     describe 'DELETE #destroy' do
       it 'does not delete the guest roaster and redirects to root_path' do
         expect do
-          delete roaster_path(guest_roaster)
+          delete roaster_path guest_roaster
         end.to_not change(Roaster, :count)
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to root_path
         # follow_redirect!1回目→302、2回目→200レスポンスが返ってくる
         2.times { follow_redirect! }
         expect(response.body).to include 'ゲストロースターの更新・削除はできません'
