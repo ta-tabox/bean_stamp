@@ -25,8 +25,9 @@ RSpec.describe 'Users', type: :request do
         expect(response).to have_http_status(:success)
         expect(response.body).to include("<title>ユーザー詳細#{base_title}</title>")
       end
-      it 'shows user name' do
+      it "shows user's name and describe" do
         expect(response.body).to include(user.name.to_s)
+        expect(response.body).to include(user.describe.to_s)
       end
     end
 
@@ -82,7 +83,7 @@ RSpec.describe 'Users', type: :request do
       end
 
       context 'with invalid parameter' do
-        it 'does not creates a User and renders users/new' do
+        it 'does not create a User and renders users/new' do
           expect do
             post user_registration_path, params: { user: attributes_for(:user, :invalid) }
           end.to_not change(User, :count)
