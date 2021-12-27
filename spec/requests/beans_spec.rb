@@ -1,39 +1,186 @@
 require 'rails_helper'
 
 RSpec.describe 'Beans', type: :request do
-  let(:roaster) { create(:roaster) }
-  let(:user) { create(:user, roaster: roaster) }
-  let(:bean) { create(:bean, :with_image, :with_3_taste_tags, roaster: roaster) }
+  let(:base_title) { ' | BeansApp' }
+  # コーヒー豆を持たないロースターに所属したユーザー
+  let(:user_without_beans) { create(:user, :with_roaster) }
+  # コーヒー豆を持ったロースターに所属したユーザー
+  let(:user_with_beans) { create(:user, :with_roaster) }
+  let!(:bean) { create(:bean, :with_image, :with_3_taste_tags, roaster: user_with_beans.roaster) }
 
-  before do
-    sign_in user
-  end
+  context 'when a roaster have no beans' do
+    before do
+      sign_in user_without_beans
+    end
 
-  describe 'GET /index' do
-    it 'returns http success' do
-      get '/beans'
-      expect(response).to have_http_status(:success)
+    describe 'GET #index' do
+      it 'gets beans/index' do
+        get beans_path
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("<title>コーヒー豆一覧#{base_title}</title>")
+        expect(response.body).not_to include(bean.name)
+      end
+    end
+
+    describe 'GET #show' do
+      it 'redirects to beans_path' do
+        get bean_path bean
+        expect(response).to redirect_to beans_path
+      end
+    end
+
+    describe 'GET #new' do
+      it 'gets beans/new' do
+        get new_bean_path
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("<title>コーヒー豆登録#{base_title}</title>")
+      end
+    end
+
+    describe 'POST #create' do
+      context 'with valid parameter' do
+        it 'creates a Bean and redirects to bean_path' do
+          # FactoryBotにてtaste_tagsとbean_imagesのパラメータを作成（他にいいやり方あるか？）
+          expect do
+            post beans_path, params: { bean: attributes_for(:bean, :with_taste_tags_params), bean_images: attributes_for(:bean_image_params) }
+          end.to change(Bean, :count).by(1)
+          # Beanは default_scope -> { order(created_at: :desc) }のためBean.firstで最新のレコードを取得する
+          expect(response).to redirect_to bean_path(Bean.first)
+        end
+      end
+
+      context 'with invalid parameter' do
+        it 'does not create a Bean and redirects to beans_path' do
+          expect do
+            post beans_path, params: { bean: attributes_for(:bean, :invalid, :with_taste_tags_params), bean_images: attributes_for(:bean_image_params) }
+          end.to_not change(Bean, :count)
+          expect(response).to have_http_status(:success)
+          expect(response.body).to include("<title>コーヒー豆登録#{base_title}</title>")
+        end
+
+        it 'shows a error message' do
+          post beans_path, params: { bean: attributes_for(:bean, :invalid, :with_taste_tags_params), bean_images: attributes_for(:bean_image_params) }
+          expect(response.body).to include '1 件のエラーが発生したため コーヒー豆 は保存されませんでした'
+        end
+      end
+    end
+
+    describe 'GET #edit' do
+      it 'redirects to beans_path' do
+        get edit_bean_path bean
+        expect(response).to redirect_to(beans_path)
+      end
+    end
+
+    describe 'PUT #update' do
+      it 'does not update a Bean and redirects to beans_path' do
+        expect do
+          put bean_path bean, params: { bean: attributes_for(:bean, :update) }
+        end.to_not change(Bean.find(bean.id), :name)
+        expect(response).to redirect_to beans_path
+      end
+    end
+
+    describe 'DELETE #destory' do
+      it 'does not delete a Bean and redirects to beans_path' do
+        expect { delete bean_path bean }.not_to change(Bean, :count)
+        expect(response).to redirect_to(beans_path)
+      end
     end
   end
 
-  describe 'GET /show' do
-    it 'returns http success' do
-      get "/beans/#{bean.id}"
-      expect(response).to have_http_status(:success)
+  context 'when a roaster have a bean' do
+    before do
+      sign_in user_with_beans
+    end
+
+    describe 'GET #index' do
+      it "gets beans/index and shows the bean's name" do
+        get beans_path
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("<title>コーヒー豆一覧#{base_title}</title>")
+        expect(response.body).to include(bean.name)
+      end
+    end
+
+    describe 'GET #show' do
+      it "gets beans/show and shows the bean's name" do
+        get bean_path bean
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("<title>コーヒー豆詳細#{base_title}</title>")
+        expect(response.body).to include(bean.name)
+      end
+    end
+
+    describe 'GET #edit' do
+      before do
+        get edit_bean_path bean
+      end
+      it 'gets beans/edit' do
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("<title>コーヒー豆情報編集#{base_title}</title>")
+      end
+      it "shows bean's name" do
+        expect(response.body).to include(bean.name)
+      end
+    end
+
+    describe 'PUT #update' do
+      context 'with valid parameter' do
+        it 'updates the bean and redirect_to bean_path' do
+          expect do
+            put bean_path bean, params: { bean: attributes_for(:bean, :update) }
+          end.to change { Bean.find(bean.id).name }.from('テストビーン').to('アップデートビーン')
+          expect(response).to redirect_to bean_path bean
+        end
+      end
+
+      context 'with invalid parameter' do
+        it 'does not updated the bean and renders beans/edit' do
+          expect do
+            put bean_path bean, params: { bean: attributes_for(:bean, :invalid) }
+          end.to_not change(Bean.find(bean.id), :name)
+          expect(response).to have_http_status(:success)
+          expect(response.body).to include("<title>コーヒー豆情報編集#{base_title}</title>")
+        end
+
+        it 'shows a error message' do
+          put bean_path bean, params: { bean: attributes_for(:bean, :invalid) }
+          expect(response.body).to include '1 件のエラーが発生したため コーヒー豆 は保存されませんでした'
+        end
+      end
+    end
+
+    describe 'DELETE #destory' do
+      it 'deletes a Bean and redirects to beans_path' do
+        expect { delete bean_path bean }.to change(Bean, :count).by(-1)
+        expect(response).to redirect_to beans_path
+      end
     end
   end
 
-  describe 'GET /new' do
-    it 'returns http success' do
-      get '/beans/new'
-      expect(response).to have_http_status(:success)
+  # ロースターが所有しないコーヒー豆関係リソースにアクセスするのを制御するbefore_action #set_beanのテスト
+  describe '#set_bean' do
+    context "when user makes an incorrect beans/#show request for a bean he doesn't have" do
+      it 'redirects beans_path and shows error message' do
+        sign_in user_without_beans
+        get bean_path bean
+        expect(response).to redirect_to beans_path
+        follow_redirect!
+        expect(response.body).to include 'コーヒー豆を登録してください'
+      end
     end
   end
 
-  describe 'GET /edit' do
-    it 'returns http success' do
-      get "/beans/#{bean.id}/edit"
-      expect(response).to have_http_status(:success)
+  # set_cropped_atメソッドは<input type='month'>で年月データを受け取り年月日データに変換する i.g. '2021-01' -> '2021-01-01'
+  describe '#set_cropped_at' do
+    context "when bean is updated with cropped_at for '2022-01'" do
+      it "updates the bean's cropped_at to '2022-01-01'" do
+        sign_in user_with_beans
+        expect do
+          put bean_path bean, params: { bean: attributes_for(:bean, :update, cropped_at: '2022-01') }
+        end.to change { Bean.find(bean.id).cropped_at.to_s }.from('2021-01-01').to('2022-01-01')
+      end
     end
   end
 end

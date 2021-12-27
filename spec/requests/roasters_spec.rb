@@ -131,7 +131,7 @@ RSpec.describe 'Roasters', type: :request do
 
     describe 'PUT #update' do
       context 'with valid parameter' do
-        it 'updates the roaster and redirect_to roster_path' do
+        it 'updates the roaster and redirect_to roaster_path' do
           expect do
             put roaster_path roaster, params: { roaster: attributes_for(:roaster, :update) }
           end.to change { Roaster.find(roaster.id).name }.from('テストロースター').to('アップデートロースター')

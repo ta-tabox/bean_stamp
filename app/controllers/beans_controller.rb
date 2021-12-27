@@ -86,8 +86,8 @@ class BeansController < ApplicationController
   # rubocop:disable all
 
   def set_bean
-    @bean = current_roaster.beans.find_by(id: params[:id])
-    redirect_to(root_url) unless @bean
+    return if @bean = current_roaster.beans.find_by(id: params[:id])
+    redirect_to beans_path, alert: 'コーヒー豆を登録してください'
   end
 
   # input type=monthフィールドのデータをdateカラムに保存できる形に変換する
