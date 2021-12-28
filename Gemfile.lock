@@ -271,6 +271,8 @@ GEM
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
     semantic_range (3.0.0)
+    shoulda-matchers (5.0.0)
+      activesupport (>= 5.2.0)
     solargraph (0.44.0)
       backport (~> 1.2)
       benchmark
@@ -347,6 +349,7 @@ DEPENDENCIES
   htmlbeautifier
   jbuilder (~> 2.7)
   jp_prefecture (~> 1.0)
+  launchy
   letter_opener_web (~> 1.0)
   listen (~> 3.3)
   mini_magick (~> 4.11)
@@ -363,6 +366,7 @@ DEPENDENCIES
   sass-rails (>= 6)
   seed-fu (~> 2.3)
   selenium-webdriver
+  shoulda-matchers
   solargraph
   spring
   spring-commands-rspec

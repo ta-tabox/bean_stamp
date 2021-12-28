@@ -68,7 +68,7 @@ class Bean < ApplicationRecord
     taste_ids = bean_taste_tags.map { |x| x[:mst_taste_tag_id] }
     return unless taste_ids.count > MAX_TASTE_TAGS_COUNT
 
-    errors.add(:taste_tags, 'は最大3つまでしか登録できません')
+    errors.add(:taste_tags, "は最大#{MAX_TASTE_TAGS_COUNT}つまでしか登録できません")
   end
 
   # 有効なtaste_tagsがMIN_TASTE_TAGS_COUNT以上であるか検証する
@@ -78,7 +78,7 @@ class Bean < ApplicationRecord
     taste_ids.delete(0)
     return unless taste_ids.count < MIN_TASTE_TAGS_COUNT
 
-    errors.add(:taste_tags, 'は2つ以上登録してください')
+    errors.add(:taste_tags, "は#{MIN_TASTE_TAGS_COUNT}つ以上登録してください")
   end
 
   # taste_tagsに重複がないか検証する
