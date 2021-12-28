@@ -37,13 +37,35 @@ FactoryBot.define do
         bean.taste_tags << MstTasteTag.find(2)
       end
     end
+
+    # createアクションのparams[:bean][:bean_taste_tags_sttributes]用のパラメータ
+    trait :with_taste_tags_params do
+      bean_taste_tags_attributes { { '0' => { mst_taste_tag_id: '2' }, '1' => { mst_taste_tag_id: '3' } } }
+    end
+
+    trait :invalid do
+      name { nil }
+    end
+
+    trait :update do
+      name { 'アップデートビーン' }
+    end
   end
 
   factory :bean_image do
     image { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/sample.jpg'), 'image/jpg') }
   end
 
+  # createアクションのparams[:bean_image]用のパラメータ
+  factory :bean_image_params, class: BeanImage do
+    image { [Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/sample.jpg'), 'image/jpg')] }
+  end
+
   factory :too_big_bean_image, class: BeanImage do
     image { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/over_5mb_sample.jpg'), 'image/jpg') }
+  end
+
+  factory :taste_tag, class: BeanTasteTag do
+    mst_taste_tag_id { MstTasteTag.find(1).id }
   end
 end

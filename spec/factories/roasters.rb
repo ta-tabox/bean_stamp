@@ -9,5 +9,17 @@ FactoryBot.define do
     trait :with_image do
       image { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/sample.jpg'), 'image/jpg') }
     end
+
+    trait :guest do
+      guest { true }
+    end
+
+    trait :invalid do
+      name { nil }
+    end
+
+    trait :update do
+      name { 'アップデートロースター' }
+    end
   end
 end
