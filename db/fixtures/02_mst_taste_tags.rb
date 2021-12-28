@@ -9,7 +9,7 @@ MstTasteTag.seed(
   { id: 6, name: 'BERRY', taste_group_id: 6 },
   { id: 7, name: 'BLACKBERRY', taste_group_id: 6 },
   { id: 8, name: 'RASPBERRY', taste_group_id: 6 },
-  { id: 9, name: 'BULUBERRY', taste_group_id: 6 },
+  { id: 9, name: 'BLUEBERRY', taste_group_id: 6 },
   { id: 10, name: 'STRAWBERRY', taste_group_id: 6 },
   { id: 11, name: 'DRIED FRUIT', taste_group_id: 11 },
   { id: 12, name: 'RAISIN', taste_group_id: 11 },
