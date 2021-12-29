@@ -14,8 +14,6 @@ class RoastersController < ApplicationController
     @roaster = current_user.build_roaster
   end
 
-  def edit; end
-
   def create
     @roaster = current_user.build_roaster(roaster_params)
     if @roaster.save
@@ -26,6 +24,8 @@ class RoastersController < ApplicationController
       render 'new'
     end
   end
+
+  def edit; end
 
   def update
     if @roaster.update(roaster_params)

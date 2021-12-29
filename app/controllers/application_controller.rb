@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
     redirect_to(root_url)
   end
 
-  # ユーザーにロースター所属未所属を求める
+  # ユーザーにロースター未所属を求める
   def user_not_belonged_to_roaster_required
     return unless current_user.roaster_id?
 
