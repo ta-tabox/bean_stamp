@@ -4,65 +4,22 @@ RSpec.describe 'Users', type: :request do
   let(:base_title) { ' | BeansApp' }
   let(:user) { create(:user) }
 
-  context 'when user is signed in' do
-    before do
-      sign_in user
-    end
-
+  # ユーザーがログインしていないときのテスト
+  context 'when user is signed out' do
     describe 'GET #home' do
-      it 'gets users/home' do
+      it 'redirects_to new_user_session_path' do
         get user_home_path
-        expect(response).to have_http_status(:success)
-        expect(response.body).to include("<title>ホーム#{base_title}</title>")
+        expect(response).to redirect_to new_user_session_path
       end
     end
 
     describe 'GET #show' do
-      before do
+      it 'redirects to new_user_session_path' do
         get user_path user
-      end
-      it 'gets users/show' do
-        expect(response).to have_http_status(:success)
-        expect(response.body).to include("<title>ユーザー詳細#{base_title}</title>")
-      end
-      it "shows user's name and describe" do
-        expect(response.body).to include(user.name.to_s)
-        expect(response.body).to include(user.describe.to_s)
+        expect(response).to redirect_to new_user_session_path
       end
     end
 
-    describe 'GET #new' do
-      it 'regirects to user_home' do
-        get new_user_registration_path
-        expect(response).to redirect_to(root_path)
-      end
-    end
-
-    describe 'GET #edit' do
-      before do
-        get edit_user_registration_path
-      end
-      it 'gets users/registrations/edit' do
-        expect(response).to have_http_status(:success)
-        expect(response.body).to include("<title>ユーザー情報編集#{base_title}</title>")
-      end
-      it 'shows user name' do
-        expect(response.body).to include(user.name.to_s)
-      end
-    end
-    describe 'GET #cancel' do
-      it 'gets users/registration/cancel' do
-        get users_cancel_path
-        expect(response).to have_http_status(:success)
-        expect(response.body).to include("<title>アカウントの削除#{base_title}</title>")
-      end
-    end
-    # deviseが提供する以下メソッドについてはテストが困難（paramsにauthenticity_tokenが必要？）
-    # 'PUT #update' についてはfeature specでカバー
-    # 'DELET #destroy' についてはfeature specでカバー
-  end
-
-  context 'when user is signed out' do
     describe 'GET #new' do
       it 'gets users/registrations/new' do
         get new_user_registration_path
@@ -98,6 +55,87 @@ RSpec.describe 'Users', type: :request do
         end
       end
     end
+
+    describe 'GET #edit' do
+      it 'redirects to new_user_session_path' do
+        get edit_user_registration_path
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+
+    describe 'GET #cancel' do
+      it 'redirects to new_user_session_path' do
+        get cancel_user_registration_path
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+  end
+
+  # ユーザーがログインしているときのテスト
+  context 'when user is signed in' do
+    before do
+      sign_in user
+    end
+
+    describe 'GET #home' do
+      it 'gets users/home' do
+        get user_home_path
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("<title>ホーム#{base_title}</title>")
+      end
+    end
+
+    describe 'GET #show' do
+      before do
+        get user_path user
+      end
+      it 'gets users/show' do
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("<title>ユーザー詳細#{base_title}</title>")
+      end
+      it "shows user's name and describe" do
+        expect(response.body).to include(user.name.to_s)
+        expect(response.body).to include(user.describe.to_s)
+      end
+    end
+
+    describe 'GET #new' do
+      it 'regirects to root_path' do
+        get new_user_registration_path
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    describe 'POST #create' do
+      it 'regirects to root_path' do
+        post user_registration_path, params: { user: attributes_for(:user) }
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    describe 'GET #edit' do
+      before do
+        get edit_user_registration_path
+      end
+      it 'gets users/registrations/edit' do
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("<title>ユーザー情報編集#{base_title}</title>")
+      end
+      it 'shows user name' do
+        expect(response.body).to include(user.name.to_s)
+      end
+    end
+
+    describe 'GET #cancel' do
+      it 'gets users/registration/cancel' do
+        get cancel_user_registration_path
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("<title>アカウントの削除#{base_title}</title>")
+      end
+    end
+    # deviseが提供する以下メソッドについてはテストが困難（paramsにauthenticity_tokenが必要？）
+    # 'PUT #update' についてはfeature specでカバー
+    # 'DELET #destroy' についてはfeature specでカバー
   end
 
   # ゲストログイン機能のテスト

@@ -100,6 +100,25 @@ RSpec.describe 'Roasters', type: :request do
       sign_in user_belonging_a_roaster
     end
 
+    describe 'GET #index' do
+      it 'gets roasters/index' do
+        get roasters_path
+        expect(response).to have_http_status(:success)
+        skip 'roaster/indexのタイトル' do
+          # roaster/indexのタイトルを決めたらテストする（search機能実装時）
+          expect(response.body).to include("<title>#{base_title}</title>")
+        end
+      end
+    end
+
+    describe 'GET #show' do
+      it 'gets roasters/show' do
+        get roaster_path roaster
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("<title>ロースター詳細#{base_title}</title>")
+      end
+    end
+
     describe 'GET #new' do
       it 'redirects to root_path' do
         get new_roaster_path

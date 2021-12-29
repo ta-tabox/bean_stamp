@@ -65,6 +65,7 @@ RSpec.configure do |config|
 
   # sign_inヘルパーを提供
   config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Devise::Test::ControllerHelpers, type: :controller
 
   # マスタデータの投入
   config.before(:suite) do

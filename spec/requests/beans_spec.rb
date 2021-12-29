@@ -8,6 +8,7 @@ RSpec.describe 'Beans', type: :request do
   let(:user_with_beans) { create(:user, :with_roaster) }
   let!(:bean) { create(:bean, :with_image, :with_3_taste_tags, roaster: user_with_beans.roaster) }
 
+  # コーヒー豆を持っていないときのテスト
   context 'when a roaster have no beans' do
     before do
       sign_in user_without_beans
@@ -89,6 +90,7 @@ RSpec.describe 'Beans', type: :request do
     end
   end
 
+  # コーヒー豆を持っているときのテスト
   context 'when a roaster have a bean' do
     before do
       sign_in user_with_beans
@@ -111,6 +113,8 @@ RSpec.describe 'Beans', type: :request do
         expect(response.body).to include(bean.name)
       end
     end
+
+    # GET #new, GET #crateはコーヒー豆の有無で挙動が変わらないためテストしない
 
     describe 'GET #edit' do
       before do
