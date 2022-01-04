@@ -16,7 +16,7 @@ RSpec.describe BeansController, type: :controller do
 
     describe 'GET #show' do
       it 'redirects to new_user_session_path' do
-        get :show, params: { id: bean }
+        get :show, params: { id: bean.id }
         expect(response).to redirect_to new_user_session_path
       end
     end
@@ -37,21 +37,21 @@ RSpec.describe BeansController, type: :controller do
 
     describe 'GET #edit' do
       it 'redirects to new_user_session_path' do
-        get :edit, params: { id: bean }
+        get :edit, params: { id: bean.id }
         expect(response).to redirect_to new_user_session_path
       end
     end
 
     describe 'PUT #update' do
       it 'redirects to new_user_session_path' do
-        put :update, params: { id: bean, bean: attributes_for(:bean, :update) }
+        put :update, params: { id: bean.id, bean: attributes_for(:bean, :update) }
         expect(response).to redirect_to new_user_session_path
       end
     end
 
     describe 'DELETE #destory' do
       it 'redirects to new_user_session_path' do
-        delete :destroy, params: { id: bean }
+        delete :destroy, params: { id: bean.id }
         expect(response).to redirect_to new_user_session_path
       end
     end
@@ -72,7 +72,7 @@ RSpec.describe BeansController, type: :controller do
 
     describe 'GET #show' do
       it 'redirects to root_path' do
-        get :show, params: { id: bean }
+        get :show, params: { id: bean.id }
         expect(response).to redirect_to root_path
       end
     end
@@ -93,21 +93,21 @@ RSpec.describe BeansController, type: :controller do
 
     describe 'GET #edit' do
       it 'redirects to root_path' do
-        get :edit, params: { id: bean }
+        get :edit, params: { id: bean.id }
         expect(response).to redirect_to root_path
       end
     end
 
     describe 'PUT #update' do
       it 'redirects to root_path' do
-        put :update, params: { id: bean, bean: attributes_for(:bean, :update) }
+        put :update, params: { id: bean.id, bean: attributes_for(:bean, :update) }
         expect(response).to redirect_to root_path
       end
     end
 
     describe 'DELETE #destory' do
       it 'redirects to root_path' do
-        delete :destroy, params: { id: bean }
+        delete :destroy, params: { id: bean.id }
         expect(response).to redirect_to root_path
       end
     end

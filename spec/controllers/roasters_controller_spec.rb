@@ -14,7 +14,7 @@ RSpec.describe RoastersController, type: :controller do
 
     describe 'GET #show' do
       it 'redirects to new_user_session_path' do
-        get :show, params: { id: roaster }
+        get :show, params: { id: roaster.id }
         expect(response).to redirect_to new_user_session_path
       end
     end
@@ -35,28 +35,28 @@ RSpec.describe RoastersController, type: :controller do
 
     describe 'GET #edit' do
       it 'redirects to new_user_session_path' do
-        get :edit, params: { id: roaster }
+        get :edit, params: { id: roaster.id }
         expect(response).to redirect_to new_user_session_path
       end
     end
 
     describe 'PUT #update' do
       it 'redirects to new_user_session_path' do
-        put :update, params: { id: roaster, roaster: attributes_for(:roaster, :update) }
+        put :update, params: { id: roaster.id, roaster: attributes_for(:roaster, :update) }
         expect(response).to redirect_to new_user_session_path
       end
     end
 
     describe 'DELETE #destory' do
       it 'redirects to new_user_session_path' do
-        delete :destroy, params: { id: roaster }
+        delete :destroy, params: { id: roaster.id }
         expect(response).to redirect_to new_user_session_path
       end
     end
 
     describe 'GET #cancel' do
       it 'redirects to new_user_session_path' do
-        get :cancel, params: { id: roaster }
+        get :cancel, params: { id: roaster.id }
         expect(response).to redirect_to new_user_session_path
       end
     end

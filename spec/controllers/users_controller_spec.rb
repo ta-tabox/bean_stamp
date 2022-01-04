@@ -14,7 +14,7 @@ RSpec.describe Users::UsersController, type: :controller do
 
     describe 'GET #show' do
       it 'redirects to new_user_session_path' do
-        get :show, params: { id: user }
+        get :show, params: { id: user.id }
         expect(response).to redirect_to new_user_session_path
       end
     end
