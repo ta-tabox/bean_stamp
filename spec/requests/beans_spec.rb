@@ -27,6 +27,8 @@ RSpec.describe 'Beans', type: :request do
       it 'redirects to beans_path' do
         get bean_path bean
         expect(response).to redirect_to beans_path
+        follow_redirect!
+        expect(response.body).to include 'コーヒー豆を登録してください'
       end
     end
 
@@ -73,6 +75,8 @@ RSpec.describe 'Beans', type: :request do
       it 'redirects to beans_path' do
         get edit_bean_path bean
         expect(response).to redirect_to(beans_path)
+        follow_redirect!
+        expect(response.body).to include 'コーヒー豆を登録してください'
       end
     end
 
@@ -166,31 +170,6 @@ RSpec.describe 'Beans', type: :request do
       it 'deletes a Bean and redirects to beans_path' do
         expect { delete bean_path bean }.to change(Bean, :count).by(-1)
         expect(response).to redirect_to beans_path
-      end
-    end
-  end
-
-  # ロースターが所有しないコーヒー豆関係リソースにアクセスするのを制御するbefore_action #set_beanのテスト
-  describe '#set_bean' do
-    context "when user makes an incorrect beans/#show request for a bean he doesn't have" do
-      it 'redirects beans_path and shows error message' do
-        sign_in user_without_beans
-        get bean_path bean
-        expect(response).to redirect_to beans_path
-        follow_redirect!
-        expect(response.body).to include 'コーヒー豆を登録してください'
-      end
-    end
-  end
-
-  # set_cropped_atメソッドは<input type='month'>で年月データを受け取り年月日データに変換する i.g. '2021-01' -> '2021-01-01'
-  describe '#set_cropped_at' do
-    context "when bean is updated with cropped_at for '2022-01'" do
-      it "updates the bean's cropped_at to '2022-01-01'" do
-        sign_in user_with_beans
-        expect do
-          put bean_path bean, params: { bean: attributes_for(:bean, :update, cropped_at: '2022-01') }
-        end.to change { Bean.find(bean.id).cropped_at.to_s }.from('2021-01-01').to('2022-01-01')
       end
     end
   end
