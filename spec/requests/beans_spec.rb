@@ -39,28 +39,31 @@ RSpec.describe 'Beans', type: :request do
     end
 
     describe 'POST #create' do
+      # FactoryBotにてtaste_tagsとbean_imagesのパラメータを作成（他にいいやり方あるか？）
+      subject { post beans_path, params: { bean: bean_params, bean_images: attributes_for(:bean_image_params) } }
+
       context 'with valid parameter' do
+        # bean_paramsを正常なパラメータで定義する
+        let(:bean_params) { attributes_for(:bean, :with_taste_tags_params) }
+
         it 'creates a Bean and redirects to bean_path' do
-          # FactoryBotにてtaste_tagsとbean_imagesのパラメータを作成（他にいいやり方あるか？）
-          expect do
-            post beans_path, params: { bean: attributes_for(:bean, :with_taste_tags_params), bean_images: attributes_for(:bean_image_params) }
-          end.to change(Bean, :count).by(1)
+          expect { subject }.to change(Bean, :count).by(1)
           # Beanは default_scope -> { order(created_at: :desc) }のためBean.firstで最新のレコードを取得する
           expect(response).to redirect_to bean_path(Bean.first)
         end
       end
 
       context 'with invalid parameter' do
+        # bean_paramsを正常ではないパラメータで定義する
+        let(:bean_params) { attributes_for(:bean, :invalid, :with_taste_tags_params) }
         it 'does not create a Bean and redirects to beans_path' do
-          expect do
-            post beans_path, params: { bean: attributes_for(:bean, :invalid, :with_taste_tags_params), bean_images: attributes_for(:bean_image_params) }
-          end.to_not change(Bean, :count)
+          expect { subject }.to_not change(Bean, :count)
           expect(response).to have_http_status(:success)
           expect(response.body).to include("<title>コーヒー豆登録#{base_title}</title>")
         end
 
         it 'shows a error message' do
-          post beans_path, params: { bean: attributes_for(:bean, :invalid, :with_taste_tags_params), bean_images: attributes_for(:bean_image_params) }
+          subject
           expect(response.body).to include '1 件のエラーが発生したため コーヒー豆 は保存されませんでした'
         end
       end
@@ -130,26 +133,30 @@ RSpec.describe 'Beans', type: :request do
     end
 
     describe 'PUT #update' do
+      subject { put bean_path bean, params: { bean: bean_params } }
+
       context 'with valid parameter' do
+        # bean_paramsに正常なパラメータを定義する
+        let(:bean_params) { attributes_for(:bean, :update) }
+
         it 'updates the bean and redirect_to bean_path' do
-          expect do
-            put bean_path bean, params: { bean: attributes_for(:bean, :update) }
-          end.to change { Bean.find(bean.id).name }.from('テストビーン').to('アップデートビーン')
+          expect { subject }.to change { Bean.find(bean.id).name }.from('テストビーン').to('アップデートビーン')
           expect(response).to redirect_to bean_path bean
         end
       end
 
       context 'with invalid parameter' do
+        # bean_paramsに正常ではないパラメータを定義する
+        let(:bean_params) { attributes_for(:bean, :invalid) }
+
         it 'does not updated the bean and renders beans/edit' do
-          expect do
-            put bean_path bean, params: { bean: attributes_for(:bean, :invalid) }
-          end.to_not change(Bean.find(bean.id), :name)
+          expect { subject }.to_not change(Bean.find(bean.id), :name)
           expect(response).to have_http_status(:success)
           expect(response.body).to include("<title>コーヒー豆情報編集#{base_title}</title>")
         end
 
         it 'shows a error message' do
-          put bean_path bean, params: { bean: attributes_for(:bean, :invalid) }
+          subject
           expect(response.body).to include '1 件のエラーが発生したため コーヒー豆 は保存されませんでした'
         end
       end

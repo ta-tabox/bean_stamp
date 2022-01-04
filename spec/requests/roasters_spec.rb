@@ -40,26 +40,30 @@ RSpec.describe 'Roasters', type: :request do
     end
 
     describe 'POST #create' do
+      subject { post roasters_path, params: { roaster: roaster_params } }
+
       context 'with valid parameter' do
+        # roater_paramsに正常なパラメータを定義する
+        let(:roaster_params) { attributes_for(:roaster) }
+
         it 'create a Roaster and redirect_to root_path' do
-          expect do
-            post roasters_path, params: { roaster: attributes_for(:roaster) }
-          end.to change(Roaster, :count).by(1)
+          expect { subject }.to change(Roaster, :count).by(1)
           expect(response).to redirect_to roaster_path(Roaster.last)
         end
       end
 
       context 'with invalid parameter' do
+        # rotaster_paramsに正常ではないパラメータを定義する
+        let(:roaster_params) { attributes_for(:roaster, :invalid) }
+
         it 'does not create a Raster and redirects to root_path' do
-          expect do
-            post roasters_path, params: { roaster: attributes_for(:roaster, :invalid) }
-          end.to_not change(Roaster, :count)
+          expect { subject }.to_not change(Roaster, :count)
           expect(response).to have_http_status(:success)
           expect(response.body).to include("<title>ロースター登録#{base_title}</title>")
         end
 
         it 'shows a error message' do
-          post roasters_path, params: { roaster: attributes_for(:roaster, :invalid) }
+          subject
           expect(response.body).to include '1 件のエラーが発生したため ロースター は保存されませんでした'
         end
       end
@@ -149,26 +153,30 @@ RSpec.describe 'Roasters', type: :request do
     end
 
     describe 'PUT #update' do
+      subject { put roaster_path roaster, params: { roaster: roaster_params } }
+
       context 'with valid parameter' do
+        # roaster_parasmに正常なパラメータを定義する
+        let(:roaster_params) { attributes_for(:roaster, :update) }
+
         it 'updates the roaster and redirect_to roaster_path' do
-          expect do
-            put roaster_path roaster, params: { roaster: attributes_for(:roaster, :update) }
-          end.to change { Roaster.find(roaster.id).name }.from('テストロースター').to('アップデートロースター')
+          expect { subject }.to change { Roaster.find(roaster.id).name }.from('テストロースター').to('アップデートロースター')
           expect(response).to redirect_to roaster_path roaster
         end
       end
 
       context 'with invalid parameter' do
+        # roaster_paramsに正常ではないパラメータを定義する
+        let(:roaster_params) { attributes_for(:roaster, :invalid) }
+
         it 'does not updated the roaster and renders roasters/edit' do
-          expect do
-            put roaster_path roaster, params: { roaster: attributes_for(:roaster, :invalid) }
-          end.to_not change(Roaster.find(roaster.id), :name)
+          expect { subject }.to_not change(Roaster.find(roaster.id), :name)
           expect(response).to have_http_status(:success)
           expect(response.body).to include("<title>ロースター情報編集#{base_title}</title>")
         end
 
         it 'shows a error message' do
-          put roaster_path roaster, params: { roaster: attributes_for(:roaster, :invalid) }
+          subject
           expect(response.body).to include '1 件のエラーが発生したため ロースター は保存されませんでした'
         end
       end
