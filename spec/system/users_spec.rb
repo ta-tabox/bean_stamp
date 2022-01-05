@@ -9,6 +9,8 @@ RSpec.describe 'Users', type: :system do
       before { visit root_path }
 
       describe 'new registration feature' do
+        subject { click_button '登録' }
+
         before do
           click_link 'メールアドレスで登録'
           fill_in '名前', with: 'テストユーザー'
@@ -20,55 +22,45 @@ RSpec.describe 'Users', type: :system do
 
         context 'with correct form' do
           it 'creates a new user' do
-            expect do
-              click_button '登録'
-              expect(current_path).to eq user_home_path
-              expect(page).to have_content 'アカウント登録が完了しました'
-            end.to change(User, :count).by(1)
+            expect { subject }.to change(User, :count).by(1)
+            expect(current_path).to eq user_home_path
+            expect(page).to have_content 'アカウント登録が完了しました'
           end
         end
 
         context 'with no name' do
           it 'does not create a new user' do
             fill_in '名前', with: nil
-            expect do
-              click_button '登録'
-              expect(current_path).to eq user_registration_path
-              expect(page).to have_content '名前を入力してください'
-            end.to_not change(User, :count)
+            expect { subject }.to_not change(User, :count)
+            expect(current_path).to eq user_registration_path
+            expect(page).to have_content '名前を入力してください'
           end
         end
 
         context 'with no email' do
           it 'does not create a new user' do
             fill_in 'Eメール', with: nil
-            expect do
-              click_button '登録'
-              expect(current_path).to eq user_registration_path
-              expect(page).to have_content 'Eメールを入力してください'
-            end.to_not change(User, :count)
+            expect { subject }.to_not change(User, :count)
+            expect(current_path).to eq user_registration_path
+            expect(page).to have_content 'Eメールを入力してください'
           end
         end
 
         context 'with existing email address' do
           it 'does not create a new user' do
             fill_in 'Eメール', with: user.email
-            expect do
-              click_button '登録'
-              expect(current_path).to eq user_registration_path
-              expect(page).to have_content 'Eメールはすでに存在します'
-            end.to_not change(User, :count)
+            expect { subject }.to_not change(User, :count)
+            expect(current_path).to eq user_registration_path
+            expect(page).to have_content 'Eメールはすでに存在します'
           end
         end
 
         context 'with mismatching passwords' do
           it 'does not create a new user' do
             fill_in 'パスワード（確認用）', with: 'mismatching_password'
-            expect do
-              click_button '登録'
-              expect(current_path).to eq user_registration_path
-              expect(page).to have_content 'パスワードの入力が一致しません'
-            end.to_not change(User, :count)
+            expect { subject }.to_not change(User, :count)
+            expect(current_path).to eq user_registration_path
+            expect(page).to have_content 'パスワードの入力が一致しません'
           end
         end
 
@@ -76,16 +68,16 @@ RSpec.describe 'Users', type: :system do
           it 'does not create a new user' do
             fill_in 'パスワード', with: 'pswd'
             fill_in 'パスワード（確認用）', with: 'pswd'
-            expect do
-              click_button '登録'
-              expect(current_path).to eq user_registration_path
-              expect(page).to have_content 'パスワードは6文字以上で入力してください'
-            end.to_not change(User, :count)
+            expect { subject }.to_not change(User, :count)
+            expect(current_path).to eq user_registration_path
+            expect(page).to have_content 'パスワードは6文字以上で入力してください'
           end
         end
       end
 
       describe 'sign in feature' do
+        subject { click_button 'ログイン' }
+
         before do
           click_link 'ログイン'
           fill_in 'Eメール', with: user.email
@@ -94,7 +86,7 @@ RSpec.describe 'Users', type: :system do
 
         context 'with correct form' do
           it 'creates a new session' do
-            click_button 'ログイン'
+            subject
             expect(current_path).to eq user_home_path
             expect(page).to have_content 'ログインしました'
             expect(page).to have_content user.name
@@ -104,7 +96,7 @@ RSpec.describe 'Users', type: :system do
         context 'with no email' do
           it 'does not create a new session' do
             fill_in 'Eメール', with: nil
-            click_button 'ログイン'
+            subject
             expect(current_path).to eq new_user_session_path
             expect(page).to have_content 'Eメールまたはパスワードが違います'
           end
@@ -113,7 +105,7 @@ RSpec.describe 'Users', type: :system do
         context 'with wrong password' do
           it 'does not create a new session' do
             fill_in 'パスワード', with: 'wrong_password'
-            click_button 'ログイン'
+            subject
             expect(current_path).to eq new_user_session_path
             expect(page).to have_content 'Eメールまたはパスワードが違います'
           end
@@ -122,11 +114,14 @@ RSpec.describe 'Users', type: :system do
     end
 
     context 'when user is signed in' do
-      before { sign_in user }
+      before do
+        sign_in user
+        visit root_path
+      end
 
       describe 'user editing feature' do
+        subject { click_button '更新' }
         before do
-          visit root_path
           click_link 'my page'
           click_link '編集'
         end
@@ -137,7 +132,7 @@ RSpec.describe 'Users', type: :system do
             fill_in 'Eメール', with: 'update@example.com'
             select '東京都', from: 'エリア'
             fill_in '自己紹介', with: 'テストメッセージ'
-            click_button '更新'
+            subject
             expect(current_path).to eq user_path user
             expect(page).to have_content 'アカウント情報を変更しました。'
             expect(page).to have_content 'アップデートユーザー'
@@ -149,7 +144,7 @@ RSpec.describe 'Users', type: :system do
         context 'with a image' do
           it 'uploads a image' do
             attach_file 'user[image]', Rails.root.join('spec/fixtures/sample.jpg')
-            click_button '更新'
+            subject
             expect(current_path).to eq user_path user
             expect(page).to have_content 'アカウント情報を変更しました。'
             expect(page).to have_selector("img[src$='sample.jpg']")
@@ -159,7 +154,7 @@ RSpec.describe 'Users', type: :system do
         context 'with no name' do
           it 'does not update the user information' do
             fill_in '名前', with: nil
-            click_button '更新'
+            subject
             expect(current_path).to eq user_registration_path
             expect(page).to have_content '名前を入力してください'
           end
@@ -168,7 +163,7 @@ RSpec.describe 'Users', type: :system do
         context 'with no email' do
           it 'does not update the user information' do
             fill_in 'Eメール', with: nil
-            click_button '更新'
+            subject
             expect(current_path).to eq user_registration_path
             expect(page).to have_content 'Eメールを入力してください'
           end
@@ -178,7 +173,7 @@ RSpec.describe 'Users', type: :system do
           it 'does not update the user information' do
             fill_in '自己紹介',
                     with: ('a' * 141).to_s
-            click_button '更新'
+            subject
             expect(current_path).to eq user_registration_path
             expect(page).to have_content '140文字まで投稿'
           end
@@ -193,7 +188,7 @@ RSpec.describe 'Users', type: :system do
 
           context 'with correct password' do
             it 'updates a new password' do
-              click_button '更新'
+              subject
               expect(current_path).to eq user_path user
               expect(page).to have_content 'アカウント情報を変更しました。'
             end
@@ -202,7 +197,7 @@ RSpec.describe 'Users', type: :system do
           context 'with no current password' do
             it 'does not update a new password' do
               fill_in '現在のパスワード', with: nil
-              click_button '更新'
+              subject
               expect(current_path).to eq user_registration_path
               expect(page).to have_content '現在のパスワードを入力してください'
             end
@@ -211,7 +206,7 @@ RSpec.describe 'Users', type: :system do
           context 'with wrong password' do
             it 'does not update a new password' do
               fill_in 'パスワード', with: 'wrong_password'
-              click_button '更新'
+              subject
               expect(current_path).to eq user_registration_path
               expect(page).to have_content 'パスワードの入力が一致しません'
             end
@@ -220,29 +215,29 @@ RSpec.describe 'Users', type: :system do
       end
 
       describe 'user detail showing feature' do
+        subject { visit user_path user }
+
         context 'when log in as user' do
-          before do
-            sign_in user
-            visit user_path user
-          end
           it "shows user's name" do
+            subject
             expect(page).to have_content user.name
           end
+
           it 'displays a edit button' do
+            subject
             expect(page).to have_content '編集'
             expect(page).to have_selector("a[href='/users/edit']")
           end
         end
 
         context 'when log in as another user' do
-          before do
-            sign_in another_user
-            visit user_path user
-          end
+          before { sign_in another_user }
           it "shows user's name" do
+            subject
             expect(page).to have_content user.name
           end
           it 'does not display a edit button' do
+            subject
             expect(page).to_not have_content '編集'
             expect(page).to_not have_selector("a[href='/users/edit']")
           end
@@ -251,7 +246,6 @@ RSpec.describe 'Users', type: :system do
 
       describe 'user member canceling feature' do
         before do
-          sign_in user
           visit edit_user_registration_path
           click_link '退会する'
         end
@@ -261,8 +255,8 @@ RSpec.describe 'Users', type: :system do
               click_button '退会する'
               accept_confirm
               expect(current_path).to eq root_path
-              expect(page).to have_content 'アカウントを削除しました'
             end.to change(User, :count).by(-1)
+            expect(page).to have_content 'アカウントを削除しました'
           end
         end
       end
