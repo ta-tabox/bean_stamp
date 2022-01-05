@@ -1,142 +1,142 @@
 require 'rails_helper'
 
-RSpec.describe 'Users', type: :request do
+RSpec.describe 'Users', type: :request, focus: true do
   let(:base_title) { ' | BeansApp' }
   let(:user) { create(:user) }
 
-  # ユーザーがログインしていないときのテスト
-  context 'when user is signed out' do
-    describe 'GET #home' do
-      it 'redirects_to new_user_session_path' do
-        get user_home_path
-        expect(response).to redirect_to new_user_session_path
-      end
+  describe 'GET #home' do
+    subject { get user_home_path }
+
+    context 'when user is signed out' do
+      it { is_expected.to redirect_to new_user_session_path }
     end
 
-    describe 'GET #show' do
-      it 'redirects to new_user_session_path' do
-        get user_path user
-        expect(response).to redirect_to new_user_session_path
+    context 'when user is signed in' do
+      before { sign_in user }
+      it 'gets users/home' do
+        subject
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("<title>ホーム#{base_title}</title>")
       end
     end
+  end
 
-    describe 'GET #new' do
+  describe 'GET #show' do
+    subject { get user_path user }
+
+    context 'when user is signed out' do
+      it { is_expected.to redirect_to new_user_session_path }
+    end
+
+    context 'when user is signed in' do
+      before { sign_in user }
+      it 'gets users/show' do
+        subject
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("<title>ユーザー詳細#{base_title}</title>")
+      end
+
+      it "shows user's name and describe" do
+        subject
+        expect(response.body).to include(user.name.to_s)
+        expect(response.body).to include(user.describe.to_s)
+      end
+    end
+  end
+
+  describe 'GET #new' do
+    subject { get new_user_registration_path }
+
+    context 'when user is signed out' do
       it 'gets users/registrations/new' do
-        get new_user_registration_path
+        subject
         expect(response).to have_http_status(:success)
         expect(response.body).to include("<title>サインアップ#{base_title}</title>")
       end
     end
 
-    describe 'POST #create' do
-      context 'with valid parameter' do
-        it 'creates a User and redirects to root_path' do
-          expect do
-            post user_registration_path, params: { user: attributes_for(:user) }
-          end.to change(User, :count).by(1)
+    context 'when user is signed in' do
+      before { sign_in user }
+      it { is_expected.to redirect_to root_path }
+    end
+  end
 
-          expect(response).to redirect_to(root_path)
+  describe 'POST #create' do
+    subject { post user_registration_path, params: { user: user_params } }
+
+    context 'when user is signed out' do
+      context 'with valid parameter' do
+        let(:user_params) { attributes_for(:user) }
+        it 'creates a User' do
+          expect { subject }.to change(User, :count).by(1)
         end
+        it { is_expected.to redirect_to root_path }
       end
 
       context 'with invalid parameter' do
+        let(:user_params) { attributes_for(:user, :invalid) }
         it 'does not create a User and renders users/new' do
-          expect do
-            post user_registration_path, params: { user: attributes_for(:user, :invalid) }
-          end.to_not change(User, :count)
-
+          expect { subject }.to_not change(User, :count)
           expect(response).to have_http_status(:success)
           expect(response.body).to include("<title>サインアップ#{base_title}</title>")
         end
 
         it 'shows a error message' do
-          post user_registration_path, params: { user: attributes_for(:user, :invalid) }
+          subject
           expect(response.body).to include '1 件のエラーが発生したため ユーザー は保存されませんでした'
         end
       end
     end
 
-    describe 'GET #edit' do
-      it 'redirects to new_user_session_path' do
-        get edit_user_registration_path
-        expect(response).to redirect_to new_user_session_path
-      end
-    end
-
-    describe 'GET #cancel' do
-      it 'redirects to new_user_session_path' do
-        get cancel_user_registration_path
-        expect(response).to redirect_to new_user_session_path
-      end
+    context 'when user is signed in' do
+      let(:user_params) { attributes_for(:user) }
+      before { sign_in user }
+      it { is_expected.to redirect_to root_path }
     end
   end
 
-  # ユーザーがログインしているときのテスト
-  context 'when user is signed in' do
-    before do
-      sign_in user
+  describe 'GET #edit' do
+    subject { get edit_user_registration_path }
+
+    context 'when user is signed out' do
+      it { is_expected.to redirect_to new_user_session_path }
     end
 
-    describe 'GET #home' do
-      it 'gets users/home' do
-        get user_home_path
-        expect(response).to have_http_status(:success)
-        expect(response.body).to include("<title>ホーム#{base_title}</title>")
-      end
-    end
+    context 'when user is signed in' do
+      before { sign_in user }
 
-    describe 'GET #show' do
-      before do
-        get user_path user
-      end
-      it 'gets users/show' do
-        expect(response).to have_http_status(:success)
-        expect(response.body).to include("<title>ユーザー詳細#{base_title}</title>")
-      end
-      it "shows user's name and describe" do
-        expect(response.body).to include(user.name.to_s)
-        expect(response.body).to include(user.describe.to_s)
-      end
-    end
-
-    describe 'GET #new' do
-      it 'regirects to root_path' do
-        get new_user_registration_path
-        expect(response).to redirect_to(root_path)
-      end
-    end
-
-    describe 'POST #create' do
-      it 'regirects to root_path' do
-        post user_registration_path, params: { user: attributes_for(:user) }
-        expect(response).to redirect_to(root_path)
-      end
-    end
-
-    describe 'GET #edit' do
-      before do
-        get edit_user_registration_path
-      end
       it 'gets users/registrations/edit' do
+        subject
         expect(response).to have_http_status(:success)
         expect(response.body).to include("<title>ユーザー情報編集#{base_title}</title>")
       end
       it 'shows user name' do
+        subject
         expect(response.body).to include(user.name.to_s)
       end
     end
+  end
 
-    describe 'GET #cancel' do
+  describe 'GET #cancel' do
+    subject { get cancel_user_registration_path }
+
+    context 'when user is signed out' do
+      it { is_expected.to redirect_to new_user_session_path }
+    end
+
+    context 'when user is signed in' do
+      before { sign_in user }
       it 'gets users/registration/cancel' do
-        get cancel_user_registration_path
+        subject
         expect(response).to have_http_status(:success)
         expect(response.body).to include("<title>アカウントの削除#{base_title}</title>")
       end
     end
-    # deviseが提供する以下メソッドについてはテストが困難（paramsにauthenticity_tokenが必要？）
-    # 'PUT #update' についてはfeature specでカバー
-    # 'DELET #destroy' についてはfeature specでカバー
   end
+
+  # deviseが提供する以下メソッドについてはテストが困難（paramsにauthenticity_tokenが必要？）
+  # 'PUT #update' についてはfeature specでカバー
+  # 'DELET #destroy' についてはfeature specでカバー
 
   # ゲストログイン機能のテスト
   describe 'POST #guest_sign_in' do
