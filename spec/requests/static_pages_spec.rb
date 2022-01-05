@@ -5,20 +5,19 @@ RSpec.describe 'StaticPages', type: :request do
   let(:user) { create(:user) }
 
   describe 'GET #home' do
+    subject { get home_path }
+
     context 'when user is signed out' do
       it 'gets home' do
-        get home_path
+        subject
         expect(response).to have_http_status(:success)
         expect(response.body).to include("<title>Top#{base_title}</title>")
       end
     end
 
     context 'when user is signed in' do
-      it 'redirects to user_home' do
-        sign_in user
-        get home_path
-        expect(response).to redirect_to(user_home_path)
-      end
+      before { sign_in user }
+      it { is_expected.to redirect_to user_home_path }
     end
   end
 

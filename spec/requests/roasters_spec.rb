@@ -240,13 +240,6 @@ RSpec.describe 'Roasters', type: :request do
         expect(response.body).to include('所属していないロースターの更新・削除はできません')
       end
     end
-
-    describe 'before_action #correct_roaster' do
-      it 'redirects to roaster_path and shows flash message' do
-        get edit_roaster_path roaster
-        expect(response).to redirect_to roaster
-      end
-    end
   end
 
   # ゲストロースター編集、削除のテスト ensure_normal_roaster
