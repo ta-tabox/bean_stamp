@@ -1,5 +1,7 @@
 class RoastersController < ApplicationController
   before_action :user_signed_in_required
+  before_action :user_not_belonged_to_roaster_required, only: %i[new create]
+  before_action :user_belonged_to_roaster_required, only: %i[edit update destroy cancel]
   before_action :set_roaster, only: %i[show edit update destroy]
   before_action :correct_roaster, only: %i[edit update destroy]
   before_action :ensure_normal_roaster, only: %i[update destroy]
@@ -12,8 +14,6 @@ class RoastersController < ApplicationController
     @roaster = current_user.build_roaster
   end
 
-  def edit; end
-
   def create
     @roaster = current_user.build_roaster(roaster_params)
     if @roaster.save
@@ -24,6 +24,8 @@ class RoastersController < ApplicationController
       render 'new'
     end
   end
+
+  def edit; end
 
   def update
     if @roaster.update(roaster_params)
