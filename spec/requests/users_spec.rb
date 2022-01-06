@@ -62,36 +62,84 @@ RSpec.describe 'Users', type: :request do
   end
 
   describe 'POST #create' do
-    subject { post user_registration_path, params: { user: user_params } }
+    subject { proc { post user_registration_path, params: { user: user_params } } }
 
     context 'when user is signed out' do
-      context 'with valid parameter' do
-        let(:user_params) { attributes_for(:user) }
-        it 'creates a User' do
-          expect { subject }.to change(User, :count).by(1)
-        end
-        it { is_expected.to redirect_to root_path }
-      end
-
-      context 'with invalid parameter' do
-        let(:user_params) { attributes_for(:user, :invalid) }
-        it 'does not create a User and renders users/new' do
-          expect { subject }.to_not change(User, :count)
+      shared_examples 'does not create a User and renders users/new' do
+        it { is_expected.to_not change(User, :count) }
+        it {
+          subject.call
           expect(response).to have_http_status(:success)
           expect(response.body).to include("<title>サインアップ#{base_title}</title>")
-        end
+        }
+      end
 
-        it 'shows a error message' do
-          subject
-          expect(response.body).to include '1 件のエラーが発生したため ユーザー は保存されませんでした'
-        end
+      shared_examples 'shows a error message' do
+        it {
+          subject.call
+          expect(response.body).to include error_message
+        }
+      end
+
+      context 'with valid parameter' do
+        let(:user_params) { attributes_for(:user) }
+
+        it { is_expected.to change(User, :count).by(1) }
+        it {
+          subject.call
+          expect(response).to redirect_to root_path
+        }
+      end
+
+      context 'with no name' do
+        let(:user_params) { attributes_for(:user, name: nil) }
+        let(:error_message) { '名前を入力してください' }
+
+        it_behaves_like 'does not create a User and renders users/new'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with no email' do
+        let(:user_params) { attributes_for(:user, email: nil) }
+        let(:error_message) { 'Eメールを入力してください' }
+
+        it_behaves_like 'does not create a User and renders users/new'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with existing email address' do
+        before { user }
+        let(:user_params) { attributes_for(:user, email: user.email) }
+        let(:error_message) { 'Eメールはすでに存在します' }
+
+        it_behaves_like 'does not create a User and renders users/new'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with mismatching passwords' do
+        let(:user_params) { attributes_for(:user, password: 'password', password_confirmation: 'mismatching_password') }
+        let(:error_message) { 'パスワードの入力が一致しません' }
+
+        it_behaves_like 'does not create a User and renders users/new'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with too less password' do
+        let(:user_params) { attributes_for(:user, password: 'pswd', password_confirmation: 'pswd') }
+        let(:error_message) { 'パスワードは6文字以上で入力してください' }
+
+        it_behaves_like 'does not create a User and renders users/new'
+        it_behaves_like 'shows a error message'
       end
     end
 
     context 'when user is signed in' do
       let(:user_params) { attributes_for(:user) }
       before { sign_in user }
-      it { is_expected.to redirect_to root_path }
+      it {
+        subject.call
+        expect(response).to redirect_to root_path
+      }
     end
   end
 
