@@ -9,7 +9,7 @@ RSpec.describe 'Users', type: :system do
       before { visit root_path }
 
       describe 'new registration feature' do
-        subject { click_button '登録' }
+        subject { proc { click_button '登録' } }
 
         before do
           click_link 'メールアドレスで登録'
@@ -22,55 +22,9 @@ RSpec.describe 'Users', type: :system do
 
         context 'with correct form' do
           it 'creates a new user' do
-            expect { subject }.to change(User, :count).by(1)
+            is_expected.to change(User, :count).by(1)
             expect(current_path).to eq user_home_path
             expect(page).to have_content 'アカウント登録が完了しました'
-          end
-        end
-
-        context 'with no name' do
-          it 'does not create a new user' do
-            fill_in '名前', with: nil
-            expect { subject }.to_not change(User, :count)
-            expect(current_path).to eq user_registration_path
-            expect(page).to have_content '名前を入力してください'
-          end
-        end
-
-        context 'with no email' do
-          it 'does not create a new user' do
-            fill_in 'Eメール', with: nil
-            expect { subject }.to_not change(User, :count)
-            expect(current_path).to eq user_registration_path
-            expect(page).to have_content 'Eメールを入力してください'
-          end
-        end
-
-        context 'with existing email address' do
-          it 'does not create a new user' do
-            fill_in 'Eメール', with: user.email
-            expect { subject }.to_not change(User, :count)
-            expect(current_path).to eq user_registration_path
-            expect(page).to have_content 'Eメールはすでに存在します'
-          end
-        end
-
-        context 'with mismatching passwords' do
-          it 'does not create a new user' do
-            fill_in 'パスワード（確認用）', with: 'mismatching_password'
-            expect { subject }.to_not change(User, :count)
-            expect(current_path).to eq user_registration_path
-            expect(page).to have_content 'パスワードの入力が一致しません'
-          end
-        end
-
-        context 'with too less password' do
-          it 'does not create a new user' do
-            fill_in 'パスワード', with: 'pswd'
-            fill_in 'パスワード（確認用）', with: 'pswd'
-            expect { subject }.to_not change(User, :count)
-            expect(current_path).to eq user_registration_path
-            expect(page).to have_content 'パスワードは6文字以上で入力してください'
           end
         end
       end
@@ -171,8 +125,7 @@ RSpec.describe 'Users', type: :system do
 
         context 'with too much text in describe' do
           it 'does not update the user information' do
-            fill_in '自己紹介',
-                    with: ('a' * 141).to_s
+            fill_in '自己紹介', with: ('a' * 141).to_s
             subject
             expect(current_path).to eq user_registration_path
             expect(page).to have_content '140文字まで投稿'
