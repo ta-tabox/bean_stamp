@@ -41,33 +41,84 @@ RSpec.describe 'Beans', type: :request do
     end
 
     describe 'POST #create' do
-      # FactoryBotにてtaste_tagsとbean_imagesのパラメータを作成（他にいいやり方あるか？）
-      subject { post beans_path, params: { bean: bean_params, bean_images: attributes_for(:bean_image_params) } }
+      # FactoryBotにてbean_imagesのパラメータを作成
+      subject {  proc { post beans_path, params: { bean: bean_params, bean_images: attributes_for(:bean_image_params) } } }
+
+      shared_examples 'does not create a Bean and redirects to beans_path' do
+        it { is_expected.not_to change(Bean, :count) }
+        it {
+          subject.call
+          expect(response).to have_http_status(:success)
+          expect(response.body).to include("<title>コーヒー豆登録#{base_title}</title>")
+        }
+      end
+
+      shared_examples 'shows a error message' do
+        it {
+          subject.call
+          expect(response.body).to include error_message
+        }
+      end
 
       context 'with valid parameter' do
         # bean_paramsを正常なパラメータで定義する
-        let(:bean_params) { attributes_for(:bean, :with_taste_tags_params) }
+        let(:bean_params) { attributes_for(:bean, bean_taste_tags_attributes: { '0' => { mst_taste_tag_id: '2' }, '1' => { mst_taste_tag_id: '3' } }) }
 
-        it 'creates a Bean and redirects to bean_path' do
-          expect { subject }.to change(Bean, :count).by(1)
+        it { is_expected.to change(Bean, :count).by(1) }
+        it {
+          subject.call
           # Beanは default_scope -> { order(created_at: :desc) }のためBean.firstで最新のレコードを取得する
           expect(response).to redirect_to bean_path(Bean.first)
-        end
+        }
       end
 
-      context 'with invalid parameter' do
-        # bean_paramsを正常ではないパラメータで定義する
-        let(:bean_params) { attributes_for(:bean, :invalid, :with_taste_tags_params) }
-        it 'does not create a Bean and redirects to beans_path' do
-          expect { subject }.to_not change(Bean, :count)
-          expect(response).to have_http_status(:success)
-          expect(response.body).to include("<title>コーヒー豆登録#{base_title}</title>")
-        end
+      # bean_paramsに正常ではないパラメータを渡すときのテスト
+      context 'with no name' do
+        let(:bean_params) { attributes_for(:bean, name: nil) }
+        let(:error_message) { 'タイトルを入力してください' }
 
-        it 'shows a error message' do
-          subject
-          expect(response.body).to include '1 件のエラーが発生したため コーヒー豆 は保存されませんでした'
-        end
+        it_behaves_like 'does not create a Bean and redirects to beans_path'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with no country' do
+        let(:bean_params) { attributes_for(:bean, country: nil) }
+        let(:error_message) { '生産国を入力してください' }
+
+        it_behaves_like 'does not create a Bean and redirects to beans_path'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with too much text in describe' do
+        let(:bean_params) { attributes_for(:bean, describe: ('a' * 301).to_s) }
+        let(:error_message) { 'コーヒー紹介は300文字以内で入力してください' }
+
+        it_behaves_like 'does not create a Bean and redirects to beans_path'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with no taste_tags' do
+        let(:bean_params) { attributes_for(:bean) }
+        let(:error_message) { 'Tastesは2つ以上登録してください' }
+
+        it_behaves_like 'does not create a Bean and redirects to beans_path'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with one taste_tag' do
+        let(:bean_params) { attributes_for(:bean, bean_taste_tags_attributes: { '0' => { mst_taste_tag_id: '2' } }) }
+        let(:error_message) { 'Tastesは2つ以上登録してください' }
+
+        it_behaves_like 'does not create a Bean and redirects to beans_path'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with duplication of taste_tags' do
+        let(:bean_params) { attributes_for(:bean, bean_taste_tags_attributes: { '0' => { mst_taste_tag_id: '2' }, '1' => { mst_taste_tag_id: '2' } }) }
+        let(:error_message) { 'Tastesが重複しています' }
+
+        it_behaves_like 'does not create a Bean and redirects to beans_path'
+        it_behaves_like 'shows a error message'
       end
     end
 
@@ -137,32 +188,61 @@ RSpec.describe 'Beans', type: :request do
     end
 
     describe 'PUT #update' do
-      subject { put bean_path bean, params: { bean: bean_params } }
+      subject { proc { put bean_path bean, params: { bean: bean_params } } }
+
+      shared_examples 'does not updated the bean and renders beans/edit' do
+        it { is_expected.not_to change(Bean.find(bean.id), attribute) }
+        it {
+          subject.call
+          expect(response).to have_http_status(:success)
+          expect(response.body).to include("<title>コーヒー豆情報編集#{base_title}</title>")
+        }
+      end
+
+      shared_examples 'shows a error message' do
+        it {
+          subject.call
+          expect(response.body).to include error_message
+        }
+      end
 
       context 'with valid parameter' do
         # bean_paramsに正常なパラメータを定義する
         let(:bean_params) { attributes_for(:bean, :update) }
 
-        it 'updates the bean and redirect_to bean_path' do
-          expect { subject }.to change { Bean.find(bean.id).name }.from('テストビーン').to('アップデートビーン')
+        it { is_expected.to change { Bean.find(bean.id).name }.from('テストビーン').to('アップデートビーン') }
+        it {
+          subject.call
           expect(response).to redirect_to bean_path bean
-        end
+        }
       end
 
-      context 'with invalid parameter' do
-        # bean_paramsに正常ではないパラメータを定義する
-        let(:bean_params) { attributes_for(:bean, :invalid) }
+      # bean_paramsに正常ではないパラメータを渡すときのテスト
+      context 'with no name' do
+        let(:bean_params) { attributes_for(:bean, name: nil) }
+        let(:error_message) { 'タイトルを入力してください' }
+        let(:attribute) { :name }
 
-        it 'does not updated the bean and renders beans/edit' do
-          expect { subject }.to_not change(Bean.find(bean.id), :name)
-          expect(response).to have_http_status(:success)
-          expect(response.body).to include("<title>コーヒー豆情報編集#{base_title}</title>")
-        end
+        it_behaves_like 'does not updated the bean and renders beans/edit'
+        it_behaves_like 'shows a error message'
+      end
 
-        it 'shows a error message' do
-          subject
-          expect(response.body).to include '1 件のエラーが発生したため コーヒー豆 は保存されませんでした'
-        end
+      context 'with no country' do
+        let(:bean_params) { attributes_for(:bean, country: nil) }
+        let(:error_message) { '生産国を入力してください' }
+        let(:attribute) { :country }
+
+        it_behaves_like 'does not updated the bean and renders beans/edit'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with too much text in describe' do
+        let(:bean_params) { attributes_for(:bean, describe: ('a' * 301).to_s) }
+        let(:error_message) { 'コーヒー紹介は300文字以内で入力してください' }
+        let(:attribute) { :describe }
+
+        it_behaves_like 'does not updated the bean and renders beans/edit'
+        it_behaves_like 'shows a error message'
       end
     end
 

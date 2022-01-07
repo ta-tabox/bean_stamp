@@ -38,11 +38,6 @@ FactoryBot.define do
       end
     end
 
-    # createアクションのparams[:bean][:bean_taste_tags_sttributes]用のパラメータ
-    trait :with_taste_tags_params do
-      bean_taste_tags_attributes { { '0' => { mst_taste_tag_id: '2' }, '1' => { mst_taste_tag_id: '3' } } }
-    end
-
     trait :invalid do
       name { nil }
     end
