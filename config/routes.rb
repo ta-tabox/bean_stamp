@@ -15,4 +15,5 @@ Rails.application.routes.draw do
     collection { get 'cancel' }
   end
   resources :beans
+  resources :offers
 end
