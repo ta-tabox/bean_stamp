@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_28_123113) do
+ActiveRecord::Schema.define(version: 2022_01_10_063955) do
 
   create_table "bean_images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "image"
@@ -69,6 +69,21 @@ ActiveRecord::Schema.define(version: 2021_11_28_123113) do
     t.index ["taste_group_id"], name: "index_mst_taste_tags_on_taste_group_id"
   end
 
+  create_table "offers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "bean_id", null: false
+    t.date "ended_at", null: false
+    t.date "roasted_at", null: false
+    t.date "receipt_started_at", null: false
+    t.date "receipt_ended_at", null: false
+    t.integer "price", null: false
+    t.integer "weight", null: false
+    t.integer "amount", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["bean_id", "created_at", "ended_at"], name: "index_offers_on_bean_id_and_created_at_and_ended_at"
+    t.index ["bean_id"], name: "index_offers_on_bean_id"
+  end
+
   create_table "roasters", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "phone_number", default: "", null: false
@@ -106,5 +121,6 @@ ActiveRecord::Schema.define(version: 2021_11_28_123113) do
   add_foreign_key "bean_taste_tags", "mst_taste_tags"
   add_foreign_key "beans", "mst_roast_levels", column: "roast_level_id"
   add_foreign_key "beans", "roasters"
+  add_foreign_key "offers", "beans"
   add_foreign_key "users", "roasters"
 end
