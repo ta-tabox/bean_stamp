@@ -14,6 +14,7 @@ class OffersController < ApplicationController
   def new
     set_bean
     @offer = @bean.offers.build
+    @bean_images = @bean.bean_images.all
   end
 
   def create
