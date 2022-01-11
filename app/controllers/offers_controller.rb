@@ -7,7 +7,9 @@ class OffersController < ApplicationController
   # 受け取り開始日は焙煎日＜受け取り開始日＜受け取り終了日且つ＜1ヶ月後
   # 受け取り終了日は受け取り開始日＜受け取り終了日＜2ヶ月後
 
-  def index; end
+  def index
+    @pagy, @offers = pagy(current_roaster.offers)
+  end
 
   def show; end
 
