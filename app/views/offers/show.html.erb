@@ -1,2 +1,30 @@
-<h1>Offers#show</h1>
-<p>Find me in app/views/offers/show.html.erb</p>
+<% provide(:title, "オファー詳細") %>
+<h1 class="mb-1">オファ詳細</h1>
+<hr class="mb-3">
+<div class="container">
+  <div class="w-200 pt-12 mx-auto">
+    <div class="bg-white w-200 mx-auto">
+      <%= show_thumbnail(@offer.roaster) %>
+      <span><%= link_to @offer.roaster.name, @offer.roaster %></span>
+      <span><%= link_to @offer.bean.name, @offer %></span>
+      <span>
+        <%= link_to "削除", @offer, method: :delete, data: { confirm: "本当に削除しますか?" }, class: "link ml-4" %>
+      </span>
+      <p> <%= time_ago_in_words(@offer.created_at) %> 前</p>
+      <div>
+        <p><%= @offer.bean.country %></p>
+        <p><%= @offer.bean.process %></p>
+        <p><%= @offer.created_at %></p>
+        <p><%= @offer.ended_at %></p>
+        <p><%= @offer.roasted_at %></p>
+        <p><%= @offer.receipt_started_at %></p>
+        <p><%= @offer.receipt_ended_at %></p>
+        <p><%= @offer.price %></p>
+        <p><%= @offer.weight %></p>
+        <p><%= @offer.amount %></p>
+      </div>
+      <hr class="mb-3">
+    </div>
+  </div>
+</div>
+<%= render partial: 'beans/bean_info', locals: { bean: @offer.bean, bean_images: @offer.bean.bean_images } %>

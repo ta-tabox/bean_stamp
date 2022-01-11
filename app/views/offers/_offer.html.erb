@@ -2,7 +2,7 @@
   <li id="offer-<%= offer.id %>">
     <%= show_thumbnail(offer.roaster) %>
     <span><%= link_to offer.roaster.name, offer.roaster %></span>
-    <span><%= link_to offer.bean.name, offer.bean %></span>
+    <span><%= link_to offer.bean.name, offer %></span>
     <span>
       <%= link_to "削除", offer, method: :delete, data: { confirm: "本当に削除しますか?" }, class: "link ml-4" %>
     </span>
