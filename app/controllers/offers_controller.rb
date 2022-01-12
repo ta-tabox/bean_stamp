@@ -12,7 +12,6 @@ class OffersController < ApplicationController
   def new
     set_bean
     @offer = @bean.offers.build
-    @bean_images = @bean.bean_images.all
   end
 
   def create
@@ -26,11 +25,25 @@ class OffersController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    @bean = @offer.bean
+  end
 
-  def update; end
+  def update
+    if @offer.update(offer_params)
+      flash[:notice] = 'オファーを更新しました'
+      redirect_to @offer
+    else
+      @bean = @offer.bean
+      render 'edit'
+    end
+  end
 
-  def destroy; end
+  def destroy
+    @offer.destroy
+    flash[:notice] = "コーヒー豆「#{@offer.bean.name}」のオファーを1件削除しました"
+    redirect_to offers_path
+  end
 
   private
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Offer, type: :model, focus: true do
+RSpec.describe Offer, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:bean) }
     pending { is_expected.to have_many(:likes) }

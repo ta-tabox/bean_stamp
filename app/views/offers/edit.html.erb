@@ -1,2 +1,5 @@
-<h1>Offers#edit</h1>
-<p>Find me in app/views/offers/edit.html.erb</p>
+<% provide(:title, "オファー編集") %>
+<% provide(:form_title, "オファーを編集する") %>
+<% provide(:button_text, "更新") %>
+<%= render 'form' %>
+<%= render partial: 'beans/bean_info', locals: { bean: @bean, bean_images: @bean.bean_images } %>
