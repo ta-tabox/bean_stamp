@@ -40,32 +40,98 @@ RSpec.describe 'Roasters', type: :request do
     end
 
     describe 'POST #create' do
-      subject { post roasters_path, params: { roaster: roaster_params } }
+      subject { proc { post roasters_path, params: { roaster: roaster_params } } }
+
+      shared_examples 'does not create a Raster and redirects to root_path' do
+        it { is_expected.not_to change(Roaster, :count) }
+        it {
+          subject.call
+          expect(response).to have_http_status(:success)
+          expect(response.body).to include("<title>ロースター登録#{base_title}</title>")
+        }
+      end
+
+      shared_examples 'shows a error message' do
+        it {
+          subject.call
+          expect(response.body).to include error_message
+        }
+      end
 
       context 'with valid parameter' do
         # roater_paramsに正常なパラメータを定義する
         let(:roaster_params) { attributes_for(:roaster) }
 
-        it 'create a Roaster and redirect_to root_path' do
-          expect { subject }.to change(Roaster, :count).by(1)
+        it { is_expected.to change(Roaster, :count).by(1) }
+        it {
+          subject.call
           expect(response).to redirect_to roaster_path(Roaster.last)
-        end
+        }
       end
 
-      context 'with invalid parameter' do
-        # rotaster_paramsに正常ではないパラメータを定義する
-        let(:roaster_params) { attributes_for(:roaster, :invalid) }
+      # rotaster_paramsに正常ではないパラメータを渡すときのテスト
+      context 'with no name' do
+        let(:roaster_params) { attributes_for(:roaster, name: nil) }
+        let(:error_message) { '店舗名を入力してください' }
 
-        it 'does not create a Raster and redirects to root_path' do
-          expect { subject }.to_not change(Roaster, :count)
-          expect(response).to have_http_status(:success)
-          expect(response.body).to include("<title>ロースター登録#{base_title}</title>")
-        end
+        it_behaves_like 'does not create a Raster and redirects to root_path'
+        it_behaves_like 'shows a error message'
+      end
 
-        it 'shows a error message' do
-          subject
-          expect(response.body).to include '1 件のエラーが発生したため ロースター は保存されませんでした'
-        end
+      context 'with no phone_number' do
+        let(:roaster_params) { attributes_for(:roaster, phone_number: nil) }
+        let(:error_message) { '電話番号を入力してください' }
+
+        it_behaves_like 'does not create a Raster and redirects to root_path'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with too less integer' do
+        let(:roaster_params) { attributes_for(:roaster, phone_number: '123456789') }
+        let(:error_message) { '電話番号は10文字以上で入力してください' }
+
+        it_behaves_like 'does not create a Raster and redirects to root_path'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with too much integer' do
+        let(:roaster_params) { attributes_for(:roaster, phone_number: '123456789123') }
+        let(:error_message) { '電話番号は11文字以内で入力してください' }
+
+        it_behaves_like 'does not create a Raster and redirects to root_path'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with multiple strings' do
+        let(:roaster_params) { attributes_for(:roaster, phone_number: '11文字の電話番号です') }
+        let(:error_message) { '電話番号は数値で入力してください' }
+
+        it_behaves_like 'does not create a Raster and redirects to root_path'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with no prefecture_code' do
+        let(:roaster_params) { attributes_for(:roaster, prefecture_code: nil) }
+        let(:error_message) { '都道府県を入力してください' }
+
+        it_behaves_like 'does not create a Raster and redirects to root_path'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with no address' do
+        let(:roaster_params) { attributes_for(:roaster, address: nil) }
+        let(:error_message) { '住所を入力してください' }
+
+        it_behaves_like 'does not create a Raster and redirects to root_path'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with too much text in describe' do
+        let(:roaster_params) { attributes_for(:roaster, describe: ('a' * 301).to_s) }
+        let(:error_message) { '店舗紹介は300文字以内で入力してください' }
+
+        it_behaves_like 'does not create a Raster and redirects to root_path'
+        it_behaves_like 'shows a error message'
       end
     end
 
@@ -153,32 +219,97 @@ RSpec.describe 'Roasters', type: :request do
     end
 
     describe 'PUT #update' do
-      subject { put roaster_path roaster, params: { roaster: roaster_params } }
+      subject { proc { put roaster_path roaster, params: { roaster: roaster_params } } }
+      shared_examples 'does not updated the roaster and renders roasters/edit' do
+        it { is_expected.not_to change(Roaster.find(roaster.id), :name) }
+        it {
+          subject.call
+          expect(response).to have_http_status(:success)
+          expect(response.body).to include("<title>ロースター情報編集#{base_title}</title>")
+        }
+      end
+
+      shared_examples 'shows a error message' do
+        it {
+          subject.call
+          expect(response.body).to include error_message
+        }
+      end
 
       context 'with valid parameter' do
         # roaster_parasmに正常なパラメータを定義する
         let(:roaster_params) { attributes_for(:roaster, :update) }
 
-        it 'updates the roaster and redirect_to roaster_path' do
-          expect { subject }.to change { Roaster.find(roaster.id).name }.from('テストロースター').to('アップデートロースター')
+        it { is_expected.to change { Roaster.find(roaster.id).name }.from('テストロースター').to('アップデートロースター') }
+        it {
+          subject.call
           expect(response).to redirect_to roaster_path roaster
-        end
+        }
       end
 
-      context 'with invalid parameter' do
-        # roaster_paramsに正常ではないパラメータを定義する
-        let(:roaster_params) { attributes_for(:roaster, :invalid) }
+      # rotaster_paramsに正常ではないパラメータを渡すときのテスト
+      context 'with no name' do
+        let(:roaster_params) { attributes_for(:roaster, name: nil) }
+        let(:error_message) { '店舗名を入力してください' }
 
-        it 'does not updated the roaster and renders roasters/edit' do
-          expect { subject }.to_not change(Roaster.find(roaster.id), :name)
-          expect(response).to have_http_status(:success)
-          expect(response.body).to include("<title>ロースター情報編集#{base_title}</title>")
-        end
+        it_behaves_like 'does not updated the roaster and renders roasters/edit'
+        it_behaves_like 'shows a error message'
+      end
 
-        it 'shows a error message' do
-          subject
-          expect(response.body).to include '1 件のエラーが発生したため ロースター は保存されませんでした'
-        end
+      context 'with no phone_number' do
+        let(:roaster_params) { attributes_for(:roaster, phone_number: nil) }
+        let(:error_message) { '電話番号を入力してください' }
+
+        it_behaves_like 'does not updated the roaster and renders roasters/edit'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with too less integer' do
+        let(:roaster_params) { attributes_for(:roaster, phone_number: '123456789') }
+        let(:error_message) { '電話番号は10文字以上で入力してください' }
+
+        it_behaves_like 'does not updated the roaster and renders roasters/edit'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with too much integer' do
+        let(:roaster_params) { attributes_for(:roaster, phone_number: '123456789123') }
+        let(:error_message) { '電話番号は11文字以内で入力してください' }
+
+        it_behaves_like 'does not updated the roaster and renders roasters/edit'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with multiple strings' do
+        let(:roaster_params) { attributes_for(:roaster, phone_number: '11文字の電話番号です') }
+        let(:error_message) { '電話番号は数値で入力してください' }
+
+        it_behaves_like 'does not updated the roaster and renders roasters/edit'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with no prefecture_code' do
+        let(:roaster_params) { attributes_for(:roaster, prefecture_code: nil) }
+        let(:error_message) { '都道府県を入力してください' }
+
+        it_behaves_like 'does not updated the roaster and renders roasters/edit'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with no address' do
+        let(:roaster_params) { attributes_for(:roaster, address: nil) }
+        let(:error_message) { '住所を入力してください' }
+
+        it_behaves_like 'does not updated the roaster and renders roasters/edit'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with too much text in describe' do
+        let(:roaster_params) { attributes_for(:roaster, describe: ('a' * 301).to_s) }
+        let(:error_message) { '店舗紹介は300文字以内で入力してください' }
+
+        it_behaves_like 'does not updated the roaster and renders roasters/edit'
+        it_behaves_like 'shows a error message'
       end
     end
 
