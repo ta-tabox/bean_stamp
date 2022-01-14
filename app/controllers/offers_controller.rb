@@ -2,6 +2,7 @@ class OffersController < ApplicationController
   before_action :user_signed_in_required
   before_action :user_belonged_to_roaster_required
   before_action :set_offer, only: %i[show edit update destroy]
+  before_action :set_bean, only: %i[new]
 
   def index
     @pagy, @offers = pagy(current_roaster.offers)
@@ -10,7 +11,6 @@ class OffersController < ApplicationController
   def show; end
 
   def new
-    set_bean
     @offer = @bean.offers.build
   end
 
