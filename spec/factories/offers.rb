@@ -8,5 +8,9 @@ FactoryBot.define do
     weight { 100 }
     amount { 10 }
     bean
+
+    trait :update do
+      price { '1500' }
+    end
   end
 end

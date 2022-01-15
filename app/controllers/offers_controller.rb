@@ -3,6 +3,7 @@ class OffersController < ApplicationController
   before_action :user_belonged_to_roaster_required
   before_action :set_offer, only: %i[show edit update destroy]
   before_action :set_bean, only: %i[new]
+  before_action :roaster_had_bean_requierd, only: %i[create]
 
   def index
     @pagy, @offers = pagy(current_roaster.offers)
@@ -63,5 +64,11 @@ class OffersController < ApplicationController
     return if @offer
 
     redirect_to beans_path, alert: 'オファーを登録してください'
+  end
+
+  def roaster_had_bean_requierd
+    return if current_roaster.beans.find_by(id: offer_params[:bean_id])
+
+    redirect_to beans_path, alert: 'コーヒー豆を登録してください'
   end
 end

@@ -5,10 +5,6 @@ RSpec.describe 'Offers', type: :request do
   # コーヒー豆、オファーを持たないロースターに所属したユーザー
   let(:user_without_beans_and_offers) { create(:user, :with_roaster) }
 
-  # コーヒー豆を持ったロースターに所属したユーザー
-  # let(:user_with_a_bean) { create(:user, :with_roaster) }
-  # let(:bean_with_no_offers) { create(:bean, :with_image, :with_3_taste_tags, roaster: user_with_a_bean.roaster) }
-
   # オファー付きのコーヒー豆を持ったロースターに所属したユーザー
   let(:user_with_a_offer) { create(:user, :with_roaster) }
   let!(:bean) { create(:bean, :with_image, :with_3_taste_tags, roaster: user_with_a_offer.roaster) }
@@ -78,6 +74,133 @@ RSpec.describe 'Offers', type: :request do
     end
   end
 
+  describe 'POST #create' do
+    subject { proc { post offers_path, params: { offer: offer_params } } }
+
+    shared_examples 'does not create a Offer and renders to new' do
+      it { is_expected.not_to change(Offer, :count) }
+      it {
+        subject.call
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("<title>オファー作成#{base_title}</title>")
+      }
+    end
+
+    shared_examples 'shows a error message' do
+      it {
+        subject.call
+        expect(response.body).to include error_message
+      }
+    end
+
+    context 'when user have no beans' do
+      before { sign_in user_without_beans_and_offers }
+      let(:offer_params) { attributes_for(:offer, bean_id: bean.id) }
+
+      it 'redirects to beans_path' do
+        subject.call
+        expect(response).to redirect_to beans_path
+        follow_redirect!
+        expect(response.body).to include 'コーヒー豆を登録してください'
+      end
+    end
+
+    context 'when user have a bean' do
+      before { sign_in user_with_a_offer }
+
+      # offer_paramsに正常なパラメータを渡す時のテスト
+      context 'with valid parameter' do
+        let(:offer_params) { attributes_for(:offer, bean_id: bean.id) }
+        it { is_expected.to change(Offer, :count).by(1) }
+        it {
+          subject.call
+          expect(response).to redirect_to offer_path(Offer.first)
+        }
+      end
+
+      # offer_paramsに正常ではないパラーメータを渡す時のテスト
+      context 'with no ended_at' do
+        let(:offer_params) { attributes_for(:offer, bean_id: bean.id, ended_at: nil) }
+        let(:error_message) { 'オファー終了日を入力してください' }
+
+        it_behaves_like 'does not create a Offer and renders to new'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with no roasted_at' do
+        let(:offer_params) { attributes_for(:offer, bean_id: bean.id, roasted_at: nil) }
+        let(:error_message) { '焙煎日を入力してください' }
+
+        it_behaves_like 'does not create a Offer and renders to new'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with no receit_started_at' do
+        let(:offer_params) { attributes_for(:offer, bean_id: bean.id, receipt_started_at: nil) }
+        let(:error_message) { '受け取り開始日を入力してください' }
+
+        it_behaves_like 'does not create a Offer and renders to new'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with no receipt_ended_at' do
+        let(:offer_params) { attributes_for(:offer, bean_id: bean.id, receipt_ended_at: nil) }
+        let(:error_message) { '受け取り終了日を入力してください' }
+
+        it_behaves_like 'does not create a Offer and renders to new'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with no price' do
+        let(:offer_params) { attributes_for(:offer, bean_id: bean.id, price: nil) }
+        let(:error_message) { '販売価格を入力してください' }
+
+        it_behaves_like 'does not create a Offer and renders to new'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with price of strings' do
+        let(:offer_params) { attributes_for(:offer, bean_id: bean.id, price: 'price') }
+        let(:error_message) { '販売価格は数値で入力してください' }
+
+        it_behaves_like 'does not create a Offer and renders to new'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with no weight' do
+        let(:offer_params) { attributes_for(:offer, bean_id: bean.id, weight: nil) }
+        let(:error_message) { '内容量を入力してください' }
+
+        it_behaves_like 'does not create a Offer and renders to new'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with weight of strings' do
+        let(:offer_params) { attributes_for(:offer, bean_id: bean.id, weight: 'weight') }
+        let(:error_message) { '内容量は数値で入力してください' }
+
+        it_behaves_like 'does not create a Offer and renders to new'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with no amount' do
+        let(:offer_params) { attributes_for(:offer, bean_id: bean.id, amount: nil) }
+        let(:error_message) { '数量を入力してください' }
+
+        it_behaves_like 'does not create a Offer and renders to new'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with amount of strings' do
+        let(:offer_params) { attributes_for(:offer, bean_id: bean.id, amount: 'amount') }
+        let(:error_message) { '数量は数値で入力してください' }
+
+        it_behaves_like 'does not create a Offer and renders to new'
+        it_behaves_like 'shows a error message'
+      end
+    end
+  end
+
   describe 'GET #edit' do
     subject { get edit_offer_path offer }
     context 'when a user have no offers' do
@@ -95,6 +218,161 @@ RSpec.describe 'Offers', type: :request do
         subject
         expect(response).to have_http_status(:success)
         expect(response.body).to include("<title>オファー編集#{base_title}</title>")
+      end
+    end
+  end
+
+  describe 'PUT #update' do
+    subject { proc { put offer_path offer, params: { offer: offer_params } } }
+
+    shared_examples 'does not update a Offer and renders to edit' do
+      it { is_expected.not_to change(Offer.find(offer.id), attribute) }
+      it {
+        subject.call
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("<title>オファー編集#{base_title}</title>")
+      }
+    end
+
+    shared_examples 'shows a error message' do
+      it {
+        subject.call
+        expect(response.body).to include error_message
+      }
+    end
+
+    context 'when user have no beans' do
+      before { sign_in user_without_beans_and_offers }
+      let(:offer_params) { attributes_for(:offer, :update, bean_id: bean.id) }
+
+      it 'redirects to beans_path' do
+        subject.call
+        expect(response).to redirect_to beans_path
+        follow_redirect!
+        expect(response.body).to include 'オファーを登録してください'
+      end
+    end
+
+    context 'when user have a bean' do
+      before { sign_in user_with_a_offer }
+
+      # offer_paramsに正常なパラメータを渡す時のテスト
+      context 'with valid parameter' do
+        let(:offer_params) { attributes_for(:offer, :update, bean_id: bean.id) }
+        it { is_expected.to change { Offer.find(offer.id).price }.from(1000).to(1500) }
+        it {
+          subject.call
+          expect(response).to redirect_to offer_path(Offer.first)
+        }
+      end
+
+      # offer_paramsに正常ではないパラーメータを渡す時のテスト
+      context 'with no ended_at' do
+        let(:offer_params) { attributes_for(:offer, :update, bean_id: bean.id, ended_at: nil) }
+        let(:error_message) { 'オファー終了日を入力してください' }
+        let(:attribute) { :ended_at }
+
+        it_behaves_like 'does not update a Offer and renders to edit'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with no roasted_at' do
+        let(:offer_params) { attributes_for(:offer, :update, bean_id: bean.id, roasted_at: nil) }
+        let(:error_message) { '焙煎日を入力してください' }
+        let(:attribute) { :roasted_at }
+
+        it_behaves_like 'does not update a Offer and renders to edit'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with no receit_started_at' do
+        let(:offer_params) { attributes_for(:offer, :update, bean_id: bean.id, receipt_started_at: nil) }
+        let(:error_message) { '受け取り開始日を入力してください' }
+        let(:attribute) { :receipt_started_at }
+
+        it_behaves_like 'does not update a Offer and renders to edit'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with no receipt_ended_at' do
+        let(:offer_params) { attributes_for(:offer, :update, bean_id: bean.id, receipt_ended_at: nil) }
+        let(:error_message) { '受け取り終了日を入力してください' }
+        let(:attribute) { :receipt_ended_at }
+
+        it_behaves_like 'does not update a Offer and renders to edit'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with no price' do
+        let(:offer_params) { attributes_for(:offer, :update, bean_id: bean.id, price: nil) }
+        let(:error_message) { '販売価格を入力してください' }
+        let(:attribute) { :price }
+
+        it_behaves_like 'does not update a Offer and renders to edit'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with price of strings' do
+        let(:offer_params) { attributes_for(:offer, :update, bean_id: bean.id, price: 'price') }
+        let(:error_message) { '販売価格は数値で入力してください' }
+        let(:attribute) { :price }
+
+        it_behaves_like 'does not update a Offer and renders to edit'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with no weight' do
+        let(:offer_params) { attributes_for(:offer, :update, bean_id: bean.id, weight: nil) }
+        let(:error_message) { '内容量を入力してください' }
+        let(:attribute) { :weight }
+
+        it_behaves_like 'does not update a Offer and renders to edit'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with weight of strings' do
+        let(:offer_params) { attributes_for(:offer, :update, bean_id: bean.id, weight: 'weight') }
+        let(:error_message) { '内容量は数値で入力してください' }
+        let(:attribute) { :weight }
+
+        it_behaves_like 'does not update a Offer and renders to edit'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with no amount' do
+        let(:offer_params) { attributes_for(:offer, :update, bean_id: bean.id, amount: nil) }
+        let(:error_message) { '数量を入力してください' }
+        let(:attribute) { :amount }
+
+        it_behaves_like 'does not update a Offer and renders to edit'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'with amount of strings' do
+        let(:offer_params) { attributes_for(:offer, :update, bean_id: bean.id, amount: 'amount') }
+        let(:error_message) { '数量は数値で入力してください' }
+        let(:attribute) { :amount }
+
+        it_behaves_like 'does not update a Offer and renders to edit'
+        it_behaves_like 'shows a error message'
+      end
+    end
+  end
+
+  describe 'DELETE #destory' do
+    before { sign_in user_without_beans_and_offers }
+    context 'when user have no offers' do
+      it 'does not delete a Offer and redirects to beans_path' do
+        expect { delete offer_path offer }.not_to change(Offer, :count)
+        expect(response).to redirect_to(beans_path)
+      end
+    end
+
+    context 'when user have a bean' do
+      before { sign_in user_with_a_offer }
+      it 'deletes a Offer and redirects to offers_path' do
+        expect { delete offer_path offer }.to change(Offer, :count).by(-1)
+        expect(response).to redirect_to offers_path
       end
     end
   end
