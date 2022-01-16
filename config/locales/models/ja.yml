@@ -5,6 +5,7 @@ ja:
       roaster: ロースター
       bean: コーヒー豆
       bean_image: コーヒー豆イメージ
+      offer: オファー
     attributes:
       user:
         name: 名前

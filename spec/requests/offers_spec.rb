@@ -105,7 +105,7 @@ RSpec.describe 'Offers', type: :request do
       end
     end
 
-    context 'when user have a bean' do
+    context 'when user have a bean', focus: true do
       before { sign_in user_with_a_offer }
 
       # offer_paramsに正常なパラメータを渡す時のテスト
@@ -198,6 +198,41 @@ RSpec.describe 'Offers', type: :request do
         it_behaves_like 'does not create a Offer and renders to new'
         it_behaves_like 'shows a error message'
       end
+
+      # 日付データの順番をテストする
+      context 'when the ended_at is earlier than today' do
+        let(:offer_params) { attributes_for(:offer, :too_early_ended_at, bean_id: bean.id) }
+        let(:error_message) { 'オファー終了日は本日以降の日付を入力してください' }
+
+        it_behaves_like 'does not create a Offer and renders to new'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'when the roasterd_at is earlier than the ended_at' do
+        let(:offer_params) { attributes_for(:offer, :too_early_roasted_at, bean_id: bean.id) }
+        let(:error_message) { '焙煎日はオファー終了日以降の日付を入力してください' }
+
+        it_behaves_like 'does not create a Offer and renders to new'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'when the receipt_started_at is earlier than the roasterd_at' do
+        let(:offer_params) { attributes_for(:offer, :too_early_receipt_started_at, bean_id: bean.id) }
+        let(:error_message) { '受け取り開始日は焙煎日以降の日付を入力してください' }
+
+        it_behaves_like 'does not create a Offer and renders to new'
+        it_behaves_like 'shows a error message'
+      end
+
+      context 'when the receipt_ended_at is earlier than the receipt_started_at' do
+        let(:offer_params) { attributes_for(:offer, :too_early_receipt_ended_at, bean_id: bean.id) }
+        let(:error_message) { '受け取り終了日は受け取り開始日以降の日付を入力してください' }
+
+        it_behaves_like 'does not create a Offer and renders to new'
+        it_behaves_like 'shows a error message'
+      end
+
+      # 最長登録可能期間（1ヶ月もしくは２ヶ月）はモデルのテストで行う
     end
   end
 

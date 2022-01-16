@@ -9,14 +9,43 @@ class Offer < ApplicationRecord
   validates :price, presence: true, numericality: { only_integer: true }
   validates :weight, presence: true, numericality: { only_integer: true }
   validates :amount, presence: true, numericality: { only_integer: true }
-  # オファーの期日関連のバリデーションを追加する
-  # オファー開始日は当日以降でないといけない且つ＜1ヶ月後
-  # 焙煎日はオファー開始日＜焙煎日＜＝受け取り開始日且つ＜1ヶ月後
-  # 受け取り開始日は焙煎日＜受け取り開始日＜受け取り終了日且つ＜1ヶ月後
-  # 受け取り終了日は受け取り開始日＜受け取り終了日＜2ヶ月後
+  validate :ended_at_cannot_be_in_the_past
+  validate :roasted_at_cannot_be_earlier_than_ended_at
+  validate :receipt_started_at_cannot_be_earlier_than_roasted_at
+  validate :receipt_ended_at_cannot_be_earlier_than_receipt_started_at
 
   # オファーが所属するロースターを返す
   def roaster
     self.bean.roaster
+  end
+
+  private
+
+  # オファーの期日関連のバリデーション
+  def ended_at_cannot_be_in_the_past
+    return unless ended_at&.past?
+
+    errors.add(:ended_at, 'は本日以降の日付を入力してください')
+  end
+
+  def roasted_at_cannot_be_earlier_than_ended_at
+    return unless ended_at && roasted_at
+    return unless roasted_at.before? ended_at
+
+    errors.add(:roasted_at, 'はオファー終了日以降の日付を入力してください')
+  end
+
+  def receipt_started_at_cannot_be_earlier_than_roasted_at
+    return unless roasted_at && receipt_started_at
+    return unless receipt_started_at.before? roasted_at
+
+    errors.add(:receipt_started_at, 'は焙煎日以降の日付を入力してください')
+  end
+
+  def receipt_ended_at_cannot_be_earlier_than_receipt_started_at
+    return unless receipt_started_at && receipt_ended_at
+    return unless receipt_ended_at.before? receipt_started_at
+
+    errors.add(:receipt_ended_at, 'は受け取り開始日以降の日付を入力してください')
   end
 end
