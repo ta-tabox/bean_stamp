@@ -1,18 +1,24 @@
 class OffersController < ApplicationController
   before_action :user_signed_in_required
-  before_action :user_belonged_to_roaster_required
-  before_action :set_offer, only: %i[show edit update destroy]
-  before_action :set_bean, only: %i[new]
+  before_action :user_belonged_to_roaster_required, except: %i[show]
   before_action :roaster_had_bean_requierd, only: %i[create]
+  before_action :roaster_had_offer_requierd_and_set_offer, only: %i[edit update destroy]
 
   def index
     @pagy, @offers = pagy(current_roaster.offers)
   end
 
-  def show; end
+  def show
+    @offer = Offer.find_by(id: params[:id])
+  end
 
   def new
-    @offer = @bean.offers.build
+    @bean = current_roaster.beans.find_by(id: params[:bean_id])
+    if @bean
+      @offer = @bean.offers.build
+    else
+      redirect_to beans_path, alert: 'コーヒー豆を登録してください'
+    end
   end
 
   def create
@@ -52,23 +58,20 @@ class OffersController < ApplicationController
     params.require(:offer).permit(:bean_id, :ended_at, :roasted_at, :receipt_started_at, :receipt_ended_at, :price, :weight, :amount)
   end
 
-  def set_bean
-    @bean = current_roaster.beans.find_by(id: params[:bean_id])
-    return if @bean
+  def roaster_had_bean_requierd
+    return if current_roaster.beans.find_by(id: offer_params[:bean_id])
 
     redirect_to beans_path, alert: 'コーヒー豆を登録してください'
   end
 
   def set_offer
+    @offer = Offer.find_by(id: params[:id])
+  end
+
+  def roaster_had_offer_requierd_and_set_offer
     @offer = current_roaster.offers.find_by(id: params[:id])
     return if @offer
 
     redirect_to beans_path, alert: 'オファーを登録してください'
-  end
-
-  def roaster_had_bean_requierd
-    return if current_roaster.beans.find_by(id: offer_params[:bean_id])
-
-    redirect_to beans_path, alert: 'コーヒー豆を登録してください'
   end
 end

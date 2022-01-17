@@ -8,8 +8,10 @@
       <span><%= link_to @offer.roaster.name, @offer.roaster %></span>
       <span><%= link_to @offer.bean.name, @offer %></span>
       <span>
-        <%= link_to "編集", edit_offer_path(@offer), class: "link ml-4" %>
-        <%= link_to "削除", @offer, method: :delete, data: { confirm: "本当に削除しますか?" }, class: "link ml-4" %>
+        <% if current_user.had_offer?(@offer) %>
+          <%= link_to "編集", edit_offer_path(@offer), class: "link ml-4" %>
+          <%= link_to "削除", @offer, method: :delete, data: { confirm: "本当に削除しますか?" }, class: "link ml-4" %>
+        <% end %>
       </span>
       <p> <%= time_ago_in_words(@offer.created_at) %> 前</p>
       <div>

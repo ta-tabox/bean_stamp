@@ -1,7 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe 'Offers', type: :request do
+RSpec.describe 'Offers', type: :request, focus: true do
   let(:base_title) { ' | BeansApp' }
+  # ロースターに所属しないユーザー
+  let(:user) { create(:user) }
   # コーヒー豆、オファーを持たないロースターに所属したユーザー
   let(:user_without_beans_and_offers) { create(:user, :with_roaster) }
 
@@ -34,16 +36,23 @@ RSpec.describe 'Offers', type: :request do
 
   describe 'GET #show' do
     subject { get offer_path offer }
-    context 'when a user have no offers' do
-      before { sign_in user_without_beans_and_offers }
-      it 'redirects to beans_path' do
+    context 'when a user does not belong to a roaster' do
+      before { sign_in user }
+      it "gets offers/show and shows the bean's name of the offer" do
         subject
-        expect(response).to redirect_to beans_path
-        follow_redirect!
-        expect(response.body).to include 'オファーを登録してください'
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("<title>オファー詳細#{base_title}</title>")
       end
     end
-    context 'when a user have a offer' do
+    context 'when a user belongs to a roaster who had no offers' do
+      before { sign_in user_without_beans_and_offers }
+      it "gets offers/show and shows the bean's name of the offer" do
+        subject
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("<title>オファー詳細#{base_title}</title>")
+      end
+    end
+    context 'when a user belongs to a roaster who had a offer' do
       before { sign_in user_with_a_offer }
       it "gets offers/show and shows the bean's name of the offer" do
         subject
@@ -105,7 +114,7 @@ RSpec.describe 'Offers', type: :request do
       end
     end
 
-    context 'when user have a bean', focus: true do
+    context 'when user have a bean' do
       before { sign_in user_with_a_offer }
 
       # offer_paramsに正常なパラメータを渡す時のテスト
