@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Offers', type: :request, focus: true do
+RSpec.describe 'Offers', type: :request do
   let(:base_title) { ' | BeansApp' }
   # ロースターに所属しないユーザー
   let(:user) { create(:user) }

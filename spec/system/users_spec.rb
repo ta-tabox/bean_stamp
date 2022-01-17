@@ -215,4 +215,17 @@ RSpec.describe 'Users', type: :system do
       end
     end
   end
+
+  describe 'User#home' do
+    let!(:bean) { create(:bean, :with_image, :with_3_taste_tags) }
+    let!(:offer) { create(:offer, bean: bean) }
+    before do
+      sign_in user
+      visit user_home_path
+    end
+    it 'shows a offer' do
+      expect(page).to have_content offer.bean.name
+      expect(page).to have_content offer.roaster.name
+    end
+  end
 end
