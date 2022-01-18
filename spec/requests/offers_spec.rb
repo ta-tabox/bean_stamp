@@ -240,8 +240,6 @@ RSpec.describe 'Offers', type: :request do
         it_behaves_like 'does not create a Offer and renders to new'
         it_behaves_like 'shows a error message'
       end
-
-      # 最長登録可能期間（1ヶ月もしくは２ヶ月）はモデルのテストで行う
     end
   end
 

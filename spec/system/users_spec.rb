@@ -208,8 +208,8 @@ RSpec.describe 'Users', type: :system do
               click_button '退会する'
               accept_confirm
               expect(current_path).to eq root_path
+              expect(page).to have_content 'アカウントを削除しました'
             end.to change(User, :count).by(-1)
-            expect(page).to have_content 'アカウントを削除しました'
           end
         end
       end

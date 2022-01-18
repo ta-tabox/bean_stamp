@@ -10,21 +10,20 @@
       <span>
         <% if current_user.had_offer?(@offer) %>
           <%= link_to "編集", edit_offer_path(@offer), class: "link ml-4" %>
-          <%= link_to "削除", @offer, method: :delete, data: { confirm: "本当に削除しますか?" }, class: "link ml-4" %>
         <% end %>
       </span>
       <p> <%= time_ago_in_words(@offer.created_at) %> 前</p>
       <div>
-        <p><%= @offer.bean.country %></p>
-        <p><%= @offer.bean.process %></p>
-        <p><%= @offer.created_at %></p>
-        <p><%= @offer.ended_at %></p>
-        <p><%= @offer.roasted_at %></p>
-        <p><%= @offer.receipt_started_at %></p>
-        <p><%= @offer.receipt_ended_at %></p>
-        <p><%= @offer.price %></p>
-        <p><%= @offer.weight %></p>
-        <p><%= @offer.amount %></p>
+        <div id="offer_bean_country"><%= @offer.bean.country %></div>
+        <div id="offer_bean_process"><%= @offer.bean.process %></div>
+        <div id="offer_created_at"><%= @offer.created_at %></div>
+        <div id="offer_ended_at"><%= @offer.ended_at %></div>
+        <div id="offer_roasted_at"><%= @offer.roasted_at %></div>
+        <div id="offer_receipt_started_at"><%= @offer.receipt_started_at %></div>
+        <div id="offer_receipt_ended_at"><%= @offer.receipt_ended_at %></div>
+        <div id="offer_price"><%= @offer.price %></div>
+        <div id="offer_weight"><%= @offer.weight %></div>
+        <div id="offer_amount"><%= @offer.amount %></div>
       </div>
       <hr class="mb-3">
     </div>
