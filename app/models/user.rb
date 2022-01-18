@@ -27,4 +27,9 @@ class User < ApplicationRecord
   def had_bean?(bean)
     self.roaster == bean.roaster
   end
+
+  # ユーザーが所属するロースターのオファーと一致しているか？
+  def had_offer?(offer)
+    self.roaster == offer.roaster
+  end
 end

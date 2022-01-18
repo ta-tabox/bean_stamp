@@ -17,7 +17,6 @@ AllCops:
     - "db/migrate/**"
   DisplayCopNames: true
   TargetRubyVersion: 3.0
-
 # trueかfalseを設定しないと警告が出る
 Style/HashEachMethods:
   Enabled: true
@@ -83,7 +82,7 @@ Metrics/CyclomaticComplexity:
   Max: 10
 
 # 1行の文字数
-Metrics/LineLength:
+Layout/LineLength:
   Max: 160
   Exclude:
     - "db/migrate/*.rb"
