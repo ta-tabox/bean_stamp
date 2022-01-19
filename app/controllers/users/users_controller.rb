@@ -2,7 +2,7 @@ class Users::UsersController < ApplicationController
   before_action :authenticate_user!
   def home
     # フォローリソースを実装するときにユーザーがフォローするロースターのオファーのみに修正する
-    @pagy, @offers = pagy(Offer.all)
+    @pagy, @offers = pagy(Offer.all.includes([:bean]))
   end
 
   def show
