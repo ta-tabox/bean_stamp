@@ -22,7 +22,7 @@ class OffersController < ApplicationController
   end
 
   def create
-    @offer = Offer.create(offer_params)
+    @offer = Offer.new(offer_params)
     if @offer.save
       flash[:notice] = 'オファーを作成しました'
       redirect_to @offer
