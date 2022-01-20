@@ -1,5 +1,6 @@
 class Offer < ApplicationRecord
   belongs_to :bean, -> { includes(:roaster, :bean_images) }, inverse_of: :offers
+  has_one :roaster, through: :bean
   default_scope -> { order(created_at: :desc) }
   validates :bean_id, presence: true
   validates :ended_at, presence: true
@@ -13,11 +14,6 @@ class Offer < ApplicationRecord
   validate :roasted_at_cannot_be_earlier_than_ended_at
   validate :receipt_started_at_cannot_be_earlier_than_roasted_at
   validate :receipt_ended_at_cannot_be_earlier_than_receipt_started_at
-
-  # オファーが所属するロースターを返す
-  def roaster
-    self.bean.roaster
-  end
 
   private
 
