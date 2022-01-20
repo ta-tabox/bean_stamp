@@ -7,15 +7,15 @@
       <% end %>
     <% end %>
   </div>
-  <p>生産国：<%= bean.country if bean.country? %></p>
-  <p>焙煎度：<%= bean.roast_level.name if bean.roast_level_id? %></p>
-  <p>地域：<%= bean.subregion if bean.subregion? %></p>
-  <p>農園：<%= bean.farm if bean.farm? %></p>
-  <p>品種：<%= bean.variety if bean.variety? %></p>
-  <p>精製方法：<%= bean.process if bean.process? %></p>
-  <p>標高：<%= "#{bean.elevation} m" if bean.elevation? %></p>
-  <p>収穫：<%= "#{bean.cropped_at.year}年 #{bean.cropped_at.month}月" if bean.cropped_at? %></p>
-  <p>説明：<%= bean.describe if bean.describe? %></p>
+  <p>生産国：<%= bean&.country %></p>
+  <p>焙煎度：<%= bean.roast_level&.name %></p>
+  <p>地域：<%= bean&.subregion %></p>
+  <p>農園：<%= bean&.farm %></p>
+  <p>品種：<%= bean&.variety %></p>
+  <p>精製方法：<%= bean&.process %></p>
+  <p>標高：<%= "#{bean&.elevation} m" %></p>
+  <p>収穫：<%= "#{bean.cropped_at&.year}年 #{bean.cropped_at&.month}月" %></p>
+  <p>説明：<%= bean&.describe %></p>
   <p>酸味：<%= bean.acidity %></p>
   <p>香り：<%= bean.flavor %></p>
   <p>ボディ：<%= bean.body %></p>
