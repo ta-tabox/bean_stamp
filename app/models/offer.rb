@@ -1,5 +1,5 @@
 class Offer < ApplicationRecord
-  belongs_to :bean, -> { includes(:roaster, :bean_images) }, inverse_of: :offers
+  belongs_to :bean, inverse_of: :offers
   has_one :roaster, through: :bean
   default_scope -> { order(created_at: :desc) }
   validates :bean_id, presence: true
