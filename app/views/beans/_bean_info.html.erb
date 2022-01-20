@@ -1,10 +1,8 @@
 <div class="form form-container">
   <p>タイトル：<%= bean.name %></p>
   <div class="flex">
-    <% if bean_images.any? %>
-      <% bean_images.each do |bean_image| %>
-        <%= image_tag bean_image.image.thumb.url, class: "thumbnail" if bean_image.image? %>
-      <% end %>
+    <% bean_images.each do |bean_image| %>
+      <%= image_tag bean_image.image.thumb.url, class: "thumbnail" if bean_image.image? %>
     <% end %>
   </div>
   <p>生産国：<%= bean&.country %></p>
@@ -23,11 +21,9 @@
   <p>甘味：<%= bean.sweetness %></p>
   <!-- 処理の分岐が多い、タグ領域(pタグ)の生成をもっとシンプルにできないか？ -->
   <div class="flex">
-    <% if bean.taste_tags.any? %>
-      <% bean.taste_tags.each do |tag| %>
-        <% if tag.id? %>
-          <p class="mr-4 px-4 border border-1 border-gray-100 rounded-md"> <%= tag.name %></p>
-        <% end %>
+    <% bean.taste_tags.each do |tag| %>
+      <% if tag.id? %>
+        <p class="mr-4 px-4 border border-1 border-gray-100 rounded-md"> <%= tag.name %></p>
       <% end %>
     <% end %>
   </div>
