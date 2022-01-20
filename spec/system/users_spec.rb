@@ -208,11 +208,24 @@ RSpec.describe 'Users', type: :system do
               click_button '退会する'
               accept_confirm
               expect(current_path).to eq root_path
+              expect(page).to have_content 'アカウントを削除しました'
             end.to change(User, :count).by(-1)
-            expect(page).to have_content 'アカウントを削除しました'
           end
         end
       end
+    end
+  end
+
+  describe 'User#home' do
+    let!(:bean) { create(:bean, :with_image, :with_3_taste_tags) }
+    let!(:offer) { create(:offer, bean: bean) }
+    before do
+      sign_in user
+      visit user_home_path
+    end
+    it 'shows a offer' do
+      expect(page).to have_content offer.bean.name
+      expect(page).to have_content offer.roaster.name
     end
   end
 end

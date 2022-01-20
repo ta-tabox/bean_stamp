@@ -1,0 +1,5 @@
+<% provide(:title, "オファー作成") %>
+<% provide(:form_title, "オファーを作成する") %>
+<% provide(:button_text, "オファーする") %>
+<%= render 'form' %>
+<%= render partial: 'beans/bean_info', locals: { bean: @bean, bean_images: @bean.bean_images } %>

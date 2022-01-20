@@ -11,6 +11,7 @@ class Bean < ApplicationRecord
   # bean_tagsのアソシエーション
   has_many :bean_taste_tags, dependent: :destroy
   has_many :taste_tags, through: :bean_taste_tags, source: :mst_taste_tag
+  has_many :offers, dependent: :destroy
   accepts_nested_attributes_for :bean_taste_tags, allow_destroy: true
 
   default_scope -> { order(created_at: :desc) }
@@ -32,9 +33,9 @@ class Bean < ApplicationRecord
   validate :taste_tags_cannot_be_duplicated
 
   def update_with_bean_images(bean_params)
-    self.transaction do
-      self.update!(bean_params)
-      update_bean_images if self.upload_images
+    transaction do
+      update!(bean_params)
+      update_bean_images if upload_images
     end
     true
   rescue ActiveRecord::RecordInvalid
@@ -94,9 +95,9 @@ class Bean < ApplicationRecord
   # upload_imagesがある場合は登録ずみの画像を削除し新たにcreateする
   def update_bean_images
     # 登録ずみの画像を全て削除する
-    self.bean_images.each(&:destroy)
-    self.upload_images.each do |img|
-      self.bean_images.create!(image: img, bean_id: self.id)
+    bean_images.each(&:destroy)
+    upload_images.each do |img|
+      bean_images.create!(image: img, bean_id: self.id)
     end
   end
 end

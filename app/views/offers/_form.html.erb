@@ -1,0 +1,50 @@
+<div class="form-container">
+  <div class="form">
+    <%= form_with(model: @offer) do |f| %>
+      <%= render "shared/error_messages", resource: f.object %>
+      <h1 class="text-center"><%= yield(:form_title) %></h1>
+      <%= f.hidden_field :bean_id, value: "#{@bean.id}" %>
+      <div class="field">
+        <%= f.label :ended_at, class: "label" %>
+        <%= f.date_field :ended_at, autofocus: true, min: Date.today, max: Date.today.next_month(1), class: "input-field" %>
+      </div>
+      <div class="field">
+        <%= f.label :roasted_at, class: "label" %>
+        <%= f.date_field :roasted_at, min: Date.today, max: Date.today.next_month(1), class: "input-field" %>
+      </div>
+      <div class="field">
+        <%= f.label :receipt_started_at, class: "label" %>
+        <%= f.date_field :receipt_started_at, min: Date.today, max: Date.today.next_month(1), class: "input-field" %>
+      </div>
+      <div class="field">
+        <%= f.label :receipt_ended_at, class: "label" %>
+        <%= f.date_field :receipt_ended_at, min: Date.today, max: Date.today.next_month(2), class: "input-field" %>
+      </div>
+      <div class="field">
+        <%= f.label :price, class: "label" %>
+        <%= f.number_field :price, placeholder: "販売価格（円）", min: 0, class: "input-field" %>
+      </div>
+      <div class="field">
+        <%= f.label :weight, class: "label" %>
+        <%= f.number_field :weight, placeholder: "内容量（g）", min: 50, step: 50, class: "input-field" %>
+      </div>
+      <div class="field">
+        <%= f.label :amount, class: "label" %>
+        <%= f.number_field :amount, placeholder: "数量（個）", min: 1, class: "input-field" %>
+      </div>
+      <div class="flex">
+        <%= link_to "一覧に戻る", beans_path , class: "mr-4 btn-primary", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>
+        <div class="actions">
+          <%= f.submit yield(:button_text), class: "btn-primary" %>
+        </div>
+      </div>
+      <div>
+        <% if @offer.id? %>
+          <p>オファーを
+            <%= link_to '削除する', offer_path(@offer), data: { confirm: "本当に削除しますか？"}, method: :delete , class: "link mt-4"%>
+          </p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

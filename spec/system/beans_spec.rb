@@ -173,7 +173,7 @@ RSpec.describe 'Beans', type: :system do
 
         it 'deletes a bean' do
           expect do
-            find("li#bean-#{bean.id}").click_link '削除'
+            click_link '削除する'
             accept_confirm
             expect(current_path).to eq beans_path
           end.to change(Bean, :count).by(-1)
