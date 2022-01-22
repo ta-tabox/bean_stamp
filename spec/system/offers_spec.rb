@@ -85,11 +85,6 @@ RSpec.describe 'Offers', type: :system do
       subject { click_button '更新' }
       it "updates the offer's information" do
         visit edit_offer_path offer
-        # find("li#offer-#{offer.id}").click_link '編集'
-        # system_specのランダム落ち対策、画面が表示されるまで待つ
-        # Timeout.timeout(Capybara.default_max_wait_time) do
-        # loop until page.find('#offer_ended_at').visible?
-        # end
         page.find('#offer_ended_at').set(Time.zone.today.next_day(7))
         page.find('#offer_roasted_at').set(Time.zone.today.next_day(12))
         page.find('#offer_receipt_started_at').set(Time.zone.today.next_day(17))
