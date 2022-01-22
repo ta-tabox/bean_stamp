@@ -84,9 +84,12 @@ RSpec.describe 'Offers', type: :system do
     describe 'offer editing feature' do
       subject { click_button '更新' }
       it "updates the offer's information" do
-        click_link 'offers'
-        find("li#offer-#{offer.id}").click_link '編集'
-        # fill_inでは上手く動かなかった
+        visit edit_offer_path offer
+        # find("li#offer-#{offer.id}").click_link '編集'
+        # system_specのランダム落ち対策、画面が表示されるまで待つ
+        # Timeout.timeout(Capybara.default_max_wait_time) do
+        # loop until page.find('#offer_ended_at').visible?
+        # end
         page.find('#offer_ended_at').set(Time.zone.today.next_day(7))
         page.find('#offer_roasted_at').set(Time.zone.today.next_day(12))
         page.find('#offer_receipt_started_at').set(Time.zone.today.next_day(17))
@@ -109,8 +112,8 @@ RSpec.describe 'Offers', type: :system do
     describe 'delete offer feature' do
       before { click_link 'offers' }
       it 'deletes a offer at offers#index' do
+        find("li#offer-#{offer.id}").click_link '削除'
         expect do
-          find("li#offer-#{offer.id}").click_link '削除'
           accept_confirm
           expect(current_path).to eq offers_path
         end.to change(Offer, :count).by(-1)
@@ -118,9 +121,9 @@ RSpec.describe 'Offers', type: :system do
         expect(page).to_not have_selector("a[href='/offers/#{offer.id}]")
       end
       it 'deletes a offer at offers#edit' do
-        find("li#offer-#{offer.id}").click_link '編集'
+        visit edit_offer_path offer
+        click_link '削除する'
         expect do
-          click_link '削除する'
           accept_confirm
           expect(current_path).to eq offers_path
         end.to change(Offer, :count).by(-1)
