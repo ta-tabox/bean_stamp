@@ -23,15 +23,6 @@ RSpec.describe 'Beans', type: :system do
         expect(page.find('ol > div:first-of-type')).to have_selector "li#bean-#{recent_bean.id}"
         expect(page.find('ol > div:last-of-type')).to have_selector "li#bean-#{old_bean.id}"
       end
-
-      it 'displays link for edit and delete' do
-        subject
-
-        expect(page).to have_content '編集'
-        expect(page).to have_selector("a[href='/beans/#{bean.id}/edit']")
-        expect(page).to have_content '削除'
-        expect(page).to have_selector 'a[data-method=delete]', text: '削除'
-      end
     end
 
     describe 'new creation feature' do
@@ -76,14 +67,15 @@ RSpec.describe 'Beans', type: :system do
 
       context 'with too many images' do
         it 'shows alert and does not create a new Bean' do
+          click_link 'beans'
+          click_link '新規作成'
           attach_file 'bean_images[image][]',
                       [Rails.root.join('spec/fixtures/sample.jpg'),
                        Rails.root.join('spec/fixtures/sample.jpg'),
                        Rails.root.join('spec/fixtures/sample.jpg'),
                        Rails.root.join('spec/fixtures/sample.jpg'),
                        Rails.root.join('spec/fixtures/sample.jpg')], multiple: true
-
-          page.accept_alert('画像は最大4枚まで投稿できます')
+          accept_alert('画像は最大4枚まで投稿できます')
           is_expected.to_not change(Bean, :count)
         end
       end
