@@ -74,7 +74,7 @@ RSpec.describe 'Beans', type: :system do
       end
 
       context 'with too many images' do
-        it 'does not create a new Bean' do
+        it 'shows alert and does not create a new Bean' do
           attach_file 'bean_images[image][]',
                       [Rails.root.join('spec/fixtures/sample.jpg'),
                        Rails.root.join('spec/fixtures/sample.jpg'),
@@ -82,9 +82,8 @@ RSpec.describe 'Beans', type: :system do
                        Rails.root.join('spec/fixtures/sample.jpg'),
                        Rails.root.join('spec/fixtures/sample.jpg')], multiple: true
 
+          page.accept_alert('画像は最大4枚まで投稿できます')
           is_expected.to_not change(Bean, :count)
-          expect(current_path).to eq beans_path
-          expect(page).to have_content 'イメージは4枚までしか登録できません'
         end
       end
     end
