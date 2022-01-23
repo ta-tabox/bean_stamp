@@ -1,4 +1,4 @@
   <%= form_with(model: current_user.roaster_relationships.find_by(roaster_id: @roaster.id),
-              html: { method: :delete }, local: true) do |f| %>
+              html: { method: :delete }, local: false) do |f| %>
   <%= f.submit "Unfollow", class: "btn btn-primary" %>
 <% end %>
