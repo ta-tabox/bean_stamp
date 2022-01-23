@@ -1,0 +1,8 @@
+<div class="stats">
+  <%= link_to followers_roaster_path(@roaster), class: "link mt-4" do%>
+    <strong id="followers" class="stat">
+      <%= @roaster.followers.count %>
+    </strong>
+    followers
+  <% end %>
+</div>

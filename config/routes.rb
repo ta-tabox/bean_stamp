@@ -11,9 +11,14 @@ Rails.application.routes.draw do
     post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
   end
   resources :users, only: [:show], module: 'users'
+  resources :users do
+    member { get 'following' }
+  end
   resources :roasters do
     collection { get 'cancel' }
+    member { get 'followers' }
   end
   resources :beans
   resources :offers
+  resources :roaster_relationships, only: %i[create destroy]
 end
