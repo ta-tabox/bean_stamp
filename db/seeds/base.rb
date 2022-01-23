@@ -5,7 +5,7 @@ User.create!(
   prefecture_code: '13',
   password: 'password',
   password_confirmation: 'password',
-  describe: '閲覧用のロースターです',
+  describe: '閲覧用のユーザーです',
   guest: true,
 )
 
