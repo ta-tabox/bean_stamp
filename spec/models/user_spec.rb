@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  describe 'associations' do
+  describe 'associations', focus: true do
     it { is_expected.to belong_to(:roaster).optional }
+    it { is_expected.to have_many(:roaster_relationships).with_foreign_key('follower_id').inverse_of(:follower).dependent(:destroy) }
+    it { is_expected.to have_many(:following_roasters).through(:roaster_relationships) }
   end
 
   describe 'validations' do

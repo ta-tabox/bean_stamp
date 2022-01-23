@@ -1,5 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe RoasterRelationship, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+RSpec.describe RoasterRelationship, type: :model, focus: true do
+  describe 'associations' do
+    it { is_expected.to belong_to(:follower).class_name('User') }
+    it { is_expected.to belong_to(:roaster) }
+  end
 end
