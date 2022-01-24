@@ -1,0 +1,9 @@
+<div class="bg-white w-200 mx-auto">
+  <li id="user-<%= user.id %>">
+    <%= show_thumbnail(user) %>
+    <div>
+      <%= user.name %><span class="ml-3">＠<%=  "#{user.prefecture.name}" %></span>
+    </div>
+    <hr class="mb-3">
+  </li>
+</div>

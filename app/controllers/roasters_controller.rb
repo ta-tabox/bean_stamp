@@ -2,7 +2,7 @@ class RoastersController < ApplicationController
   before_action :user_signed_in_required
   before_action :user_not_belonged_to_roaster_required, only: %i[new create]
   before_action :user_belonged_to_roaster_required, only: %i[edit update destroy cancel]
-  before_action :set_roaster, only: %i[show edit update destroy]
+  before_action :set_roaster, only: %i[show edit update destroy followers]
   before_action :correct_roaster, only: %i[edit update destroy]
   before_action :ensure_normal_roaster, only: %i[update destroy]
 
@@ -44,6 +44,10 @@ class RoastersController < ApplicationController
 
   def cancel
     @roaster = current_roaster
+  end
+
+  def followers
+    @pagy, @users = pagy(@roaster.followers)
   end
 
   private
