@@ -1,8 +1,9 @@
-20.times do |n|
-  Offer.seed_once do |s|
+beans = Bean.all
+beans.count.times do |n|
+  Offer.seed do |s|
     s.id = n + 1
-    s.bean_id = n + 1
-    s.created_at = Faker::Time.between(from: DateTime.now - 1, to: DateTime.now)
+    s.bean_id = beans[n].id
+    s.created_at = Faker::Time.between(from: DateTime.now.prev_day(7), to: DateTime.now)
     s.ended_at = Faker::Time.between(from: DateTime.now.next_day(7), to: DateTime.now.next_day(14))
     s.roasted_at = Faker::Time.between(from: DateTime.now.next_day(15), to: DateTime.now.next_day(21))
     s.receipt_started_at = Faker::Time.between(from: DateTime.now.next_day(22), to: DateTime.now.next_day(28))
