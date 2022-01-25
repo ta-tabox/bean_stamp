@@ -1,8 +1,7 @@
 class Users::UsersController < ApplicationController
   before_action :authenticate_user!
   def home
-    # フォローリソースを実装するときにユーザーがフォローするロースターのオファーのみに修正する
-    @pagy, @offers = pagy(Offer.joins(:bean).where('roaster_id IN (?)', current_user.following_roaster_ids).includes(:roaster, bean: :bean_images))
+    @pagy, @offers = pagy(current_user.feed)
   end
 
   def show

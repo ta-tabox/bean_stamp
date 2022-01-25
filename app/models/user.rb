@@ -51,4 +51,13 @@ class User < ApplicationRecord
   def following_roaster?(roaster)
     following_roasters.include?(roaster)
   end
+
+  # user#homeのフォローしたロースターのオファー一覧を返す
+  def feed
+    # following_roaster_idsに相当するサブセレクト
+    following_roaster_ids = 'SELECT `roasters`.`id` FROM `roasters`
+                             INNER JOIN `roaster_relationships` ON `roasters`.`id` = `roaster_relationships`.`roaster_id`
+                             WHERE `roaster_relationships`.`follower_id` = :user_id'
+    Offer.joins(:bean).where("roaster_id IN (#{following_roaster_ids})", user_id: id).includes(:roaster, bean: :bean_images)
+  end
 end
