@@ -8,7 +8,9 @@ class RoastersController < ApplicationController
 
   def index; end
 
-  def show; end
+  def show
+    @pagy, @offers = pagy(@roaster.offers.includes(:roaster, bean: :bean_images))
+  end
 
   def new
     @roaster = current_user.build_roaster
