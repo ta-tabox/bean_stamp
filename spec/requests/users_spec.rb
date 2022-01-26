@@ -7,11 +7,11 @@ RSpec.describe 'Users', type: :request do
   describe 'GET #home' do
     subject { get user_home_path }
 
-    context 'when user is signed out' do
+    context 'when a user is signed out' do
       it { is_expected.to redirect_to new_user_session_path }
     end
 
-    context 'when user is signed in' do
+    context 'when a user is signed in' do
       before { sign_in user }
       it 'gets users/home' do
         subject
@@ -24,11 +24,11 @@ RSpec.describe 'Users', type: :request do
   describe 'GET #show' do
     subject { get user_path user }
 
-    context 'when user is signed out' do
+    context 'when a user is signed out' do
       it { is_expected.to redirect_to new_user_session_path }
     end
 
-    context 'when user is signed in' do
+    context 'when a user is signed in' do
       before { sign_in user }
       it 'gets users/show' do
         subject
@@ -47,7 +47,7 @@ RSpec.describe 'Users', type: :request do
   describe 'GET #new' do
     subject { get new_user_registration_path }
 
-    context 'when user is signed out' do
+    context 'when a user is signed out' do
       it 'gets users/registrations/new' do
         subject
         expect(response).to have_http_status(:success)
@@ -55,7 +55,7 @@ RSpec.describe 'Users', type: :request do
       end
     end
 
-    context 'when user is signed in' do
+    context 'when a user is signed in' do
       before { sign_in user }
       it { is_expected.to redirect_to root_path }
     end
@@ -64,7 +64,7 @@ RSpec.describe 'Users', type: :request do
   describe 'POST #create' do
     subject { proc { post user_registration_path, params: { user: user_params } } }
 
-    context 'when user is signed out' do
+    context 'when a user is signed out' do
       shared_examples 'does not create a User and renders users/new' do
         it { is_expected.to_not change(User, :count) }
         it {
@@ -133,7 +133,7 @@ RSpec.describe 'Users', type: :request do
       end
     end
 
-    context 'when user is signed in' do
+    context 'when a user is signed in' do
       let(:user_params) { attributes_for(:user) }
       before { sign_in user }
       it {
@@ -146,11 +146,11 @@ RSpec.describe 'Users', type: :request do
   describe 'GET #edit' do
     subject { get edit_user_registration_path }
 
-    context 'when user is signed out' do
+    context 'when a user is signed out' do
       it { is_expected.to redirect_to new_user_session_path }
     end
 
-    context 'when user is signed in' do
+    context 'when a user is signed in' do
       before { sign_in user }
 
       it 'gets users/registrations/edit' do
@@ -168,11 +168,11 @@ RSpec.describe 'Users', type: :request do
   describe 'GET #cancel' do
     subject { get cancel_user_registration_path }
 
-    context 'when user is signed out' do
+    context 'when a user is signed out' do
       it { is_expected.to redirect_to new_user_session_path }
     end
 
-    context 'when user is signed in' do
+    context 'when a user is signed in' do
       before { sign_in user }
       it 'gets users/registration/cancel' do
         subject

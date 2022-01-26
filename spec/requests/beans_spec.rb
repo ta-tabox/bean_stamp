@@ -9,7 +9,7 @@ RSpec.describe 'Beans', type: :request do
   let!(:bean) { create(:bean, :with_image, :with_3_taste_tags, roaster: user_with_beans.roaster) }
 
   # コーヒー豆を持っていないときのテスト
-  context 'when a roaster have no beans' do
+  context 'when a roaster has no beans' do
     before do
       sign_in user_without_beans
     end
@@ -149,7 +149,7 @@ RSpec.describe 'Beans', type: :request do
   end
 
   # コーヒー豆を持っているときのテスト
-  context 'when a roaster have a bean' do
+  context 'when a roaster has a bean' do
     before do
       sign_in user_with_beans
     end

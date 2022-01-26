@@ -7,7 +7,7 @@ RSpec.describe 'StaticPages', type: :request do
   describe 'GET #home' do
     subject { get home_path }
 
-    context 'when user is signed out' do
+    context 'when a user is signed out' do
       it 'gets home' do
         subject
         expect(response).to have_http_status(:success)
@@ -15,7 +15,7 @@ RSpec.describe 'StaticPages', type: :request do
       end
     end
 
-    context 'when user is signed in' do
+    context 'when a user is signed in' do
       before { sign_in user }
       it { is_expected.to redirect_to user_home_path }
     end

@@ -4,7 +4,7 @@ RSpec.describe Users::UsersController, type: :controller do
   let(:user) { create(:user) }
 
   # ユーザー未ログイン時におけるusers/users_controller各アクションへのアクセス制限のテスト
-  context 'when user does not sign in' do
+  context 'when a user is not signed in' do
     describe 'GET #home' do
       it 'redirects to new_user_session_path' do
         get :home

@@ -4,7 +4,7 @@ RSpec.describe RoastersController, type: :controller do
   let(:roaster) { create(:roaster) }
 
   # ユーザー未ログイン時におけるroasters_controller各アクションへのアクセス制限のテスト
-  context 'when user does not sign in' do
+  context 'when a user is not signed in' do
     describe 'GET #index' do
       it 'redirects to new_user_session_path' do
         get :index

@@ -14,7 +14,7 @@ RSpec.describe 'Offers', type: :request do
 
   describe 'GET #index' do
     subject { get offers_path }
-    context 'when a user have no offers' do
+    context 'when a user has no offers' do
       before { sign_in user_without_beans_and_offers }
       it 'gets offers/index with no offers' do
         subject
@@ -23,7 +23,7 @@ RSpec.describe 'Offers', type: :request do
         expect(response.body).not_to include(offer.bean.name)
       end
     end
-    context 'when a user have a offer' do
+    context 'when a user has a offer' do
       before { sign_in user_with_a_offer }
       it 'gets offers/index with a offer' do
         subject
@@ -64,7 +64,7 @@ RSpec.describe 'Offers', type: :request do
 
   describe 'GET #new' do
     subject { get new_offer_path, params: { bean_id: bean.id } }
-    context 'when user have no beans' do
+    context 'when a user has no beans' do
       before { sign_in user_without_beans_and_offers }
       it 'redirects to beans_path' do
         subject
@@ -73,7 +73,7 @@ RSpec.describe 'Offers', type: :request do
         expect(response.body).to include 'コーヒー豆を登録してください'
       end
     end
-    context 'when a user have a bean' do
+    context 'when a user has a bean' do
       before { sign_in user_with_a_offer }
       it 'gets offers/new' do
         subject
@@ -102,7 +102,7 @@ RSpec.describe 'Offers', type: :request do
       }
     end
 
-    context 'when user have no beans' do
+    context 'when a user has no beans' do
       before { sign_in user_without_beans_and_offers }
       let(:offer_params) { attributes_for(:offer, bean_id: bean.id) }
 
@@ -114,7 +114,7 @@ RSpec.describe 'Offers', type: :request do
       end
     end
 
-    context 'when user have a bean' do
+    context 'when a user has a bean' do
       before { sign_in user_with_a_offer }
 
       # offer_paramsに正常なパラメータを渡す時のテスト
@@ -245,7 +245,7 @@ RSpec.describe 'Offers', type: :request do
 
   describe 'GET #edit' do
     subject { get edit_offer_path offer }
-    context 'when a user have no offers' do
+    context 'when a user has no offers' do
       before { sign_in user_without_beans_and_offers }
       it 'gets offers/edit' do
         subject
@@ -254,7 +254,7 @@ RSpec.describe 'Offers', type: :request do
         expect(response.body).to include 'オファーを登録してください'
       end
     end
-    context 'when a user have a offer' do
+    context 'when a user has a offer' do
       before { sign_in user_with_a_offer }
       it 'gets offers/edit' do
         subject
@@ -283,7 +283,7 @@ RSpec.describe 'Offers', type: :request do
       }
     end
 
-    context 'when user have no beans' do
+    context 'when a user has no beans' do
       before { sign_in user_without_beans_and_offers }
       let(:offer_params) { attributes_for(:offer, :update, bean_id: bean.id) }
 
@@ -295,7 +295,7 @@ RSpec.describe 'Offers', type: :request do
       end
     end
 
-    context 'when user have a bean' do
+    context 'when a user has a bean' do
       before { sign_in user_with_a_offer }
 
       # offer_paramsに正常なパラメータを渡す時のテスト
@@ -410,7 +410,7 @@ RSpec.describe 'Offers', type: :request do
       end
     end
 
-    context 'when user have a bean' do
+    context 'when a user has a bean' do
       before { sign_in user_with_a_offer }
       it 'deletes a Offer and redirects to offers_path' do
         expect { delete offer_path offer }.to change(Offer, :count).by(-1)
