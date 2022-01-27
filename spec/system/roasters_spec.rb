@@ -164,7 +164,7 @@ RSpec.describe 'Roasters', type: :system do
             expect(page).to have_content '難波市***-****'
             expect(page).to have_content 'アップデートメッセージ'
           end
-          pending 'ロースター詳細ページに電話番号を表示する' do
+          pending 'ロースター詳細ページ��電話番号を表示する' do
             expect(page).to have_content '000000000'
           end
         end
@@ -205,11 +205,8 @@ RSpec.describe 'Roasters', type: :system do
     it 'shows stats of followers counts' do
       expect do
         click_button 'Follow'
-        # sleepしないと反映される前にcangeの評価をしてしまう。他に良い書き方はないか？
-        sleep 1
-        expect(current_path).to eq roaster_path roaster
+        expect(find('#followers')).to have_content(roaster.followers.count.to_s)
       end.to change(RoasterRelationship, :count).by(1)
-      expect(find('#followers')).to have_content(roaster.followers.count.to_s)
       find('.stats').click_link 'followers'
       expect(current_path).to eq followers_roaster_path roaster
       expect(page).to have_content user.name
