@@ -1,0 +1,14 @@
+<% provide(:title, "フォローユーザー") %>
+<h1 class="mb-1">フォローユーザー</h1>
+<hr class="mb-3">
+<div><%= render 'roaster_info' %></div>
+<div class="container">
+  <div class="w-200 pt-12 mx-auto">
+    <% if @users.any? %>
+      <ol>
+        <%= render partial: 'users/users/user', collection: @users %>
+      </ol>
+      <%== pagy_nav_js(@pagy) %>
+    <% end %>
+  </div>
+</div>

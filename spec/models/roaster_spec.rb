@@ -4,6 +4,8 @@ RSpec.describe Roaster, type: :model do
   describe 'associations' do
     it { is_expected.to have_many(:users).dependent(:nullify) }
     it { is_expected.to have_many(:beans).dependent(:destroy) }
+    it { is_expected.to have_many(:roaster_relationships).dependent(:destroy) }
+    it { is_expected.to have_many(:followers).through(:roaster_relationships) }
   end
 
   describe 'validations' do

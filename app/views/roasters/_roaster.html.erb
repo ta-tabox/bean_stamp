@@ -1,0 +1,9 @@
+<div class="bg-white w-200 mx-auto">
+  <li id="roaster-<%= roaster.id %>">
+    <%= show_thumbnail(roaster) %>
+    <div>
+      <%= roaster.name %><span class="ml-3">＠<%=  "#{roaster.prefecture.name} #{roaster.address}" %></span>
+    </div>
+    <hr class="mb-3">
+  </li>
+</div>

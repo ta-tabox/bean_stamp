@@ -1,0 +1,9 @@
+<div><%= render 'follow_form' %></div>
+<p><%= @roaster.name %><span class="ml-3">＠<%=  "#{@roaster.prefecture.name} #{@roaster.address}" %></span></p>
+<div><%= render 'stats' %></div>
+<div class="flex my-4">
+  <%= show_thumbnail(@roaster) %>
+  <div class="bg-white rounded px-8 pt-6 pb-8 mb-4 ml-4 w-full max-w-md ">
+    <p><%= @roaster.describe %></p>
+  </div>
+</div>

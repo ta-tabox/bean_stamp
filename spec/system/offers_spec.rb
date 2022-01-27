@@ -28,9 +28,7 @@ RSpec.describe 'Offers', type: :system do
 
       it 'displays link for edit and delete' do
         subject
-        expect(page).to have_content '編集'
         expect(page).to have_selector("a[href='/offers/#{offer.id}/edit']")
-        expect(page).to have_content '削除'
         expect(page).to have_selector 'a[data-method=delete]', text: '削除'
       end
     end

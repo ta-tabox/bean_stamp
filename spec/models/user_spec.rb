@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:roaster).optional }
+    it { is_expected.to have_many(:roaster_relationships).with_foreign_key('follower_id').inverse_of(:follower).dependent(:destroy) }
+    it { is_expected.to have_many(:following_roasters).through(:roaster_relationships) }
   end
 
   describe 'validations' do
@@ -55,6 +57,54 @@ RSpec.describe User, type: :model do
     context 'when user does not belongs_to the roaster' do
       let(:user) { create(:user) }
       it { is_expected.to be_falsey }
+    end
+  end
+
+  # roasterのfollow関係のテスト
+  describe 'follow_roaster_function' do
+    let(:user) { create(:user) }
+    let(:roaster) { create(:roaster) }
+
+    describe '#following_roaster' do
+      subject { user.following_roaster?(roaster) }
+      context 'when user does not follow a roaster' do
+        it { is_expected.to be_falsey }
+      end
+      context 'when user is following a roaster' do
+        before { user.following_roasters << roaster }
+        it { is_expected.to be_truthy }
+      end
+    end
+
+    describe '#follow_roaster' do
+      subject { proc { user.follow_roaster(roaster) } }
+      it { is_expected.to change(RoasterRelationship, :count).by(1) }
+      it { is_expected.to change(user.following_roasters, :count).by(1) }
+      it { is_expected.to change(roaster.followers, :count).by(1) }
+      it "adds a roaster to the user's following_roasters" do
+        subject.call
+        expect(user.following_roasters.include?(roaster)).to be_truthy
+      end
+      it "adds a user to the roaster's followers" do
+        subject.call
+        expect(roaster.followers.include?(user)).to be_truthy
+      end
+    end
+
+    describe '#unfollow_roaster' do
+      subject { proc { user.unfollow_roaster(roaster) } }
+      before { user.following_roasters << roaster }
+      it { is_expected.to change(RoasterRelationship, :count).by(-1) }
+      it { is_expected.to change(user.following_roasters, :count).by(-1) }
+      it { is_expected.to change(roaster.followers, :count).by(-1) }
+      it "removes a roaster to the user's following_roasters" do
+        subject.call
+        expect(user.following_roasters.include?(roaster)).to be_falsey
+      end
+      it "removes a user to the roaster's followers" do
+        subject.call
+        expect(roaster.followers.include?(user)).to be_falsey
+      end
     end
   end
 end

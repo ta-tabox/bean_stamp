@@ -1,4 +1,5 @@
-30.times do |n|
+beans = Bean.all
+beans.count.times do |n|
   3.times do |i|
     BeanTasteTag.seed_once do |s|
       s.id = (n * 3) + i + 1
