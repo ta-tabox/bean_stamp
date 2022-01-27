@@ -186,6 +186,16 @@ RSpec.describe 'Users', type: :request do
   # 'PUT #update' についてはfeature specでカバー
   # 'DELET #destroy' についてはfeature specでカバー
 
+  describe 'GET #following' do
+    subject { get following_user_path user }
+    before { sign_in user }
+    it 'gets users/users/following' do
+      subject
+      expect(response).to have_http_status(:success)
+      expect(response.body).to include("<title>フォロー#{base_title}</title>")
+    end
+  end
+
   # ゲストログイン機能のテスト
   describe 'POST #guest_sign_in' do
     let!(:guest_user) { create(:user, :guest) }

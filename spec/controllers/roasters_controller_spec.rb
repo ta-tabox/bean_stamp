@@ -60,5 +60,12 @@ RSpec.describe RoastersController, type: :controller do
         expect(response).to redirect_to new_user_session_path
       end
     end
+
+    describe 'GET #followers' do
+      it 'redirects to new_user_session_path' do
+        get :followers, params: { id: roaster.id }
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
   end
 end

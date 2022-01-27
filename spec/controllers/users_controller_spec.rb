@@ -18,5 +18,12 @@ RSpec.describe Users::UsersController, type: :controller do
         expect(response).to redirect_to new_user_session_path
       end
     end
+
+    describe 'GET #following' do
+      it 'redirects to new_user_session_path' do
+        get :following, params: { id: user.id }
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
   end
 end

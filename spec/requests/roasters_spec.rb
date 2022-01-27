@@ -162,6 +162,15 @@ RSpec.describe 'Roasters', type: :request do
         expect(response).to redirect_to root_path
       end
     end
+
+    describe 'GET #following' do
+      subject { get followers_roaster_path roaster }
+      it 'gets roasters/followers' do
+        subject
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("<title>フォローユーザー#{base_title}</title>")
+      end
+    end
   end
 
   # ロースター登録済みの場合のテスト

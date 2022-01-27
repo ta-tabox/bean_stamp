@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Roasters', type: :system do
-  let(:roaster) { create(:roaster, :with_image) }
-  let(:another_roaster) { create(:roaster, :with_image, name: '他のテストロースター') }
-  let(:user_not_belonging_a_roaster) { create(:user) }
-  let(:user_belonging_a_roaster) { create(:user, roaster: roaster) }
-  let(:user_belonging_an_another_roaster) { create(:user, roaster: another_roaster) }
-
   describe 'Roaster CRUD' do
+    let(:roaster) { create(:roaster, :with_image) }
+    let(:another_roaster) { create(:roaster, :with_image, name: '他のテストロースター') }
+    let(:user_not_belonging_a_roaster) { create(:user) }
+    let(:user_belonging_a_roaster) { create(:user, roaster: roaster) }
+    let(:user_belonging_an_another_roaster) { create(:user, roaster: another_roaster) }
+
     describe 'index feature' do
       pending 'ロースター一覧表示機能、検索機能のテスト'
     end
@@ -54,6 +54,8 @@ RSpec.describe 'Roasters', type: :system do
     end
 
     describe 'roaster detail showing feature' do
+      let!(:bean) { create(:bean, :with_image, :with_3_taste_tags, name: 'following_bean', roaster: roaster) }
+      let!(:offer) { create(:offer, bean: bean) }
       subject { visit roaster_path roaster }
 
       shared_examples "shows roaster's informations" do
@@ -83,6 +85,13 @@ RSpec.describe 'Roasters', type: :system do
           expect(page).to_not have_content '編集'
           expect(page).to_not have_selector("a[href='/roasters/#{roaster.id}/edit']")
         end
+
+        it 'shows an offer created by the roaster' do
+          subject
+          expect(page).to have_content bean.name
+          expect(page).to have_selector("a[href='/offers/#{offer.id}']")
+          expect(page).to_not have_selector("a[href='/offers/#{offer.id}/edit']")
+        end
       end
 
       context 'when user belonging to the roaster' do
@@ -96,6 +105,14 @@ RSpec.describe 'Roasters', type: :system do
           subject
           expect(page).to have_selector("a[href='/roasters/#{roaster.id}/edit']")
           expect(page).to have_content '編集'
+        end
+
+        it 'shows an offer and shows edit and delete link' do
+          subject
+          expect(page).to have_content bean.name
+          expect(page).to have_selector("a[href='/offers/#{offer.id}']")
+          expect(page).to have_selector("a[href='/offers/#{offer.id}/edit']")
+          expect(page).to have_selector('a[data-method=delete]', text: '削除')
         end
       end
 
@@ -174,6 +191,28 @@ RSpec.describe 'Roasters', type: :system do
           expect(page).to_not have_selector("a[href='/roasters/#{roaster.id}]")
         end
       end
+    end
+  end
+
+  describe 'followers page', js: true do
+    let(:user) { create(:user) }
+    let(:roaster) { create(:roaster) }
+
+    before do
+      sign_in user
+      visit roaster_path roaster
+    end
+    it 'shows stats of followers counts' do
+      expect do
+        click_button 'Follow'
+        # sleepしないと反映される前にcangeの評価をしてしまう。他に良い書き方はないか？
+        sleep 1
+        expect(current_path).to eq roaster_path roaster
+      end.to change(RoasterRelationship, :count).by(1)
+      expect(find('#followers')).to have_content(roaster.followers.count.to_s)
+      find('.stats').click_link 'followers'
+      expect(current_path).to eq followers_roaster_path roaster
+      expect(page).to have_content user.name
     end
   end
 end

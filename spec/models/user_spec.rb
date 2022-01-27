@@ -61,7 +61,7 @@ RSpec.describe User, type: :model do
   end
 
   # roasterのfollow関係のテスト
-  describe 'follow_roaster_function', focus: true do
+  describe 'follow_roaster_function' do
     let(:user) { create(:user) }
     let(:roaster) { create(:roaster) }
 
@@ -81,6 +81,14 @@ RSpec.describe User, type: :model do
       it { is_expected.to change(RoasterRelationship, :count).by(1) }
       it { is_expected.to change(user.following_roasters, :count).by(1) }
       it { is_expected.to change(roaster.followers, :count).by(1) }
+      it "adds a roaster to the user's following_roasters" do
+        subject.call
+        expect(user.following_roasters.include?(roaster)).to be_truthy
+      end
+      it "adds a user to the roaster's followers" do
+        subject.call
+        expect(roaster.followers.include?(user)).to be_truthy
+      end
     end
 
     describe '#unfollow_roaster' do
@@ -89,6 +97,14 @@ RSpec.describe User, type: :model do
       it { is_expected.to change(RoasterRelationship, :count).by(-1) }
       it { is_expected.to change(user.following_roasters, :count).by(-1) }
       it { is_expected.to change(roaster.followers, :count).by(-1) }
+      it "removes a roaster to the user's following_roasters" do
+        subject.call
+        expect(user.following_roasters.include?(roaster)).to be_falsey
+      end
+      it "removes a user to the roaster's followers" do
+        subject.call
+        expect(roaster.followers.include?(user)).to be_falsey
+      end
     end
   end
 end

@@ -217,15 +217,41 @@ RSpec.describe 'Users', type: :system do
   end
 
   describe 'User#home' do
-    let!(:bean) { create(:bean, :with_image, :with_3_taste_tags) }
+    let!(:following_roaster) { create(:roaster, name: 'following_roaster') }
+    let!(:bean) { create(:bean, :with_image, :with_3_taste_tags, name: 'following_bean', roaster: following_roaster) }
     let!(:offer) { create(:offer, bean: bean) }
+    let!(:another_roaster) { create(:roaster, name: 'another_roaster') }
+    let!(:another_bean) { create(:bean, :with_image, :with_3_taste_tags, name: 'another_bean', roaster: another_roaster) }
+    let!(:another_offer) { create(:offer, bean: another_bean) }
     before do
       sign_in user
+      user.follow_roaster(following_roaster)
       visit user_home_path
     end
-    it 'shows a offer' do
-      expect(page).to have_content offer.bean.name
-      expect(page).to have_content offer.roaster.name
+    # フォローユーザーのオファーのみを表示させる
+    it 'shows an offer which is had by the roaster a user follow' do
+      expect(page).to have_content bean.name
+      expect(page).to have_content following_roaster.name
+      expect(page).to_not have_content another_bean.name
+      expect(page).to_not have_content another_roaster.name
+    end
+  end
+
+  describe 'User#following' do
+    let!(:following_roaster) { create(:roaster, name: 'following_roaster') }
+    let!(:another_roaster) { create(:roaster, name: 'another_roaster') }
+
+    before do
+      sign_in user
+      user.follow_roaster(following_roaster)
+      visit user_home_path
+      click_link 'follow'
+    end
+    # フォローいているロースターのみ表示しているか
+    it 'shows a roaster who followed by the user' do
+      expect(page).to have_content following_roaster.name
+      expect(page).to have_selector("a[href='/roasters/#{following_roaster.id}']")
+      expect(page).to_not have_content another_roaster.name
     end
   end
 end
