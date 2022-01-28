@@ -1,7 +1,7 @@
 class Users::UsersController < ApplicationController
   before_action :authenticate_user!
   def home
-    @pagy, @offers = pagy(current_user.feed)
+    @pagy, @offers = pagy(Offer.following_by(current_user))
   end
 
   def show
