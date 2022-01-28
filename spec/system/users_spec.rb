@@ -225,7 +225,7 @@ RSpec.describe 'Users', type: :system do
     let!(:another_offer) { create(:offer, bean: another_bean) }
     before do
       sign_in user
-      user.follow_roaster(following_roaster)
+      user.following_roasters << following_roaster
       visit user_home_path
     end
     # フォローユーザーのオファーのみを表示させる
@@ -243,7 +243,7 @@ RSpec.describe 'Users', type: :system do
 
     before do
       sign_in user
-      user.follow_roaster(following_roaster)
+      user.following_roasters << following_roaster
       visit user_home_path
       click_link 'follow'
     end

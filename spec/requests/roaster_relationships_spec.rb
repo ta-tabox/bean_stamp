@@ -17,6 +17,8 @@ RSpec.describe 'RoasterRelationships', type: :request do
     context 'when user is signed in' do
       before { sign_in user }
       it { is_expected.to change(RoasterRelationship, :count).by(1) }
+      it { is_expected.to change(user.following_roasters, :count).by(1) }
+      it { is_expected.to change(roaster.followers, :count).by(1) }
       context 'with Ajax' do
         subject { proc { post roaster_relationships_path, xhr: true, params: { roaster_id: roaster.id } } }
         it { is_expected.to change(RoasterRelationship, :count).by(1) }
@@ -27,7 +29,7 @@ RSpec.describe 'RoasterRelationships', type: :request do
   describe 'DELET #destroy' do
     subject { proc { delete roaster_relationship_path relationship } }
     before do
-      user.follow_roaster(roaster)
+      user.following_roasters << roaster
     end
     context 'when user is not signed in' do
       it 'redirects to new_user_session_path ' do
@@ -38,6 +40,8 @@ RSpec.describe 'RoasterRelationships', type: :request do
     context 'when user is signed in' do
       before { sign_in user }
       it { is_expected.to change(RoasterRelationship, :count).by(-1) }
+      it { is_expected.to change(user.following_roasters, :count).by(-1) }
+      it { is_expected.to change(roaster.followers, :count).by(-1) }
       context 'with Ajax' do
         subject { proc { delete roaster_relationship_path relationship, xhr: true } }
         it { is_expected.to change(RoasterRelationship, :count).by(-1) }

@@ -36,22 +36,6 @@ class User < ApplicationRecord
     roaster == offer.roaster
   end
 
-  # ロースターをフォローする
-  def follow_roaster(roaster)
-    following_roasters << roaster
-  end
-
-  # ロースターのフォローを解除する
-  def unfollow_roaster(roaster)
-    # roaster_relationships.find_by(roaster_id: roaster.id).destroy
-    following_roasters.delete(roaster)
-  end
-
-  # 現在のユーザーがロースターをフォローしているか？
-  def following_roaster?(roaster)
-    following_roasters.include?(roaster)
-  end
-
   # user#homeのフォローしたロースターのオファー一覧を返す
   def feed
     # following_roaster_idsに相当するサブセレクト
