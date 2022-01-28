@@ -8,15 +8,18 @@ class User < ApplicationRecord
          :rememberable,
          :validatable,
          :timeoutable
+  belongs_to :roaster, optional: true
+  has_many :roaster_relationships, foreign_key: 'follower_id', dependent: :destroy, inverse_of: :follower
+  has_many :following_roasters, through: :roaster_relationships, source: :roaster
+  mount_uploader :image, ImageUploader
+  jp_prefecture :prefecture_code
+
   validates :describe,
             length: {
               maximum: 140,
               too_long: ':140文字まで投稿できます。',
             }
   validates :name, presence: true
-  mount_uploader :image, ImageUploader
-  belongs_to :roaster, optional: true
-  jp_prefecture :prefecture_code
 
   # ユーザーが所属するロースターと一致しているか？
   def belonged_roaster?(roaster)

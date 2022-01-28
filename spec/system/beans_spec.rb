@@ -153,10 +153,10 @@ RSpec.describe 'Beans', type: :system do
           expect do
             find("li#bean-#{bean.id}").click_link '削除'
             accept_confirm
+            expect(page).to have_content "コーヒー豆「#{bean.name}」を削除しました"
+            expect(page).to_not have_selector("a[href='/beans/#{bean.id}]")
             expect(current_path).to eq beans_path
           end.to change(Bean, :count).by(-1)
-          expect(page).to have_content "コーヒー豆「#{bean.name}」を削除しました"
-          expect(page).to_not have_selector("a[href='/beans/#{bean.id}]")
         end
       end
 
@@ -167,10 +167,10 @@ RSpec.describe 'Beans', type: :system do
           expect do
             click_link '削除する'
             accept_confirm
+            expect(page).to have_content "コーヒー豆「#{bean.name}」を削除しました"
+            expect(page).to_not have_selector("a[href='/beans/#{bean.id}]")
             expect(current_path).to eq beans_path
           end.to change(Bean, :count).by(-1)
-          expect(page).to have_content "コーヒー豆「#{bean.name}」を削除しました"
-          expect(page).to_not have_selector("a[href='/beans/#{bean.id}]")
         end
       end
     end

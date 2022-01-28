@@ -4,7 +4,7 @@ RSpec.describe RoastersController, type: :controller do
   let(:roaster) { create(:roaster) }
 
   # ユーザー未ログイン時におけるroasters_controller各アクションへのアクセス制限のテスト
-  context 'when user does not sign in' do
+  context 'when a user is not signed in' do
     describe 'GET #index' do
       it 'redirects to new_user_session_path' do
         get :index
@@ -57,6 +57,13 @@ RSpec.describe RoastersController, type: :controller do
     describe 'GET #cancel' do
       it 'redirects to new_user_session_path' do
         get :cancel, params: { id: roaster.id }
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+
+    describe 'GET #followers' do
+      it 'redirects to new_user_session_path' do
+        get :followers, params: { id: roaster.id }
         expect(response).to redirect_to new_user_session_path
       end
     end

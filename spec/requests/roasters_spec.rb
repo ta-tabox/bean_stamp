@@ -7,7 +7,7 @@ RSpec.describe 'Roasters', type: :request do
   let(:user_not_belonging_a_roaster) { create(:user) }
 
   # ロースター未登録の場合のテスト
-  context 'when user is not belonging to the roaster' do
+  context 'when a user is not belonging to the roaster' do
     before do
       sign_in user_not_belonging_a_roaster
     end
@@ -162,10 +162,19 @@ RSpec.describe 'Roasters', type: :request do
         expect(response).to redirect_to root_path
       end
     end
+
+    describe 'GET #following' do
+      subject { get followers_roaster_path roaster }
+      it 'gets roasters/followers' do
+        subject
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("<title>フォローユーザー#{base_title}</title>")
+      end
+    end
   end
 
   # ロースター登録済みの場合のテスト
-  context 'when user is belonging to the roaster' do
+  context 'when a user is belonging to the roaster' do
     before do
       sign_in user_belonging_a_roaster
     end
@@ -331,7 +340,7 @@ RSpec.describe 'Roasters', type: :request do
   end
 
   # ユーザーが別のロースターに所属していた場合のテスト
-  context 'when user is belonging to another roaster' do
+  context 'when a user is belonging to another roaster' do
     let(:another_roaster) { create(:roaster, name: '別のロースター') }
     let(:user_belonging_another_roaster) { create(:user, roaster: another_roaster) }
 
@@ -374,7 +383,7 @@ RSpec.describe 'Roasters', type: :request do
   end
 
   # ゲストロースター編集、削除のテスト ensure_normal_roaster
-  context 'when sign in as a guest user' do
+  context 'when the guest user is signed in' do
     let!(:guest_user) { create(:user, :guest, roaster: guest_roaster) }
     let!(:guest_roaster) { create(:roaster, :guest) }
 

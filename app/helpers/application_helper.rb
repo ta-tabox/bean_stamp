@@ -50,4 +50,14 @@ module ApplicationHelper
               obj
     end
   end
+
+  # 渡されたユーザーがカレントユーザーであればtrueを返す
+  def current_user?(user)
+    user && user == current_user
+  end
+
+  # 渡されたロースターがカレントロースターであればtrueを返す
+  def current_roaster?(roaster)
+    roaster && roaster == current_user.roaster
+  end
 end

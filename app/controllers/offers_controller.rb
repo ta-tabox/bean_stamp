@@ -5,7 +5,7 @@ class OffersController < ApplicationController
   before_action :roaster_had_offer_requierd_and_set_offer, only: %i[edit update destroy]
 
   def index
-    @pagy, @offers = pagy(current_roaster.offers.includes(:roaster))
+    @pagy, @offers = pagy(current_roaster.offers.includes(:roaster, bean: :bean_images))
   end
 
   def show

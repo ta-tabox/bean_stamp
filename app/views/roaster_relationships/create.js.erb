@@ -1,0 +1,2 @@
+document.getElementById('follow_form').innerHTML = '<%= escape_javascript(render('roasters/unfollow')) %>';
+document.getElementById('followers').innerHTML = '<%= @roaster.followers.count %>';

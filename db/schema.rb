@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_10_063955) do
+ActiveRecord::Schema.define(version: 2022_01_23_000256) do
 
   create_table "bean_images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "image"
@@ -84,6 +84,16 @@ ActiveRecord::Schema.define(version: 2022_01_10_063955) do
     t.index ["bean_id"], name: "index_offers_on_bean_id"
   end
 
+  create_table "roaster_relationships", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "follower_id", null: false
+    t.bigint "roaster_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["follower_id", "roaster_id"], name: "index_roaster_relationships_on_follower_id_and_roaster_id", unique: true
+    t.index ["follower_id"], name: "index_roaster_relationships_on_follower_id"
+    t.index ["roaster_id"], name: "index_roaster_relationships_on_roaster_id"
+  end
+
   create_table "roasters", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "phone_number", default: "", null: false
@@ -122,5 +132,7 @@ ActiveRecord::Schema.define(version: 2022_01_10_063955) do
   add_foreign_key "beans", "mst_roast_levels", column: "roast_level_id"
   add_foreign_key "beans", "roasters"
   add_foreign_key "offers", "beans"
+  add_foreign_key "roaster_relationships", "roasters"
+  add_foreign_key "roaster_relationships", "users", column: "follower_id"
   add_foreign_key "users", "roasters"
 end

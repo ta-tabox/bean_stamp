@@ -1,7 +1,7 @@
 <ul class="flex">
   <li class="mx-5 nav-item"><strong><%= link_to current_user.name, user_home_path %></strong></li>
   <li class="mx-5 nav-item"><%= link_to 'my page', current_user %></li>
-  <li class="mx-5 nav-item"><%= link_to 'follow', '#' %></li>
+  <li class="mx-5 nav-item"><%= link_to 'follow', following_user_path(current_user) %></li>
   <li class="mx-5 nav-item"><%= link_to 'wants', '#' %></li>
   <li class="mx-5 nav-item"><%= link_to 'likes', '#' %></li>
   <li class="mx-5 nav-item"><%= link_to 'search', '#' %></li>

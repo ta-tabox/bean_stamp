@@ -15,6 +15,10 @@ class Offer < ApplicationRecord
   validate :receipt_started_at_cannot_be_earlier_than_roasted_at
   validate :receipt_ended_at_cannot_be_earlier_than_receipt_started_at
 
+  scope :following_by, lambda { |user|
+    joins(:bean).where('roaster_id IN (?)', user.following_roaster_ids).includes(:roaster, bean: :bean_images)
+  }
+
   private
 
   # オファーの期日関連のバリデーション

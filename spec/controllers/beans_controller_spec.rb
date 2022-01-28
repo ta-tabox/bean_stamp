@@ -6,7 +6,7 @@ RSpec.describe BeansController, type: :controller do
   let(:bean) { create(:bean, :with_image, :with_3_taste_tags, roaster: roaster) }
 
   # ユーザー未ログイン時におけるbeans_controller各アクションへのアクセス制限のテスト
-  context 'when user does not sign in' do
+  context 'when a user is not signed in' do
     describe 'GET #index' do
       it 'redirects to new_user_session_path' do
         get :index
@@ -58,7 +58,7 @@ RSpec.describe BeansController, type: :controller do
   end
 
   # ユーザーログイン、ロースター未登録時におけるbeans_controller各アクションへのアクセス制限のテスト
-  context 'when user who does not belong roaster is signed in' do
+  context 'when a user who does not belong to roaster is signed in' do
     before do
       sign_in user
     end
