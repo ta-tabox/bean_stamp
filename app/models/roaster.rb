@@ -20,4 +20,8 @@ class Roaster < ApplicationRecord
   validates :prefecture_code, presence: true
   validates :address, presence: true
   validates :describe, length: { maximum: 300 }
+
+  def full_address
+    prefecture.name + address
+  end
 end

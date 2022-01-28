@@ -2,7 +2,7 @@
   <li id="roaster-<%= roaster.id %>">
     <%= show_thumbnail(roaster) %>
     <div>
-      <%= roaster.name %><span class="ml-3">＠<%=  "#{roaster.prefecture.name} #{roaster.address}" %></span>
+      <%= roaster.name %><span class="ml-3">＠<%= roaster.full_address %></span>
     </div>
     <hr class="mb-3">
   </li>
