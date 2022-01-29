@@ -7,6 +7,24 @@ class WantsController < ApplicationController
     @pagy, @users = pagy(@offer.wanted_users)
   end
 
+  def create
+    @offer = Offer.find(params[:offer_id])
+    current_user.wanting_offers << @offer
+    respond_to do |format|
+      format.html { redirect_to @offer }
+      format.js
+    end
+  end
+
+  def destroy
+    @offer = Want.find(params[:id]).offer
+    current_user.wanting_offers.delete(@offer)
+    respond_to do |format|
+      format.html { redirect_to @offer }
+      format.js
+    end
+  end
+
   private
 
   def roaster_had_offer_requierd_and_set_offer
