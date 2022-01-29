@@ -185,7 +185,7 @@ RSpec.describe 'Roasters', type: :system do
           expect do
             click_button '削除する'
             accept_confirm
-            expect(current_path).to eq user_home_path
+            expect(current_path).to eq home_users_path
           end.to change(Roaster, :count).by(-1)
           expect(page).to have_content "ロースター「#{roaster.name}」を削除しました"
           expect(page).to_not have_selector("a[href='/roasters/#{roaster.id}]")

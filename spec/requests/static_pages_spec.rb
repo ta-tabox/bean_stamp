@@ -17,7 +17,7 @@ RSpec.describe 'StaticPages', type: :request do
 
     context 'when a user is signed in' do
       before { sign_in user }
-      it { is_expected.to redirect_to user_home_path }
+      it { is_expected.to redirect_to home_users_path }
     end
   end
 

@@ -23,7 +23,7 @@ RSpec.describe 'Users', type: :system do
         context 'with correct form' do
           it 'creates a new user' do
             is_expected.to change(User, :count).by(1)
-            expect(current_path).to eq user_home_path
+            expect(current_path).to eq home_users_path
             expect(page).to have_content 'アカウント登録が完了しました'
           end
         end
@@ -41,7 +41,7 @@ RSpec.describe 'Users', type: :system do
         context 'with correct form' do
           it 'creates a new session' do
             subject
-            expect(current_path).to eq user_home_path
+            expect(current_path).to eq home_users_path
             expect(page).to have_content 'ログインしました'
             expect(page).to have_content user.name
           end
@@ -226,7 +226,7 @@ RSpec.describe 'Users', type: :system do
     before do
       sign_in user
       user.following_roasters << following_roaster
-      visit user_home_path
+      visit home_users_path
     end
     # フォローユーザーのオファーのみを表示させる
     it 'shows an offer which is had by the roaster a user follow' do
@@ -244,7 +244,7 @@ RSpec.describe 'Users', type: :system do
     before do
       sign_in user
       user.following_roasters << following_roaster
-      visit user_home_path
+      visit home_users_path
       click_link 'follow'
     end
     # フォローいているロースターのみ表示しているか
