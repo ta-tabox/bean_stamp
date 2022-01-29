@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'wants/index'
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
   root 'static_pages#home'
   get 'home', to: 'static_pages#home', as: 'home'
@@ -23,9 +24,12 @@ Rails.application.routes.draw do
     collection { get 'cancel' }
     member { get 'followers' }
   end
-  resources :beans
+  resources :beans do
+    resources :offers, only: [:new]
+  end
   resources :offers do
     resources :wants, only: [:index]
+    # createとdestroyもここに作る
   end
   resources :roaster_relationships, only: %i[create destroy]
 end
