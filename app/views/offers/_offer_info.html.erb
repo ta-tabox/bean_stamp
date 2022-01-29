@@ -1,0 +1,14 @@
+<div><%= render partial: 'offers/stats', locals: { offer: offer } %></div>
+<p> <%= time_ago_in_words(offer.created_at) %> 前</p>
+<div>
+  <div id="offer_bean_country"><%= offer.bean.country %></div>
+  <div id="offer_bean_process"><%= offer.bean.process %></div>
+  <div id="offer_created_at"><%= offer.created_at %></div>
+  <div id="offer_ended_at"><%= offer.ended_at %></div>
+  <div id="offer_roasted_at"><%= offer.roasted_at %></div>
+  <div id="offer_receipt_started_at"><%= offer.receipt_started_at %></div>
+  <div id="offer_receipt_ended_at"><%= offer.receipt_ended_at %></div>
+  <div id="offer_price"><%= offer.price %></div>
+  <div id="offer_weight"><%= offer.weight %></div>
+  <div id="offer_amount"><%= offer.amount %></div>
+</div>

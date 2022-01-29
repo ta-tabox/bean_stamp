@@ -5,7 +5,7 @@
   <div class="w-200 pt-12 mx-auto">
     <% if @offers.any? %>
       <ol>
-        <%= render partial: 'offers/offer', collection: @offers %>
+        <%= render partial: 'shared/offer', collection: @offers %>
       </ol>
       <%== pagy_nav_js(@pagy) %>
     <% end %>

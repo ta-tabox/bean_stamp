@@ -1,0 +1,28 @@
+<!-- オファーコンテンツ -->
+<div class="bg-white w-200 mx-auto">
+  <li id="offer-<%= offer.id %>">
+    <%= show_thumbnail(offer.roaster) %>
+    <span><%= link_to offer.roaster.name, offer.roaster %></span>
+    <span><%= link_to offer.bean.name, offer %></span>
+    <div class="flex">
+      <% if offer.bean.bean_images.any? %>
+        <% offer.bean.bean_images.each do |bean_image| %>
+          <%= image_tag bean_image.image.thumb.url, class: "thumbnail" if bean_image.image? %>
+        <% end %>
+      <% end %>
+    </div>
+    <div><%= render partial: 'offers/stats', locals: { offer: offer }   %></div>
+    <p> <%= time_ago_in_words(offer.created_at) %> 前</p>
+    <div>
+      <div id="offer_bean_country"><%= offer.bean.country %></div>
+      <div id="offer_bean_process"><%= offer.bean.process %></div>
+      <div id="offer_ended_at"><%= offer.ended_at %></div>
+      <div id="offer_roasted_at"><%= offer.roasted_at %></div>
+      <div id="offer_receipt_started_at"><%= offer.receipt_started_at %></div>
+      <div id="offer_price"><%= offer.price %></div>
+      <div id="offer_weight"><%= offer.weight %></div>
+      <div id="offer_amount"><%= offer.amount %></div>
+    </div>
+    <hr class="mb-3">
+  </li>
+</div>
