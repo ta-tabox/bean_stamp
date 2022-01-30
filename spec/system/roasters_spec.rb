@@ -194,7 +194,7 @@ RSpec.describe 'Roasters', type: :system do
     end
   end
 
-  describe 'followers page', js: true do
+  describe 'followers page' do
     let(:user) { create(:user) }
     let(:roaster) { create(:roaster) }
 
