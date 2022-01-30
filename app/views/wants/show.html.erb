@@ -6,6 +6,7 @@
     <div class="bg-white w-200 mx-auto">
       <%= render partial: 'wants/want_info', locals: { want: @want, offer: @offer } %>
       <%= show_thumbnail(@offer.roaster) %>
+      <p><%= @offer.roaster.name %><span class="ml-3">＠<%= @offer.roaster.full_address %></span></p>
       <div><%= render partial: 'offers/offer_info', locals: { offer: @offer } %></div>
       <hr class="mb-3">
     </div>

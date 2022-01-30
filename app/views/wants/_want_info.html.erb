@@ -1,10 +1,12 @@
 <div class="form form-container">
   <p>ステータス</p>
-  <% if want.receipted_at? %>
-    <button class="btn-disabled">受け取り済み</button>
-  <% else %>
-    <%= form_with(url: receipt_want_path, method: "patch", local: true) do |f| %>
-      <%= f.submit "受け取り完了", class: "btn-primary" %>
+  <div id="want-receipt-form">
+    <% if want.receipted_at? %>
+      <button class="btn-disabled">受け取り済み</button>
+    <% else %>
+      <%= form_with(url: receipt_want_path, method: "patch", local: false) do |f| %>
+        <%= f.submit "受け取り完了", class: "btn-primary" %>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
 </div>
