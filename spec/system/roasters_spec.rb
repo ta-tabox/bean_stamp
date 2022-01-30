@@ -193,23 +193,4 @@ RSpec.describe 'Roasters', type: :system do
       end
     end
   end
-
-  describe 'followers page' do
-    let(:user) { create(:user) }
-    let(:roaster) { create(:roaster) }
-
-    before do
-      sign_in user
-      visit roaster_path roaster
-    end
-    it 'shows stats of followers counts' do
-      expect do
-        click_button 'Follow'
-        expect(find('#followers')).to have_content(roaster.followers.count.to_s)
-      end.to change(RoasterRelationship, :count).by(1)
-      find('.stats').click_link 'followers'
-      expect(current_path).to eq followers_roaster_path roaster
-      expect(page).to have_content user.name
-    end
-  end
 end
