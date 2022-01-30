@@ -4,6 +4,8 @@ RSpec.describe Want, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to belong_to(:offer) }
+    it { is_expected.to have_one(:bean).through(:offer) }
+    it { is_expected.to have_one(:roaster).through(:offer) }
   end
 
   describe 'validations' do
