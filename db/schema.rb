@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_23_000256) do
+ActiveRecord::Schema.define(version: 2022_01_29_015047) do
 
   create_table "bean_images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "image"
@@ -126,6 +126,17 @@ ActiveRecord::Schema.define(version: 2022_01_23_000256) do
     t.index ["roaster_id"], name: "index_users_on_roaster_id"
   end
 
+  create_table "wants", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "offer_id", null: false
+    t.datetime "receipted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["offer_id"], name: "index_wants_on_offer_id"
+    t.index ["user_id", "offer_id"], name: "index_wants_on_user_id_and_offer_id", unique: true
+    t.index ["user_id"], name: "index_wants_on_user_id"
+  end
+
   add_foreign_key "bean_images", "beans"
   add_foreign_key "bean_taste_tags", "beans"
   add_foreign_key "bean_taste_tags", "mst_taste_tags"
@@ -135,4 +146,6 @@ ActiveRecord::Schema.define(version: 2022_01_23_000256) do
   add_foreign_key "roaster_relationships", "roasters"
   add_foreign_key "roaster_relationships", "users", column: "follower_id"
   add_foreign_key "users", "roasters"
+  add_foreign_key "wants", "offers"
+  add_foreign_key "wants", "users"
 end

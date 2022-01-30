@@ -1,0 +1,9 @@
+<% unless current_user.had_offer?(offer) %>
+  <div id="offer-<%= offer.id %>-want-form">
+    <% if current_user.wanting_offers.include?(offer) %>
+      <%= render partial: 'offers/unwant', locals: { offer: offer } %>
+    <% else %>
+      <%= render partial: 'offers/want', locals: { offer: offer } %>
+    <% end %>
+  </div>
+<% end %>

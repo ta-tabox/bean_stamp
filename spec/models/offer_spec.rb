@@ -3,8 +3,10 @@ require 'rails_helper'
 RSpec.describe Offer, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:bean) }
+    it { is_expected.to have_many(:wants) }
+    it { is_expected.to have_many(:wanted_users).through(:wants) }
+    it { is_expected.to have_one(:roaster).through(:bean) }
     pending { is_expected.to have_many(:likes) }
-    pending { is_expected.to have_many(:wants) }
     pending { is_expected.to have_many(:comments) }
   end
 

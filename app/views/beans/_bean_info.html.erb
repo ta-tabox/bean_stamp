@@ -1,7 +1,7 @@
 <div class="form form-container">
   <p>タイトル：<%= bean.name %></p>
   <div class="flex">
-    <% bean_images.each do |bean_image| %>
+    <% bean.bean_images.each do |bean_image| %>
       <%= image_tag bean_image.image.thumb.url, class: "thumbnail" if bean_image.image? %>
     <% end %>
   </div>

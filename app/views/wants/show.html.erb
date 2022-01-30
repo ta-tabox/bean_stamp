@@ -1,0 +1,15 @@
+<% provide(:title, "ウォンツ詳細") %>
+<h1 class="mb-1">ウォンツ詳細</h1>
+<hr class="mb-3">
+<div class="container">
+  <div class="w-200 pt-12 mx-auto">
+    <div class="bg-white w-200 mx-auto">
+      <%= render partial: 'wants/want_info', locals: { want: @want, offer: @offer } %>
+      <%= show_thumbnail(@offer.roaster) %>
+      <p><%= @offer.roaster.name %><span class="ml-3">＠<%= @offer.roaster.full_address %></span></p>
+      <div><%= render partial: 'offers/offer_info', locals: { offer: @offer } %></div>
+      <hr class="mb-3">
+    </div>
+  </div>
+</div>
+<%= render partial: 'beans/bean_info', locals: { bean: @offer.bean } %>

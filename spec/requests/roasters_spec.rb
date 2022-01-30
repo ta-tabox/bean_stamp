@@ -325,7 +325,7 @@ RSpec.describe 'Roasters', type: :request do
     describe 'DELETE #destory' do
       it 'deletes a Roaster and redirects to root_path' do
         expect { delete roaster_path roaster }.to change(Roaster, :count).by(-1)
-        expect(response).to redirect_to user_home_path
+        expect(response).to redirect_to home_users_path
       end
     end
 
