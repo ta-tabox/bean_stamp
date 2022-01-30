@@ -2,14 +2,13 @@ class WantsController < ApplicationController
   before_action :user_signed_in_required
   before_action :user_belonged_to_roaster_required, only: :index
   before_action :roaster_had_offer_requierd_and_set_offer, only: :index
-  before_action :user_had_want_required, only: :show
+  before_action :user_had_want_required_and_set_want, only: %i[show receipt]
 
   def index
     @pagy, @users = pagy(@offer.wanted_users)
   end
 
   def show
-    @want = current_user.wants.find(params[:id])
     @offer = @want.offer
   end
 
@@ -32,6 +31,13 @@ class WantsController < ApplicationController
     end
   end
 
+  def receipt
+    @want.receipted_at = Time.current
+    @want.save
+    flash[:notice] = '受け取り完了を受け付けました'
+    redirect_to @want
+  end
+
   private
 
   def roaster_had_offer_requierd_and_set_offer
@@ -41,7 +47,7 @@ class WantsController < ApplicationController
     redirect_to beans_path, alert: 'オファーを登録してください'
   end
 
-  def user_had_want_required
+  def user_had_want_required_and_set_want
     @want = current_user.wants.find_by(id: params[:id])
     return if @want
 

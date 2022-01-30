@@ -30,5 +30,9 @@ Rails.application.routes.draw do
     resources :wants, only: %i[index create]
   end
   resources :roaster_relationships, only: %i[create destroy]
-  resources :wants, only: %i[destroy show]
+  resources :wants, only: %i[destroy show] do
+    member do
+      patch 'receipt', to: 'wants#receipt'
+    end
+  end
 end
