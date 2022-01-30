@@ -3,9 +3,9 @@
 <hr class="mb-3">
 <div class="container">
   <div class="w-200 pt-12 mx-auto">
-    <% if @offers.any? %>
+    <% if @wants.any? %>
       <ol>
-        <%= render partial: 'offers/offer', collection: @offers %>
+        <%= render partial: 'wants/want', collection: @wants %>
       </ol>
       <%== pagy_nav_js(@pagy) %>
     <% end %>

@@ -28,7 +28,7 @@ Rails.application.routes.draw do
     resources :offers, only: [:new]
   end
   resources :offers do
-    resources :wants, only: %i[index create destroy]
+    resources :wants, only: %i[index create destroy show]
   end
   resources :roaster_relationships, only: %i[create destroy]
 end

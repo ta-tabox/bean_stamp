@@ -13,7 +13,7 @@ class Users::UsersController < ApplicationController
   end
 
   def wants
-    @pagy, @offers = pagy(current_user.wanting_offers.includes(:roaster, bean: :bean_images))
+    @pagy, @wants = pagy(current_user.wants.includes(:roaster, :offer, bean: :bean_images))
   end
 
   private

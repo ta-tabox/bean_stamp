@@ -7,6 +7,11 @@ class WantsController < ApplicationController
     @pagy, @users = pagy(@offer.wanted_users)
   end
 
+  def show
+    @want = current_user.wants.find(params[:id])
+    @offer = @want.offer
+  end
+
   def create
     @offer = Offer.find(params[:offer_id])
     current_user.wanting_offers << @offer
