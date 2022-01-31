@@ -21,6 +21,23 @@ class Offer < ApplicationRecord
     joins(:bean).where('roaster_id IN (?)', user.following_roaster_ids).includes(:roaster, bean: :bean_images)
   }
 
+  def status
+    today = Date.current
+    status = { class: 'on_offering', value: 'オファー中' }
+    return status if today.before? ended_at
+
+    status = { class: 'on_roasting', value: 'ロースト中' }
+    return status if today.before? roasted_at
+
+    status = { class: 'on_preparing', value: '準備中' }
+    return status if today.before? receipt_started_at
+
+    status = { class: 'on_selling', value: '受け取り期間' }
+    return status if today.before? receipt_ended_at
+
+    { class: 'end_of_sales', value: '受け取り終了' }
+  end
+
   private
 
   # オファーの期日関連のバリデーション
