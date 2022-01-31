@@ -8,9 +8,7 @@ class WantsController < ApplicationController
     @pagy, @users = pagy(@offer.wanted_users)
   end
 
-  def show
-    @offer = @want.offer
-  end
+  def show; end
 
   def create
     @offer = Offer.find(params[:offer_id])
