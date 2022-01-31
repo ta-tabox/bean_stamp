@@ -1,0 +1,4 @@
+<%= form_with(model: [current_user.wants.find_by(offer_id: offer.id)],
+    html: { method: :delete }, local: true) do |f| %>
+  <%= f.submit "Unwant", class: "btn btn-primary" %>
+<% end %>

@@ -5,7 +5,7 @@ RSpec.describe 'Users', type: :request do
   let(:user) { create(:user) }
 
   describe 'GET #home' do
-    subject { get user_home_path }
+    subject { get home_users_path }
 
     context 'when a user is signed out' do
       it { is_expected.to redirect_to new_user_session_path }

@@ -2,7 +2,7 @@ roasters = Roaster.order(:created_at).take(6)
 roasters.count.times do |n|
   10.times do |i|
     Bean.seed_once do |s|
-      s.id = (n * 6) + i + 1
+      s.id = (n * 10) + i + 1
       s.name = "#{roasters[n].name}のテストビーン#{i}"
       s.roaster_id = roasters[n].id
       s.created_at = Faker::Time.between(from: DateTime.now - 1, to: DateTime.now)

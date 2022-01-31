@@ -41,7 +41,7 @@ class RoastersController < ApplicationController
   def destroy
     @roaster.destroy
     flash[:notice] = "ロースター「#{@roaster.name}」を削除しました"
-    redirect_to user_home_path
+    redirect_to home_users_path
   end
 
   def cancel

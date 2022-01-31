@@ -1,10 +1,10 @@
 <% provide(:title, "コーヒー豆詳細") %>
 <h1 class="mb-1">コーヒー豆詳細</h1>
 <hr class="mb-3">
-<%= render partial: 'bean_info', locals: { bean: @bean, bean_images: @bean_images } %>
+<%= render partial: 'bean_info', locals: { bean: @bean} %>
 <div class="max-w-md mx-auto">
   <% if current_user.had_bean?(@bean) %>
-    <%= link_to "オファー", new_offer_path(bean_id: @bean.id), class: "btn-primary ml-4" %>
+    <%= link_to "オファー", new_bean_offer_path(@bean), class: "btn-primary ml-4" %>
     <%= link_to '編集', edit_bean_path(@bean), class: "btn-primary" %>
   <% end %>
 </div>

@@ -1,0 +1,13 @@
+<% provide(:title, "ウォンツ") %>
+<h1 class="mb-1">ウォンツ</h1>
+<hr class="mb-3">
+<div class="container">
+  <div class="w-200 pt-12 mx-auto">
+    <% if @wants.any? %>
+      <ol>
+        <%= render partial: 'wants/want', collection: @wants %>
+      </ol>
+      <%== pagy_nav_js(@pagy) %>
+    <% end %>
+  </div>
+</div>

@@ -4,7 +4,7 @@
     <span><%= link_to bean.name, bean %></span>
     <span>
       <% if current_user.had_bean?(bean) %>
-        <%= link_to "オファー", new_offer_path(bean_id: bean.id), class: "link ml-4" %>
+        <%= link_to "オファー", new_bean_offer_path(bean), class: "link ml-4" %>
         <%= link_to "編集", edit_bean_path(bean), class: "link ml-4" %>
         <%= link_to "削除", bean, method: :delete, data: { confirm: "本当に削除しますか?" }, class: "link ml-4" %>
       <% end %>

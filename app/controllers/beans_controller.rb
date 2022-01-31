@@ -7,9 +7,7 @@ class BeansController < ApplicationController
     @pagy, @beans = pagy(current_roaster.beans.includes([:bean_images]))
   end
 
-  def show
-    @bean_images = @bean.bean_images.all
-  end
+  def show; end
 
   def new
     @bean = current_roaster.beans.build

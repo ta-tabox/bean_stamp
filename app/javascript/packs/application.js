@@ -11,7 +11,7 @@ import "../css/application.css";
 import "../shared/pagy.js.erb";
 
 // JavaScriptファイルの読み込み
-// import "../shared/input_image_preview";
+import "../shared/input_image_preview";
 
 Rails.start();
 Turbolinks.start();

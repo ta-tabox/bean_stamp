@@ -23,7 +23,7 @@ RSpec.describe 'Users', type: :system do
         context 'with correct form' do
           it 'creates a new user' do
             is_expected.to change(User, :count).by(1)
-            expect(current_path).to eq user_home_path
+            expect(current_path).to eq home_users_path
             expect(page).to have_content 'アカウント登録が完了しました'
           end
         end
@@ -41,7 +41,7 @@ RSpec.describe 'Users', type: :system do
         context 'with correct form' do
           it 'creates a new session' do
             subject
-            expect(current_path).to eq user_home_path
+            expect(current_path).to eq home_users_path
             expect(page).to have_content 'ログインしました'
             expect(page).to have_content user.name
           end
@@ -213,45 +213,6 @@ RSpec.describe 'Users', type: :system do
           end
         end
       end
-    end
-  end
-
-  describe 'User#home' do
-    let!(:following_roaster) { create(:roaster, name: 'following_roaster') }
-    let!(:bean) { create(:bean, :with_image, :with_3_taste_tags, name: 'following_bean', roaster: following_roaster) }
-    let!(:offer) { create(:offer, bean: bean) }
-    let!(:another_roaster) { create(:roaster, name: 'another_roaster') }
-    let!(:another_bean) { create(:bean, :with_image, :with_3_taste_tags, name: 'another_bean', roaster: another_roaster) }
-    let!(:another_offer) { create(:offer, bean: another_bean) }
-    before do
-      sign_in user
-      user.following_roasters << following_roaster
-      visit user_home_path
-    end
-    # フォローユーザーのオファーのみを表示させる
-    it 'shows an offer which is had by the roaster a user follow' do
-      expect(page).to have_content bean.name
-      expect(page).to have_content following_roaster.name
-      expect(page).to_not have_content another_bean.name
-      expect(page).to_not have_content another_roaster.name
-    end
-  end
-
-  describe 'User#following' do
-    let!(:following_roaster) { create(:roaster, name: 'following_roaster') }
-    let!(:another_roaster) { create(:roaster, name: 'another_roaster') }
-
-    before do
-      sign_in user
-      user.following_roasters << following_roaster
-      visit user_home_path
-      click_link 'follow'
-    end
-    # フォローいているロースターのみ表示しているか
-    it 'shows a roaster who followed by the user' do
-      expect(page).to have_content following_roaster.name
-      expect(page).to have_selector("a[href='/roasters/#{following_roaster.id}']")
-      expect(page).to_not have_content another_roaster.name
     end
   end
 end
