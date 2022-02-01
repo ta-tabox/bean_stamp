@@ -23,15 +23,15 @@ class Offer < ApplicationRecord
 
   def status
     today = Date.current
-    return 'on_offering' if today.before? ended_at
+    return 'on-offering' if today.before? ended_at
 
-    return 'on_roasting' if today.before? roasted_at
+    return 'on-roasting' if today.before? roasted_at
 
-    return 'on_preparing' if today.before? receipt_started_at
+    return 'on-preparing' if today.before? receipt_started_at
 
-    return 'on_selling' if today.before? receipt_ended_at
+    return 'on-selling' if today.before? receipt_ended_at
 
-    'end_of_sales'
+    'end-of-sales'
   end
 
   def status_value

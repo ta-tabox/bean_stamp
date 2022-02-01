@@ -3,6 +3,10 @@
 @import "tailwindcss/utilities";
 
 /* conponent */
+.btn {
+  @apply bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow;
+}
+
 .btn-primary {
   @apply bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow;
 }
@@ -142,4 +146,21 @@
 .pagy-combo-nav-js .page.prev.disabled,
 .pagy-combo-nav-js .page.next.disabled {
   @apply text-gray-400 cursor-default;
+}
+
+/* offer */
+.on-offering {
+  @apply text-blue-800;
+}
+.on-roasting {
+  @apply text-purple-800;
+}
+.on-preparing {
+  @apply text-green-800;
+}
+.on-selling {
+  @apply text-red-800;
+}
+.end-of-sales {
+  @apply text-gray-600;
 }
