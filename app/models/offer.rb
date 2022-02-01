@@ -23,19 +23,28 @@ class Offer < ApplicationRecord
 
   def status
     today = Date.current
-    status = { class: 'on_offering', value: 'オファー中' }
-    return status if today.before? ended_at
+    return 'on_offering' if today.before? ended_at
 
-    status = { class: 'on_roasting', value: 'ロースト中' }
-    return status if today.before? roasted_at
+    return 'on_roasting' if today.before? roasted_at
 
-    status = { class: 'on_preparing', value: '準備中' }
-    return status if today.before? receipt_started_at
+    return 'on_preparing' if today.before? receipt_started_at
 
-    status = { class: 'on_selling', value: '受け取り期間' }
-    return status if today.before? receipt_ended_at
+    return 'on_selling' if today.before? receipt_ended_at
 
-    { class: 'end_of_sales', value: '受け取り終了' }
+    'end_of_sales'
+  end
+
+  def status_value
+    today = Date.current
+    return 'オファー中' if today.before? ended_at
+
+    return 'ロースト中' if today.before? roasted_at
+
+    return '準備中' if today.before? receipt_started_at
+
+    return '受け取り期間' if today.before? receipt_ended_at
+
+    '受け取り終了'
   end
 
   private
