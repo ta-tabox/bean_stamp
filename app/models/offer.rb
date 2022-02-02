@@ -3,7 +3,6 @@ class Offer < ApplicationRecord
   has_one :roaster, through: :bean
   has_many :wants, dependent: :restrict_with_error
   has_many :wanted_users, through: :wants, source: :user
-  default_scope -> { order(created_at: :desc) }
   validates :bean_id, presence: true
   validates :ended_at, presence: true
   validates :roasted_at, presence: true
@@ -20,6 +19,9 @@ class Offer < ApplicationRecord
   scope :following_by, lambda { |user|
     joins(:bean).where('roaster_id IN (?)', user.following_roaster_ids).includes(:roaster, bean: :bean_images)
   }
+
+  scope :recent, -> { order(created_at: :desc) }
+  scope :active, -> { where("receipt_ended_at > '#{Date.current}'") }
 
   def status
     today = Date.current

@@ -10,6 +10,7 @@ class RoastersController < ApplicationController
 
   def show
     @pagy, @offers = pagy(@roaster.offers.includes(:roaster, bean: :bean_images))
+    # @pagy, @offers = pagy(Offer.all)
   end
 
   def new
