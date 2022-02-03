@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     resources :offers, only: [:new]
   end
   resources :offers do
+    collection { get 'search' }
     resources :wants, only: %i[index create]
   end
   resources :roaster_relationships, only: %i[create destroy]

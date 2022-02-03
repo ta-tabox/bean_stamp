@@ -149,18 +149,18 @@
 }
 
 /* offer */
-.on-offering {
+.on_offering {
   @apply text-blue-800;
 }
-.on-roasting {
+.on_roasting {
   @apply text-purple-800;
 }
-.on-preparing {
+.on_preparing {
   @apply text-green-800;
 }
-.on-selling {
+.on_selling {
   @apply text-red-800;
 }
-.end-of-sales {
+.end_of_sales {
   @apply text-gray-600;
 }

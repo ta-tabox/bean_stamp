@@ -21,19 +21,24 @@ class Offer < ApplicationRecord
   }
 
   scope :recent, -> { order(created_at: :desc) }
-  scope :active, -> { where("receipt_ended_at > '#{Date.current}'") }
+  scope :active, -> { where('receipt_ended_at > ?', Date.current) }
+  scope :on_offering, -> { where('ended_at >= ?', Date.current).order(:ended_at) }
+  scope :on_roasting, -> { where('ended_at < :today AND roasted_at >= :today', { today: Date.current }).order(:roasted_at) }
+  scope :on_preparing, -> { where('roasted_at < :today AND receipt_started_at >= :today', { today: Date.current }).order(:receipt_started_at) }
+  scope :on_selling, -> { where('receipt_started_at < :today AND receipt_ended_at >= :today', { today: Date.current }).order(:receipt_ended_at) }
+  scope :end_of_sales, -> { where('receipt_ended_at < ?', Date.current).order(receipt_ended_at: :desc) }
 
   def status
     today = Date.current
-    return 'on-offering' if today.before? ended_at
+    return 'on_offering' if today.before? ended_at
 
-    return 'on-roasting' if today.before? roasted_at
+    return 'on_roasting' if today.before? roasted_at
 
-    return 'on-preparing' if today.before? receipt_started_at
+    return 'on_preparing' if today.before? receipt_started_at
 
-    return 'on-selling' if today.before? receipt_ended_at
+    return 'on_selling' if today.before? receipt_ended_at
 
-    'end-of-sales'
+    'end_of_sales'
   end
 
   def status_value
@@ -47,6 +52,10 @@ class Offer < ApplicationRecord
     return '受け取り期間' if today.before? receipt_ended_at
 
     '受け取り終了'
+  end
+
+  def self.status_list
+    { on_offering: 'オファー中', on_roasting: 'ロースト中', on_preparing: '準備中', on_selling: '受け取り期間', end_of_sales: '受け取り終了' }
   end
 
   private

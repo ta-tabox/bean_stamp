@@ -3,10 +3,10 @@ class OffersController < ApplicationController
   before_action :user_belonged_to_roaster_required, except: %i[show]
   before_action :roaster_had_bean_requierd, only: %i[create]
   before_action :roaster_had_offer_requierd_and_set_offer, only: %i[edit update destroy]
+  before_action :set_search_index, only: %i[index search]
 
   def index
-    @q = current_roaster.offers.ransack(params[:q])
-    @pagy, @offers = pagy(@q.result(distinct: true).active.recent.includes(:roaster, bean: :bean_images))
+    @pagy, @offers = pagy(current_roaster.offers.active.recent.includes(:roaster, bean: :bean_images))
   end
 
   def show
@@ -53,6 +53,24 @@ class OffersController < ApplicationController
     redirect_to offers_path
   end
 
+  def search # rubocop:disable all
+    @pagy, @offers = case params[:search]
+                     when 'on_offering'
+                       pagy(current_roaster.offers.on_offering.includes(:roaster, bean: :bean_images))
+                     when 'on_roasting'
+                       pagy(current_roaster.offers.on_roasting.includes(:roaster, bean: :bean_images))
+                     when 'on_preparing'
+                       pagy(current_roaster.offers.on_preparing.includes(:roaster, bean: :bean_images))
+                     when 'on_selling'
+                       pagy(current_roaster.offers.on_selling.includes(:roaster, bean: :bean_images))
+                     when 'end_of_sales'
+                       pagy(current_roaster.offers.end_of_sales.includes(:roaster, bean: :bean_images))
+                     else
+                       pagy(current_roaster.offers.active.recent.includes(:roaster, bean: :bean_images))
+                     end
+    render 'index'
+  end
+
   private
 
   def offer_params
@@ -74,5 +92,10 @@ class OffersController < ApplicationController
     return if @offer
 
     redirect_to beans_path, alert: 'オファーを登録してください'
+  end
+
+  def set_search_index
+    status_list = Offer.status_list.map { |k, v| [v, k] }
+    @search_index = status_list.to_a
   end
 end

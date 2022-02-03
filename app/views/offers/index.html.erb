@@ -4,11 +4,11 @@
 <div class="container">
   <%= link_to "コーヒー豆一覧", beans_path, class: "mr-4 mb-8 btn-primary" %>
   <div class="form form-container">
-    <%= search_form_for(@q, class: "mb-4") do |f| %>
-      <div class="field">
-        <%= f.label :price_lteq, '金額' , class: "label" %>
-        <%= f.search_field :price_lteq, class: "input-field" %>
-        <%= f.submit '検索', class: "btn-primary" %>
+    <%= form_with(url: search_offers_path, method: :get, local: true)do |f| %>
+      <div class="select-field">
+        <%= f.label :search, "検索", class: "label" %>
+        <%= f.select :search, @search_index, {include_blank: '選択ボックス'}, class: 'select-box' %>
+        <%= f.submit "検索", class: "btn-primary"  %>
       </div>
     <% end %>
   </div>
