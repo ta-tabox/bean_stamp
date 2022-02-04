@@ -53,21 +53,22 @@ class OffersController < ApplicationController
     redirect_to offers_path
   end
 
-  def search # rubocop:disable all
-    @pagy, @offers = case params[:search]
-                     when 'on_offering'
-                       pagy(current_roaster.offers.on_offering.includes(:roaster, bean: :bean_images))
-                     when 'on_roasting'
-                       pagy(current_roaster.offers.on_roasting.includes(:roaster, bean: :bean_images))
-                     when 'on_preparing'
-                       pagy(current_roaster.offers.on_preparing.includes(:roaster, bean: :bean_images))
-                     when 'on_selling'
-                       pagy(current_roaster.offers.on_selling.includes(:roaster, bean: :bean_images))
-                     when 'end_of_sales'
-                       pagy(current_roaster.offers.end_of_sales.includes(:roaster, bean: :bean_images))
-                     else
-                       pagy(current_roaster.offers.active.recent.includes(:roaster, bean: :bean_images))
-                     end
+  def search
+    offers = case params[:search]
+             when 'on_offering'
+               current_roaster.offers.on_offering.includes(:roaster, bean: :bean_images)
+             when 'on_roasting'
+               current_roaster.offers.on_roasting.includes(:roaster, bean: :bean_images)
+             when 'on_preparing'
+               current_roaster.offers.on_preparing.includes(:roaster, bean: :bean_images)
+             when 'on_selling'
+               current_roaster.offers.on_selling.includes(:roaster, bean: :bean_images)
+             when 'end_of_sales'
+               current_roaster.offers.end_of_sales.includes(:roaster, bean: :bean_images)
+             else
+               current_roaster.offers.active.recent.includes(:roaster, bean: :bean_images)
+             end
+    @pagy, @offers = pagy(offers)
     render 'index'
   end
 
@@ -94,6 +95,7 @@ class OffersController < ApplicationController
     redirect_to beans_path, alert: 'オファーを登録してください'
   end
 
+  # select_box用にstatus_listを配列化, [key, value] ->[value, key]
   def set_search_index
     status_list = Offer.status_list.map { |k, v| [v, k] }
     @search_index = status_list.to_a

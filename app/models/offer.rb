@@ -29,31 +29,34 @@ class Offer < ApplicationRecord
   scope :end_of_sales, -> { where('receipt_ended_at < ?', Date.current).order(receipt_ended_at: :desc) }
 
   def status
+    status = Offer.status_list.keys
     today = Date.current
-    return 'on_offering' if today.before? ended_at
+    return status[0] if today.before? ended_at
 
-    return 'on_roasting' if today.before? roasted_at
+    return status[1] if today.before? roasted_at
 
-    return 'on_preparing' if today.before? receipt_started_at
+    return status[2] if today.before? receipt_started_at
 
-    return 'on_selling' if today.before? receipt_ended_at
+    return status[3] if today.before? receipt_ended_at
 
-    'end_of_sales'
+    status[4]
   end
 
   def status_value
+    values = Offer.status_list.values
     today = Date.current
-    return 'オファー中' if today.before? ended_at
+    return values[0] if today.before? ended_at
 
-    return 'ロースト中' if today.before? roasted_at
+    return values[1] if today.before? roasted_at
 
-    return '準備中' if today.before? receipt_started_at
+    return values[2] if today.before? receipt_started_at
 
-    return '受け取り期間' if today.before? receipt_ended_at
+    return values[3] if today.before? receipt_ended_at
 
-    '受け取り終了'
+    values[4]
   end
 
+  # Offerのstatusの種類と名称を定義
   def self.status_list
     { on_offering: 'オファー中', on_roasting: 'ロースト中', on_preparing: '準備中', on_selling: '受け取り期間', end_of_sales: '受け取り終了' }
   end
