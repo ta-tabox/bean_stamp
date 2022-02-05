@@ -66,7 +66,7 @@ RSpec.describe 'Wants', type: :system do
     end
     it 'shows wanting offers' do
       find('.stats').click_link 'wants'
-      expect(current_path).to eq offer_wants_path(offer)
+      expect(current_path).to eq wanted_users_offer_path(offer)
       expect(page).to have_content 'ウォンツしたユーザー'
       expect(page).to have_content another_user.name
     end

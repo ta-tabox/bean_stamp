@@ -2,7 +2,7 @@ class OffersController < ApplicationController
   before_action :user_signed_in_required
   before_action :user_belonged_to_roaster_required, except: %i[show]
   before_action :roaster_had_bean_requierd, only: %i[create]
-  before_action :roaster_had_offer_requierd_and_set_offer, only: %i[edit update destroy]
+  before_action :roaster_had_offer_requierd_and_set_offer, only: %i[edit update destroy wanted_users]
   before_action :set_search_index, only: %i[index search]
 
   def index
@@ -75,6 +75,10 @@ class OffersController < ApplicationController
     render 'index'
   end
 
+  def wanted_users
+    @pagy, @users = pagy(@offer.wanted_users)
+  end
+
   private
 
   def offer_params
@@ -104,6 +108,7 @@ class OffersController < ApplicationController
     @search_index = status_list.to_a
   end
 
+  # オファーにstatusをセットする
   def set_offer_status
     @offers&.map(&:set_status)
     @offer&.set_status

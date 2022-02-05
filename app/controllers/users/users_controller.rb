@@ -14,6 +14,7 @@ class Users::UsersController < ApplicationController
 
   def wants
     @pagy, @wants = pagy(current_user.wants.includes(:roaster, :offer, bean: :bean_images))
+    @wants&.map { |want| want.offer.set_status }
   end
 
   private

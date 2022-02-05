@@ -170,7 +170,7 @@ RSpec.describe 'Offers', type: :request do
 
       context 'with price of strings' do
         let(:offer_params) { attributes_for(:offer, bean_id: bean.id, price: 'price') }
-        let(:error_message) { '販売価格は数値で入力してください' }
+        let(:error_message) { '販売価格は数値で入力' }
 
         it_behaves_like 'does not create a Offer and renders to new'
         it_behaves_like 'shows a error message'
@@ -521,6 +521,40 @@ RSpec.describe 'Offers', type: :request do
         expect(response.body).to_not include selling_bean.name
         # 昨日がreceipt_ended_atのオファーを表示する
         expect(response.body).to include sold_bean.name
+      end
+    end
+  end
+
+  describe 'GET #wanted_users' do
+    subject { get wanted_users_offer_path(offer) }
+    context 'when a user is not signed in' do
+      it 'redirects to new_user_session_path ' do
+        subject
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+    context 'when a user is not belonging to a roaster' do
+      before { sign_in user }
+      it 'redirects to root_path ' do
+        subject
+        expect(response).to redirect_to root_path
+      end
+    end
+    context 'when a user does not have the offer' do
+      let(:another_user) { create(:user, roaster: another_roaster) }
+      let(:another_roaster) { create(:roaster) }
+      before { sign_in another_user }
+      it 'redirects to beans_path ' do
+        subject
+        expect(response).to redirect_to beans_path
+      end
+    end
+    context 'when a user is belonging to a roaster with the offer' do
+      before { sign_in user_with_a_offer }
+      it 'gets offers/index with no offers' do
+        subject
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("<title>ウォンツしたユーザー#{base_title}</title>")
       end
     end
   end

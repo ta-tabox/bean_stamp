@@ -2,7 +2,7 @@
   <!-- アイコンを設置してwantの切り替えを行う -->
   <span>
     <% if current_user.had_offer?(offer) %>
-      <%= link_to offer_wants_path(offer), class: "link mt-4" do%>
+      <%= link_to wanted_users_offer_path(offer), class: "link mt-4" do%>
         <strong id="offer-<%= offer.id %>-wants", class="stat">
           <%= offer.wants.count %>
         </strong>

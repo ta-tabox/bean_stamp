@@ -28,7 +28,9 @@ Rails.application.routes.draw do
   end
   resources :offers do
     collection { get 'search' }
-    resources :wants, only: %i[index create]
+    member { get 'wanted_users' }
+    resources :wants, only: %i[create] do
+    end
   end
   resources :roaster_relationships, only: %i[create destroy]
   resources :wants, only: %i[destroy show] do

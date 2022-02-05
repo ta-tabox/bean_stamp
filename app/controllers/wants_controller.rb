@@ -1,12 +1,6 @@
 class WantsController < ApplicationController
   before_action :user_signed_in_required
-  before_action :user_belonged_to_roaster_required, only: :index
-  before_action :roaster_had_offer_requierd_and_set_offer, only: :index
   before_action :user_had_want_required_and_set_want, only: %i[show receipt]
-
-  def index
-    @pagy, @users = pagy(@offer.wanted_users)
-  end
 
   def show; end
 
