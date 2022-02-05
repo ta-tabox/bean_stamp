@@ -24,7 +24,8 @@ RSpec.describe Offer, type: :model do
     it { is_expected.to validate_numericality_of(:amount).only_integer }
   end
 
-  describe '#status, #status_value' do
+  describe '#set_status' do
+    before { test_offer.set_status }
     let!(:bean) { create(:bean, :with_image, :with_3_taste_tags) }
     let(:offer) { create(:offer, bean: bean) }
     let(:roasting_offer) { create(:offer, :on_roasting, bean: bean) }
@@ -33,24 +34,29 @@ RSpec.describe Offer, type: :model do
     let(:sold_offer) { create(:offer, :end_of_sales, bean: bean) }
 
     context 'when an offer is on offer' do
-      it { expect(offer.status).to eq :on_offering }
-      it { expect(offer.status_value).to eq 'オファー中' }
+      let(:test_offer) { offer }
+      it { expect(test_offer.status).to eq 'on_offering' }
+      it { expect(test_offer.status_value).to eq 'オファー中' }
     end
     context 'when an offer is on roasting' do
-      it { expect(roasting_offer.status).to eq :on_roasting }
-      it { expect(roasting_offer.status_value).to eq 'ロースト中' }
+      let(:test_offer) { roasting_offer }
+      it { expect(test_offer.status).to eq 'on_roasting' }
+      it { expect(test_offer.status_value).to eq 'ロースト中' }
     end
     context 'when an offer is on preparing' do
-      it { expect(preparing_offer.status).to eq :on_preparing }
-      it { expect(preparing_offer.status_value).to eq '準備中' }
+      let(:test_offer) { preparing_offer }
+      it { expect(test_offer.status).to eq 'on_preparing' }
+      it { expect(test_offer.status_value).to eq '準備中' }
     end
     context 'when an offer is on selling' do
-      it { expect(selling_offer.status).to eq :on_selling }
-      it { expect(selling_offer.status_value).to eq '受け取り期間' }
+      let(:test_offer) { selling_offer }
+      it { expect(test_offer.status).to eq 'on_selling' }
+      it { expect(test_offer.status_value).to eq '受け取り期間' }
     end
     context 'when an offer is end of sales' do
-      it { expect(sold_offer.status).to eq :end_of_sales }
-      it { expect(sold_offer.status_value).to eq '受け取り終了' }
+      let(:test_offer) { sold_offer }
+      it { expect(test_offer.status).to eq 'end_of_sales' }
+      it { expect(test_offer.status_value).to eq '受け取り終了' }
     end
   end
 end

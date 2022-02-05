@@ -67,8 +67,7 @@ RSpec.describe 'Beans', type: :request do
         it { is_expected.to change(Bean, :count).by(1) }
         it {
           subject.call
-          # Beanは default_scope -> { order(created_at: :desc) }のためBean.firstで最新のレコードを取得する
-          expect(response).to redirect_to bean_path(Bean.first)
+          expect(response).to redirect_to bean_path(Bean.last)
         }
       end
 
