@@ -7,10 +7,12 @@ class OffersController < ApplicationController
 
   def index
     @pagy, @offers = pagy(current_roaster.offers.active.recent.includes(:roaster, bean: :bean_images))
+    set_offer_status
   end
 
   def show
     @offer = Offer.find_by(id: params[:id])
+    set_offer_status
   end
 
   def new
@@ -53,7 +55,7 @@ class OffersController < ApplicationController
     redirect_to offers_path
   end
 
-  def search
+  def search   # rubocop:disable all
     offers = case params[:search]
              when 'on_offering'
                current_roaster.offers.on_offering.includes(:roaster, bean: :bean_images)
@@ -69,6 +71,7 @@ class OffersController < ApplicationController
                current_roaster.offers.active.recent.includes(:roaster, bean: :bean_images)
              end
     @pagy, @offers = pagy(offers)
+    set_offer_status
     render 'index'
   end
 
@@ -99,5 +102,10 @@ class OffersController < ApplicationController
   def set_search_index
     status_list = Offer.status_list.map { |k, v| [v, k] }
     @search_index = status_list.to_a
+  end
+
+  def set_offer_status
+    @offers&.map(&:set_status)
+    @offer&.set_status
   end
 end

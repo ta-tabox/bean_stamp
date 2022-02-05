@@ -1,4 +1,6 @@
 class Offer < ApplicationRecord
+  attr_accessor :status, :status_value
+
   belongs_to :bean, inverse_of: :offers
   has_one :roaster, through: :bean
   has_many :wants, dependent: :restrict_with_error
@@ -28,32 +30,25 @@ class Offer < ApplicationRecord
   scope :on_selling, -> { where('receipt_started_at <= :today AND receipt_ended_at >= :today', { today: Date.current }).order(:receipt_ended_at) }
   scope :end_of_sales, -> { where('receipt_ended_at < ?', Date.current).order(receipt_ended_at: :desc) }
 
-  def status
-    status = Offer.status_list.keys
+  def set_status
+    status_list = Offer.status_list
     today = Date.current
-    return status[0] if today.before? ended_at
-
-    return status[1] if today.before? roasted_at
-
-    return status[2] if today.before? receipt_started_at
-
-    return status[3] if today.before? receipt_ended_at
-
-    status[4]
-  end
-
-  def status_value
-    values = Offer.status_list.values
-    today = Date.current
-    return values[0] if today.before? ended_at
-
-    return values[1] if today.before? roasted_at
-
-    return values[2] if today.before? receipt_started_at
-
-    return values[3] if today.before? receipt_ended_at
-
-    values[4]
+    if ended_at >= Date.current
+      self.status = 'on_offering'
+      self.status_value = status_list[:on_offering]
+    elsif roasted_at >= today
+      self.status = 'on_roasting'
+      self.status_value = status_list[:on_roasting]
+    elsif receipt_started_at > today
+      self.status = 'on_preparing'
+      self.status_value = status_list[:on_preparing]
+    elsif receipt_ended_at >= today
+      self.status = 'on_selling'
+      self.status_value = status_list[:on_selling]
+    else
+      self.status = 'end_of_sales'
+      self.status_value = status_list[:end_of_sales]
+    end
   end
 
   # Offerのstatusの種類と名称を定義
