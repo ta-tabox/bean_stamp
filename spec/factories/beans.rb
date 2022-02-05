@@ -45,6 +45,15 @@ FactoryBot.define do
     trait :update do
       name { 'アップデートビーン' }
     end
+
+    trait :with_image_and_tags do
+      after(:build) do |bean|
+        bean.bean_images << build(:bean_image, bean: bean)
+        bean.taste_tags << MstTasteTag.find(1)
+        bean.taste_tags << MstTasteTag.find(2)
+        bean.taste_tags << MstTasteTag.find(3)
+      end
+    end
   end
 
   factory :bean_image do

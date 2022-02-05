@@ -24,8 +24,8 @@ class Offer < ApplicationRecord
   scope :active, -> { where('receipt_ended_at > ?', Date.current) }
   scope :on_offering, -> { where('ended_at >= ?', Date.current).order(:ended_at) }
   scope :on_roasting, -> { where('ended_at < :today AND roasted_at >= :today', { today: Date.current }).order(:roasted_at) }
-  scope :on_preparing, -> { where('roasted_at < :today AND receipt_started_at >= :today', { today: Date.current }).order(:receipt_started_at) }
-  scope :on_selling, -> { where('receipt_started_at < :today AND receipt_ended_at >= :today', { today: Date.current }).order(:receipt_ended_at) }
+  scope :on_preparing, -> { where('roasted_at < :today AND receipt_started_at > :today', { today: Date.current }).order(:receipt_started_at) }
+  scope :on_selling, -> { where('receipt_started_at <= :today AND receipt_ended_at >= :today', { today: Date.current }).order(:receipt_ended_at) }
   scope :end_of_sales, -> { where('receipt_ended_at < ?', Date.current).order(receipt_ended_at: :desc) }
 
   def status
