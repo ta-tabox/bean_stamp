@@ -3,7 +3,7 @@ class OffersController < ApplicationController
   before_action :user_belonged_to_roaster_required, except: %i[show]
   before_action :roaster_had_bean_requierd, only: %i[create]
   before_action :roaster_had_offer_requierd_and_set_offer, only: %i[edit update destroy wanted_users]
-  before_action :set_search_index, only: %i[index search]
+  before_action :set_search_index_for_offer_status, only: %i[index search]
 
   def index
     @pagy, @offers = pagy(current_roaster.offers.active.recent.includes(:roaster, bean: :bean_images))
@@ -55,21 +55,8 @@ class OffersController < ApplicationController
     redirect_to offers_path
   end
 
-  def search   # rubocop:disable all
-    offers = case params[:search]
-             when 'on_offering'
-               current_roaster.offers.on_offering.includes(:roaster, bean: :bean_images)
-             when 'on_roasting'
-               current_roaster.offers.on_roasting.includes(:roaster, bean: :bean_images)
-             when 'on_preparing'
-               current_roaster.offers.on_preparing.includes(:roaster, bean: :bean_images)
-             when 'on_selling'
-               current_roaster.offers.on_selling.includes(:roaster, bean: :bean_images)
-             when 'end_of_sales'
-               current_roaster.offers.end_of_sales.includes(:roaster, bean: :bean_images)
-             else
-               current_roaster.offers.active.recent.includes(:roaster, bean: :bean_images)
-             end
+  def search
+    offers = search_offers(params[:search])
     @pagy, @offers = pagy(offers)
     set_offer_status
     render 'index'
@@ -102,15 +89,26 @@ class OffersController < ApplicationController
     redirect_to beans_path, alert: 'オファーを登録してください'
   end
 
-  # select_box用にstatus_listを配列化, [key, value] ->[value, key]
-  def set_search_index
-    status_list = Offer.status_list.map { |k, v| [v, k] }
-    @search_index = status_list.to_a
-  end
-
   # オファーにstatusをセットする
   def set_offer_status
     @offers&.map(&:set_status)
     @offer&.set_status
+  end
+
+  def search_offers(status)
+    case status
+    when 'on_offering'
+      current_roaster.offers.on_offering
+    when 'on_roasting'
+      current_roaster.offers.on_roasting
+    when 'on_preparing'
+      current_roaster.offers.on_preparing
+    when 'on_selling'
+      current_roaster.offers.on_selling
+    when 'end_of_sales'
+      current_roaster.offers.end_of_sales
+    else
+      current_roaster.offers.active.recent
+    end
   end
 end

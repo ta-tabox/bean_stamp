@@ -29,4 +29,10 @@ class ApplicationController < ActionController::Base
   def current_roaster
     current_user.roaster
   end
+
+  # offers, wantsのselect_box用にstatus_listを配列化, [key, value] ->[value, key]
+  def set_search_index_for_offer_status
+    status_list = Offer.status_list.map { |k, v| [v, k] }
+    @search_index = status_list.to_a
+  end
 end

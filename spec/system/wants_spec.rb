@@ -47,7 +47,7 @@ RSpec.describe 'Wants', type: :system do
     end
     it 'shows wanting offers' do
       click_link 'wants'
-      expect(current_path).to eq wants_users_path
+      expect(current_path).to eq wants_path
       expect(page).to have_content 'ウォンツ'
       expect(find("#offer-#{offer.id}-wants")).to have_content(offer.wants.count.to_s)
       expect(page).to have_content offer.bean.name

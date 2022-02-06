@@ -19,15 +19,18 @@ class Offer < ApplicationRecord
   validate :receipt_ended_at_cannot_be_earlier_than_receipt_started_at
 
   scope :following_by, lambda { |user|
-    joins(:bean).where('roaster_id IN (?)', user.following_roaster_ids).includes(:roaster, bean: :bean_images)
+    joins(:bean).where('roaster_id IN (?)', user.following_roaster_ids).with_associations
   }
   scope :recent, -> { order(created_at: :desc) }
-  scope :active, -> { where('receipt_ended_at > ?', Date.current) }
-  scope :on_offering, -> { where('ended_at >= ?', Date.current).order(:ended_at) }
-  scope :on_roasting, -> { where('ended_at < :today AND roasted_at >= :today', { today: Date.current }).order(:roasted_at) }
-  scope :on_preparing, -> { where('roasted_at < :today AND receipt_started_at > :today', { today: Date.current }).order(:receipt_started_at) }
-  scope :on_selling, -> { where('receipt_started_at <= :today AND receipt_ended_at >= :today', { today: Date.current }).order(:receipt_ended_at) }
-  scope :end_of_sales, -> { where('receipt_ended_at < ?', Date.current).order(receipt_ended_at: :desc) }
+  scope :active, -> { where('receipt_ended_at > ?', Date.current).with_associations }
+  scope :on_offering, -> { where('ended_at >= ?', Date.current).order(:ended_at).with_associations }
+  scope :on_roasting, -> { where('ended_at < :today AND roasted_at >= :today', { today: Date.current }).order(:roasted_at).with_associations }
+  scope :on_preparing, -> { where('roasted_at < :today AND receipt_started_at > :today', { today: Date.current }).order(:receipt_started_at).with_associations }
+  scope :on_selling, lambda {
+                       where('receipt_started_at <= :today AND receipt_ended_at >= :today', { today: Date.current }).order(:receipt_ended_at).with_associations
+                     }
+  scope :end_of_sales, -> { where('receipt_ended_at < ?', Date.current).order(receipt_ended_at: :desc).with_associations }
+  scope :with_associations, -> { includes(:roaster, bean: :bean_images) }
 
   def set_status
     status_list = Offer.status_list

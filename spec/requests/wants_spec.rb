@@ -19,9 +19,9 @@ RSpec.describe 'Wants', type: :request do
     end
     context 'when a user does not have a want' do
       before { sign_in another_user }
-      it 'redirects to wants_users_path' do
+      it 'redirects to wants_path' do
         subject
-        expect(response).to redirect_to wants_users_path
+        expect(response).to redirect_to wants_path
       end
     end
     context 'when a user has a want' do
@@ -37,7 +37,7 @@ RSpec.describe 'Wants', type: :request do
   end
 
   describe 'POST #create' do
-    subject { proc { post offer_wants_path(offer), headers: { 'HTTP_REFERER' => wants_users_url } } }
+    subject { proc { post offer_wants_path(offer), headers: { 'HTTP_REFERER' => wants_url } } }
     context 'when user is not signed in' do
       it 'redirects to new_user_session_path ' do
         subject.call
@@ -67,7 +67,7 @@ RSpec.describe 'Wants', type: :request do
         it { is_expected.to_not change(Want, :count) }
         it 'redirects to referer' do
           subject.call
-          expect(response).to redirect_to wants_users_path
+          expect(response).to redirect_to wants_path
         end
       end
 
@@ -86,7 +86,7 @@ RSpec.describe 'Wants', type: :request do
         it { is_expected.to_not change(Want, :count) }
         it 'redirects to referer' do
           subject.call
-          expect(response).to redirect_to wants_users_path
+          expect(response).to redirect_to wants_path
         end
       end
     end
@@ -94,7 +94,7 @@ RSpec.describe 'Wants', type: :request do
 
   describe 'DELET #destroy' do
     let(:want) { user.wants.find_by(offer_id: offer.id) }
-    subject { proc { delete want_path(want), headers: { 'HTTP_REFERER' => wants_users_url } } }
+    subject { proc { delete want_path(want), headers: { 'HTTP_REFERER' => wants_url } } }
     before do
       user.wanting_offers << offer
     end
@@ -128,9 +128,9 @@ RSpec.describe 'Wants', type: :request do
 
     context 'when a user does not have a want' do
       before { sign_in another_user }
-      it 'redirects to wants_users_path' do
+      it 'redirects to wants_path' do
         subject.call
-        expect(response).to redirect_to wants_users_path
+        expect(response).to redirect_to wants_path
       end
     end
 

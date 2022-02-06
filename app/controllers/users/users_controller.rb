@@ -14,11 +14,6 @@ class Users::UsersController < ApplicationController
     @pagy, @roasters = pagy(@user.following_roasters)
   end
 
-  def wants
-    @pagy, @wants = pagy(current_user.wants.includes(:roaster, :offer, bean: :bean_images))
-    @wants&.map { |want| want.offer.set_status }
-  end
-
   private
 
   def set_user
