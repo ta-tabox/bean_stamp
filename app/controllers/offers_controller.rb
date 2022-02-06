@@ -2,14 +2,17 @@ class OffersController < ApplicationController
   before_action :user_signed_in_required
   before_action :user_belonged_to_roaster_required, except: %i[show]
   before_action :roaster_had_bean_requierd, only: %i[create]
-  before_action :roaster_had_offer_requierd_and_set_offer, only: %i[edit update destroy]
+  before_action :roaster_had_offer_requierd_and_set_offer, only: %i[edit update destroy wanted_users]
+  before_action :set_search_index_for_offer_status, only: %i[index search]
 
   def index
-    @pagy, @offers = pagy(current_roaster.offers.includes(:roaster, bean: :bean_images))
+    @pagy, @offers = pagy(current_roaster.offers.active.recent.includes(:roaster, bean: :bean_images))
+    set_offer_status
   end
 
   def show
     @offer = Offer.find_by(id: params[:id])
+    set_offer_status
   end
 
   def new
@@ -52,6 +55,17 @@ class OffersController < ApplicationController
     redirect_to offers_path
   end
 
+  def search
+    offers = search_offers(params[:search])
+    @pagy, @offers = pagy(offers)
+    set_offer_status
+    render 'index'
+  end
+
+  def wanted_users
+    @pagy, @users = pagy(@offer.wanted_users)
+  end
+
   private
 
   def offer_params
@@ -73,5 +87,28 @@ class OffersController < ApplicationController
     return if @offer
 
     redirect_to beans_path, alert: 'オファーを登録してください'
+  end
+
+  # オファーにstatusをセットする
+  def set_offer_status
+    @offers&.map(&:set_status)
+    @offer&.set_status
+  end
+
+  def search_offers(status)
+    case status
+    when 'on_offering'
+      current_roaster.offers.on_offering
+    when 'on_roasting'
+      current_roaster.offers.on_roasting
+    when 'on_preparing'
+      current_roaster.offers.on_preparing
+    when 'on_selling'
+      current_roaster.offers.on_selling
+    when 'end_of_sales'
+      current_roaster.offers.end_of_sales
+    else
+      current_roaster.offers.active.recent
+    end
   end
 end

@@ -1,3 +1,4 @@
+<div class="font-semibold my-4 <%=offer.status%>"><%= offer.status_value %></div>
 <div><%= render partial: 'offers/want_form', locals: { offer: offer} %></div>
 <div><%= render partial: 'offers/stats', locals: { offer: offer } %></div>
 <p> <%= time_ago_in_words(offer.created_at) %> 前</p>
@@ -11,5 +12,5 @@
   <div id="offer_receipt_ended_at"><%= offer.receipt_ended_at %></div>
   <div id="offer_price"><%= offer.price %></div>
   <div id="offer_weight"><%= offer.weight %></div>
-  <div id="offer_amount"><%= offer.amount %></div>
+  <div id="offer_amount"><span id="offer-<%= offer.id %>-wants-count"><%= offer.wants.count %></span> / <%= offer.amount %></div>
 </div>

@@ -1,22 +1,28 @@
 guest_user = User.find_by(guest: true)
 users = User.where.not(guest: true).take(10)
-beans = Bean.order(:created_at).where.not(roaster_id: guest_user.roaster.id).take(10)
-# offers = Offer.order(:created_at).take(10)
+# beans = Bean.order(:created_at).where.not(roaster_id: guest_user.roaster.id).take(10)
+offers = Offer.all
+id = 1
 
-beans.count.times do |n|
-  Want.seed_once do |s|
-    s.id = n + 1
-    s.user_id = guest_user.id
-    s.offer_id = beans[n].offers[0].id
+users.count.times do |m|
+  offers.count.times do |i|
+    Want.seed_once do |s|
+      s.id = id
+      s.user_id = users[m].id
+      s.offer_id = offers[i].id
+    end
+    id += 1
   end
+  id += 1
 end
 
-users.count.times do |n|
-  beans.count.times do |i|
-    Want.seed_once do |s|
-      s.id = beans.count + (n * beans.count) + i + 1
-      s.user_id = users[n].id
-      s.offer_id = beans[i].offers[0].id
-    end
+# Offerの日程に応じた状態確認用テストウォンツ
+bean = Bean.order(:created_at).where.not(roaster_id: guest_user.roaster.id).last
+bean.offers.count.times do |offer_num|
+  Want.seed_once do |s|
+    s.id = id
+    s.user_id = guest_user.id
+    s.offer_id = bean.offers[offer_num].id
   end
+  id += 1
 end

@@ -14,7 +14,7 @@ class Bean < ApplicationRecord
   has_many :offers, dependent: :destroy
   accepts_nested_attributes_for :bean_taste_tags, allow_destroy: true
 
-  default_scope -> { order(created_at: :desc) }
+  scope :recent, -> { order(created_at: :desc) }
   validates :roaster_id, presence: true
   validates :name, presence: true
   validates :country, presence: true

@@ -1,9 +1,10 @@
 class Offer < ApplicationRecord
+  attr_accessor :status, :status_value
+
   belongs_to :bean, inverse_of: :offers
   has_one :roaster, through: :bean
   has_many :wants, dependent: :restrict_with_error
   has_many :wanted_users, through: :wants, source: :user
-  default_scope -> { order(created_at: :desc) }
   validates :bean_id, presence: true
   validates :ended_at, presence: true
   validates :roasted_at, presence: true
@@ -18,8 +19,44 @@ class Offer < ApplicationRecord
   validate :receipt_ended_at_cannot_be_earlier_than_receipt_started_at
 
   scope :following_by, lambda { |user|
-    joins(:bean).where('roaster_id IN (?)', user.following_roaster_ids).includes(:roaster, bean: :bean_images)
+    joins(:bean).where('roaster_id IN (?)', user.following_roaster_ids).with_associations
   }
+  scope :recent, -> { order(created_at: :desc) }
+  scope :active, -> { where('receipt_ended_at > ?', Date.current).with_associations }
+  scope :on_offering, -> { where('ended_at >= ?', Date.current).order(:ended_at).with_associations }
+  scope :on_roasting, -> { where('ended_at < :today AND roasted_at >= :today', { today: Date.current }).order(:roasted_at).with_associations }
+  scope :on_preparing, -> { where('roasted_at < :today AND receipt_started_at > :today', { today: Date.current }).order(:receipt_started_at).with_associations }
+  scope :on_selling, lambda {
+                       where('receipt_started_at <= :today AND receipt_ended_at >= :today', { today: Date.current }).order(:receipt_ended_at).with_associations
+                     }
+  scope :end_of_sales, -> { where('receipt_ended_at < ?', Date.current).order(receipt_ended_at: :desc).with_associations }
+  scope :with_associations, -> { includes(:roaster, bean: :bean_images) }
+
+  def set_status
+    status_list = Offer.status_list
+    today = Date.current
+    if ended_at >= Date.current
+      self.status = 'on_offering'
+      self.status_value = status_list[:on_offering]
+    elsif roasted_at >= today
+      self.status = 'on_roasting'
+      self.status_value = status_list[:on_roasting]
+    elsif receipt_started_at > today
+      self.status = 'on_preparing'
+      self.status_value = status_list[:on_preparing]
+    elsif receipt_ended_at >= today
+      self.status = 'on_selling'
+      self.status_value = status_list[:on_selling]
+    else
+      self.status = 'end_of_sales'
+      self.status_value = status_list[:end_of_sales]
+    end
+  end
+
+  # Offerのstatusの種類と名称を定義
+  def self.status_list
+    { on_offering: 'オファー中', on_roasting: 'ロースト中', on_preparing: '準備中', on_selling: '受け取り期間', end_of_sales: '受け取り終了' }
+  end
 
   private
 
