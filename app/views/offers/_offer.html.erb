@@ -3,7 +3,6 @@
   <li id="offer-<%= offer.id %>">
     <span><%= link_to offer.roaster.name, offer.roaster %></span>
     <span><%= link_to offer.bean.name, offer %></span>
-    <span class="btn <%=offer.status%>"><%= offer.status_value %></span>
     <span>
       <% if current_user.had_offer?(offer) %>
         <%= link_to "編集", edit_offer_path(offer), class: "link ml-4" %>

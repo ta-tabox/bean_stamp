@@ -4,7 +4,7 @@
 <div class="container">
   <div class="w-200 pt-12 mx-auto">
     <div class="bg-white w-200 mx-auto">
-      <%= render partial: 'wants/want_info', locals: { want: @want, offer: @want.offer } %>
+      <%= render partial: 'wants/receipt_form', locals: { want: @want, offer: @want.offer } %>
       <%= show_thumbnail(@want.roaster) %>
       <p><%= @want.roaster.name %><span class="ml-3">＠<%= @want.roaster.full_address %></span></p>
       <div><%= render partial: 'offers/offer_info', locals: { offer: @want.offer } %></div>

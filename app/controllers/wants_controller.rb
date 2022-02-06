@@ -2,7 +2,9 @@ class WantsController < ApplicationController
   before_action :user_signed_in_required
   before_action :user_had_want_required_and_set_want, only: %i[show receipt]
 
-  def show; end
+  def show
+    @want.offer.set_status
+  end
 
   def create
     @offer = Offer.find(params[:offer_id])
@@ -29,6 +31,8 @@ class WantsController < ApplicationController
   end
 
   def receipt
+    return if already_received?(@want)
+
     @want.receipted_at = Time.current
     @want.save
     flash[:notice] = '受け取り完了を受け付けました'
@@ -49,11 +53,10 @@ class WantsController < ApplicationController
     redirect_to request.referer, alert: 'オファーは終了しました'
   end
 
-  def roaster_had_offer_requierd_and_set_offer
-    @offer = current_roaster.offers.find_by(id: params[:offer_id])
-    return if @offer
+  def already_received?(want)
+    return unless want.receipted_at?
 
-    redirect_to beans_path, alert: 'オファーを登録してください'
+    redirect_to want, alert: 'すでに受け取りが完了しています'
   end
 
   def user_had_want_required_and_set_want

@@ -3,7 +3,6 @@
   <li id="want-<%= want.id %>">
     <span><%= link_to want.roaster.name, want.roaster %></span>
     <span><%= link_to want.bean.name, want.offer %></span>
-    <span class="btn <%=want.offer.status%>"><%= want.offer.status_value %></span>
     <span><%= link_to '詳細', want_path(want), class: "link mt-4" %></span>
     <div class="flex">
       <% if want.bean.bean_images.any? %>

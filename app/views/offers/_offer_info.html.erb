@@ -1,3 +1,4 @@
+<div class="font-semibold my-4 <%=offer.status%>"><%= offer.status_value %></div>
 <div><%= render partial: 'offers/want_form', locals: { offer: offer} %></div>
 <div><%= render partial: 'offers/stats', locals: { offer: offer } %></div>
 <p> <%= time_ago_in_words(offer.created_at) %> 前</p>

@@ -137,6 +137,14 @@ RSpec.describe 'Wants', type: :request do
     context 'when a user have a want' do
       before { sign_in user }
       it { is_expected.to change { Want.find(want.id).receipted_at? }.from(false).to(true) }
+
+      # すでに受け取り済みの場合、２重受け取り処理ができないことをテスト
+      context 'when a user already received' do
+        before do
+          want.update(receipted_at: Time.current.prev_day(1))
+        end
+        it { is_expected.to_not(change { Want.find(want.id).receipted_at }) }
+      end
     end
   end
 end
