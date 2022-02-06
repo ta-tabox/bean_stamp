@@ -436,7 +436,7 @@ RSpec.describe 'Offers', type: :request do
     # 本日まで準備中、明日から受付開始
     let!(:preparing_offer) { create(:offer, :on_preparing, receipt_started_at: Date.current.next_day(1), bean: preparing_bean) }
     # 本日から受付開始
-    let!(:start_sellng_offer) { create(:offer, :on_selling, receipt_started_at: Date.current, bean: start_selling_bean) }
+    let!(:start_selling_offer) { create(:offer, :on_selling, receipt_started_at: Date.current, bean: start_selling_bean) }
     # 本日まで受付中
     let!(:selling_offer) { create(:offer, :on_selling, receipt_ended_at: Date.current, bean: selling_bean) }
     # 昨日まで受付中、本日は受付終了
