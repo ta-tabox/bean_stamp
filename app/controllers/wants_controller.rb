@@ -6,6 +6,11 @@ class WantsController < ApplicationController
 
   def create
     @offer = Offer.find(params[:offer_id])
+    if @offer.wants.count >= @offer.amount
+      redirect_to request.referer, alert: '数量が上限に達しています'
+      return
+    end
+
     current_user.wanting_offers << @offer
     respond_to do |format|
       format.html { redirect_to request.referer }
@@ -19,6 +24,7 @@ class WantsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to request.referer }
       # Ajaxで行うとusers/wantsにてdestroyしたときにwant詳細ページへのリンクが壊れる
+      # JSで非表示にするようにできたらAjaxで処理する
       # format.js
     end
   end

@@ -11,5 +11,5 @@
   <div id="offer_receipt_ended_at"><%= offer.receipt_ended_at %></div>
   <div id="offer_price"><%= offer.price %></div>
   <div id="offer_weight"><%= offer.weight %></div>
-  <div id="offer_amount"><%= offer.amount %></div>
+  <div id="offer_amount"><span id="offer-<%= offer.id %>-wants-count"><%= offer.wants.count %></span> / <%= offer.amount %></div>
 </div>

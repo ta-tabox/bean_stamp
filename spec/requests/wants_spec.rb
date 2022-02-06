@@ -56,6 +56,19 @@ RSpec.describe 'Wants', type: :request do
         subject { proc { post offer_wants_path(offer), xhr: true } }
         it { is_expected.to change(Want, :count).by(1) }
       end
+
+      # wantがoffer.amountの上限に達していたらwantを作成しない
+      context 'when an offer reached the max amount' do
+        let!(:offer) { create(:offer, amount: 1, bean: bean) }
+        before do
+          offer.wanted_users << another_user
+        end
+        it { is_expected.to_not change(Want, :count) }
+        it 'redirects to referer' do
+          subject.call
+          expect(response).to redirect_to wants_users_path
+        end
+      end
     end
   end
 
