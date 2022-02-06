@@ -59,10 +59,30 @@ RSpec.describe 'Wants', type: :request do
 
       # wantがoffer.amountの上限に達していたらwantを作成しない
       context 'when an offer reached the max amount' do
-        let!(:offer) { create(:offer, amount: 1, bean: bean) }
+        let(:offer_reached_max_amount) { create(:offer, amount: 1, bean: bean) }
+        let(:offer) { offer_reached_max_amount }
         before do
           offer.wanted_users << another_user
         end
+        it { is_expected.to_not change(Want, :count) }
+        it 'redirects to referer' do
+          subject.call
+          expect(response).to redirect_to wants_users_path
+        end
+      end
+
+      # 本日がoffer.ended_at以降の日だったらwantを作成しない
+      context 'when today is offer ended at day' do
+        let(:offer_ended_at_today) { create(:offer, ended_at: Date.current, bean: bean) }
+        let(:offer) { offer_ended_at_today }
+        it { is_expected.to change(Want, :count).by(1) }
+      end
+
+      # 本日がoffer.ended_at以降の日だったらwantを作成しない
+      context 'when today is after an offer ended at day' do
+        # on_roasting = ended_at { Date.current.prev_day(1) }
+        let(:offer_ended_at_yesterday) { create(:offer, :on_roasting, bean: bean) }
+        let(:offer) { offer_ended_at_yesterday }
         it { is_expected.to_not change(Want, :count) }
         it 'redirects to referer' do
           subject.call

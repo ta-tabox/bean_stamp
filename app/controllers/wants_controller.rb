@@ -6,10 +6,9 @@ class WantsController < ApplicationController
 
   def create
     @offer = Offer.find(params[:offer_id])
-    if @offer.wants.count >= @offer.amount
-      redirect_to request.referer, alert: '数量が上限に達しています'
-      return
-    end
+    return if over_the_max_amount?(@offer)
+
+    return if end_of_offering?(@offer)
 
     current_user.wanting_offers << @offer
     respond_to do |format|
@@ -37,6 +36,18 @@ class WantsController < ApplicationController
   end
 
   private
+
+  def over_the_max_amount?(offer)
+    return unless offer.wants.count >= offer.amount
+
+    redirect_to request.referer, alert: '数量が上限に達しています'
+  end
+
+  def end_of_offering?(offer)
+    return unless offer.ended_at.before? Date.current
+
+    redirect_to request.referer, alert: 'オファーは終了しました'
+  end
 
   def roaster_had_offer_requierd_and_set_offer
     @offer = current_roaster.offers.find_by(id: params[:offer_id])

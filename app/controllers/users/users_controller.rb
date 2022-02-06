@@ -3,7 +3,8 @@ class Users::UsersController < ApplicationController
   before_action :set_user, only: %i[show following]
 
   def home
-    @pagy, @offers = pagy(Offer.following_by(current_user))
+    offers = Offer.following_by(current_user).on_offering
+    @pagy, @offers = pagy(offers)
   end
 
   def show; end

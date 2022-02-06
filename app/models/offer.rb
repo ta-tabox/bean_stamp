@@ -21,7 +21,6 @@ class Offer < ApplicationRecord
   scope :following_by, lambda { |user|
     joins(:bean).where('roaster_id IN (?)', user.following_roaster_ids).includes(:roaster, bean: :bean_images)
   }
-
   scope :recent, -> { order(created_at: :desc) }
   scope :active, -> { where('receipt_ended_at > ?', Date.current) }
   scope :on_offering, -> { where('ended_at >= ?', Date.current).order(:ended_at) }
