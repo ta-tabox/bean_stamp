@@ -34,6 +34,9 @@ Rails.application.routes.draw do
   resources :roaster_relationships, only: %i[create destroy]
   resources :wants, only: %i[index show destroy] do
     collection { get 'search' }
-    member { patch 'receipt', to: 'wants#receipt' }
+    member do
+      patch 'receipt', to: 'wants#receipt'
+      patch 'rate', to: 'wants#rate'
+    end
   end
 end

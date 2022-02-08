@@ -1,6 +1,6 @@
 class WantsController < ApplicationController
   before_action :user_signed_in_required
-  before_action :user_had_want_required_and_set_want, only: %i[show receipt]
+  before_action :user_had_want_required_and_set_want, only: %i[show receipt rate]
   before_action :set_search_index_for_offer_status, only: %i[index search]
 
   def index
@@ -52,7 +52,19 @@ class WantsController < ApplicationController
     render 'index'
   end
 
+  def rate
+    return unless @want.unrated?
+
+    @want.update(want_params)
+    flash[:notice] = 'コーヒー豆を評価しました'
+    redirect_to @want
+  end
+
   private
+
+  def want_params
+    params.require(:want).permit(:rate)
+  end
 
   def set_offer_status
     @wants&.map { |want| want.offer.set_status }
