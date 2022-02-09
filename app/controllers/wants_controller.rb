@@ -55,7 +55,10 @@ class WantsController < ApplicationController
   end
 
   def rate
-    return unless @want.unrated?
+    unless @want.unrated?
+      redirect_to @want, alert: 'すでに評価が完了しています'
+      return
+    end
 
     @want.update(want_params)
 
