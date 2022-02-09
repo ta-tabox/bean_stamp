@@ -30,8 +30,7 @@ class WantsController < ApplicationController
     current_user.wanting_offers.delete(@offer)
     respond_to do |format|
       format.html { redirect_to request.referer }
-      # Ajaxで行うとusers/wantsにてdestroyしたときにwant詳細ページへのリンクが壊れる
-      # JSで非表示にするようにできたらAjaxで処理する
+      # Ajaxで行うとusers/wantsにてdestroyしたときにwant詳細ページへのリンクが壊れる。JSで非表示にするようにできたらAjaxで処理する
       # format.js
     end
   end
@@ -41,8 +40,11 @@ class WantsController < ApplicationController
 
     @want.receipted_at = Time.current
     @want.save
-    flash[:notice] = '受け取り完了を受け付けました'
-    redirect_to @want
+    # redirectとAjaxでflashの表示方法を変えている→もっと良い方法はないか？
+    respond_to do |format|
+      format.html { redirect_to @want, notice: '受け取り完了を受け付けました' }
+      format.js { flash.now[:notice] = '受け取り完了を受け付けました' }
+    end
   end
 
   def search
@@ -58,13 +60,8 @@ class WantsController < ApplicationController
     @want.update(want_params)
 
     respond_to do |format|
-      format.html do
-        flash[:notice] = 'コーヒー豆を評価しました'
-        redirect_to @want
-      end
-      format.js do
-        flash.now[:notice] = 'コーヒー豆を評価しました'
-      end
+      format.html { redirect_to @want, notice: 'コーヒー豆を評価しました' }
+      format.js { flash.now[:notice] = 'コーヒー豆を評価しました' }
     end
   end
 

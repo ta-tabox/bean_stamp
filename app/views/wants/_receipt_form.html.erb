@@ -2,14 +2,16 @@
   <div class="form form-container">
     <p>ステータス</p>
     <div id="want-receipt-form">
-      <%= form_with(url: receipt_want_path, method: "patch", local: false) do |f| %>
-        <% if want.receipted_at? %>
-          <%= f.submit "受け取り完了", disabled: 'disabled', class: "btn btn-disabled" %>
-        <% else %>
+      <% if want.receipted_at? %>
+        <input type="submit" class="btn btn-disabled" value="受け取り完了">
+      <% else %>
+        <%= form_with(url: receipt_want_path, method: "patch", local: false) do |f| %>
           <%= f.submit "受け取り完了", class: "btn btn-primary" %>
         <% end %>
       <% end %>
     </div>
-    <%= render partial: 'wants/rating_form', locals: { want: want }%>
+    <div id="want-rating-area">
+      <%= render partial: 'wants/rating_form', locals: { want: want } if want.receipted_at?%>
+    </div>
   </div>
 <% end %>

@@ -1,14 +1,11 @@
-<% if want.receipted_at? %>
-  <div class="form-container">
-    <p>評価</p>
-    <div id="want-rate",class="my-4 btn font-semibold"><%= want.rate %></div>
-    <div id="want-reating-form">
-      <% if want.unrated? %>
-        <%= render partial: 'unrated', locals: { want: want } %>
-      <% else %>
-        <%= render partial: 'rated', locals: { want: want } %>
-      <% end %>
-    </div>
+<div class="form-container">
+  <p>評価</p>
+  <div id="want-rate",class="my-4 btn font-semibold"><%= want.rate %></div>
+  <div id="want-reating-form">
+    <% if want.unrated? %>
+      <%= render partial: 'unrated', locals: { want: want } %>
+    <% else %>
+      <%= render partial: 'rated', locals: { want: want } %>
+    <% end %>
   </div>
 </div>
-<% end %>

@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   # ユーザーのサインインを求める
   def user_signed_in_required
-    redirect_to new_user_session_url unless user_signed_in?
+    redirect_to new_user_session_url, alert: 'ログインもしくはアカウント登録してください。' unless user_signed_in?
   end
 
   # ユーザーにロースター所属を求める
