@@ -1,25 +1,12 @@
 <% if want.receipted_at? %>
   <div class="form-container">
     <p>評価</p>
-    <div class="my-4 btn font-semibold"><%= want.rate %></div>
+    <div id="want-rate",class="my-4 btn font-semibold"><%= want.rate %></div>
     <div id="want-reating-form">
-      <%= form_with( model: want, url: rate_want_path, method: "patch", local: true) do |f| %>
-        <!-- JSなどでdisabledの切り替えを行いたい-->
-        <% if want.unrated? %>
-          <% Want.rates.each do |rate| %>
-            <% next if rate[0] == 'unrated' %>
-            <%= f.label rate[0] %>
-            <%= f.radio_button :rate, rate[0] %>
-          <% end %>
-          <%= f.submit "評価する", class: "btn btn-primary" %>
-        <% else %>
-          <% Want.rates.each do |rate| %>
-            <% next if rate[0] == 'unrated' %>
-            <%= f.label rate[0] %>
-            <%= f.radio_button :rate, rate[0], disabled: 'disabled' %>
-          <% end %>
-          <%= f.submit "評価済み", disabled: 'disabled', class: "btn btn-disabled" %>
-        <% end %>
+      <% if want.unrated? %>
+        <%= render partial: 'unrated', locals: { want: want } %>
+      <% else %>
+        <%= render partial: 'rated', locals: { want: want } %>
       <% end %>
     </div>
   </div>

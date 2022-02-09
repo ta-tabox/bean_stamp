@@ -56,8 +56,16 @@ class WantsController < ApplicationController
     return unless @want.unrated?
 
     @want.update(want_params)
-    flash[:notice] = 'コーヒー豆を評価しました'
-    redirect_to @want
+
+    respond_to do |format|
+      format.html do
+        flash[:notice] = 'コーヒー豆を評価しました'
+        redirect_to @want
+      end
+      format.js do
+        flash.now[:notice] = 'コーヒー豆を評価しました'
+      end
+    end
   end
 
   private

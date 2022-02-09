@@ -36,9 +36,13 @@ beans.count.times do |bean_num|
 end
 
 # Offerの日程に応じた状態確認用テストオファー
+other_beans = Bean.order(:created_at).where.not(roaster_id: guest_roaster.id).take(5)
 my_and_other_beans = []
 my_and_other_beans << guest_roaster_beans.first
-my_and_other_beans << Bean.order(:created_at).where.not(roaster_id: guest_roaster.id).last
+other_beans.each do |other_bean|
+  my_and_other_beans << other_bean
+end
+# my_and_other_beans << Bean.order(:created_at).where.not(roaster_id: guest_roaster.id).last
 
 # on-roasting
 my_and_other_beans.count.times do |bean_num|
