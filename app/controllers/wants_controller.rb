@@ -2,6 +2,9 @@ class WantsController < ApplicationController
   before_action :user_signed_in_required
   before_action :user_had_want_required_and_set_want, only: %i[show receipt]
   before_action :set_search_index_for_offer_status, only: %i[index search]
+  before_action :set_offer_and_want_required_before_the_receipted_ended_at, only: :create
+  before_action :want_required_less_than_the_max_amount, only: :create
+  before_action :want_required_not_received, only: :receipt
 
   def index
     @pagy, @wants = pagy(current_user.wants.active.recent.includes(:roaster, bean: :bean_images))
@@ -13,11 +16,6 @@ class WantsController < ApplicationController
   end
 
   def create
-    @offer = Offer.find(params[:offer_id])
-    return if over_the_max_amount?(@offer)
-
-    return if end_of_offering?(@offer)
-
     current_user.wanting_offers << @offer
     respond_to do |format|
       format.html { redirect_to request.referer }
@@ -37,8 +35,6 @@ class WantsController < ApplicationController
   end
 
   def receipt
-    return if already_received?(@want)
-
     @want.receipted_at = Time.current
     @want.save
     flash[:notice] = '受け取り完了を受け付けました'
@@ -76,28 +72,29 @@ class WantsController < ApplicationController
     end
   end
 
-  def over_the_max_amount?(offer)
-    return unless offer.wants.count >= offer.amount
-
-    redirect_to request.referer, alert: '数量が上限に達しています'
-  end
-
-  def end_of_offering?(offer)
-    return unless offer.ended_at.before? Date.current
-
-    redirect_to request.referer, alert: 'オファーは終了しました'
-  end
-
-  def already_received?(want)
-    return unless want.receipted_at?
-
-    redirect_to want, alert: 'すでに受け取りが完了しています'
-  end
-
   def user_had_want_required_and_set_want
     @want = current_user.wants.find_by(id: params[:id])
     return if @want
 
     redirect_to wants_path, alert: 'ウォンツは登録されていません'
+  end
+
+  def set_offer_and_want_required_before_the_receipted_ended_at
+    @offer = Offer.find(params[:offer_id])
+    return unless @offer.ended_at.before? Date.current
+
+    redirect_to request.referer, alert: 'オファーは終了しました'
+  end
+
+  def want_required_less_than_the_max_amount
+    return unless @offer.wants.count >= @offer.amount
+
+    redirect_to request.referer, alert: '数量が上限に達しています'
+  end
+
+  def want_required_not_received
+    return unless @want.receipted_at?
+
+    redirect_to @want, alert: 'すでに受け取りが完了しています'
   end
 end
