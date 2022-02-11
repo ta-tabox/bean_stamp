@@ -36,27 +36,22 @@ RSpec.describe Offer, type: :model do
     context 'when an offer is on offer' do
       let(:test_offer) { offer }
       it { expect(test_offer.status).to eq 'on_offering' }
-      it { expect(test_offer.status_value).to eq 'オファー中' }
     end
     context 'when an offer is on roasting' do
       let(:test_offer) { roasting_offer }
       it { expect(test_offer.status).to eq 'on_roasting' }
-      it { expect(test_offer.status_value).to eq 'ロースト中' }
     end
     context 'when an offer is on preparing' do
       let(:test_offer) { preparing_offer }
       it { expect(test_offer.status).to eq 'on_preparing' }
-      it { expect(test_offer.status_value).to eq '準備中' }
     end
     context 'when an offer is on selling' do
       let(:test_offer) { selling_offer }
       it { expect(test_offer.status).to eq 'on_selling' }
-      it { expect(test_offer.status_value).to eq '受け取り期間' }
     end
     context 'when an offer is end of sales' do
       let(:test_offer) { sold_offer }
       it { expect(test_offer.status).to eq 'end_of_sales' }
-      it { expect(test_offer.status_value).to eq '受け取り終了' }
     end
   end
 end

@@ -11,10 +11,6 @@ class Want < ApplicationRecord
 
   scope :recent, -> { order(created_at: :desc) }
   scope :active, -> { joins(:offer).merge(Offer.active).with_associations }
-  scope :on_offering, -> { joins(:offer).merge(Offer.on_offering).with_associations }
-  scope :on_roasting, -> { joins(:offer).merge(Offer.on_roasting).with_associations }
-  scope :on_preparing, -> { joins(:offer).merge(Offer.on_preparing).with_associations }
-  scope :on_selling, -> { joins(:offer).merge(Offer.on_selling).with_associations }
-  scope :end_of_sales, -> { joins(:offer).merge(Offer.end_of_sales).with_associations }
+  scope :search_status, ->(status) { joins(:offer).where(offer: { status: status }).with_associations }
   scope :with_associations, -> { includes(:roaster, bean: :bean_images) }
 end

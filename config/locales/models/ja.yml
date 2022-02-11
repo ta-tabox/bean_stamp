@@ -44,3 +44,11 @@ ja:
         price: 販売価格
         weight: 内容量
         amount: 数量
+  enums:
+    offer:
+      status:
+        on_offering: オファー中
+        on_roasting: ロースト中
+        on_preparing: 準備中
+        on_selling: 受け取り期間
+        end_of_sales: 受け取り終了
