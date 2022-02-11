@@ -9,7 +9,7 @@ RSpec.describe 'Offers', type: :request do
 
   # オファー付きのコーヒー豆を持ったロースターに所属したユーザー
   let(:user_with_a_offer) { create(:user, :with_roaster) }
-  let!(:bean) { create(:bean, :with_image, :with_3_taste_tags, roaster: user_with_a_offer.roaster) }
+  let!(:bean) { create(:bean, :with_image_and_tags, roaster: user_with_a_offer.roaster) }
   let!(:offer) { create(:offer, bean: bean) }
 
   describe 'GET #index' do
@@ -123,7 +123,7 @@ RSpec.describe 'Offers', type: :request do
         it { is_expected.to change(Offer, :count).by(1) }
         it {
           subject.call
-          expect(response).to redirect_to offer_path(Offer.first)
+          expect(response).to redirect_to offer_path(Offer.last)
         }
       end
 
@@ -170,7 +170,7 @@ RSpec.describe 'Offers', type: :request do
 
       context 'with price of strings' do
         let(:offer_params) { attributes_for(:offer, bean_id: bean.id, price: 'price') }
-        let(:error_message) { '販売価格は数値で入力してください' }
+        let(:error_message) { '販売価格は数値で入力' }
 
         it_behaves_like 'does not create a Offer and renders to new'
         it_behaves_like 'shows a error message'
@@ -209,14 +209,6 @@ RSpec.describe 'Offers', type: :request do
       end
 
       # 日付データの順番をテストする
-      context 'when the ended_at is earlier than today' do
-        let(:offer_params) { attributes_for(:offer, :too_early_ended_at, bean_id: bean.id) }
-        let(:error_message) { 'オファー終了日は本日以降の日付を入力してください' }
-
-        it_behaves_like 'does not create a Offer and renders to new'
-        it_behaves_like 'shows a error message'
-      end
-
       context 'when the roasterd_at is earlier than the ended_at' do
         let(:offer_params) { attributes_for(:offer, :too_early_roasted_at, bean_id: bean.id) }
         let(:error_message) { '焙煎日はオファー終了日以降の日付を入力してください' }
@@ -304,7 +296,7 @@ RSpec.describe 'Offers', type: :request do
         it { is_expected.to change { Offer.find(offer.id).price }.from(1000).to(1500) }
         it {
           subject.call
-          expect(response).to redirect_to offer_path(Offer.first)
+          expect(response).to redirect_to offer_path(offer)
         }
       end
 
@@ -415,6 +407,146 @@ RSpec.describe 'Offers', type: :request do
       it 'deletes a Offer and redirects to offers_path' do
         expect { delete offer_path offer }.to change(Offer, :count).by(-1)
         expect(response).to redirect_to offers_path
+      end
+    end
+  end
+
+  describe 'GET #search' do
+    subject { get search_offers_path, params: { search: status } }
+
+    # beanの名前を変えることでincludesで正しいofferが抽出できているかテストする
+    let!(:offering_bean) { create(:bean, :with_image_and_tags, roaster: user_with_a_offer.roaster, name: 'offering_bean') }
+    let!(:roasting_bean) { create(:bean, :with_image_and_tags, roaster: user_with_a_offer.roaster, name: 'roasting_bean') }
+    let!(:preparing_bean) { create(:bean, :with_image_and_tags, roaster: user_with_a_offer.roaster, name: 'preparing_bean') }
+    let!(:start_selling_bean) { create(:bean, :with_image_and_tags, roaster: user_with_a_offer.roaster, name: 'start_selling_bean') }
+    let!(:selling_bean) { create(:bean, :with_image_and_tags, roaster: user_with_a_offer.roaster, name: 'selling_bean') }
+    let!(:sold_bean) { create(:bean, :with_image_and_tags, roaster: user_with_a_offer.roaster, name: 'sold_bean') }
+    # 本日でオファー終わり
+    let!(:offering_offer) { create(:offer, ended_at: Date.current, bean: offering_bean) }
+    # 本日までロースト中
+    let!(:roasting_offer) { create(:offer, :on_roasting, roasted_at: Date.current, bean: roasting_bean) }
+    # 本日まで準備中、明日から受付開始
+    let!(:preparing_offer) { create(:offer, :on_preparing, receipt_started_at: Date.current.next_day(1), bean: preparing_bean) }
+    # 本日から受付開始
+    let!(:start_selling_offer) { create(:offer, :on_selling, receipt_started_at: Date.current, bean: start_selling_bean) }
+    # 本日まで受付中
+    let!(:selling_offer) { create(:offer, :on_selling, receipt_ended_at: Date.current, bean: selling_bean) }
+    # 昨日まで受付中、本日は受付終了
+    let!(:sold_offer) { create(:offer, :end_of_sales, receipt_ended_at: Date.current.prev_day(1), bean: sold_bean) }
+
+    before { sign_in user_with_a_offer }
+
+    # 境界値のテストを含む
+    context 'when search for on_offering' do
+      let(:status) { 'on_offering' }
+      it 'displays a offer on_offering not others' do
+        subject
+        expect(response).to have_http_status(:success)
+        # 本日までオファー中の豆を表示する
+        expect(response.body).to include offering_bean.name
+        expect(response.body).to_not include roasting_bean.name
+        expect(response.body).to_not include preparing_bean.name
+        expect(response.body).to_not include start_selling_bean.name
+        expect(response.body).to_not include selling_bean.name
+        expect(response.body).to_not include sold_bean.name
+      end
+    end
+
+    context 'when search for on_roasting' do
+      let(:status) { 'on_roasting' }
+      it 'displays a offer on_roasting not others' do
+        subject
+        expect(response).to have_http_status(:success)
+        # 本日がended_atのオファーを表示しない
+        expect(response.body).to_not include offering_bean.name
+        # 本日がroasted_atのオファーを表示する
+        expect(response.body).to include roasting_bean.name
+        expect(response.body).to_not include preparing_bean.name
+        expect(response.body).to_not include start_selling_bean.name
+        expect(response.body).to_not include selling_bean.name
+        expect(response.body).to_not include sold_bean.name
+      end
+    end
+
+    context 'when search for on_preparing' do
+      let(:status) { 'on_preparing' }
+      it 'displays a offer on_preparing not others' do
+        subject
+        expect(response).to have_http_status(:success)
+        expect(response.body).to_not include offering_bean.name
+        # 本日がroasted_atのオファーを表示しない
+        expect(response.body).to_not include roasting_bean.name
+        # 明日がreceipt_started_atのオファーを表示する
+        expect(response.body).to include preparing_bean.name
+        expect(response.body).to_not include start_selling_bean.name
+        expect(response.body).to_not include selling_bean.name
+        expect(response.body).to_not include sold_bean.name
+      end
+    end
+
+    context 'when search for on_selling' do
+      let(:status) { 'on_selling' }
+      it 'displays a offer on_selling not others' do
+        subject
+        expect(response).to have_http_status(:success)
+        expect(response.body).to_not include offering_bean.name
+        expect(response.body).to_not include roasting_bean.name
+        expect(response.body).to_not include preparing_bean.name
+        # 本日がreceipt_started_atのオファーを表示する
+        expect(response.body).to include start_selling_bean.name
+        # 本日がreceipt_ended_atのオファーを表示する
+        expect(response.body).to include selling_bean.name
+        expect(response.body).to_not include sold_bean.name
+      end
+    end
+
+    context 'when search for end_of_sales' do
+      let(:status) { 'end_of_sales' }
+      it 'displays a offer end_of_sales not others' do
+        subject
+        expect(response).to have_http_status(:success)
+        expect(response.body).to_not include offering_bean.name
+        expect(response.body).to_not include roasting_bean.name
+        expect(response.body).to_not include preparing_bean.name
+        expect(response.body).to_not include start_selling_bean.name
+        # 本日がreceipt_ended_atのオファーを表示しない
+        expect(response.body).to_not include selling_bean.name
+        # 昨日がreceipt_ended_atのオファーを表示する
+        expect(response.body).to include sold_bean.name
+      end
+    end
+  end
+
+  describe 'GET #wanted_users' do
+    subject { get wanted_users_offer_path(offer) }
+    context 'when a user is not signed in' do
+      it 'redirects to new_user_session_path ' do
+        subject
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+    context 'when a user is not belonging to a roaster' do
+      before { sign_in user }
+      it 'redirects to root_path ' do
+        subject
+        expect(response).to redirect_to root_path
+      end
+    end
+    context 'when a user does not have the offer' do
+      let(:another_user) { create(:user, roaster: another_roaster) }
+      let(:another_roaster) { create(:roaster) }
+      before { sign_in another_user }
+      it 'redirects to beans_path ' do
+        subject
+        expect(response).to redirect_to beans_path
+      end
+    end
+    context 'when a user is belonging to a roaster with the offer' do
+      before { sign_in user_with_a_offer }
+      it 'gets offers/index with no offers' do
+        subject
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("<title>ウォンツしたユーザー#{base_title}</title>")
       end
     end
   end

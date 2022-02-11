@@ -52,7 +52,7 @@ RSpec.describe 'Beans', type: :system do
         before { attach_file 'bean_images[image][]', Rails.root.join('spec/fixtures/sample.jpg') }
         it 'creates a new Bean' do
           is_expected.to change(Bean, :count).by(1)
-          expect(current_path).to eq bean_path Bean.first
+          expect(current_path).to eq bean_path Bean.last
           expect(page).to have_content 'コーヒー豆を登録しました'
         end
       end

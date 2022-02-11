@@ -12,7 +12,6 @@ Rails.application.routes.draw do
     resources :users, only: [:show] do
       collection do
         get 'home', to: 'users#home'
-        get 'wants', to: 'users#wants'
       end
       member do
         get 'following', to: 'users#following'
@@ -27,12 +26,14 @@ Rails.application.routes.draw do
     resources :offers, only: [:new]
   end
   resources :offers do
-    resources :wants, only: %i[index create]
+    collection { get 'search' }
+    member { get 'wanted_users' }
+    resources :wants, only: %i[create] do
+    end
   end
   resources :roaster_relationships, only: %i[create destroy]
-  resources :wants, only: %i[destroy show] do
-    member do
-      patch 'receipt', to: 'wants#receipt'
-    end
+  resources :wants, only: %i[index show destroy] do
+    collection { get 'search' }
+    member { patch 'receipt', to: 'wants#receipt' }
   end
 end

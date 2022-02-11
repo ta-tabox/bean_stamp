@@ -6,4 +6,9 @@ class Want < ApplicationRecord
 
   validates :user_id, presence: true
   validates :offer_id, presence: true
+
+  scope :recent, -> { order(created_at: :desc) }
+  scope :active, -> { joins(:offer).merge(Offer.active).with_associations }
+  scope :search_status, ->(status) { joins(:offer).where(offer: { status: status }).with_associations }
+  scope :with_associations, -> { includes(:roaster, bean: :bean_images) }
 end

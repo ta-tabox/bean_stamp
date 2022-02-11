@@ -51,7 +51,7 @@ RSpec.describe 'Offers', type: :system do
       context 'with correct form' do
         it 'creates a new Offer' do
           is_expected.to change(Offer, :count).by(1)
-          expect(current_path).to eq offer_path Offer.first
+          expect(current_path).to eq offer_path Offer.last
           expect(page).to have_content 'オファーを作成しました'
           expect(page).to have_content bean.name
         end

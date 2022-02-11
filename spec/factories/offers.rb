@@ -31,5 +31,35 @@ FactoryBot.define do
       receipt_started_at { Date.current.next_day(15) }
       receipt_ended_at { Date.current.next_day(14) }
     end
+
+    trait :on_roasting do
+      ended_at { Date.current.prev_day(1) }
+      status { 1 }
+      to_create { |instance| instance.save(validate: false) }
+    end
+
+    trait :on_preparing do
+      ended_at { Date.current.prev_day(5) }
+      roasted_at { Date.current.prev_day(1) }
+      status { 2 }
+      to_create { |instance| instance.save(validate: false) }
+    end
+
+    trait :on_selling do
+      ended_at { Date.current.prev_day(10) }
+      roasted_at { Date.current.prev_day(5) }
+      receipt_started_at { Date.current.prev_day(1) }
+      status { 3 }
+      to_create { |instance| instance.save(validate: false) }
+    end
+
+    trait :end_of_sales do
+      ended_at { Date.current.prev_day(15) }
+      roasted_at { Date.current.prev_day(10) }
+      receipt_started_at { Date.current.prev_day(5) }
+      receipt_ended_at { Date.current.prev_day(1) }
+      status { 4 }
+      to_create { |instance| instance.save(validate: false) }
+    end
   end
 end

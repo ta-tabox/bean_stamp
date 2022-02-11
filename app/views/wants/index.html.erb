@@ -1,13 +1,20 @@
-<% provide(:title, "ウォンツしたユーザー") %>
-<h1 class="mb-1">ウォンツしたユーザー</h1>
+<% provide(:title, "ウォンツ") %>
+<h1 class="mb-1">ウォンツ</h1>
 <hr class="mb-3">
-<div><%= render partial: 'offers/offer_info', locals: { offer: @offer } %></div>
-<div><%= render partial: 'beans/bean_info', locals: { bean: @offer.bean } %></div>
 <div class="container">
+  <div class="form form-container">
+    <%= form_with(url: search_wants_path, method: :get, local: true)do |f| %>
+      <div class="select-field">
+        <%= f.label :search, "検索", class: "label" %>
+        <%= f.select :search, Offer.statuses.map {|k, v| [t("enums.offer.status.#{k}"), v]}, {include_blank: '選択ボックス'}, class: 'select-box' %>
+        <%= f.submit "検索", class: "btn-primary"  %>
+      </div>
+    <% end %>
+  </div>
   <div class="w-200 pt-12 mx-auto">
-    <% if @users.any? %>
+    <% if @wants.any? %>
       <ol>
-        <%= render partial: 'users/users/user', collection: @users %>
+        <%= render partial: 'wants/want', collection: @wants %>
       </ol>
       <%== pagy_nav_js(@pagy) %>
     <% end %>

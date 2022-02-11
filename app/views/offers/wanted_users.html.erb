@@ -1,0 +1,15 @@
+<% provide(:title, "ウォンツしたユーザー") %>
+<h1 class="mb-1">ウォンツしたユーザー</h1>
+<hr class="mb-3">
+<div><%= render partial: 'offers/offer_info', locals: { offer: @offer } %></div>
+<div><%= render partial: 'beans/bean_info', locals: { bean: @offer.bean } %></div>
+<div class="container">
+  <div class="w-200 pt-12 mx-auto">
+    <% if @users.any? %>
+      <ol>
+        <%= render partial: 'users/users/user', collection: @users %>
+      </ol>
+      <%== pagy_nav_js(@pagy) %>
+    <% end %>
+  </div>
+</div>
