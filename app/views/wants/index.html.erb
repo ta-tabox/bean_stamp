@@ -6,7 +6,7 @@
     <%= form_with(url: search_wants_path, method: :get, local: true)do |f| %>
       <div class="select-field">
         <%= f.label :search, "検索", class: "label" %>
-        <%= f.select :search, @search_index, {include_blank: '選択ボックス'}, class: 'select-box' %>
+        <%= f.select :search, Offer.statuses.map {|k, v| [t("enums.offer.status.#{k}"), v]}, {include_blank: '選択ボックス'}, class: 'select-box' %>
         <%= f.submit "検索", class: "btn-primary"  %>
       </div>
     <% end %>

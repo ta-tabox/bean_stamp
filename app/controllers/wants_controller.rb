@@ -1,7 +1,6 @@
 class WantsController < ApplicationController
   before_action :user_signed_in_required
   before_action :user_had_want_required_and_set_want, only: %i[show receipt]
-  before_action :set_search_index_for_offer_status, only: %i[index search]
   before_action :set_offer_and_want_required_before_the_receipted_ended_at, only: :create
   before_action :want_required_less_than_the_max_amount, only: :create
   before_action :want_required_not_received, only: :receipt
@@ -42,7 +41,12 @@ class WantsController < ApplicationController
   end
 
   def search
-    wants = search_wants(params[:search])
+    status = params[:search]
+    wants = if status.blank?
+              current_user.wants.active.recent
+            else
+              current_user.wants.search_status(status)
+            end
     @pagy, @wants = pagy(wants)
     set_offer_status
     render 'index'
@@ -53,23 +57,6 @@ class WantsController < ApplicationController
   def set_offer_status
     @wants&.map { |want| want.offer.set_status }
     @want&.offer&.set_status
-  end
-
-  def search_wants(status)
-    case status
-    when 'on_offering'
-      current_user.wants.on_offering
-    when 'on_roasting'
-      current_user.wants.on_roasting
-    when 'on_preparing'
-      current_user.wants.on_preparing
-    when 'on_selling'
-      current_user.wants.on_selling
-    when 'end_of_sales'
-      current_user.wants.end_of_sales
-    else
-      current_user.wants.active.recent
-    end
   end
 
   def user_had_want_required_and_set_want

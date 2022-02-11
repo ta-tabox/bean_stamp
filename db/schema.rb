@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_29_015047) do
+ActiveRecord::Schema.define(version: 2022_02_10_130742) do
 
   create_table "bean_images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "image"
@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(version: 2022_01_29_015047) do
     t.integer "amount", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "status", default: 0, null: false
     t.index ["bean_id", "created_at", "ended_at"], name: "index_offers_on_bean_id_and_created_at_and_ended_at"
     t.index ["bean_id"], name: "index_offers_on_bean_id"
   end
@@ -132,6 +133,7 @@ ActiveRecord::Schema.define(version: 2022_01_29_015047) do
     t.datetime "receipted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "rate", default: 0, null: false
     t.index ["offer_id"], name: "index_wants_on_offer_id"
     t.index ["user_id", "offer_id"], name: "index_wants_on_user_id_and_offer_id", unique: true
     t.index ["user_id"], name: "index_wants_on_user_id"
