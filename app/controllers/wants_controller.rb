@@ -1,13 +1,14 @@
 class WantsController < ApplicationController
   before_action :user_signed_in_required
-  before_action :user_had_want_required_and_set_want, only: %i[show receipt]
+  before_action :user_had_want_required_and_set_want, only: %i[show receipt rate]
   before_action :set_offer_and_want_required_before_the_receipted_ended_at, only: :create
   before_action :want_required_less_than_the_max_amount, only: :create
   before_action :want_required_not_received, only: :receipt
 
   def index
-    @pagy, @wants = pagy(current_user.wants.active.recent.includes(:roaster, bean: :bean_images))
-    set_offer_status
+    wants = current_user.wants.includes(:roaster, bean: :bean_images)
+    wants&.map { |want| want.offer.set_status }     # offerのstatusを更新する
+    @pagy, @wants = pagy(wants.active.recent)
   end
 
   def show
@@ -50,7 +51,6 @@ class WantsController < ApplicationController
               current_user.wants.search_status(status)
             end
     @pagy, @wants = pagy(wants)
-    set_offer_status
     render 'index'
   end
 
@@ -62,6 +62,7 @@ class WantsController < ApplicationController
 
     @want.update(want_params)
 
+    # redirectとAjaxでflashの表示方法を変えている→もっと良い方法はないか？
     respond_to do |format|
       format.html { redirect_to @want, notice: 'コーヒー豆を評価しました' }
       format.js { flash.now[:notice] = 'コーヒー豆を評価しました' }
@@ -72,11 +73,6 @@ class WantsController < ApplicationController
 
   def want_params
     params.require(:want).permit(:rate)
-  end
-
-  def set_offer_status
-    @wants&.map { |want| want.offer.set_status }
-    @want&.offer&.set_status
   end
 
   def user_had_want_required_and_set_want
