@@ -4,6 +4,8 @@ class Want < ApplicationRecord
   has_one :roaster, through: :offer
   has_one :bean, through: :offer
 
+  enum rate: { unrated: 0, bad: 1, so_so: 2, good: 3, excellent: 4 }
+
   validates :user_id, presence: true
   validates :offer_id, presence: true
 

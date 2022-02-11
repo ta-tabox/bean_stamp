@@ -9,8 +9,9 @@ class RoastersController < ApplicationController
   def index; end
 
   def show
-    @pagy, @offers = pagy(@roaster.offers.includes(:roaster, bean: :bean_images))
-    @offers&.map(&:set_status)
+    offers = @roaster.offers.with_associations
+    offers&.map(&:set_status)
+    @pagy, @offers = pagy(offers)
   end
 
   def new

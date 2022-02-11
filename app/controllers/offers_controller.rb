@@ -5,13 +5,14 @@ class OffersController < ApplicationController
   before_action :roaster_had_offer_requierd_and_set_offer, only: %i[edit update destroy wanted_users]
 
   def index
-    @pagy, @offers = pagy(current_roaster.offers.active.recent.includes(:roaster, bean: :bean_images))
-    set_offer_status
+    offers = current_roaster.offers.includes(:roaster, bean: :bean_images)
+    offers&.map(&:set_status)
+    @pagy, @offers = pagy(offers.active.recent)
   end
 
   def show
     @offer = Offer.find_by(id: params[:id])
-    set_offer_status
+    @offer.set_status
   end
 
   def new
@@ -62,7 +63,6 @@ class OffersController < ApplicationController
                current_roaster.offers.search_status(status)
              end
     @pagy, @offers = pagy(offers)
-    set_offer_status
     render 'index'
   end
 
@@ -91,11 +91,5 @@ class OffersController < ApplicationController
     return if @offer
 
     redirect_to beans_path, alert: 'オファーを登録してください'
-  end
-
-  # オファーにstatusをセットする
-  def set_offer_status
-    @offers&.map(&:set_status)
-    @offer&.set_status
   end
 end
