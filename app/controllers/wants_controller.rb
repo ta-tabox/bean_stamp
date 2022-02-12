@@ -4,6 +4,7 @@ class WantsController < ApplicationController
   before_action :set_offer_and_want_required_before_the_receipted_ended_at, only: :create
   before_action :want_required_less_than_the_max_amount, only: :create
   before_action :want_required_not_received, only: :receipt
+  before_action :required_want_is_not_rated, only: :rate
 
   def index
     wants = current_user.wants.includes(:roaster, bean: :bean_images)
@@ -55,13 +56,7 @@ class WantsController < ApplicationController
   end
 
   def rate
-    unless @want.unrated?
-      redirect_to @want, alert: 'すでに評価が完了しています'
-      return
-    end
-
     @want.update(want_params)
-
     # redirectとAjaxでflashの表示方法を変えている→もっと良い方法はないか？
     respond_to do |format|
       format.html { redirect_to @want, notice: 'コーヒー豆を評価しました' }
@@ -99,5 +94,11 @@ class WantsController < ApplicationController
     return unless @want.receipted_at?
 
     redirect_to @want, alert: 'すでに受け取りが完了しています'
+  end
+
+  def required_want_is_not_rated
+    return if @want.unrated?
+
+    redirect_to @want, alert: 'すでに評価が完了しています'
   end
 end
