@@ -167,6 +167,11 @@ RSpec.describe 'Wants', type: :request do
         end
         it { is_expected.to_not(change { Want.find(want.id).receipted_at }) }
       end
+
+      context 'with Ajax' do
+        subject { proc { patch receipt_want_path(want), xhr: true } }
+        it { is_expected.to change { Want.find(want.id).receipted_at? }.from(false).to(true) }
+      end
     end
   end
 
@@ -184,7 +189,7 @@ RSpec.describe 'Wants', type: :request do
     let!(:offering_offer) { create(:offer, ended_at: Date.current, bean: offering_bean) }
     # 本日までロースト中
     let!(:roasting_offer) { create(:offer, :on_roasting, roasted_at: Date.current, bean: roasting_bean) }
-    # 本日まで準備���、明日から受付開始
+    # 本日まで準備中、明日から受付開始
     let!(:preparing_offer) { create(:offer, :on_preparing, receipt_started_at: Date.current.next_day(1), bean: preparing_bean) }
     # 本日から受付開始
     let!(:start_selling_offer) { create(:offer, :on_selling, receipt_started_at: Date.current, bean: start_selling_bean) }
@@ -276,6 +281,41 @@ RSpec.describe 'Wants', type: :request do
         expect(response.body).to_not include selling_bean.name
         # 昨日がreceipt_ended_atのオファーを表示する
         expect(response.body).to include sold_bean.name
+      end
+    end
+  end
+
+  describe 'PATCH #rate' do
+    let(:want) { create(:want, user_id: user.id, offer_id: offer.id) }
+    subject { proc { patch rate_want_path(want), params: { want: { rate: 'good' } } } }
+    context 'when user is not signed in' do
+      it 'redirects to new_user_session_path ' do
+        subject.call
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+
+    context 'when a user does not have a want' do
+      before { sign_in another_user }
+      it 'redirects to wants_path' do
+        subject.call
+        expect(response).to redirect_to wants_path
+      end
+    end
+
+    context 'when a user have a want' do
+      before { sign_in user }
+      it { is_expected.to change { Want.find(want.id).rate }.from('unrated').to('good') }
+
+      # すでに評価済みの場合は評価できないことをテスト
+      context 'when a user already received' do
+        before { want.so_so! }
+        it { is_expected.to_not(change { Want.find(want.id).rate }) }
+      end
+
+      context 'with Ajax' do
+        subject { proc { patch rate_want_path(want), params: { want: { rate: 'good' } }, xhr: true } }
+        it { is_expected.to change { Want.find(want.id).rate }.from('unrated').to('good') }
       end
     end
   end

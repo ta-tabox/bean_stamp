@@ -26,7 +26,7 @@ class Offer < ApplicationRecord
   scope :search_status, ->(status) { where(status: status).with_associations }
   scope :with_associations, -> { includes(:roaster, bean: :bean_images) }
 
-  def set_status
+  def update_status
     today = Date.current
     if ended_at >= today
       on_offering!

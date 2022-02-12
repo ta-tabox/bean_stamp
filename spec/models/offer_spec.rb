@@ -24,8 +24,8 @@ RSpec.describe Offer, type: :model do
     it { is_expected.to validate_numericality_of(:amount).only_integer }
   end
 
-  describe '#set_status' do
-    before { test_offer.set_status }
+  describe '#update_status' do
+    before { test_offer.update_status }
     let!(:bean) { create(:bean, :with_image, :with_3_taste_tags) }
     let(:offer) { create(:offer, bean: bean) }
     let(:roasting_offer) { create(:offer, :on_roasting, bean: bean) }

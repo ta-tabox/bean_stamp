@@ -17,12 +17,14 @@ users.count.times do |m|
 end
 
 # Offerの日程に応じた状態確認用テストウォンツ
-bean = Bean.order(:created_at).where.not(roaster_id: guest_user.roaster.id).last
-bean.offers.count.times do |offer_num|
-  Want.seed_once do |s|
-    s.id = id
-    s.user_id = guest_user.id
-    s.offer_id = bean.offers[offer_num].id
+beans = Bean.order(:created_at).where.not(roaster_id: guest_user.roaster.id).take(5)
+beans.each do |bean|
+  bean.offers.count.times do |offer_num|
+    Want.seed_once do |s|
+      s.id = id
+      s.user_id = guest_user.id
+      s.offer_id = bean.offers[offer_num].id
+    end
+    id += 1
   end
-  id += 1
 end
