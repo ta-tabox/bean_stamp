@@ -8,12 +8,12 @@ class WantsController < ApplicationController
 
   def index
     wants = current_user.wants.includes(:roaster, bean: :bean_images)
-    wants&.map { |want| want.offer.set_status }     # offerのstatusを更新する
+    wants&.map { |want| want.offer.update_status }
     @pagy, @wants = pagy(wants.active.recent)
   end
 
   def show
-    @want.offer.set_status
+    @want.offer.update_status
   end
 
   def create

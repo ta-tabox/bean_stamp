@@ -6,13 +6,13 @@ class OffersController < ApplicationController
 
   def index
     offers = current_roaster.offers.includes(:roaster, bean: :bean_images)
-    offers&.map(&:set_status)
+    offers&.map(&:update_status)
     @pagy, @offers = pagy(offers.active.recent)
   end
 
   def show
     @offer = Offer.find_by(id: params[:id])
-    @offer.set_status
+    @offer.update_status
   end
 
   def new

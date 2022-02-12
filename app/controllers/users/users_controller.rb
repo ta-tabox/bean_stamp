@@ -6,7 +6,7 @@ class Users::UsersController < ApplicationController
     # enum型のon_offeringでオファー中のオファーを引っ張るとオファーが終了しているのに、
     # statusが更新されていないものを取ることがある→where文でended_atを直接参照するようにした
     offers = Offer.following_by(current_user).where('ended_at >= ?', Date.current)
-    offers&.map(&:set_status)
+    offers&.map(&:update_status)
     @pagy, @offers = pagy(offers)
   end
 

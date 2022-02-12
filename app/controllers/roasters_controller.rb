@@ -10,7 +10,7 @@ class RoastersController < ApplicationController
 
   def show
     offers = @roaster.offers.with_associations
-    offers&.map(&:set_status)
+    offers&.map(&:update_status)
     @pagy, @offers = pagy(offers)
   end
 
