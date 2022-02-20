@@ -22,7 +22,7 @@ RSpec.describe 'Roasters', type: :system do
         end
 
         before do
-          click_link 'my page'
+          click_link 'User'
           click_link '編集'
           click_link 'こちら'
 
@@ -139,7 +139,7 @@ RSpec.describe 'Roasters', type: :system do
         end
 
         it 'does not desplay link for /roasters/new but /roasters/[:id]/edit in users/edit' do
-          click_link 'my page'
+          click_link 'User'
           click_link '編集'
           expect(page).to_not have_selector("a[href='/roasters/new']")
           expect(page).to have_selector("a[href='/roasters/#{roaster.id}/edit']")
@@ -149,7 +149,7 @@ RSpec.describe 'Roasters', type: :system do
           subject { click_button '更新' }
 
           it "updates the roaster's information" do
-            click_link 'roaster'
+            click_link 'Roaster'
             click_link '編集'
             fill_in '店舗名', with: 'アップデートロースター'
             fill_in '電話番号', with: '0000000000'
@@ -175,7 +175,7 @@ RSpec.describe 'Roasters', type: :system do
       before do
         sign_in user_belonging_a_roaster
         visit root_path
-        click_link 'roaster'
+        click_link 'Roaster'
         click_link '編集'
         click_link 'ロースターを削除する'
       end

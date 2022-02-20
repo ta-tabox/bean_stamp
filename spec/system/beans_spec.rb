@@ -14,7 +14,7 @@ RSpec.describe 'Beans', type: :system do
     describe 'index feature' do
       let(:recent_bean) { create(:bean, :with_image, :with_3_taste_tags, name: 'recent_bean', created_at: Time.current, roaster: user.roaster) }
       let(:old_bean) { create(:bean, :with_image, :with_3_taste_tags, name: 'old_bean', created_at: Time.current.ago(3.days), roaster: user.roaster) }
-      subject { click_link 'beans' }
+      subject { click_link 'Beans' }
 
       it 'displays beans in order desc' do
         recent_bean
@@ -29,7 +29,7 @@ RSpec.describe 'Beans', type: :system do
       subject { proc { click_button '登録' } }
 
       before do
-        click_link 'beans'
+        click_link 'Beans'
         click_link '新規作成'
         fill_in 'タイトル', with: 'テストビーンズ'
         fill_in '生産国', with: 'エチオピア'
@@ -99,7 +99,7 @@ RSpec.describe 'Beans', type: :system do
       subject { click_button '更新' }
 
       it "updates the bean's information" do
-        click_link 'beans'
+        click_link 'Beans'
         find("li#bean-#{bean.id}").click_link '編集'
         fill_in 'タイトル', with: 'アップデートビーンズ'
         fill_in '生産国', with: 'ブラジル'
@@ -131,7 +131,7 @@ RSpec.describe 'Beans', type: :system do
     end
 
     describe 'delete bean feature' do
-      before { click_link 'beans' }
+      before { click_link 'Beans' }
 
       context 'When applorch at beans#index' do
         it 'deletes a bean' do

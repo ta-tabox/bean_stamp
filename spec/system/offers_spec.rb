@@ -16,7 +16,7 @@ RSpec.describe 'Offers', type: :system do
       let(:recent_offer) { create(:offer, created_at: Time.current, bean: bean) }
       let(:old_offer) { create(:offer, created_at: Time.current.ago(3.days), bean: bean) }
 
-      subject { click_link 'offers' }
+      subject { click_link 'Offers' }
 
       it 'displays offers in order desc' do
         recent_offer
@@ -37,7 +37,7 @@ RSpec.describe 'Offers', type: :system do
       subject { proc { click_button 'オファーする' } }
 
       before do
-        click_link 'beans'
+        click_link 'Beans'
         find("li#bean-#{bean.id}").click_link 'オファー'
         fill_in 'オファー終了日', with: Time.zone.today.next_day(5)
         fill_in '焙煎日', with: Time.zone.today.next_day(10)
@@ -103,7 +103,7 @@ RSpec.describe 'Offers', type: :system do
     end
 
     describe 'delete offer feature' do
-      before { click_link 'offers' }
+      before { click_link 'Offers' }
       it 'deletes a offer at offers#index' do
         find("li#offer-#{offer.id}").click_link '削除'
         expect do

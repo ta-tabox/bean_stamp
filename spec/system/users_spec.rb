@@ -43,7 +43,6 @@ RSpec.describe 'Users', type: :system do
             subject
             expect(current_path).to eq home_users_path
             expect(page).to have_content 'ログインしました'
-            expect(page).to have_content user.name
           end
         end
 
@@ -76,7 +75,7 @@ RSpec.describe 'Users', type: :system do
       describe 'user editing feature' do
         subject { click_button '更新' }
         before do
-          click_link 'my page'
+          click_link 'User'
           click_link '編集'
         end
 
