@@ -1,2 +1,2 @@
 document.getElementById('offer-<%= @offer.id %>-want-form').innerHTML = '<%= escape_javascript(render partial: 'offers/want', locals: { offer: @offer }) %>';
-document.getElementById('offer-<%= @offer.id %>-wants').innerHTML = '<%= @offer.wants.count %>';
+document.getElementById('offer-<%= @offer.id %>-wants-count').innerHTML = '<%= @offer.wants.count %> ';

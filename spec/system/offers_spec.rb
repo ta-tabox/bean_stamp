@@ -79,7 +79,7 @@ RSpec.describe 'Offers', type: :system do
       end
     end
 
-    describe 'offer editing feature' do
+    pending 'offer editing feature' do
       subject { click_button '更新' }
       it "updates the offer's information" do
         visit edit_offer_path offer

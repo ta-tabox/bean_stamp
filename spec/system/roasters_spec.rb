@@ -107,12 +107,11 @@ RSpec.describe 'Roasters', type: :system do
           expect(page).to have_content '編集'
         end
 
-        it 'shows an offer and shows edit and delete link' do
+        it 'shows an offer and does not show edit and delete link' do
           subject
           expect(page).to have_content bean.name
           expect(page).to have_selector("a[href='/offers/#{offer.id}']")
-          expect(page).to have_selector("a[href='/offers/#{offer.id}/edit']")
-          expect(page).to have_selector('a[data-method=delete]', text: '削除')
+          expect(page).to_not have_selector("a[href='/offers/#{offer.id}/edit']")
         end
       end
 
