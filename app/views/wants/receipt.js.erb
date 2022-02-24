@@ -1,3 +1,3 @@
 document.getElementById('flash-messages').innerHTML = '<%= escape_javascript(render 'layouts/flash_messages') %>';
-document.getElementById('want-receipt-form').innerHTML = '<input type="submit" class="btn btn-disabled" value="受け取り完了">';
+document.getElementById('want-receipt-form').innerHTML = '<input type="submit" class="btn-primary" disabled="disabled" value="受け取り完了">';
 document.getElementById('want-rating-area').innerHTML = '<%= escape_javascript(render partial: 'rating_form', locals: { want: @want }) %>';

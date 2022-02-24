@@ -3,10 +3,10 @@
     <p>ステータス</p>
     <div id="want-receipt-form">
       <% if want.receipted_at? %>
-        <input type="submit" class="btn btn-disabled" value="受け取り完了">
+        <input type="submit" disabled="disabled" class="btn-primary" value="受け取り完了">
       <% else %>
         <%= form_with(url: receipt_want_path, method: "patch", local: false) do |f| %>
-          <%= f.submit "受け取り完了", class: "btn btn-primary" %>
+          <%= f.submit "受け取り完了", class: "btn-primary" %>
         <% end %>
       <% end %>
     </div>
