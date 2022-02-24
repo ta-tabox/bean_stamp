@@ -18,3 +18,79 @@
   </div>
 </div>
 <%= render partial: 'beans/bean_info', locals: { bean: @offer.bean } %>
+<article id="@offer-<%= @offer.id %>" class="text-gray-600 body-font overflow-hidden">
+  <div class="container lg:w-11/12 my-24 mx-auto py-4 bg-white rounded">
+    <header>
+      <div class="w-11/12 mb-2 mx-auto">
+        <div class="flex justify-between content-end mb-2">
+          <span class="text-md title-font text-gray-500 tracking-widest"><%= link_to @offer.roaster.name, @offer.roaster %></span>
+          <%= show_thumbnail(@offer.roaster) %>
+        </div>
+        <h1 class="mb-2 text-gray-900 text-2xl title-font font-medium"><%= link_to @offer.bean.name, @offer %></h1>
+        <div class="flex justify-between items-end">
+          <div class="flex">
+            <%= render partial: 'offers/want_form', locals: { offer: @offer} %>
+            <button class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
+              <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+              </svg>
+            </button>
+            <div class="font-semibold my-4 <%=@offer.status%>"><%= @offer.status_i18n %></div>
+          </div>
+          <div><%= render partial: 'offers/stats', locals: { offer: @offer } %></div>
+        </div>
+      </div>
+    </header>
+    <div class="w-11/12 mx-auto flex flex-wrap">
+      <section class="lg:w-1/2 w-full lg:pr-10 lg:py-2 mb-6 lg:mb-0">
+        <div class="flex mb-4">
+          <a class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg px-1">Description</a>
+          <a class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">Detail</a>
+          <a class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">Schedule</a>
+        </div>
+        <p class="leading-relaxed mb-4"><%= @offer.bean&.describe %></p>
+        <div class="flex border-t border-gray-200 py-2">
+          <span class="text-gray-500">生産国</span>
+          <span class="ml-auto text-gray-900"><%= @offer.bean&.country %></span>
+        </div>
+        <div class="flex border-t border-gray-200 py-2">
+          <span class="text-gray-500">焙煎度</span>
+          <span class="ml-auto text-gray-900"><%= @offer.bean.roast_level&.name %></span>
+        </div>
+        <div class="flex border-t border-gray-200 py-2">
+          <span class="text-gray-500">地域</span>
+          <span class="ml-auto text-gray-900"><%= @offer.bean&.subregion %></span>
+        </div>
+        <div class="flex border-t border-gray-200 py-2">
+          <span class="text-gray-500">農園</span>
+          <span class="ml-auto text-gray-900"><%= @offer.bean&.farm %></span>
+        </div>
+        <div class="flex border-t border-gray-200 py-2">
+          <span class="text-gray-500">品種</span>
+          <span class="ml-auto text-gray-900"><%= @offer.bean&.variety %></span>
+        </div>
+        <div class="flex border-t border-gray-200 py-2">
+          <span class="text-gray-500">精製方法</span>
+          <span class="ml-auto text-gray-900"><%= @offer.bean&.process %></span>
+        </div>
+        <div class="flex border-t border-gray-200 py-2">
+          <span class="text-gray-500">標高</span>
+          <span class="ml-auto text-gray-900"><%= "#{@offer.bean&.elevation} m" %></span>
+        </div>
+        <div class="flex border-t border-gray-200 py-2">
+          <span class="text-gray-500">収穫</span>
+          <span class="ml-auto text-gray-900"><%= "#{@offer.bean.cropped_at&.year}年 #{@offer.bean.cropped_at&.month}月" %></span>
+        </div>
+        <div class="mt-2 mb-2 flex justify-between items-end">
+          <div><%= link_to '詳細', offer_path(@offer), class: "link mt-4" %></div>
+          <%= render partial:'offers/price_weight', locals: { offer: @offer } %>
+        </div>
+      </section>
+      <% if @offer.bean.bean_images.any? %>
+        <% @offer.bean.bean_images.each do |bean_image| %>
+          <%= image_tag bean_image.image.url, class: "lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded", alt: "#{@offer.bean.name}の画像" if bean_image.image? %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</article>

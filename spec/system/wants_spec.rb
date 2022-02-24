@@ -56,7 +56,7 @@ RSpec.describe 'Wants', type: :system do
       end
     end
 
-    describe 'offer/:id/wants page' do
+    describe 'offers/:id/wants page' do
       let(:user_belonging_a_roaster) { create(:user, roaster: roaster) }
       let(:another_user) { create(:user, name: '他のユーザー') }
 

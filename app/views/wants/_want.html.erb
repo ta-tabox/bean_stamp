@@ -1,18 +1,47 @@
 <!-- wants一覧用 -->
-<div class="bg-white w-200 mx-auto">
-  <h1>wants/want</h1>
-  <li id="want-<%= want.id %>">
-    <span><%= link_to want.roaster.name, want.roaster %></span>
-    <span><%= link_to want.bean.name, want.offer %></span>
-    <span><%= link_to '詳細', want_path(want), class: "link mt-4" %></span>
-    <div class="flex">
-      <% if want.bean.bean_images.any? %>
-        <% want.bean.bean_images.each do |bean_image| %>
-          <%= image_tag bean_image.image.thumb.url, class: "thumbnail" if bean_image.image? %>
-        <% end %>
-      <% end %>
+<article>
+  <div class="w-11/12 px-8 py-4 mx-auto mt-16 bg-white rounded-lg shadow-lg dark:bg-gray-800">
+    <div class="flex justify-center -mt-16 md:justify-end">
+      <%= show_bean_image(want.bean) %>
     </div>
-    <div><%= render partial: 'offers/offer_info', locals: { offer: want.offer } %></div>
-    <hr class="mb-3">
-  </li>
-</div>
+    <div class="font-semibold mb-4 <%=want.offer.status%>"><%= want.offer.status_i18n %></div>
+    <h1 class="mt-2 text-xl md:text-2xl font-semibold text-gray-800 dark:text-white md:mt-0 md:text-3xl"><%= want.bean.name %></h1>
+    <section class= "mt-4 mx-auto md:grid grid-cols-2 content-between">
+      <div class="flex w-11/12 border-t border-gray-200 py-2">
+        <span class="text-gray-500">生産国</span>
+        <span class="ml-auto text-gray-900"><%= want.bean&.country %></span>
+      </div>
+      <div class="flex w-11/12 md:ml-4 border-t border-gray-200 py-2">
+        <span class="text-gray-500">焙煎度</span>
+        <span class="ml-auto text-gray-900"><%= want.bean.roast_level&.name %></span>
+      </div>
+      <div class="flex w-11/12 border-t border-gray-200 py-2">
+        <span class="text-gray-500">精製方法</span>
+        <span class="ml-auto text-gray-900"><%= want.bean&.process %></span>
+      </div>
+      <div class="col-start-1 flex w-11/12 border-t border-gray-200 py-2">
+        <span class="text-gray-500">オファー終了日</span>
+        <span class="ml-auto text-gray-900"><%= want.offer&.ended_at %></span>
+      </div>
+      <div class="flex w-11/12 md:ml-4 border-t border-gray-200 py-2">
+        <span class="text-gray-500">ロースト日</span>
+        <span class="ml-auto text-gray-900"><%= want.offer&.roasted_at %></span>
+      </div>
+      <div class="flex w-11/12 border-t border-gray-200 py-2">
+        <span class="text-gray-500">受け取り開始日</span>
+        <span class="ml-auto text-gray-900"><%= want.offer&.receipt_started_at %></span>
+      </div>
+      <div class="flex w-11/12 md:ml-4 border-t border-gray-200 py-2">
+        <span class="text-gray-500">受け取り終了日</span>
+        <span class="ml-auto text-gray-900"><%= want.offer&.receipt_ended_at %></span>
+      </div>
+    </section>
+    <div class="mt-2 flex justify-between items-end">
+      <div><%= link_to '詳細', want_path(want), class: "link" %></div>
+      <%= render partial:'offers/price_weight', locals: { offer: want.offer } %>
+    </div>
+    <div class="flex justify-end mt-2">
+      <h2 class="text-md title-font text-gray-500 tracking-widest hover:text-gray-800"><%= link_to want.roaster.name, want.roaster %></h2>
+    </div>
+  </div>
+</article>
