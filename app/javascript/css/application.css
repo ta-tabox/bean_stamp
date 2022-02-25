@@ -12,7 +12,7 @@ title-font
 }
 
 .btn-primary {
-  @apply py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50 cursor-pointer;
+  @apply py-2 px-4 bg-indigo-500 text-white rounded hover:bg-indigo-600 active:bg-indigo-700 disabled:opacity-50 cursor-pointer;
 }
 
 .btn-secondary {
@@ -20,7 +20,7 @@ title-font
 }
 
 .link {
-  @apply pt-2 px-1 text-blue-500 border-b border-blue-500 hover:text-blue-600 active:text-blue-700 disabled:opacity-50;
+  @apply pt-2 px-1 text-indigo-500 border-b border-indigo-500 hover:text-indigo-600 active:text-indigo-700 disabled:opacity-50;
 }
 
 .side-nav-item {
@@ -162,17 +162,17 @@ title-font
 
 /* offer */
 .on_offering {
-  @apply text-blue-800;
+  @apply bg-blue-500 rounded-full text-white px-3 py-1 text-xs uppercase font-medium;
 }
 .on_roasting {
-  @apply text-purple-800;
+  @apply bg-green-500 rounded-full text-white px-3 py-1 text-xs uppercase font-medium;
 }
 .on_preparing {
-  @apply text-green-800;
+  @apply bg-green-500 rounded-full text-white px-3 py-1 text-xs uppercase font-medium;
 }
 .on_selling {
-  @apply text-red-800;
+  @apply bg-red-500 rounded-full text-white px-3 py-1 text-xs uppercase font-medium;
 }
 .end_of_sales {
-  @apply text-gray-600;
+  @apply bg-gray-700 rounded-full text-white px-3 py-1 text-xs uppercase font-medium;
 }
