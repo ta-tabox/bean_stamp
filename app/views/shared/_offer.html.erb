@@ -3,9 +3,12 @@
   <div class="container lg:w-11/12 my-24 mx-auto py-4 bg-white rounded">
     <header>
       <div class="w-11/12 mb-2 mx-auto">
-        <div class="flex justify-between content-end mb-2">
-          <span class="text-md title-font text-gray-500 tracking-widest"><%= link_to offer.roaster.name, offer.roaster %></span>
+        <div class="flex justify-center -mt-16 md:justify-end">
           <%= show_thumbnail(offer.roaster) %>
+        </div>
+        <div class="flex justify-between">
+          <div class="font-semibold mb-4 <%=offer.status%>"><%= offer.status_i18n %></div>
+          <h2 class="text-md title-font text-gray-500 tracking-widest hover:text-gray-800"><%= link_to offer.roaster.name, offer.roaster %></h2>
         </div>
         <h1 class="mb-2 text-gray-900 text-2xl title-font font-medium"><%= link_to offer.bean.name, offer %></h1>
         <div class="flex justify-between items-end">
