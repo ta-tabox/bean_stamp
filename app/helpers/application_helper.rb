@@ -4,52 +4,24 @@ module ApplicationHelper
 
   # 渡されたインスタンスのサムネイルを表示する
   def show_thumbnail(obj)
-    if obj.instance_of?(Bean)
-      show_bean_thumbnail(obj)
-    else
-      show_user_roaster_thumbnail(obj)
-    end
+    image_url = if obj.image?
+                  obj.image.thumb.url.to_s
+                else
+                  "default_#{obj.class.name.downcase}.png"
+                end
+    link_to image_tag(image_url, class: 'thumbnail', alt: "#{obj.name}の画像"), obj
+  end
+
+  def show_bean_thumbnail(bean)
+    image_url = if bean.bean_images.any?
+                  bean.bean_images[0].image.url.to_s
+                else
+                  "default_#{bean.class.name.downcase}.png"
+                end
+    image_tag(image_url, alt: "#{bean.name}の画像", class: 'thumbnail')
   end
 
   private
-
-  # beanの画像を表示する（複数画像のうち最初のもの）
-  def show_bean_thumbnail(obj)
-    if obj.bean_images.any? && obj.bean_images[0].image?
-      link_to image_tag(
-        obj.bean_images[0].image.thumb.url.to_s,
-        class: 'thumbnail',
-        alt: "#{obj.name}の画像",
-      ),
-              obj
-    else
-      link_to image_tag(
-        "default_#{obj.class.name.downcase}.png",
-        class: 'thumbnail',
-        alt: "#{obj.name}の画像",
-      ),
-              obj
-    end
-  end
-
-  # userとroasterの画像を表示する
-  def show_user_roaster_thumbnail(obj)
-    if obj.image?
-      link_to image_tag(
-        obj.image.thumb.url.to_s,
-        class: 'thumbnail',
-        alt: "#{obj.name}の画像",
-      ),
-              obj
-    else
-      link_to image_tag(
-        "default_#{obj.class.name.downcase}.png",
-        class: 'thumbnail',
-        alt: "#{obj.name}の画像",
-      ),
-              obj
-    end
-  end
 
   # 渡されたユーザーがカレントユーザーであればtrueを返す
   def current_user?(user)

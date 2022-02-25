@@ -1,6 +1,6 @@
 <div class="bg-white w-200 mx-auto">
   <li id="bean-<%= bean.id %>">
-    <%= show_thumbnail(bean) %>
+    <%= show_bean_thumbnail(bean) %>
     <span><%= link_to bean.name, bean %></span>
     <span>
       <% if current_user.had_bean?(bean) %>
