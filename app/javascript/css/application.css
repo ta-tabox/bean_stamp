@@ -72,13 +72,13 @@ title-font
   @apply block appearance-none w-full bg-white border border-gray-100 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow-md leading-tight focus:outline-none;
 }
 
-/* notice */
+/* alert */
 .alert-notice {
-  @apply bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4;
+  @apply bg-blue-50 border-b border-blue-400 text-blue-800 text-sm p-4;
 }
 
 .alert-alert {
-  @apply bg-red-100 border-l-4 border-red-500 text-red-700 p-4;
+  @apply bg-red-50 border-b border-red-400 text-red-800 text-sm p-4;
 }
 
 /* debug-field */
