@@ -2,11 +2,13 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-/* font
+/* typography  */
+/*
 title-font
+page-title
 */
 
-/* conponent */
+/* button, link */
 .btn {
   @apply bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow cursor-pointer;
 }
@@ -23,6 +25,7 @@ title-font
   @apply pt-2 px-1 text-indigo-500 border-b border-indigo-500 hover:text-indigo-600 active:text-indigo-700 disabled:opacity-50;
 }
 
+/* nav */
 .side-nav-item {
   @apply text-gray-500 hover:text-gray-800 transition duration-200 transform hover:-translate-x-4;
 }
@@ -35,6 +38,12 @@ title-font
   @apply text-gray-500 hover:text-gray-800 transition duration-200;
 }
 
+/* header */
+.header {
+  @apply md:sticky top-0 z-50 h-20 pb-2 mb-4 mx-2 bg-gray-50 bg-opacity-95 border-b border-gray-200;
+}
+
+/* thumbnail, image */
 .thumbnail {
   @apply object-cover w-20 h-20 border-2 border-indigo-500 rounded-full;
 }
@@ -57,7 +66,7 @@ title-font
 }
 
 .label {
-  @apply block text-gray-700 text-sm font-bold mb-2;
+  @apply block text-gray-700 text-sm font-bold;
 }
 
 .input-field {
@@ -70,6 +79,10 @@ title-font
 
 .select-box {
   @apply block appearance-none w-full bg-white border border-gray-100 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow-md leading-tight focus:outline-none;
+}
+
+.sort-box {
+  @apply h-10 py-2 px-4 bg-white border border-gray-200 text-gray-600 hover:bg-gray-100 active:bg-gray-200 text-sm text-left;
 }
 
 /* alert */
