@@ -1,17 +1,19 @@
-<% provide(:title, "ロースター詳細") %>
-<h1 class="mb-1">ロースター</h1>
-<hr class="mb-3">
-<div><%= render 'roaster_info' %></div>
-<% if current_user.belonged_roaster?(@roaster) %>
-  <%= link_to '編集', edit_roaster_path , class: "btn-primary" %>
-<% end %>
-<div class="container">
-  <div class="w-200 pt-12 mx-auto">
-    <% if @offers.any? %>
-      <ol>
-        <%= render partial: 'shared/offer', collection: @offers %>
-      </ol>
-      <%== pagy_nav_js(@pagy) %>
-    <% end %>
+<% provide(:title, "ロースター") %>
+<header class="header">
+  <div class="h-full w-11/12 mx-auto flex justify-start items-end">
+    <h1 class="page-title">ロースター</h1>
   </div>
-</div>
+</header>
+<%= render 'roaster_info'%>
+<div class="mt-4 mx-2 border-b border-gray-200"></div>
+<section class="mt-4">
+  <% if @offers.any? %>
+    <ol>
+      <%= render partial: 'shared/offer', collection: @offers %>
+    </ol>
+    <%== pagy_nav_js(@pagy) %>
+  <% end %>
+</section>
+<% content_for :aside do%>
+  <% render partial: 'shared/user_aside' %>
+<% end %>

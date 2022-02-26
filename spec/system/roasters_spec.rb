@@ -76,7 +76,7 @@ RSpec.describe 'Roasters', type: :system do
 
         it_behaves_like "shows roaster's informations"
 
-        pending 'ロースター詳細ページに電話番号を表示する' do
+        it 'ロースター詳細ページに電話番号を表示する' do
           expect(page).to have_content roaster.phone_number
         end
 

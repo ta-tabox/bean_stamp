@@ -5,6 +5,7 @@
 /* typography  */
 /*
 title-font
+body-font
 page-title
 */
 
@@ -92,6 +93,11 @@ page-title
 
 .alert-alert {
   @apply bg-red-50 border-b border-red-400 text-red-800 text-sm p-4;
+}
+
+/* card */
+.card {
+  @apply container lg:w-11/12 mx-auto py-4 bg-white rounded-lg shadow-lg;
 }
 
 /* debug-field */
