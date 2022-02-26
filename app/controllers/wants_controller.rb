@@ -7,9 +7,10 @@ class WantsController < ApplicationController
   before_action :required_want_is_not_rated, only: :rate
 
   def index
-    wants = current_user.wants.includes(:roaster, bean: :bean_images)
+    wants = current_user.wants.includes(:offer)
     wants&.map { |want| want.offer.update_status }
-    @pagy, @wants = pagy(wants.active.recent)
+    wants.active.recent
+    @pagy, @wants = pagy(wants.active.recent.includes(:roaster, bean: %i[bean_images roast_level]))
   end
 
   def show
@@ -47,11 +48,11 @@ class WantsController < ApplicationController
   def search
     status = params[:search]
     wants = if status.blank?
-              current_user.wants.active.recent
+              current_user.wants.active.recent.includes(:roaster, bean: :roast_level)
             else
-              current_user.wants.search_status(status)
+              current_user.wants.search_status(status).includes(:roaster, bean: :roast_level)
             end
-    @pagy, @wants = pagy(wants)
+    @pagy, @wants = pagy(wants.includes(:offer))
     render 'index'
   end
 

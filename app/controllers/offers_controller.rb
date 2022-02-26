@@ -5,9 +5,9 @@ class OffersController < ApplicationController
   before_action :roaster_had_offer_requierd_and_set_offer, only: %i[edit update destroy wanted_users]
 
   def index
-    offers = current_roaster.offers.includes(:roaster, bean: :bean_images)
+    offers = current_roaster.offers
     offers&.map(&:update_status)
-    @pagy, @offers = pagy(offers.active.recent)
+    @pagy, @offers = pagy(offers.active.recent.includes(:roaster, bean: :bean_images))
   end
 
   def show
@@ -62,7 +62,7 @@ class OffersController < ApplicationController
              else
                current_roaster.offers.search_status(status)
              end
-    @pagy, @offers = pagy(offers)
+    @pagy, @offers = pagy(offers.includes(:roaster, bean: :bean_images))
     render 'index'
   end
 
