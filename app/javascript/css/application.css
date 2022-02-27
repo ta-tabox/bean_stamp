@@ -100,6 +100,14 @@ page-title
   @apply container lg:w-11/12 mx-auto py-4 bg-white rounded-lg shadow-lg;
 }
 
+.grid-container {
+  @apply lg:grid content-between;
+}
+
+.grid-item {
+  @apply flex w-11/12 mx-auto border-t border-gray-200 py-2;
+}
+
 /* debug-field */
 .debug_dump {
   clear: both;

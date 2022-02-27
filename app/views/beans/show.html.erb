@@ -1,10 +1,11 @@
 <% provide(:title, "コーヒー豆詳細") %>
-<h1 class="mb-1">コーヒー豆詳細</h1>
-<hr class="mb-3">
+<header class="header">
+  <div class="h-full w-11/12 mx-auto flex justify-between items-end">
+    <h1 class="page-title">コーヒー豆詳細</h1>
+    <div class="flex items-end">
+      <%= link_to "オファー", new_bean_offer_path(@bean), class: "btn-primary" %>
+      <%= link_to '編集', edit_bean_path(@bean), class: "link ml-4" %>
+    </div>
+  </div>
+</header>
 <%= render partial: 'bean_info', locals: { bean: @bean} %>
-<div class="max-w-md mx-auto">
-  <% if current_user.had_bean?(@bean) %>
-    <%= link_to "オファー", new_bean_offer_path(@bean), class: "btn-primary ml-4" %>
-    <%= link_to '編集', edit_bean_path(@bean), class: "btn-primary" %>
-  <% end %>
-</div>

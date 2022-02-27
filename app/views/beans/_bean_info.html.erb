@@ -1,30 +1,84 @@
-<div class="form form-container">
-  <p>タイトル：<%= bean.name %></p>
-  <div class="flex">
-    <% bean.bean_images.each do |bean_image| %>
-      <%= image_tag bean_image.image.thumb.url, class: "thumbnail" if bean_image.image? %>
-    <% end %>
+<%# コーヒー豆詳細情報 %>
+<article class="text-gray-600 body-font">
+  <div class="container lg:w-11/12 mx-auto py-4 bg-white rounded">
+    <h1 class="w-11/12 mx-auto text-center pb-2 text-gray-900 text-xl lg:text-2xl title-font font-medium"><%= bean.name %></h1>
+    <div class="w-11/12 mx-auto flex flex-col justify-center items-center">
+      <div class="lg:w-10/12 md:10/12 w-full">
+        <% if bean.bean_images.any? %>
+          <% bean.bean_images.each do |bean_image| %>
+            <%= image_tag bean_image.image.url, class: "object-cover object-center rounded", alt: "#{bean.name}の画像" if bean_image.image? %>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="text-center lg:w-10/12 w-full pt-4">
+        <p class="leading-relaxed"><%= bean&.describe %></p>
+        <section class= "w-11/12 mx-auto pt-4">
+          <div class="text-center text-lg">〜 Flavor 〜</div>
+          <div class="pt-2 flex justify-center space-x-3">
+            <%bean.taste_tags.each do |taste_tag|%>
+              <%= tag.div taste_tag.name, class: 'rounded-full py-1 px-4 font-medium border bg-white border-gray-300 text-center' if taste_tag.id?%>
+            <%end%>
+          </div>
+        </section>
+        <section class= "pt-4 grid-container grid-cols-2">
+          <div class="col-span-2 mb-2 text-lg">〜 Detail 〜</div>
+          <div class="grid-item">
+            <span class="text-gray-500">生産国</span>
+            <span class="ml-auto text-gray-900"><%= bean&.country %></span>
+          </div>
+          <div class="grid-item">
+            <span class="text-gray-500">焙煎度</span>
+            <span class="ml-auto text-gray-900"><%= bean.roast_level&.name %></span>
+          </div>
+          <div class="grid-item">
+            <span class="text-gray-500">地域</span>
+            <span class="ml-auto text-gray-900"><%= bean&.subregion %></span>
+          </div>
+          <div class="grid-item">
+            <span class="text-gray-500">農園</span>
+            <span class="ml-auto text-gray-900"><%= bean&.farm %></span>
+          </div>
+          <div class="grid-item">
+            <span class="text-gray-500">品種</span>
+            <span class="ml-auto text-gray-900"><%= bean&.variety %></span>
+          </div>
+          <div class="grid-item">
+            <span class="text-gray-500">精製方法</span>
+            <span class="ml-auto text-gray-900"><%= bean&.process %></span>
+          </div>
+          <div class="grid-item">
+            <span class="text-gray-500">標高</span>
+            <span class="ml-auto text-gray-900"><%= "#{bean&.elevation} m" %></span>
+          </div>
+          <div class="grid-item">
+            <span class="text-gray-500">収穫</span>
+            <span class="ml-auto text-gray-900"><%= "#{bean.cropped_at&.year}年 #{bean.cropped_at&.month}月" %></span>
+          </div>
+        </section>
+        <section class= "pt-4 grid grid-cols-2 lg:grid-cols-3 content-between">
+          <div class="col-span-2 lg:col-span-3 mb-2 text-lg">〜 Taste 〜</div>
+          <div class="grid-item">
+            <span class="text-gray-500">酸味</span>
+            <span class="ml-auto text-gray-900"><%= bean&.acidity %></span>
+          </div>
+          <div class="grid-item">
+            <span class="text-gray-500">香り</span>
+            <span class="ml-auto text-gray-900"><%= bean&.flavor %></span>
+          </div>
+          <div class="grid-item">
+            <span class="text-gray-500">ボディ</span>
+            <span class="ml-auto text-gray-900"><%= bean&.body %></span>
+          </div>
+          <div class="grid-item">
+            <span class="text-gray-500">苦味</span>
+            <span class="ml-auto text-gray-900"><%= bean&.bitterness %></span>
+          </div>
+          <div class="grid-item">
+            <span class="text-gray-500">甘味</span>
+            <span class="ml-auto text-gray-900"><%= bean&.sweetness %></span>
+          </div>
+        </section>
+      </div>
+    </div>
   </div>
-  <p>生産国：<%= bean&.country %></p>
-  <p>焙煎度：<%= bean.roast_level&.name %></p>
-  <p>地域：<%= bean&.subregion %></p>
-  <p>農園：<%= bean&.farm %></p>
-  <p>品種：<%= bean&.variety %></p>
-  <p>精製方法：<%= bean&.process %></p>
-  <p>標高：<%= "#{bean&.elevation} m" %></p>
-  <p>収穫：<%= "#{bean.cropped_at&.year}年 #{bean.cropped_at&.month}月" %></p>
-  <p>説明：<%= bean&.describe %></p>
-  <p>酸味：<%= bean.acidity %></p>
-  <p>香り：<%= bean.flavor %></p>
-  <p>ボディ：<%= bean.body %></p>
-  <p>苦味：<%= bean.bitterness %></p>
-  <p>甘味：<%= bean.sweetness %></p>
-  <!-- 処理の分岐が多い、タグ領域(pタグ)の生成をもっとシンプルにできないか？ -->
-  <div class="flex">
-    <% bean.taste_tags.each do |tag| %>
-      <% if tag.id? %>
-        <p class="mr-4 px-4 border border-1 border-gray-100 rounded-md"> <%= tag.name %></p>
-      <% end %>
-    <% end %>
-  </div>
-</div>
+</article>
