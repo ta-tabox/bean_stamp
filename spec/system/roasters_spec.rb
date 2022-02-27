@@ -64,6 +64,7 @@ RSpec.describe 'Roasters', type: :system do
           expect(page).to have_content roaster.name
           expect(page).to have_content roaster.prefecture.name
           expect(page).to have_content roaster.address
+          expect(page).to have_content roaster.phone_number
           expect(page).to have_content roaster.describe
           expect(page).to have_selector("img[src$='sample.jpg']")
         }
@@ -75,10 +76,6 @@ RSpec.describe 'Roasters', type: :system do
         end
 
         it_behaves_like "shows roaster's informations"
-
-        it 'ロースター詳細ページに電話番号を表示する' do
-          expect(page).to have_content roaster.phone_number
-        end
 
         it 'does not display a edit button' do
           subject

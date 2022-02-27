@@ -64,11 +64,11 @@ RSpec.describe 'Offers', type: :system do
       it "shows offer's and bean's informations" do
         subject
         # offerの情報が表示されているかの確認
-        expect(page).to have_content offer.created_at
-        expect(page).to have_content offer.ended_at
-        expect(page).to have_content offer.roasted_at
-        expect(page).to have_content offer.receipt_started_at
-        expect(page).to have_content offer.receipt_ended_at
+        expect(page).to have_content offer.created_at.strftime('%Y/%m/%d')
+        expect(page).to have_content offer.ended_at.strftime('%Y/%m/%d')
+        expect(page).to have_content offer.roasted_at.strftime('%Y/%m/%d')
+        expect(page).to have_content offer.receipt_started_at.strftime('%Y/%m/%d')
+        expect(page).to have_content offer.receipt_ended_at.strftime('%Y/%m/%d')
         expect(page).to have_content offer.price
         expect(page).to have_content offer.weight
         expect(page).to have_content offer.amount
