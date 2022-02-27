@@ -21,6 +21,16 @@ module ApplicationHelper
     image_tag(image_url, alt: "#{bean.name}の画像", class: 'thumbnail')
   end
 
+  # user, roaster詳細用のimage表示メソッド
+  def show_image(obj)
+    image_url = if obj.image?
+                  obj.image.thumb.url.to_s
+                else
+                  "default_#{obj.class.name.downcase}.png"
+                end
+    image_tag(image_url, class: 'object-cover object-center w-full h-48 lg:h-64 rounded-md shadow', alt: "#{obj.name}の画像")
+  end
+
   private
 
   # 渡されたユーザーがカレントユーザーであればtrueを返す

@@ -6,6 +6,7 @@ User.create!(
   password: 'password',
   password_confirmation: 'password',
   describe: '閲覧用のユーザーです',
+  image: File.open(Rails.root.join('db/fixtures/images/users/user_1.jpg')),
   guest: true,
 )
 
