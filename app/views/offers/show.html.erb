@@ -1,45 +1,18 @@
 <% provide(:title, "オファー詳細") %>
-<h1 class="mb-1">オファー詳細</h1>
-<hr class="mb-3">
-<div class="container">
-  <div class="w-200 pt-12 mx-auto">
-    <div class="bg-white w-200 mx-auto">
-      <%= show_thumbnail(@offer.roaster) %>
-      <span><%= link_to @offer.roaster.name, @offer.roaster %></span>
-      <span><%= link_to @offer.bean.name, @offer %></span>
-      <span>
-        <% if current_user.had_offer?(@offer) %>
-          <%= link_to "編集", edit_offer_path(@offer), class: "link ml-4" %>
-        <% end %>
-      </span>
-      <div><%= render partial: 'offer_info', locals: { offer: @offer } %></div>
-      <hr class="mb-3">
-    </div>
-  </div>
-</div>
-<%# bean以外の情報 %>
-<header>
-  <div class="w-11/12 mb-2 mx-auto">
-    <div class="flex justify-between content-end mb-2">
-      <span class="text-md title-font text-gray-500 tracking-widest"><%= link_to @offer.roaster.name, @offer.roaster %></span>
-      <%= show_thumbnail(@offer.roaster) %>
+<header class="header">
+  <div class="h-full w-11/12 mx-auto flex justify-between items-end">
+    <h1 class="page-title">オファー豆詳細</h1>
+    <div class="flex items-end">
+      <% if current_user.had_offer?(@offer) %>
+        <%= link_to "編集", edit_offer_path(@offer), class: "link ml-4" %>
+      <% end %>
     </div>
   </div>
 </header>
-<div class="flex justify-between items-end">
-  <div class="flex">
-    <%= render partial: 'offers/want_form', locals: { offer: @offer} %>
-    <button class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
-      <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
-        <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
-      </svg>
-    </button>
-    <div class="font-semibold my-4 <%=@offer.status%>"><%= @offer.status_i18n %></div>
-  </div>
-  <div><%= render partial: 'offers/stats', locals: { offer: @offer } %></div>
+<%# bean以外の情報 %>
+<div class="mt-16">
+  <%= render partial: 'offer_info', locals: { offer: @offer } %>
 </div>
-<div class="mt-2 mb-2 flex justify-between items-end">
-  <div><%= link_to '詳細', offer_path(@offer), class: "link mt-4" %></div>
-  <%= render partial:'offers/price_weight', locals: { offer: @offer } %>
+<div class="mt-8 mb-20">
+  <%= render partial: 'beans/bean_info', locals: { bean: @offer.bean } %>
 </div>
-<%= render partial: 'beans/bean_info', locals: { bean: @offer.bean } %>

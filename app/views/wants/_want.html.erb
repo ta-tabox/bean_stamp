@@ -27,19 +27,19 @@
       </div>
       <div class="col-start-1 grid-item">
         <span class="text-gray-500">オファー終了日</span>
-        <span class="ml-auto text-gray-900"><%= l want.offer&.ended_at, format: :long %></span>
+        <span class="ml-auto text-gray-900"><%= l want.offer&.ended_at%></span>
       </div>
       <div class="lg:ml-4 grid-item">
         <span class="text-gray-500">ロースト日</span>
-        <span class="ml-auto text-gray-900"><%= l want.offer&.roasted_at, format: :long  %></span>
+        <span class="ml-auto text-gray-900"><%= l want.offer&.roasted_at %></span>
       </div>
       <div class="grid-item">
         <span class="text-gray-500">受け取り開始日</span>
-        <span class="ml-auto text-gray-900"><%= l want.offer&.receipt_started_at, format: :long  %></span>
+        <span class="ml-auto text-gray-900"><%= l want.offer&.receipt_started_at %></span>
       </div>
       <div class="lg:ml-4 grid-item">
         <span class="text-gray-500">受け取り終了日</span>
-        <span class="ml-auto text-gray-900"><%= l want.offer&.receipt_ended_at, format: :long  %></span>
+        <span class="ml-auto text-gray-900"><%= l want.offer&.receipt_ended_at %></span>
       </div>
       <div class="col-span-2 w-11/12 lg:w-full mx-auto pr-2 flex justify-end">
         <%= render partial:'offers/price_weight', locals: { offer: want.offer } %>
