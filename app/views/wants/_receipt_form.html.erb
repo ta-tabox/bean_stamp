@@ -1,6 +1,6 @@
 <% if want.offer.receipt_started_at <= Date.current %>
-  <div class="form form-container">
-    <p>ステータス</p>
+  <section class="px-8">
+    <div class="label">ステータス</div>
     <div id="want-receipt-form">
       <% if want.receipted_at? %>
         <input type="submit" disabled="disabled" class="btn-primary" value="受け取り完了">
@@ -10,8 +10,5 @@
         <% end %>
       <% end %>
     </div>
-    <div id="want-rating-area">
-      <%= render partial: 'wants/rating_form', locals: { want: want } if want.receipted_at?%>
-    </div>
-  </div>
+  </section>
 <% end %>

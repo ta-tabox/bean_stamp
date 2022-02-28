@@ -1,6 +1,6 @@
-<div class="form-container">
-  <p>評価</p>
-  <div id="want-rate",class="my-4 btn font-semibold"><%= want.rate %></div>
+<section class="container lg:w-11/12 mx-auto py-4 text-gray-600 body-font">
+  <div class="text-center text-lg">〜 評価 〜</div>
+  <div id="want-rate" class="my-4 text-center font-semibold"><%= want.rate %></div>
   <div id="want-reating-form">
     <% if want.unrated? %>
       <%= render partial: 'unrated', locals: { want: want } %>
@@ -8,4 +8,4 @@
       <%= render partial: 'rated', locals: { want: want } %>
     <% end %>
   </div>
-</div>
+</section>
