@@ -10,7 +10,6 @@
 <div id="want-rating-area">
   <%= render partial: 'wants/rating_form', locals: { want: @want } if @want.receipted_at?%>
 </div>
-</div>
 <div class="mt-16">
   <%= render partial: 'offers/offer_info', locals: { offer: @want.offer } %>
 </div>
