@@ -1,3 +1,2 @@
 document.getElementById('flash-messages').innerHTML = '<%= escape_javascript(render 'layouts/flash_messages') %>';
-document.getElementById('want-rate').innerHTML = '<%= escape_javascript(@want.rate) %>';
-document.getElementById('want-reating-form').innerHTML = '<%= escape_javascript(render partial: 'rated', locals: { want: @want }) %>';
+document.getElementById('want-rating-area').innerHTML = '<%= escape_javascript(render partial: 'rating_form', locals: { want: @want, status: true }) %>';

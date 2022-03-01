@@ -11,6 +11,7 @@ module.exports = {
       // backgroundColor: ["checked"],
       // textColor: ["checked"],
       opacity: ["disabled"],
+      cursor: ["disabled"],
     },
   },
   plugins: [],

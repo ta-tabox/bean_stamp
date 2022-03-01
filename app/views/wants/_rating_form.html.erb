@@ -1,11 +1,21 @@
-<section class="container lg:w-11/12 mx-auto py-4 text-gray-600 body-font">
-  <div class="text-center text-lg">〜 評価 〜</div>
-  <div id="want-rate" class="my-4 text-center font-semibold"><%= want.rate %></div>
-  <div id="want-reating-form">
-    <% if want.unrated? %>
-      <%= render partial: 'unrated', locals: { want: want } %>
-    <% else %>
-      <%= render partial: 'rated', locals: { want: want } %>
-    <% end %>
-  </div>
-</section>
+<div class="container">
+  <%= form_with( model: want, url: rate_want_path, method: "patch", local: false) do |f| %>
+    <div class="radio-tile-group">
+      <% Want.rates.each do |rate| %>
+        <% next if rate[0] == 'unrated' %>
+        <div class="input-container">
+          <%= f.radio_button :rate, rate[0], disabled: status, class: "radio-button" %>
+          <div class="radio-tile">
+            <div class="icon">
+              <%= render "#{rate[0]}" %>
+            </div>
+            <%= f.label rate[0], disabled: status, class: "radio-tile-label" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="text-center">
+      <%= f.submit "評価", disabled: status,  class: "btn-primary" %>
+    </div>
+  <% end %>
+</div>

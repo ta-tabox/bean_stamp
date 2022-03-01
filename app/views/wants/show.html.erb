@@ -7,9 +7,18 @@
     </div>
   </div>
 </header>
-<div id="want-rating-area">
-  <%= render partial: 'wants/rating_form', locals: { want: @want } if @want.receipted_at?%>
+<section class="container lg:w-11/12 mx-auto py-4 text-gray-600 body-font">
+  <div id="want-rating-area">
+    <div id="want-rating-form">
+      <% if @want.receipted_at? && @want.unrated? %>
+        <%= render partial: 'rating_form', locals: { want: @want, status: false } %>
+      <% else %>
+        <%= render partial: 'rating_form', locals: { want: @want, status: true } %>
+      <% end %>
+    </div>
+  </div>
 </div>
+</section>
 <div class="mt-16">
   <%= render partial: 'offers/offer_info', locals: { offer: @want.offer } %>
 </div>

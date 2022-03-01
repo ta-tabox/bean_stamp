@@ -1,11 +1,10 @@
 <% if want.offer.receipt_started_at <= Date.current %>
   <section class="px-8">
-    <div class="label">ステータス</div>
     <div id="want-receipt-form">
-      <% if want.receipted_at? %>
-        <input type="submit" disabled="disabled" class="btn-primary" value="受け取り完了">
-      <% else %>
-        <%= form_with(url: receipt_want_path, method: "patch", local: false) do |f| %>
+      <%= form_with(url: receipt_want_path, method: "patch", local: false) do |f| %>
+        <% if want.receipted_at? %>
+          <%= f.submit "受け取り完了", class: "btn-primary", disabled: "disabled" %>
+        <% else %>
           <%= f.submit "受け取り完了", class: "btn-primary" %>
         <% end %>
       <% end %>
