@@ -8,9 +8,7 @@
 <div class="mt-4 mx-2 border-b border-gray-200"></div>
 <section class="mt-4">
   <% if @offers.any? %>
-    <ol>
-      <%= render partial: 'shared/offer', collection: @offers %>
-    </ol>
+    <%= render partial: 'shared/offer', collection: @offers %>
     <%== pagy_nav_js(@pagy) %>
   <% end %>
 </section>

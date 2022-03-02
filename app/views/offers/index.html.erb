@@ -19,9 +19,7 @@
 </header>
 <section class="mt-4">
   <% if @offers.any? %>
-    <ol>
-      <%= render partial: @offers %>
-    </ol>
+    <%= render partial: @offers %>
     <%== pagy_nav_js(@pagy) %>
   <% end %>
 </section>
