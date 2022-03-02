@@ -12,6 +12,7 @@ module.exports = {
       // textColor: ["checked"],
       opacity: ["disabled"],
       cursor: ["disabled"],
+      borderWidth: ["hover", "focus"],
     },
   },
   plugins: [],
