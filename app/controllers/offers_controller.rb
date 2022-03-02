@@ -7,7 +7,7 @@ class OffersController < ApplicationController
   def index
     offers = current_roaster.offers
     offers&.map(&:update_status)
-    @pagy, @offers = pagy(offers.active.recent.includes(:roaster, bean: :bean_images))
+    @pagy, @offers = pagy(offers.includes(:roaster, { bean: %i[roast_level bean_images] }).active.recent)
   end
 
   def show
@@ -62,7 +62,7 @@ class OffersController < ApplicationController
              else
                current_roaster.offers.search_status(status)
              end
-    @pagy, @offers = pagy(offers.includes(:roaster, bean: :bean_images))
+    @pagy, @offers = pagy(offers.includes(:roaster, { bean: %i[roast_level bean_images] }))
     render 'index'
   end
 
