@@ -11,15 +11,15 @@ page-title
 
 /* button, link */
 .btn {
-  @apply bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow cursor-pointer disabled:cursor-not-allowed;
+  @apply bg-white text-gray-800 font-semibold py-1 px-3 border border-gray-400 rounded shadow cursor-pointer disabled:cursor-not-allowed;
 }
 
 .btn-primary {
-  @apply py-2 px-4 bg-indigo-500 text-white rounded hover:bg-indigo-600 active:bg-indigo-700 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed inline-block;
+  @apply py-1 px-3 bg-indigo-500 text-white rounded hover:bg-indigo-600 active:bg-indigo-700 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed inline-block;
 }
 
 .btn-secondary {
-  @apply py-2 px-4 bg-white border border-gray-200 text-gray-600 rounded hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed inline-block;
+  @apply py-1 px-3 bg-white border border-gray-200 text-gray-600 rounded hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed inline-block;
 }
 
 .link {

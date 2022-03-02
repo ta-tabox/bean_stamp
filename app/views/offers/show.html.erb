@@ -4,7 +4,7 @@
     <h1 class="page-title">オファー豆詳細</h1>
     <div class="flex items-end">
       <% if current_user.had_offer?(@offer) %>
-        <%= link_to "編集", edit_offer_path(@offer), class: "link ml-4" %>
+        <%= link_to "編集", edit_offer_path(@offer), class: "btn-secondary ml-4" %>
         <%= link_to "削除", @offer, method: :delete, data: { confirm: "本当に削除しますか?" }, class: "link ml-4" %>
       <% end %>
     </div>
