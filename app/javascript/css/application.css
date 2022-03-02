@@ -173,29 +173,26 @@ page-title
   @apply flex justify-center;
 }
 .radio-tile-group .input-container {
-  @apply relative w-20 h-20 m-1 sm:m-2;
+  width: 4.5rem;
+  height: 4.5rem;
+  @apply relative m-1 sm:m-2;
 }
 .radio-tile-group .input-container .radio-button {
   @apply opacity-0 absolute top-0 left-0 h-full w-full m-0 cursor-pointer z-50;
 }
 .radio-tile-group .input-container .radio-tile {
-  @apply flex flex-col items-center justify-center w-full h-full border-2 border-indigo-500 rounded p-2 transition transform duration-300 ease-in-out;
+  @apply flex flex-col items-center justify-center w-full h-full border-2 border-indigo-500 rounded p-1 transition transform duration-300 ease-in-out;
 }
-.radio-tile-group .input-container .icon svg {
-  @apply fill-current text-indigo-500 w-8 h-8;
+.radio-tile-group .input-container .icon i {
+  @apply fill-current text-indigo-500;
 }
 .radio-tile-group .input-container .radio-tile-label {
-  @apply text-center text-xs font-semibold uppercase tracking-tight text-indigo-500 duration-300 ease-in-out;
+  @apply text-center text-xs font-normal uppercase tracking-tight text-indigo-500 duration-300 ease-in-out;
 }
 .radio-tile-group .input-container .radio-button:checked + .radio-tile {
   @apply bg-indigo-500 border-2 border-indigo-500 text-white scale-110;
 }
-.radio-tile-group
-  .input-container
-  .radio-button:checked
-  + .radio-tile
-  .icon
-  svg {
+.radio-tile-group .input-container .radio-button:checked + .radio-tile .icon i {
   @apply fill-current text-white border-indigo-500;
 }
 .radio-tile-group
@@ -206,12 +203,7 @@ page-title
   @apply text-white;
 }
 .radio-tile-group .input-container .radio-button:disabled + .radio-tile,
-.radio-tile-group
-  .input-container
-  .radio-button:disabled
-  + .radio-tile
-  .icon
-  svg,
+.radio-tile-group .input-container .radio-button:disabled + .radio-tile .icon i,
 .radio-tile-group
   .input-container
   .radio-button:disabled
