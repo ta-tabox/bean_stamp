@@ -10,8 +10,5 @@
       <p class=""><%= "#{roaster.describe}" %></p>
     </div>
   </div>
-  <div class="ml-4"><%#= render partial: 'roasters/follow_form', locals: { roaster: roaster } %></div>
-  <div class="user-option mx-auto sm:ml-auto sm:mr-0">
-    <button class="btn inline-block select-none align-middle cursor-pointer whitespace-nowrap px-4 py-1.5 rounded text-base font-medium leading-6 tracking-tight text-white text-center border-0 bg-[#6911e7] hover:bg-[#590acb] duration-300" type="button">Follow</button>
-  </div>
+  <div class="mx-auto sm:ml-auto sm:mr-0"><%= render partial: 'roasters/follow_form', locals: { roaster: roaster } %></div>
 </li>

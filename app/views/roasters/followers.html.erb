@@ -6,7 +6,7 @@
 </header>
 <%= render 'roaster_info'%>
 <div class="mt-4 mx-2 border-b border-gray-200"></div>
-<section class="card mt-4 py-4 text-gray-600 body-font">
+<section class="card mt-4 mb-20 py-4 text-gray-600 body-font">
   <% if @users.any? %>
     <ol>
       <%= render partial: 'users/users/user', collection: @users %>
