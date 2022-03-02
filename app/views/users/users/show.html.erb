@@ -4,31 +4,9 @@
     <h1 class="page-title">ユーザー詳細</h1>
   </div>
 </header>
-<%# ユーザー詳細 %>
-<section class="card">
-  <div class="container px-6 py-8 mx-auto">
-    <div class="items-center lg:flex">
-      <div class="lg:w-1/2">
-        <div class="flex justify-start items-baseline">
-          <h2 class="text-2xl font-bold text-gray-800"><%= @user.name %></h2>
-          <div class="ml-2"><%= link_to_edit_user(@user) %></div>
-        </div>
-        <div class="mt-4 text-gray-500 lg:max-w-md">
-          <div>@ <%= @user.prefecture.name %></div>
-          <p><%= @user.describe %></p>
-        </div>
-        <!-- <#%= render partial: 'shared/external_link' %> -->
-      </div>
-      <div class="mt-8 lg:mt-0 lg:w-1/2">
-        <div class="flex items-center justify-center lg:justify-end">
-          <div class="max-w-lg">
-            <%= show_image(@user) %>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<div class="mt-4">
+  <%= render partial: 'users/users/user_info', locals: { user: @user } %>
+</div>
 <% content_for :aside do%>
   <% render partial: 'shared/user_aside' %>
 <% end %>
