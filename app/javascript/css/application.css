@@ -97,7 +97,7 @@ page-title
 
 /* card */
 .card {
-  @apply container lg:w-11/12 mx-auto py-4 bg-white rounded-lg shadow-lg lg:shadow-md;
+  @apply container sm:w-11/12 mx-auto py-4 bg-white rounded-lg shadow-lg lg:shadow-md;
 }
 
 .grid-container {
