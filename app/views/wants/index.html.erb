@@ -8,8 +8,10 @@
           <%= image_tag("search.svg", class:'h-4 w-4') %>
           <%= f.label :search, "ウォンツを検索", class: "label pl-1" %>
         </div>
-        <%= f.select :search, Offer.statuses.map {|k, v| [t("enums.offer.status.#{k}"), v]}, {include_blank: 'ステータスを選択'}, class: 'sort-box mr-2' %>
-        <%= f.submit "検索", class: "btn-primary"  %>
+        <div class="search-form">
+          <%= f.submit "検索", class: "search-button"  %>
+          <%= f.select :search, Offer.statuses.map {|k, v| [t("enums.offer.status.#{k}"), v]}, {include_blank: 'ステータスを選択'}, class: 'search-field' %>
+        </div>
       <% end %>
     </div>
   </div>

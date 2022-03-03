@@ -3,20 +3,27 @@
   <div class="h-full w-11/12 mx-auto flex justify-between items-end">
     <h1 class="page-title">オファー一覧</h1>
     <div class="flex items-end">
-      <%= link_to "コーヒー豆一覧", beans_path, class: "link mr-4" %>
+      <div class="hidden md:block">
+        <%= link_to "コーヒー豆一覧", beans_path, class: "link mr-4" %>
+      </div>
       <div class="text-left">
         <%= form_with(url: search_offers_path, method: :get, local: true)do |f| %>
           <div class="flex">
             <%= image_tag("search.svg", class:'h-4 w-4') %>
             <%= f.label :search, "オファーを検索", class: "label pl-1" %>
           </div>
-          <%= f.select :search, Offer.statuses.map {|k, v| [t("enums.offer.status.#{k}"), v]}, {include_blank: 'ステータスを選択'}, class: 'sort-box mr-2' %>
-          <%= f.submit "検索", class: "btn-primary"  %>
+          <div class="search-form">
+            <%= f.submit "検索", class: "search-button"  %>
+            <%= f.select :search, Offer.statuses.map {|k, v| [t("enums.offer.status.#{k}"), v]}, {include_blank: 'ステータスを選択'}, class: 'search-field' %>
+          </div>
         <% end %>
       </div>
     </div>
   </div>
 </header>
+<div class="block md:hidden text-right">
+  <%= link_to "コーヒー豆一覧", beans_path, class: "link mr-4" %>
+</div>
 <section class="mt-4">
   <% if @offers.any? %>
     <%= render partial: @offers %>
