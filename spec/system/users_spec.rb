@@ -14,10 +14,10 @@ RSpec.describe 'Users', type: :system do
         before do
           click_link 'メールアドレスで登録'
           fill_in '名前', with: 'テストユーザー'
-          fill_in 'Eメール', with: 'test@example.com'
-          select '広島県', from: 'エリア'
-          fill_in 'パスワード', with: 'password'
-          fill_in 'パスワード（確認用）', with: 'password'
+          fill_in 'メールアドレス', with: 'test@example.com'
+          find('#user_prefecture_code').select '広島県'
+          find('#user_password').fill_in with: 'password'
+          find('#user_password_confirmation').fill_in with: 'password'
         end
 
         context 'with correct form' do
@@ -34,7 +34,7 @@ RSpec.describe 'Users', type: :system do
 
         before do
           click_link 'ログイン'
-          fill_in 'Eメール', with: user.email
+          fill_in 'メールアドレス', with: user.email
           fill_in 'パスワード', with: user.password
         end
 
@@ -48,10 +48,10 @@ RSpec.describe 'Users', type: :system do
 
         context 'with no email' do
           it 'does not create a new session' do
-            fill_in 'Eメール', with: nil
+            fill_in 'メールアドレス', with: nil
             subject
             expect(current_path).to eq new_user_session_path
-            expect(page).to have_content 'Eメールまたはパスワードが違います'
+            expect(page).to have_content 'メールアドレスまたはパスワードが違います'
           end
         end
 
@@ -60,7 +60,7 @@ RSpec.describe 'Users', type: :system do
             fill_in 'パスワード', with: 'wrong_password'
             subject
             expect(current_path).to eq new_user_session_path
-            expect(page).to have_content 'Eメールまたはパスワードが違います'
+            expect(page).to have_content 'メールアドレスまたはパスワードが違います'
           end
         end
       end
@@ -82,7 +82,7 @@ RSpec.describe 'Users', type: :system do
         context 'with correct form without password' do
           it 'updates the user information' do
             fill_in '名前', with: 'アップデートユーザー'
-            fill_in 'Eメール', with: 'update@example.com'
+            fill_in 'メールアドレス', with: 'update@example.com'
             select '東京都', from: 'エリア'
             fill_in '自己紹介', with: 'テストメッセージ'
             subject
@@ -115,10 +115,10 @@ RSpec.describe 'Users', type: :system do
 
         context 'with no email' do
           it 'does not update the user information' do
-            fill_in 'Eメール', with: nil
+            fill_in 'メールアドレス', with: nil
             subject
             expect(current_path).to eq user_registration_path
-            expect(page).to have_content 'Eメールを入力してください'
+            expect(page).to have_content 'メールアドレスを入力してください'
           end
         end
 
