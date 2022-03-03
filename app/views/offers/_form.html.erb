@@ -6,19 +6,19 @@
       <%= f.hidden_field :bean_id, value: "#{@bean.id}" %>
       <div class="field">
         <%= f.label :ended_at, class: "label" %>
-        <%= f.date_field :ended_at, autofocus: true, min: Date.today, max: Date.today.next_month(1), class: "input-field" %>
+        <%= f.date_field :ended_at, autofocus: true, max: Date.today.next_month(1), class: "input-field" %>
       </div>
       <div class="field">
         <%= f.label :roasted_at, class: "label" %>
-        <%= f.date_field :roasted_at, min: Date.today, max: Date.today.next_month(1), class: "input-field" %>
+        <%= f.date_field :roasted_at, max: Date.today.next_month(1), class: "input-field" %>
       </div>
       <div class="field">
         <%= f.label :receipt_started_at, class: "label" %>
-        <%= f.date_field :receipt_started_at, min: Date.today, max: Date.today.next_month(1), class: "input-field" %>
+        <%= f.date_field :receipt_started_at, max: Date.today.next_month(1), class: "input-field" %>
       </div>
       <div class="field">
         <%= f.label :receipt_ended_at, class: "label" %>
-        <%= f.date_field :receipt_ended_at, min: Date.today, max: Date.today.next_month(2), class: "input-field" %>
+        <%= f.date_field :receipt_ended_at, max: Date.today.next_month(2), class: "input-field" %>
       </div>
       <div class="field">
         <%= f.label :price, class: "label" %>

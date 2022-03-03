@@ -20,8 +20,8 @@ RSpec.describe 'Beans', type: :system do
         recent_bean
         old_bean
         subject
-        expect(page.find('ol > div:first-of-type')).to have_selector "li#bean-#{recent_bean.id}"
-        expect(page.find('ol > div:last-of-type')).to have_selector "li#bean-#{old_bean.id}"
+        expect(page.find('section > article:first-of-type')).to match_selector "#bean-#{recent_bean.id}"
+        expect(page.find('section > article:last-of-type')).to match_selector "#bean-#{old_bean.id}"
       end
     end
 
@@ -100,7 +100,8 @@ RSpec.describe 'Beans', type: :system do
 
       it "updates the bean's information" do
         click_link 'Beans'
-        find("li#bean-#{bean.id}").click_link '編集'
+        find("article#bean-#{bean.id}").click_link '詳細'
+        click_link '編集'
         fill_in 'タイトル', with: 'アップデートビーンズ'
         fill_in '生産国', with: 'ブラジル'
         select '浅煎り', from: '焙煎度'
@@ -133,30 +134,15 @@ RSpec.describe 'Beans', type: :system do
     describe 'delete bean feature' do
       before { click_link 'Beans' }
 
-      context 'When applorch at beans#index' do
-        it 'deletes a bean' do
-          expect do
-            find("li#bean-#{bean.id}").click_link '削除'
-            accept_confirm
-            expect(page).to have_content "コーヒー豆「#{bean.name}」を削除しました"
-            expect(page).to_not have_selector("a[href='/beans/#{bean.id}]")
-            expect(current_path).to eq beans_path
-          end.to change(Bean, :count).by(-1)
-        end
-      end
-
-      context 'When applorch at beans#edit' do
-        before { find("li#bean-#{bean.id}").click_link '編集' }
-
-        it 'deletes a bean' do
-          expect do
-            click_link '削除する'
-            accept_confirm
-            expect(page).to have_content "コーヒー豆「#{bean.name}」を削除しました"
-            expect(page).to_not have_selector("a[href='/beans/#{bean.id}]")
-            expect(current_path).to eq beans_path
-          end.to change(Bean, :count).by(-1)
-        end
+      it 'deletes a bean' do
+        expect do
+          find("article#bean-#{bean.id}").click_link '詳細'
+          click_link '削除'
+          accept_confirm
+          expect(page).to have_content "コーヒー豆「#{bean.name}」を削除しました"
+          expect(page).to_not have_selector("a[href='/beans/#{bean.id}]")
+          expect(current_path).to eq beans_path
+        end.to change(Bean, :count).by(-1)
       end
     end
   end

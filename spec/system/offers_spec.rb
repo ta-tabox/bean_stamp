@@ -22,14 +22,8 @@ RSpec.describe 'Offers', type: :system do
         recent_offer
         old_offer
         subject
-        expect(page.find('ol > div:first-of-type')).to have_selector "li#offer-#{recent_offer.id}"
-        expect(page.find('ol > div:last-of-type')).to have_selector "li#offer-#{old_offer.id}"
-      end
-
-      it 'displays link for edit and delete' do
-        subject
-        expect(page).to have_selector("a[href='/offers/#{offer.id}/edit']")
-        expect(page).to have_selector 'a[data-method=delete]', text: '削除'
+        expect(page.find('section > article:first-of-type')).to match_selector "#offer-#{recent_offer.id}"
+        expect(page.find('section > article:last-of-type')).to match_selector "#offer-#{old_offer.id}"
       end
     end
 
@@ -38,7 +32,7 @@ RSpec.describe 'Offers', type: :system do
 
       before do
         click_link 'Beans'
-        find("li#bean-#{bean.id}").click_link 'オファー'
+        find("article#bean-#{bean.id}").click_link 'オファー'
         fill_in 'オファー終了日', with: Time.zone.today.next_day(5)
         fill_in '焙煎日', with: Time.zone.today.next_day(10)
         fill_in '受け取り開始日', with: Time.zone.today.next_day(15)
@@ -79,7 +73,7 @@ RSpec.describe 'Offers', type: :system do
       end
     end
 
-    pending 'offer editing feature' do
+    describe 'offer editing feature' do
       subject { click_button '更新' }
       it "updates the offer's information" do
         visit edit_offer_path offer
@@ -88,24 +82,26 @@ RSpec.describe 'Offers', type: :system do
         page.find('#offer_receipt_started_at').set(Time.zone.today.next_day(17))
         page.find('#offer_receipt_ended_at').set(Time.zone.today.next_day(22))
         fill_in '販売価格', with: 1500
-        fill_in '内容量', with: 150
-        fill_in '数量', with: 15
+        fill_in '内容量', with: 200
+        fill_in '数量', with: 30
         subject
         expect(current_path).to eq offer_path offer
-        expect(find('#offer_ended_at')).to have_content Time.zone.today.next_day(7)
-        expect(find('#offer_roasted_at')).to have_content Time.zone.today.next_day(12)
-        expect(find('#offer_receipt_started_at')).to have_content Time.zone.today.next_day(17)
-        expect(find('#offer_receipt_ended_at')).to have_content Time.zone.today.next_day(22)
-        expect(find('#offer_price')).to have_content 1500
-        expect(find('#offer_weight')).to have_content 150
-        expect(find('#offer_amount')).to have_content 15
+        expect(page).to have_content 'オファーを更新しました'
+        expect(page).to have_content Time.zone.today.next_day(7).day
+        expect(page).to have_content Time.zone.today.next_day(12).day
+        expect(page).to have_content Time.zone.today.next_day(17).day
+        expect(page).to have_content Time.zone.today.next_day(22).day
+        expect(page).to have_content 1500
+        expect(page).to have_content 200
+        expect(page).to have_content 30
       end
     end
 
     describe 'delete offer feature' do
       before { click_link 'Offers' }
       it 'deletes a offer at offers#index' do
-        find("li#offer-#{offer.id}").click_link '削除'
+        find("article#offer-#{offer.id}").click_link '詳細'
+        click_link '削除'
         expect do
           accept_confirm
           expect(current_path).to eq offers_path
