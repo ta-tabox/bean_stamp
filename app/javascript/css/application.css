@@ -132,12 +132,12 @@ page-title
   @apply bg-transparent pl-12 px-4 focus:outline-none w-full text-xs md:text-sm;
 }
 
-/* alert */
-.alert-notice {
+/* flash */
+.flash-notice {
   @apply bg-blue-50 border-b border-blue-400 text-blue-800 text-sm p-4;
 }
 
-.alert-alert {
+.flash-alert {
   @apply bg-red-50 border-b border-red-400 text-red-800 text-sm p-4;
 }
 
