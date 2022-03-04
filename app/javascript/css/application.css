@@ -15,7 +15,7 @@ page-title
 }
 
 .btn-primary {
-  @apply py-1 px-3 bg-indigo-500 text-white rounded hover:bg-indigo-600 active:bg-indigo-700 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed inline-block;
+  @apply py-1 px-3 bg-indigo-500 border border-indigo-200 text-white rounded hover:bg-indigo-600 active:bg-indigo-700 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed inline-block;
 }
 
 .btn-secondary {
