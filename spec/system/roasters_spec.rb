@@ -24,8 +24,7 @@ RSpec.describe 'Roasters', type: :system do
         before do
           click_link 'User'
           click_link '編集'
-          click_link 'こちら'
-
+          click_link 'ロースターとして登録する'
           fill_in '店舗名', with: 'テストロースター'
           fill_in '電話番号', with: '0123456789'
           select '東京都', from: '都道府県'
@@ -173,7 +172,7 @@ RSpec.describe 'Roasters', type: :system do
         visit root_path
         click_link 'Roaster'
         click_link '編集'
-        click_link 'ロースターを削除する'
+        click_link '削除する'
       end
 
       context 'When user select "OK" in the confirmation' do

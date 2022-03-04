@@ -101,7 +101,7 @@ RSpec.describe 'Users', type: :request do
 
       context 'with no email' do
         let(:user_params) { attributes_for(:user, email: nil) }
-        let(:error_message) { 'Eメールを入力してください' }
+        let(:error_message) { 'メールアドレスを入力してください' }
 
         it_behaves_like 'does not create a User and renders users/new'
         it_behaves_like 'shows a error message'
@@ -110,7 +110,7 @@ RSpec.describe 'Users', type: :request do
       context 'with existing email address' do
         before { user }
         let(:user_params) { attributes_for(:user, email: user.email) }
-        let(:error_message) { 'Eメールはすでに存在します' }
+        let(:error_message) { 'メールアドレスはすでに存在します' }
 
         it_behaves_like 'does not create a User and renders users/new'
         it_behaves_like 'shows a error message'

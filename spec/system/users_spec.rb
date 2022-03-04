@@ -83,8 +83,8 @@ RSpec.describe 'Users', type: :system do
           it 'updates the user information' do
             fill_in '名前', with: 'アップデートユーザー'
             fill_in 'メールアドレス', with: 'update@example.com'
-            select '東京都', from: 'エリア'
-            fill_in '自己紹介', with: 'テストメッセージ'
+            find('#user_prefecture_code').select '東京都'
+            find('#user_describe').fill_in with: 'テストメッセージ'
             subject
             expect(current_path).to eq user_path user
             expect(page).to have_content 'アカウント情報を変更しました。'
@@ -124,7 +124,9 @@ RSpec.describe 'Users', type: :system do
 
         context 'with too much text in describe' do
           it 'does not update the user information' do
-            fill_in '自己紹介', with: ('a' * 141).to_s
+            find('#user_describe').fill_in with: ('a' * 141).to_s
+
+            # fill_in '自己紹介', with: ('a' * 141).to_s
             subject
             expect(current_path).to eq user_registration_path
             expect(page).to have_content '140文字まで投稿'
@@ -133,9 +135,9 @@ RSpec.describe 'Users', type: :system do
 
         describe 'change password feature' do
           before do
-            fill_in '現在のパスワード', with: user.password
-            fill_in 'パスワード', with: 'new_password'
-            fill_in 'パスワード（確認用）', with: 'new_password'
+            find('#user_current_password').fill_in with: user.password
+            find('#user_password').fill_in with: 'new_password'
+            find('#user_password_confirmation').fill_in with: 'new_password'
           end
 
           context 'with correct password' do
@@ -148,7 +150,8 @@ RSpec.describe 'Users', type: :system do
 
           context 'with no current password' do
             it 'does not update a new password' do
-              fill_in '現在のパスワード', with: nil
+              # fill_in '現在のパスワード', with: nil
+              find('#user_current_password').fill_in with: nil
               subject
               expect(current_path).to eq user_registration_path
               expect(page).to have_content '現在のパスワードを入力してください'
@@ -157,10 +160,11 @@ RSpec.describe 'Users', type: :system do
 
           context 'with wrong password' do
             it 'does not update a new password' do
-              fill_in 'パスワード', with: 'wrong_password'
+              find('#user_current_password').fill_in with: 'wrong_password'
+              # fill_in '現在のパスワード', with: 'wrong_password'
               subject
               expect(current_path).to eq user_registration_path
-              expect(page).to have_content 'パスワードの入力が一致しません'
+              expect(page).to have_content '現在のパスワードは不正な値です'
             end
           end
         end
