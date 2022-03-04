@@ -8,7 +8,7 @@
       </div>
     </div>
   </div>
-  <div class="form">
+  <div class="form-main">
     <p class="form-title">ログイン</p>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <%= render "shared/error_messages", resource: f.object %>
@@ -43,8 +43,8 @@
   </div>
   <div class="form-footer">
     <p class="text-sm text-gray-600">パスワードを忘れましたか？
-      <%= link_to 'パスワード再設定', new_user_password_path, class: "mx-2 text-sm link" %></p>
+      <%= link_to 'パスワード再設定', new_user_password_path, class: "ml-2 link" %></p>
     <p class="text-sm text-gray-600">アカウントをお持ちではありませんか？
-      <%= link_to 'サインアップ', new_user_registration_path, class: "mx-2 text-sm link" %></p>
+      <%= link_to 'サインアップ', new_user_registration_path, class: "ml-2 link" %></p>
   </div>
 </div>

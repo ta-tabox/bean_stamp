@@ -1,69 +1,105 @@
 <% provide(:title, "ユーザー情報編集") %>
 <div class="form-container">
-  <div class="form">
+  <div class="flex justify-end -mb-10">
+    <% if resource.image? %>
+      <%= image_tag resource.image.thumb.url, class: "thumbnail" %>
+    <% end %>
+  </div>
+  <div class="form-main">
     <%= form_with(model: resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <%= render "shared/error_messages", resource: f.object %>
-      <h1 class="text-center">ユーザー情報編集</h1>
-      <div class="field">
-        <% if resource.image? %>
-          <%= image_tag resource.image.thumb.url, class: "thumbnail" %>
-        <% end %>
-        <!-- プレビュースタイル考える -->
-        <div id="preview"></div>
-        <%= f.label :image, class: "label" %>
+      <h1 class="form-title">ユーザー情報編集</h1>
+      <!-- プレビュースタイル考える -->
+      <div id="preview"></div>
+      <%# 画像フィールド %>
+      <div class="input-container bg-white">
         <%= f.file_field :image, accept:"image/*", class: "input-field", id: 'input-image' %>
-        <%= f.hidden_field :image_cache %>
+        <div class="input-icon-field">
+          <svg xmlns="http://www.w3.org/2000/svg" class="input-icon" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+          </svg>
+        </div>
       </div>
-      <div class="field">
-        <%= f.label :name, class: "label" %>
-        <%= f.text_field :name, autofocus: true, class: "input-field" %>
+      <%= f.hidden_field :image_cache %>
+      <%# 名前フィールド %>
+      <div class="input-container">
+        <%= f.text_field :name, autofocus: true, placeholder:"名前", class: "input-field" %>
+        <div class="input-icon-field">
+          <svg xmlns="http://www.w3.org/2000/svg" class="input-icon"  viewBox="0 0 20 20" fill="currentColor">
+            <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
+          </svg>
+        </div>
       </div>
-      <div class="field">
-        <%= f.label :email, class: "label" %>
-        <%= f.email_field :email, autocomplete: "email", class: "input-field" %>
+      <%# メールアドレスフィールド %>
+      <div class="input-container">
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder:"メールアドレス", class: "input-field" %>
+        <div class="input-icon-field">
+          <svg xmlns="http://www.w3.org/2000/svg" class="input-icon" viewBox="0 0 20 20"  fill="currentColor">
+            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+          </svg>
+        </div>
       </div>
-      <div class="field">
-        <%= f.label :prefecture_code, class: "label" %>
-        <%= f.collection_select :prefecture_code, JpPrefecture::Prefecture.all, :code, :name %>
+      <%# エリアセレクトフィールド %>
+      <div class="input-container">
+        <%= f.collection_select :prefecture_code, JpPrefecture::Prefecture.all, :code, :name, { prompt: "エリアを選択" } , class: 'select-field' %>
+        <div class="input-icon-field">
+          <svg xmlns="http://www.w3.org/2000/svg" class="input-icon" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+          </svg>
+        </div>
       </div>
-      <div class="field">
-        <%= f.label :describe, class: "label" %>
-        <%= f.text_area :describe, class: "input-field" %>
+      <%# 自己紹介フィールド %>
+      <div class="input-container">
+        <%= f.text_area :describe, placeholder: "自己紹介(140文字まで)", class: "input-field" %>
+        <div class="input-icon-field">
+          <svg xmlns="http://www.w3.org/2000/svg" class="input-icon" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+            <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
+          </svg>
+        </div>
       </div>
-      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-      <% end %>
-      <div class="field">
-        <%= f.label :current_password, class: "label" %>
-        <%= f.password_field :current_password, autocomplete: "current-password",
+      <%# 現在のパスワード %>
+      <div class="input-container">
+        <%= f.password_field :current_password, autocomplete: "current-password", placeholder: "現在のパスワード",
       class: "input-field" %>
+        <div class="input-icon-field">
+          <svg xmlns="http://www.w3.org/2000/svg" class="input-icon" viewBox="0 0 20 20"  fill="currentColor">
+            <path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z"/>
+          </svg>
+        </div>
       </div>
-      <div class="field">
-        <%= f.label :password, class: "label" %> <i>(新しいパスワード)</i>
-        <em>(<%= @minimum_password_length %> 文字以上)</em>
-        <%= f.password_field :password, autocomplete: "new-password", class: "input-field" %>
-        <% if @minimum_password_length %>
-        <% end %>
+      <%# 新しいパスワードフィールド %>
+      <div class="input-container">
+        <%= f.password_field :password, autocomplete: "new-password", placeholder:"新しいパスワード(#{@minimum_password_length}文字以上)", class: "input-field" %>
+        <div class="input-icon-field">
+          <svg xmlns="http://www.w3.org/2000/svg" class="input-icon" viewBox="0 0 20 20"  fill="currentColor">
+            <path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z"/>
+          </svg>
+        </div>
       </div>
-      <div class="field">
-        <%= f.label :password_confirmation, class: "label" %>
-        <%= f.password_field :password_confirmation, autocomplete: "new-password",
-      class: "input-field" %>
+      <%# パスワード確認フィールド %>
+      <div class="input-container">
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder:"パスワード(確認)", class: "input-field" %>
+        <div class="input-icon-field">
+          <svg xmlns="http://www.w3.org/2000/svg" class="input-icon" viewBox="0 0 20 20"  fill="currentColor">
+            <path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z"/>
+          </svg>
+        </div>
       </div>
-      <div class="flex">
-        <%= link_to "キャンセル", :back, class: "mr-3 btn-primary", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>
+      <div class="form-button-field mt-4">
+        <%= link_to "キャンセル", root_path, class: "mr-3 btn-secondary btn-pop", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>
         <div class="actions">
-          <%= f.submit "更新", class: "btn-primary" %>
+          <%= f.submit "登録", class: "btn-primary btn-pop" %>
         </div>
       </div>
     <% end %>
-    <div>
-      <% if current_user.roaster_id? %>
-        <p class="mt-4">ロースター情報の編集は<%= link_to 'こちら', edit_roaster_path(current_user.roaster), class: "link" %></p>
-      <% else%>
-        <p class="mt-4">ロースターとして登録する場合は<%= link_to 'こちら', new_roaster_path, class: "link" %></p>
-      <% end %>
-      <%= link_to "退会する", cancel_user_registration_path, class: "link mt-4" %>
-    </div>
+  </div>
+  <div class="form-footer">
+    <% if current_user.roaster_id? %>
+      <%= link_to 'ロースター情報の編集', edit_roaster_path(current_user.roaster), class: "link" %>
+    <% else%>
+      <%= link_to 'ロースターとして登録する', new_roaster_path, class: "link" %>
+    <% end %>
+    <%= link_to "退会する", cancel_user_registration_path, class: "link mt-2" %>
   </div>
 </div>

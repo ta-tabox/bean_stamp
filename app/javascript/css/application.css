@@ -66,7 +66,7 @@ page-title
   @apply bg-white p-8 rounded-t-lg;
 }
 
-.form {
+.form-main {
   @apply bg-gray-100 py-10 px-4 md:rounded-lg;
 }
 .form-title {
@@ -100,6 +100,14 @@ page-title
 
 .label {
   @apply block text-gray-700 text-sm font-bold;
+}
+
+/* preview */
+#preview {
+  @apply flex justify-center;
+}
+#preview img {
+  @apply w-1/2 rounded;
 }
 
 /* .input-field {
