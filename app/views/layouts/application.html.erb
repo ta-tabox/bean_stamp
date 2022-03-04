@@ -10,11 +10,11 @@
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-  <body class="bg-gray-50">
+  <body class="bg-gray-50 md:bg-white">
     <div class="container max-w-screen-2xl md:mx-auto">
       <div class="flex flex-col md:flex-row">
         <%# ナビコンテンツ %>
-        <nav>
+        <nav class=" bg-gray-50">
           <%# モバイルトップナビ %>
           <div class="md:hidden">
             <%= render 'layouts/mobile_top_nav' %>
@@ -38,8 +38,8 @@
           </div>
         </main>
         <%# サイドコンテンツ %>
-        <aside class="hidden md:block w-3/12">
-          <div class="h-full px-4 border-l border-gray-200">
+        <aside class="hidden md:block w-3/12 bg-gray-50">
+          <div class="h-full px-4 border-l border-gray-100">
             <%= yield :aside %>
           </div>
         </aside>

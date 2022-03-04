@@ -45,7 +45,7 @@ page-title
 
 /* header */
 .header {
-  @apply md:sticky top-0 z-50 h-20 pb-2 mb-4 mx-2 bg-gray-50 bg-opacity-95 border-b border-gray-200;
+  @apply md:sticky top-0 z-50 h-20 pb-2 px-2 mb-4 bg-gray-50 bg-opacity-95 border-b border-gray-100;
 }
 
 /* thumbnail, image */
@@ -59,32 +59,52 @@ page-title
 
 /* form design  */
 .form-container {
-  @apply w-full max-w-md  mx-auto pt-10;
+  @apply p-8 max-w-xl mx-auto;
+}
+
+.form-header {
+  @apply bg-white p-8 rounded-t-lg;
 }
 
 .form {
-  @apply bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4;
+  @apply bg-gray-100 py-10 px-4 md:rounded-lg;
+}
+.form-title {
+  @apply pb-6 text-center text-sm text-gray-400 font-light;
 }
 
-.field {
-  @apply mb-4;
+.form-button-field {
+  @apply flex items-center justify-center;
+}
+
+.form-footer {
+  @apply flex flex-col items-center justify-center py-4 text-center bg-white text-sm text-gray-600 rounded-b-lg;
+}
+
+/* input-field */
+.input-container {
+  @apply relative mt-3;
+}
+
+.input-field {
+  @apply appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none;
+}
+
+.input-icon-field {
+  @apply absolute left-0 inset-y-0 flex items-center;
+}
+
+.input-icon {
+  @apply h-7 w-7 ml-3 text-gray-400 p-1;
 }
 
 .label {
   @apply block text-gray-700 text-sm font-bold;
 }
 
-.input-field {
+/* .input-field {
   @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;
-}
-
-.pop-input-field {
-  @apply appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none;
-}
-
-.input-icon {
-  @apply h-7 w-7 ml-3 text-gray-400 p-1;
-}
+} */
 
 /* select-box */
 .select-field {
@@ -104,8 +124,6 @@ page-title
   @apply bg-transparent pl-12 px-4 focus:outline-none w-full text-xs md:text-sm;
 }
 
-/* sign_up, sign_in */
-
 /* alert */
 .alert-notice {
   @apply bg-blue-50 border-b border-blue-400 text-blue-800 text-sm p-4;
@@ -117,7 +135,7 @@ page-title
 
 /* card */
 .card {
-  @apply container sm:w-11/12 mx-auto py-4 bg-white rounded-lg shadow-lg lg:shadow-md;
+  @apply container sm:w-11/12 mx-auto py-2 sm:py-4 bg-white md:rounded-lg border border-gray-100 md:shadow-md;
 }
 
 .grid-container {

@@ -1,6 +1,6 @@
 <% provide(:title, "サインアップ") %>
-<div class="p-8 lg:w-1/2 mx-auto">
-  <div class="bg-white rounded-t-lg p-8">
+<div class="form-container">
+  <div class="form-header">
     <p class="mb-4 text-center text-sm text-gray-400 font-light">閲覧用</p>
     <div>
       <div class="flex items-center justify-center space-x-4">
@@ -8,23 +8,23 @@
       </div>
     </div>
   </div>
-  <div class="bg-gray-100 py-10 px-4 lg:px-24 rounded-t-lg">
-    <p class="mb-6 text-center text-sm text-gray-400 font-light">サインアップ</p>
+  <div class="form">
+    <h1 class="form-title">サインアップ</h1>
     <%= form_with(model: resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <%= render "shared/error_messages", resource: f.object %>
       <%# 名前フィールド %>
-      <div class="relative mt-3">
-        <%= f.text_field :name, autofocus: true, placeholder:"名前", class: "pop-input-field" %>
-        <div class="absolute left-0 inset-y-0 flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg"     class="input-icon"  viewBox="0 0 20 20" fill="currentColor">
+      <div class="input-container">
+        <%= f.text_field :name, autofocus: true, placeholder:"名前", class: "input-field" %>
+        <div class="input-icon-field">
+          <svg xmlns="http://www.w3.org/2000/svg" class="input-icon"  viewBox="0 0 20 20" fill="currentColor">
             <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
           </svg>
         </div>
       </div>
       <%# メールアドレスフィールド %>
-      <div class="relative mt-3">
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder:"メールアドレス", class: "pop-input-field" %>
-        <div class="absolute left-0 inset-y-0 flex items-center">
+      <div class="input-container">
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder:"メールアドレス", class: "input-field" %>
+        <div class="input-icon-field">
           <svg xmlns="http://www.w3.org/2000/svg" class="input-icon" viewBox="0 0 20 20"  fill="currentColor">
             <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
           </svg>
@@ -34,33 +34,33 @@
         <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
       <% end %>
       <%# エリアセレクトフィールド %>
-      <div class="relative mt-3">
+      <div class="input-container">
         <%= f.collection_select :prefecture_code, JpPrefecture::Prefecture.all, :code, :name, { prompt: "エリアを選択" } , class: 'select-field' %>
-        <div class="absolute left-0 inset-y-0 flex items-center">
+        <div class="input-icon-field">
           <svg xmlns="http://www.w3.org/2000/svg" class="input-icon" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
           </svg>
         </div>
       </div>
       <%# パスワードフィールド %>
-      <div class="relative mt-3">
-        <%= f.password_field :password, autocomplete: "new-password", placeholder:"パスワード(#{@minimum_password_length}文字以上)", class: "pop-input-field" %>
-        <div class="absolute left-0 inset-y-0 flex items-center">
+      <div class="input-container">
+        <%= f.password_field :password, autocomplete: "new-password", placeholder:"パスワード(#{@minimum_password_length}文字以上)", class: "input-field" %>
+        <div class="input-icon-field">
           <svg xmlns="http://www.w3.org/2000/svg" class="input-icon" viewBox="0 0 20 20"  fill="currentColor">
             <path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z"/>
           </svg>
         </div>
       </div>
       <%# パスワード確認フィールド %>
-      <div class="relative mt-3">
-        <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder:"パスワード(確認)", class: "pop-input-field" %>
-        <div class="absolute left-0 inset-y-0 flex items-center">
+      <div class="input-container">
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder:"パスワード(確認)", class: "input-field" %>
+        <div class="input-icon-field">
           <svg xmlns="http://www.w3.org/2000/svg" class="input-icon" viewBox="0 0 20 20"  fill="currentColor">
             <path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z"/>
           </svg>
         </div>
       </div>
-      <div class="flex items-center justify-center mt-4">
+      <div class="form-button-field mt-4">
         <%= link_to "キャンセル", root_path, class: "mr-3 btn-secondary btn-pop", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>
         <div class="actions">
           <%= f.submit "登録", class: "btn-primary btn-pop" %>
@@ -68,8 +68,8 @@
       </div>
     <% end %>
   </div>
-  <div class="flex flex-col items-center justify-center py-4 text-center bg-white rounded-b-lg">
-    <p class="text-sm text-gray-600">アカウントをお持ちですか？
+  <div class="form-footer">
+    <p class="">アカウントをお持ちですか？
       <%= link_to 'ログイン', new_user_session_path, class: "mx-2 text-sm link" %></p>
   </div>
 </div>
