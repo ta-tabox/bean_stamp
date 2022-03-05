@@ -1,12 +1,14 @@
 <% provide(:title, "ロースターの削除") %>
 <div class="form-container mb-4">
-  <div class="form">
+  <div class="form-main">
+    <h1 class="form-title mb-4">ロースターを削除しますか？</h1>
     <%= render "shared/error_messages", resource: @roaster %>
-    <h1 class="text-center mb-4">ロースターを削除しますか？</h1>
-    <p class="text-center text-xs mb-4">
+    <p class="text-center text-xs text-gray-500 mb-4">
       ロースター(<%= @roaster.name %>)の削除を行います。<br>
       同ロースターによるオファーやビーンズなどのデータは全て失われます
     </p>
-    <%= button_to "削除する", roaster_path(@roaster), data: { confirm: "本当に退会しますか?" }, method: :delete, class: "btn-primary" %>
+    <div class="form-button-field">
+      <%= button_to "削除する", roaster_path(@roaster), data: { confirm: "本当に退会しますか?" }, method: :delete, class: "btn-secondary btn-pop" %>
+    </div>
   </div>
 </div>
