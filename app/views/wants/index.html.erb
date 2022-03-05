@@ -11,6 +11,7 @@
         <div class="search-form">
           <%= f.submit "検索", class: "search-button"  %>
           <%= f.select :search, Offer.statuses.map {|k, v| [t("enums.offer.status.#{k}"), v]}, {include_blank: 'ステータスを選択'}, class: 'search-field' %>
+          <i class="fa-solid fa-angle-down select-box-arrow"></i>
         </div>
       <% end %>
     </div>

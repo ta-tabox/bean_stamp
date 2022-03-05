@@ -105,7 +105,7 @@
         <h2>〜 Flavor 〜</h2>
         <%= f.fields_for :bean_taste_tags do |tag| %>
           <div class="input-container">
-            <%= tag.collection_select :mst_taste_tag_id, MstTasteTag.all, :id, :name, { default: 0 }, class: "taste-tag-select-box" %>
+            <%= tag.collection_select :mst_taste_tag_id, MstTasteTag.all, :id, :name, { default: 0 }, class: "select-box" %>
             <i class="fa-solid fa-angle-down select-box-arrow"></i>
           </div>
         <% end %>
