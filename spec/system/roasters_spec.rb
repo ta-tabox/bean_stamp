@@ -27,9 +27,9 @@ RSpec.describe 'Roasters', type: :system do
           click_link 'ロースターとして登録する'
           fill_in '店舗名', with: 'テストロースター'
           fill_in '電話番号', with: '0123456789'
-          select '東京都', from: '都道府県'
+          find('#roaster_prefecture_code').select '東京都'
           fill_in '住所', with: '渋谷区***-****'
-          fill_in '店舗紹介', with: 'テストメッセージ'
+          find('#roaster_describe').fill_in with: 'テストメッセージ'
         end
 
         context 'with correct form' do
@@ -148,9 +148,9 @@ RSpec.describe 'Roasters', type: :system do
             click_link '編集'
             fill_in '店舗名', with: 'アップデートロースター'
             fill_in '電話番号', with: '0000000000'
-            select '大阪府', from: '都道府県'
+            find('#roaster_prefecture_code').select '大阪府'
             fill_in '住所', with: '難波市***-****'
-            fill_in '店舗紹介', with: 'アップデートメッセージ'
+            find('#roaster_describe').fill_in with: 'アップデートメッセージ'
             subject
             expect(current_path).to eq roaster_path roaster
             expect(page).to have_content 'ロースター情報を更新しました'
@@ -158,8 +158,6 @@ RSpec.describe 'Roasters', type: :system do
             expect(page).to have_content '大阪府'
             expect(page).to have_content '難波市***-****'
             expect(page).to have_content 'アップデートメッセージ'
-          end
-          pending 'ロースター詳細ページ��電話番号を表示する' do
             expect(page).to have_content '000000000'
           end
         end

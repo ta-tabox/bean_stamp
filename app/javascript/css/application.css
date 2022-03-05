@@ -94,8 +94,12 @@ page-title
   @apply absolute left-0 inset-y-0 flex items-center;
 }
 
-.input-icon {
+.input-icon-field svg {
   @apply h-7 w-7 ml-3 text-gray-400 p-1;
+}
+
+.input-icon-field i {
+  @apply ml-3 text-gray-400 p-1;
 }
 
 .label {
@@ -110,13 +114,9 @@ page-title
   @apply w-1/2 rounded;
 }
 
-/* .input-field {
-  @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;
-} */
-
 /* select-box */
 .select-field {
-  @apply border pl-12 placeholder-gray-600 border-gray-100 shadow-sm focus:shadow-md rounded-md w-full py-3 text-gray-600 leading-tight;
+  @apply border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none;
 }
 
 /* search-box */
