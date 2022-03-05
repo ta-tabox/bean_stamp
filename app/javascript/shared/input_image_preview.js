@@ -17,7 +17,7 @@ document.addEventListener("turbolinks:load", function () {
     // previewタイトルの表示
     const previewTitle = document.querySelector("#preview-title");
     if (previewTitle === null) {
-      const previewTitle = document.createElement("p");
+      const previewTitle = document.createElement("h2");
       previewTitle.textContent = "〜 Preview 〜";
       previewTitle.id = "preview-title";
       preview.before(previewTitle);

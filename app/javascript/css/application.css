@@ -70,7 +70,10 @@ page-title
   @apply bg-gray-100 py-10 px-4 md:rounded-lg;
 }
 .form-title {
-  @apply pb-6 text-center text-sm text-gray-400 font-light;
+  @apply pb-6 text-center text-sm text-gray-600 font-light;
+}
+.form-container h2 {
+  @apply text-gray-500 text-center text-sm;
 }
 
 .form-button-field {
@@ -103,7 +106,7 @@ page-title
 }
 
 .label {
-  @apply block text-gray-700 text-sm font-bold;
+  @apply text-gray-500 text-sm font-bold;
 }
 
 /* image preview */
@@ -115,12 +118,16 @@ page-title
 }
 
 #preview-title {
-  @apply text-gray-400 text-center text-sm;
+  @apply text-gray-500 text-center text-sm;
 }
 
 /* select-box */
-.select-field {
-  @apply border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none;
+.select-box-arrow {
+  @apply pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-600;
+}
+
+.taste-tag-select-box {
+  @apply appearance-none border pl-4 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none;
 }
 
 /* search-box */

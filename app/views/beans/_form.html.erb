@@ -1,116 +1,126 @@
 <div class="form-container">
-  <div class="form">
+  <div class="form-main">
     <%= form_with(model: @bean) do |f| %>
+      <h1 class="form-title"><%= yield(:form_title) %></h1>
       <%= render "shared/error_messages", resource: f.object %>
-      <h1 class="text-center"><%= yield(:form_title) %></h1>
-      <div class="field">
-        <div class="flex">
-          <% if @bean.bean_images.any? %>
-            <% @bean.bean_images.each do |bean_image| %>
-              <%= image_tag bean_image.image.thumb.url, class: "thumbnail" if bean_image.image? %>
-            <% end %>
+      <h2>〜 Images 〜</h2>
+      <% if @bean.bean_images.ids.any? %>
+        <div class="image-container mt-2">
+          <% @bean.bean_images.each do |bean_image| %>
+            <%= image_tag bean_image.image.thumb.url, class: "image-item" if bean_image.image? %>
           <% end %>
         </div>
-      </div>
-      <div id="preview">    </div>
+      <% end %>
+      <div id="preview" class="image-container mt-2"></div>
       <%= f.fields_for @upload_image do |i|%>
-        <div class="field">
-          <%= i.label :image, class: "label" %>
+        <div class="input-container bg-white">
           <%= i.file_field :image, multiple: true, accept:"image/*", class: "input-field", id: 'input-image', name: "bean_images[image][]" %>
+          <div class="input-icon-field"><i class="fa-solid fa-image fa-lg"></i></div>
         </div>
       <% end %>
-      <div class="field">
-        <%= f.label :name, class: "label" %>
-        <%= f.text_field :name, autofocus: true, placeholder: "タイトル", class: "input-field" %>
-      </div>
-      <div class="field">
-        <%= f.label :country, class: "label" %>
-        <%= f.text_field :country, placeholder: "生産国", class: "input-field" %>
-      </div>
-      <div class="field">
-        <%= f.label :roast_level_id, class: "label" %>
-        <div class="select-field relative">
-          <%= f.collection_select :roast_level_id, MstRoastLevel.all, :id, :name, { prompt: true }, class: "select-box" %>
-          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-              <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+      <section class="mt-4">
+        <h2>〜 Detail 〜</h2>
+        <%# タイトル %>
+        <div class="input-container">
+          <%= f.text_field :name, autofocus: true, placeholder: "タイトル", class: "input-field" %>
+          <div class="input-icon-field"><i class="fa-solid fa-heading fa-lg"></i></div>
+        </div>
+        <%# 生産国 %>
+        <div class="input-container">
+          <%= f.text_field :country, placeholder: "生産国", class: "input-field" %>
+          <div class="input-icon-field"><i class="fa-solid fa-earth-asia fa-lg"></i></div>
+        </div>
+        <%# 焙煎度 %>
+        <div class="input-container">
+          <%= f.collection_select :roast_level_id, MstRoastLevel.all, :id, :name, { prompt: true }, class: "input-field" %>
+          <div class="input-icon-field"><i class="fa-solid fa-fire-flame-curved fa-lg"></i></div>
+          <i class="fa-solid fa-angle-down select-box-arrow"></i>
+        </div>
+        <%# 地域 %>
+        <div class="input-container">
+          <%= f.text_field :subregion, placeholder: "地域", class: "input-field" %>
+          <div class="input-icon-field">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+            </svg>
           </div>
         </div>
-      </div>
-      <div class="field">
-        <%= f.label :subregion, class: "label" %>
-        <%= f.text_field :subregion, placeholder: "地域", class: "input-field" %>
-      </div>
-      <div class="field">
-        <%= f.label :farm, class: "label" %>
-        <%= f.text_field :farm, placeholder: "農園", class: "input-field" %>
-      </div>
-      <div class="field">
-        <%= f.label :variety, class: "label" %>
-        <%= f.text_field :variety, placeholder: "品種", class: "input-field" %>
-      </div>
-      <div class="field">
-        <%= f.label :elevation, class: "label" %>
-        <%= f.number_field :elevation, placeholder: "標高", maxlength:"4", class: "input-field" %>
-      </div>
-      <div class="field">
-        <%= f.label :process, class: "label" %>
-        <%= f.text_field :process, placeholder: "精製方法", class: "input-field" %>
-      </div>
-      <div class="field">
-        <%= f.label :cropped_at, class: "label" %>
-        <%= f.month_field :cropped_at, placeholder: "収穫期", class: "input-field" %>
-      </div>
-      <div class="field">
-        <%= f.label :describe, class: "label" %>
-        <%= f.text_area :describe, class: "input-field" %>
-      </div>
-      <p>風味の評価</p>
-      <div class="">
-        <%= f.label :acidity, class: "label" %>
-        <%= f.range_field :acidity, min: "1", max: "5" %>
-      </div>
-      <div class="">
-        <%= f.label :flavor, class: "label" %>
-        <%= f.range_field :flavor, min: "1", max: "5" %>
-      </div>
-      <div class="">
-        <%= f.label :body, class: "label" %>
-        <%= f.range_field :body, min: "1", max: "5" %>
-      </div>
-      <div class="">
-        <%= f.label :bitterness, class: "label" %>
-        <%= f.range_field :bitterness, min: "1", max: "5" %>
-      </div>
-      <div class="">
-        <%= f.label :sweetness, class: "label" %>
-        <%= f.range_field :sweetness, min: "1", max: "5" %>
-      </div>
-      <div class="field">
-        <%= f.label :taste_tags, class: "label" %>
+        <%# 農園 %>
+        <div class="input-container">
+          <%= f.text_field :farm, placeholder: "農園", class: "input-field" %>
+          <div class="input-icon-field"><i class="fa-solid fa-tractor fa-lg"></i></div>
+        </div>
+        <%# 品種 %>
+        <div class="input-container">
+          <%= f.text_field :variety, placeholder: "品種", class: "input-field" %>
+          <div class="input-icon-field"><i class="fa-solid fa-leaf fa-lg"></i></div>
+        </div>
+        <%# 標高 %>
+        <div class="input-container">
+          <%= f.number_field :elevation, placeholder: "標高", maxlength:"4", class: "input-field" %>
+          <div class="input-icon-field"><i class="fa-solid fa-mountain fa-lg"></i></div>
+        </div>
+        <%# 精製方法 %>
+        <div class="input-container">
+          <%= f.text_field :process, placeholder: "精製方法", class: "input-field" %>
+          <div class="input-icon-field"><i class="fa-solid fa-industry fa-lg"></i></div>
+        </div>
+        <%# 収穫期 %>
+        <div class="input-container">
+          <%= f.month_field :cropped_at, placeholder: "収穫期", class: "input-field" %>
+          <div class="input-icon-field"><i class="fa-regular fa-calendar fa-lg"></i></div>
+        </div>
+        <%# 紹介文 %>
+        <div class="input-container">
+          <%= f.text_area :describe, placeholder: "紹介文(300文字まで)", class: "input-field" %>
+          <div class="input-icon-field"><i class="fa-solid fa-pen-to-square fa-lg"></i></div>
+        </div>
+      </section>
+      <%# テイスト %>
+      <section class= "mt-4 w-11/12 sm:w-2/3 md:w-full mx-auto md:grid md:grid-cols-2 md:content-between">
+        <h2 class="md:col-span-2">〜 Taste 〜</h2>
+        <div class="flex justify-between w-11/12">
+          <%= f.label :acidity, class: "text-gray-500 text-sm font-semibold" %>
+          <%= f.range_field :acidity, min: "1", max: "5" %>
+        </div>
+        <div class="flex justify-between w-11/12">
+          <%= f.label :flavor, class: "text-gray-500 text-sm font-semibold" %>
+          <%= f.range_field :flavor, min: "1", max: "5" %>
+        </div>
+        <div class="flex justify-between w-11/12">
+          <%= f.label :body, class: "text-gray-500 text-sm font-semibold" %>
+          <%= f.range_field :body, min: "1", max: "5" %>
+        </div>
+        <div class="flex justify-between w-11/12">
+          <%= f.label :bitterness, class: "text-gray-500 text-sm font-semibold" %>
+          <%= f.range_field :bitterness, min: "1", max: "5" %>
+        </div>
+        <div class="flex justify-between w-11/12">
+          <%= f.label :sweetness, class: "text-gray-500 text-sm font-semibold" %>
+          <%= f.range_field :sweetness, min: "1", max: "5" %>
+        </div>
+      </section>
+      <%# タグ %>
+      <section class="my-4">
+        <h2>〜 Flavor 〜</h2>
         <%= f.fields_for :bean_taste_tags do |tag| %>
-          <div class="select-field relative mb-4">
-            <%= tag.collection_select :mst_taste_tag_id, MstTasteTag.all, :id, :name, { default: 0 }, class: "select-box" %>
-            <div class="pointer-events-none absolute inset-y-2 right-0 flex items-center px-2 text-gray-700">
-              <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
-            </div>
+          <div class="input-container">
+            <%= tag.collection_select :mst_taste_tag_id, MstTasteTag.all, :id, :name, { default: 0 }, class: "taste-tag-select-box" %>
+            <i class="fa-solid fa-angle-down select-box-arrow"></i>
           </div>
         <% end %>
-      </div>
-      <div class="flex">
-        <%= link_to "一覧に戻る", beans_path , class: "mr-4 btn-primary", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>
-        <div class="actions">
-          <%= f.submit yield(:button_text), class: "btn-primary" %>
+        <div class="form-button-field mt-4">
+          <%= link_to "一覧に戻る", beans_path , class: "mr-3 btn-secondary btn-pop", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>
+          <div class="actions">
+            <%= f.submit yield(:button_text), class: "btn-primary btn-pop" %>
+          </div>
         </div>
-      </div>
-      <div>
-        <% if @bean.id? %>
-          <p>コーヒー豆を
-            <%= link_to '削除する', bean_path(@bean), data: { confirm: "本当に削除しますか？"}, method: :delete , class: "link mt-4"%>
-          </p>
-        <% end %>
-      </div>
+      <% end %>
+    </section>
+  </div>
+  <div class="form-footer">
+    <% if @bean.id? %>
+      <%= link_to 'コーヒー豆を削除する', bean_path(@bean), data: { confirm: "本当に削除しますか？"}, method: :delete , class: "link text-sm"%>
     <% end %>
   </div>
 </div>
