@@ -37,9 +37,9 @@ RSpec.describe 'Offers', type: :system do
         fill_in '焙煎日', with: Time.zone.today.next_day(10)
         fill_in '受け取り開始日', with: Time.zone.today.next_day(15)
         fill_in '受け取り終了日', with: Time.zone.today.next_day(20)
-        fill_in '販売価格', with: 1000
-        fill_in '内容量', with: 100
-        fill_in '数量', with: 10
+        find('#offer_price').fill_in with: 1000
+        find('#offer_weight').fill_in with: 100
+        find('#offer_amount').fill_in with: 10
       end
 
       context 'with correct form' do
@@ -81,9 +81,9 @@ RSpec.describe 'Offers', type: :system do
         page.find('#offer_roasted_at').set(Time.zone.today.next_day(12))
         page.find('#offer_receipt_started_at').set(Time.zone.today.next_day(17))
         page.find('#offer_receipt_ended_at').set(Time.zone.today.next_day(22))
-        fill_in '販売価格', with: 1500
-        fill_in '内容量', with: 200
-        fill_in '数量', with: 30
+        find('#offer_price').fill_in with: 1500
+        find('#offer_weight').fill_in with: 200
+        find('#offer_amount').fill_in with: 30
         subject
         expect(current_path).to eq offer_path offer
         expect(page).to have_content 'オファーを更新しました'

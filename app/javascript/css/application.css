@@ -93,6 +93,10 @@ page-title
   @apply appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none;
 }
 
+.date-input-field {
+  @apply appearance-none border pl-1 sm:pl-4 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none;
+}
+
 .input-icon-field {
   @apply absolute left-0 inset-y-0 flex items-center;
 }
