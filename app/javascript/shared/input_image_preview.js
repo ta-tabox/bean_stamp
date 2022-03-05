@@ -14,6 +14,15 @@ document.addEventListener("turbolinks:load", function () {
     }
     const files = inputImage.files;
 
+    // previewタイトルの表示
+    const previewTitle = document.querySelector("#preview-title");
+    if (previewTitle === null) {
+      const previewTitle = document.createElement("p");
+      previewTitle.textContent = "〜 Preview 〜";
+      previewTitle.id = "preview-title";
+      preview.before(previewTitle);
+    }
+
     //4枚以上の画像投稿をキャンセルする
     if (validateMaxImages(files, 4)) {
       inputImage.value = null;
@@ -60,6 +69,7 @@ function previewFile(file) {
     const imageUrl = e.target.result;
     const img = document.createElement("img");
     img.src = imageUrl;
+    img.classList.add("image-item");
     preview.appendChild(img);
   };
 
