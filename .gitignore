@@ -85,4 +85,4 @@ yarn-debug.log*
 .solargraph.yml
 
 # tailwind_default file
-tailwind_default.config.js
+/tailwind_default.config.js
