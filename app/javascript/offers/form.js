@@ -1,5 +1,5 @@
 // オファー終了日の検証
-document.getElementById("offer_ended_at").onchange = function () {
+document.getElementById("offer_ended_at").onblur = function () {
   const endedAt = document.getElementById("offer_ended_at");
   const roastedAt = document.getElementById("offer_roasted_at");
   const dateEndedAt = new Date(endedAt.value);
@@ -12,7 +12,7 @@ document.getElementById("offer_ended_at").onchange = function () {
 };
 
 //焙煎日の検証
-document.getElementById("offer_roasted_at").onchange = function () {
+document.getElementById("offer_roasted_at").onblur = function () {
   const endedAt = document.getElementById("offer_ended_at");
   const roastedAt = document.getElementById("offer_roasted_at");
   const receiptStartedAt = document.getElementById("offer_receipt_started_at");
@@ -30,7 +30,7 @@ document.getElementById("offer_roasted_at").onchange = function () {
 };
 
 //受け取り開始日の検証
-document.getElementById("offer_receipt_started_at").onchange = function () {
+document.getElementById("offer_receipt_started_at").onblur = function () {
   const roastedAt = document.getElementById("offer_roasted_at");
   const receiptStartedAt = document.getElementById("offer_receipt_started_at");
   const receiptEndedAt = document.getElementById("offer_receipt_ended_at");
@@ -48,7 +48,7 @@ document.getElementById("offer_receipt_started_at").onchange = function () {
 };
 
 //受け取り終了日の検証
-document.getElementById("offer_receipt_ended_at").onchange = function () {
+document.getElementById("offer_receipt_ended_at").onblur = function () {
   const receiptStartedAt = document.getElementById("offer_receipt_started_at");
   const receiptEndedAt = document.getElementById("offer_receipt_ended_at");
   const dateReceiptStartedAt = new Date(receiptStartedAt.value);
