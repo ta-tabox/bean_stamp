@@ -1,2 +1,2 @@
-document.getElementById('follow_form').innerHTML = '<%= escape_javascript(render('roasters/follow')) %>';
+document.getElementById('roaster-<%= @roaster.id %>-follow-form').innerHTML = '<%= escape_javascript(render(partial: 'roasters/follow', locals: { roaster: @roaster })) %>';
 document.getElementById('followers').innerHTML = '<%= @roaster.followers.count %>';

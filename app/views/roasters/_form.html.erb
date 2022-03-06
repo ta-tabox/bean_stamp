@@ -1,49 +1,71 @@
-<div class="form-container">
-  <div class="form">
+<div class="form-container mt-20">
+  <div class="flex justify-end -mb-10">
+    <% if @roaster.image? %>
+      <%= image_tag @roaster.image.thumb.url, class: "thumbnail" %>
+    <% end %>
+  </div>
+  <div class="form-main">
     <%= form_with(model: @roaster) do |f| %>
       <%= render "shared/error_messages", resource: f.object %>
-      <h1 class="text-center"><%= yield(:form_title) %></h1>
-      <div class="field">
-        <% if @roaster.image? %>
-          <%= image_tag @roaster.image.thumb.url, class: "thumbnail" %>
-        <% end %>
-        <!-- プレビュースタイル考える -->
-        <div id="preview"></div>
-        <%= f.label :image, class: "label" %>
-        <%= f.file_field :image, accept:"image/*", class: "input-field", id: 'input-image' %>
+      <h1 class="form-title"><%= yield(:form_title) %></h1>
+      <%# プレビューフィールド %>
+      <div id="preview"></div>
+      <%# 画像フィールド %>
+      <div class="input-container bg-white">
+        <%= f.file_field :image, accept:"image/*", value: "店舗画像", class: "input-field", id: 'input-image' %>
+        <div class="input-icon-field"><i class="fa-solid fa-image fa-lg"></i></div>
         <%= f.hidden_field :image_cache %>
       </div>
-      <div class="field">
-        <%= f.label :name, class: "label" %>
-        <%= f.text_field :name, autofocus: true, placeholder: "例）豆本舗", class: "input-field" %>
+      <%# 店舗名フィールド %>
+      <div class=input-container>
+        <%= f.text_field :name, autofocus: true, placeholder: "店舗名", class: "input-field" %>
+        <div class="input-icon-field"><i class="fa-solid fa-mug-saucer text-gray-300"></i></div>
       </div>
-      <div class="field">
-        <%= f.label :phone_number, class: "label" %>
-        <%= f.telephone_field :phone_number, placeholder: "08012345678", pattern: '\d{10,11}', title: "半角数字で記入してください", maxlength:"11", class: "input-field" %>
+      <%# 電話番号フィールド %>
+      <div class=input-container>
+        <%= f.telephone_field :phone_number, placeholder: "電話番号", pattern: '\d{10,11}', title: "半角数字で記入してください", maxlength:"11", class: "input-field" %>
+        <div class="input-icon-field"><i class="fa-solid fa-phone"></i></div>
       </div>
-      <div class="field ">
-        <%= f.label :prefecture_code, class: "label" %>
-        <%= f.collection_select :prefecture_code, JpPrefecture::Prefecture.all, :code, :name %>
+      <%# 都道府県フィールド %>
+      <div class="input-container">
+        <%= f.collection_select :prefecture_code, JpPrefecture::Prefecture.all, :code, :name, { prompt: "都道府県を選択" }, class: "input-field" %>
+        <div class="input-icon-field">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <i class="fa-solid fa-angle-down select-box-arrow"></i>
       </div>
-      <div class="field">
-        <%= f.label :address, class: "label" %>
-        <%= f.text_field :address, placeholder: "例）**区**丁目**-**", class: "input-field" %>
-      </div>
-      <div class="field">
-        <%= f.label :describe, class: "label" %>
-        <%= f.text_area :describe, class: "input-field" %>
-      </div>
-      <div class="flex">
-        <%= link_to "キャンセル", :back, class: "mr-4 btn-primary", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>
-        <div class="actions">
-          <%= f.submit yield(:button_text), class: "btn-primary" %>
+      <%# 住所フィールド %>
+      <div class=input-container>
+        <%= f.text_field :address, placeholder: "住所", class: "input-field" %>
+        <div class="input-icon-field">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M12 1.586l-4 4v12.828l4-4V1.586zM3.707 3.293A1 1 0 002 4v10a1 1 0 00.293.707L6 18.414V5.586L3.707 3.293zM17.707 5.293L14 1.586v12.828l2.293 2.293A1 1 0 0018 16V6a1 1 0 00-.293-.707z" clip-rule="evenodd" />
+          </svg>
         </div>
       </div>
-      <div>
-        <% if @roaster.id? %>
-          <%= link_to "ロースターを削除する", cancel_roasters_path, class: "link mt-4" %>
-        <% end %>
+      <%# 店舗紹介フィールド %>
+      <div class=input-container>
+        <%= f.text_area :describe, placeholder:"店舗紹介(300文字まで)", class: "input-field" %>
+        <div class="input-icon-field">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+            <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
+          </svg>
+        </div>
       </div>
+      <div class="form-button-field mt-4">
+        <%= link_to "キャンセル", :back, class: "mr-4 btn-secondary btn-pop", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>
+        <div class="actions">
+          <%= f.submit yield(:button_text), class: "btn-primary btn-pop" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="form-footer">
+    <% if @roaster.id? %>
+      <%= link_to "ロースターを削除する", cancel_roasters_path, class: "link" %>
     <% end %>
   </div>
 </div>

@@ -1,14 +1,19 @@
 <% provide(:title, "フォローユーザー") %>
-<h1 class="mb-1">フォローユーザー</h1>
-<hr class="mb-3">
-<div><%= render 'roaster_info' %></div>
-<div class="container">
-  <div class="w-200 pt-12 mx-auto">
-    <% if @users.any? %>
-      <ol>
-        <%= render partial: 'users/users/user', collection: @users %>
-      </ol>
-      <%== pagy_nav_js(@pagy) %>
-    <% end %>
+<header class="header">
+  <div class="h-full w-11/12 mx-auto flex justify-start items-end">
+    <h1 class="page-title">フォローユーザー</h1>
   </div>
-</div>
+</header>
+<%= render 'roaster_info'%>
+<div class="mt-4 mx-2 border-b border-gray-200"></div>
+<section class="card mt-4 mb-20 py-4 text-gray-600 body-font">
+  <% if @users.any? %>
+    <ol>
+      <%= render partial: 'users/users/user', collection: @users %>
+    </ol>
+    <%== pagy_nav_js(@pagy) %>
+  <% end %>
+</section>
+<% content_for :aside do%>
+  <% render partial: 'shared/user_aside' %>
+<% end %>

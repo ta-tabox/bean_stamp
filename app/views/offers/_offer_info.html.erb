@@ -1,16 +1,47 @@
-<div class="font-semibold my-4 <%=offer.status%>"><%= offer.status_i18n %></div>
-<div><%= render partial: 'offers/want_form', locals: { offer: offer} %></div>
-<div><%= render partial: 'offers/stats', locals: { offer: offer } %></div>
-<p> <%= time_ago_in_words(offer.created_at) %> 前</p>
-<div>
-  <div id="offer_bean_country"><%= offer.bean.country %></div>
-  <div id="offer_bean_process"><%= offer.bean.process %></div>
-  <div id="offer_created_at"><%= offer.created_at %></div>
-  <div id="offer_ended_at"><%= offer.ended_at %></div>
-  <div id="offer_roasted_at"><%= offer.roasted_at %></div>
-  <div id="offer_receipt_started_at"><%= offer.receipt_started_at %></div>
-  <div id="offer_receipt_ended_at"><%= offer.receipt_ended_at %></div>
-  <div id="offer_price"><%= offer.price %></div>
-  <div id="offer_weight"><%= offer.weight %></div>
-  <div id="offer_amount"><span id="offer-<%= offer.id %>-wants-count"><%= offer.wants.count %></span> / <%= offer.amount %></div>
-</div>
+<section class="card px-8">
+  <div class="w-11/12 mb-2 mx-auto">
+    <div class="flex justify-center -mt-16 md:justify-end">
+      <%= show_thumbnail(offer.roaster) %>
+    </div>
+    <div class="flex justify-between">
+      <div class="font-semibold mb-4 <%=offer.status%>"><%= offer.status_i18n %></div>
+      <h2 class="text-md title-font text-gray-500 tracking-widest hover:text-gray-800"><%= link_to offer.roaster.name, offer.roaster %></h2>
+    </div>
+    <div class="flex justify-between items-end">
+      <div class="flex">
+        <%= render partial: 'offers/want_form', locals: { offer: offer} %>
+        <button class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
+          <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="mr-4"><%= render partial: 'offers/stats', locals: { offer: offer } %></div>
+    </div>
+  </div>
+  <div class= "mt-4 grid-container grid-cols-2">
+    <div class="grid-item">
+      <span class="text-gray-500">オファー作成日</span>
+      <span class="ml-auto text-gray-900"><%= offer.created_at.strftime("%Y/%m/%d")%></span>
+    </div>
+    <div class="col-start-1 grid-item">
+      <span class="text-gray-500">オファー終了日</span>
+      <span class="ml-auto text-gray-900"><%= l offer&.ended_at%></span>
+    </div>
+    <div class="lg:ml-4 grid-item">
+      <span class="text-gray-500">ロースト日</span>
+      <span class="ml-auto text-gray-900"><%= l offer&.roasted_at %></span>
+    </div>
+    <div class="grid-item">
+      <span class="text-gray-500">受け取り開始日</span>
+      <span class="ml-auto text-gray-900"><%= l offer&.receipt_started_at %></span>
+    </div>
+    <div class="lg:ml-4 grid-item">
+      <span class="text-gray-500">受け取り終了日</span>
+      <span class="ml-auto text-gray-900"><%= l offer&.receipt_ended_at %></span>
+    </div>
+    <div class="col-span-2 w-11/12 lg:w-full mx-auto pr-2 flex justify-end">
+      <%= render partial:'offers/price_weight', locals: { offer: offer } %>
+    </div>
+  </div>
+</section>

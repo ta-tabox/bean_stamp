@@ -1,18 +1,12 @@
 <div class="stats">
-  <!-- アイコンを設置してwantの切り替えを行う -->
-  <span>
-    <% if current_user.had_offer?(offer) %>
-      <%= link_to wanted_users_offer_path(offer), class: "link mt-4" do%>
-        <strong id="offer-<%= offer.id %>-wants", class="stat">
-          <%= offer.wants.count %>
-        </strong>
-        wants
-      <% end %>
-    <% else %>
-      <strong id="offer-<%= offer.id %>-wants", class="stat">
-        <%= offer.wants.count %>
-      </strong>
+  <% if current_user.had_offer?(offer) %>
+    <%= link_to wanted_users_offer_path(offer), class: "link" do%>
+      <span id="offer-<%= offer.id %>-wants-count"><%= offer.wants.count %></span>
       wants
     <% end %>
-  </span>
+  <% else %>
+    <span id="offer-<%= offer.id %>-wants-count"><%= offer.wants.count %></span>
+    wants
+  <% end %>
+  / <%= offer.amount %>
 </div>

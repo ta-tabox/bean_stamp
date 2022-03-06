@@ -5,9 +5,9 @@ class Users::UsersController < ApplicationController
   def home
     # enum型のon_offeringでオファー中のオファーを引っ張るとオファーが終了しているのに、
     # statusが更新されていないものを取ることがある→where文でended_atを直接参照するようにした
-    offers = Offer.following_by(current_user).where('ended_at >= ?', Date.current)
+    offers = Offer.where('ended_at >= ?', Date.current).following_by(current_user)
     offers&.map(&:update_status)
-    @pagy, @offers = pagy(offers)
+    @pagy, @offers = pagy(offers.includes(:roaster, bean: %i[bean_images roast_level]))
   end
 
   def show; end

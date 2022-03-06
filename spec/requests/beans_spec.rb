@@ -98,7 +98,7 @@ RSpec.describe 'Beans', type: :request do
 
       context 'with no taste_tags' do
         let(:bean_params) { attributes_for(:bean) }
-        let(:error_message) { 'Tastesは2つ以上登録してください' }
+        let(:error_message) { 'Flavorは2つ以上登録してください' }
 
         it_behaves_like 'does not create a Bean and redirects to beans_path'
         it_behaves_like 'shows a error message'
@@ -106,7 +106,7 @@ RSpec.describe 'Beans', type: :request do
 
       context 'with one taste_tag' do
         let(:bean_params) { attributes_for(:bean, bean_taste_tags_attributes: { '0' => { mst_taste_tag_id: '2' } }) }
-        let(:error_message) { 'Tastesは2つ以上登録してください' }
+        let(:error_message) { 'Flavorは2つ以上登録してください' }
 
         it_behaves_like 'does not create a Bean and redirects to beans_path'
         it_behaves_like 'shows a error message'
@@ -114,7 +114,7 @@ RSpec.describe 'Beans', type: :request do
 
       context 'with duplication of taste_tags' do
         let(:bean_params) { attributes_for(:bean, bean_taste_tags_attributes: { '0' => { mst_taste_tag_id: '2' }, '1' => { mst_taste_tag_id: '2' } }) }
-        let(:error_message) { 'Tastesが重複しています' }
+        let(:error_message) { 'Flavorが重複しています' }
 
         it_behaves_like 'does not create a Bean and redirects to beans_path'
         it_behaves_like 'shows a error message'

@@ -17,10 +17,9 @@ RSpec.describe 'Wants', type: :system do
         visit home_users_path
       end
       it 'shows wanting offers' do
-        click_link 'wants'
+        click_link 'Wants'
         expect(current_path).to eq wants_path
         expect(page).to have_content 'ウォンツ'
-        expect(find("#offer-#{offer.id}-wants")).to have_content(offer.wants.count.to_s)
         expect(page).to have_content offer.bean.name
         expect(page).to_not have_content another_offer.bean.name
       end
@@ -36,8 +35,8 @@ RSpec.describe 'Wants', type: :system do
         before { visit home_users_path }
         it 'should create a want for an offer' do
           expect do
-            find("#offer-#{offer.id}-want-form").click_button 'Want'
-            expect(find("#offer-#{offer.id}-wants")).to have_content(offer.wants.count.to_s)
+            click_button 'want-button'
+            expect(find("#offer-#{offer.id}-wants-count")).to have_content(offer.wants.count.to_s)
           end.to change(Want, :count).by(1)
         end
       end
@@ -49,14 +48,14 @@ RSpec.describe 'Wants', type: :system do
         end
         it 'should delete a want for an offer' do
           expect do
-            find("#offer-#{offer.id}-want-form").click_button 'Unwant'
-            expect(find("#offer-#{offer.id}-wants")).to have_content(offer.wants.count.to_s)
+            click_button 'unwant-button'
+            expect(find("#offer-#{offer.id}-wants-count")).to have_content(offer.wants.count.to_s)
           end.to change(Want, :count).by(-1)
         end
       end
     end
 
-    describe 'offer/:id/wants page' do
+    describe 'offers/:id/wants page' do
       let(:user_belonging_a_roaster) { create(:user, roaster: roaster) }
       let(:another_user) { create(:user, name: '他のユーザー') }
 

@@ -23,10 +23,14 @@ id = 1
     s.sweetness = Faker::Number.within(range: 1..5)
     s.roast_level_id = Faker::Number.within(range: 1..5)
   end
+  Bean.last.bean_images.seed_once do |s|
+    s.image = File.open(Rails.root.join('db/fixtures/images/beans/bean_1.jpg'))
+    s.bean_id = Bean.last.id
+  end
   id += 1
 end
 
-roasters.count.times do |roaster_num|
+roasters.count.times do |roaster_num| #rubocop:disable all
   10.times do |i|
     Bean.seed_once do |s|
       s.id = id
@@ -47,6 +51,10 @@ roasters.count.times do |roaster_num|
       s.bitterness = Faker::Number.within(range: 1..5)
       s.sweetness = Faker::Number.within(range: 1..5)
       s.roast_level_id = Faker::Number.within(range: 1..5)
+    end
+    Bean.last.bean_images.seed_once do |s|
+      s.image = File.open(Rails.root.join('db/fixtures/images/beans/bean_1.jpg'))
+      s.bean_id = Bean.last.id
     end
     id += 1
   end

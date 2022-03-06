@@ -1,9 +1,9 @@
-<% unless current_roaster?(@roaster) %>
-  <div id="follow_form">
-    <% if current_user.following_roasters.include?(@roaster) %>
-      <%= render 'unfollow' %>
+<% unless current_roaster?(roaster) %>
+  <div id="roaster-<%= roaster.id %>-follow-form">
+    <% if current_user.following_roasters.include?(roaster) %>
+      <%= render partial: 'roasters/unfollow', locals: { roaster: roaster} %>
     <% else %>
-      <%= render 'follow' %>
+      <%= render partial: 'roasters/follow', locals: { roaster: roaster} %>
     <% end %>
   </div>
 <% end %>

@@ -27,7 +27,7 @@ RSpec.describe 'Roasters', type: :request do
       it 'gets roasters/show' do
         get roaster_path roaster
         expect(response).to have_http_status(:success)
-        expect(response.body).to include("<title>ロースター詳細#{base_title}</title>")
+        expect(response.body).to include("<title>ロースター#{base_title}</title>")
       end
     end
 
@@ -194,7 +194,7 @@ RSpec.describe 'Roasters', type: :request do
       it 'gets roasters/show' do
         get roaster_path roaster
         expect(response).to have_http_status(:success)
-        expect(response.body).to include("<title>ロースター詳細#{base_title}</title>")
+        expect(response.body).to include("<title>ロースター#{base_title}</title>")
       end
     end
 

@@ -22,15 +22,14 @@ RSpec.describe 'Roasters', type: :system do
         end
 
         before do
-          click_link 'my page'
+          click_link 'User'
           click_link '編集'
-          click_link 'こちら'
-
+          click_link 'ロースターとして登録する'
           fill_in '店舗名', with: 'テストロースター'
           fill_in '電話番号', with: '0123456789'
-          select '東京都', from: '都道府県'
+          find('#roaster_prefecture_code').select '東京都'
           fill_in '住所', with: '渋谷区***-****'
-          fill_in '店舗紹介', with: 'テストメッセージ'
+          find('#roaster_describe').fill_in with: 'テストメッセージ'
         end
 
         context 'with correct form' do
@@ -64,6 +63,7 @@ RSpec.describe 'Roasters', type: :system do
           expect(page).to have_content roaster.name
           expect(page).to have_content roaster.prefecture.name
           expect(page).to have_content roaster.address
+          expect(page).to have_content roaster.phone_number
           expect(page).to have_content roaster.describe
           expect(page).to have_selector("img[src$='sample.jpg']")
         }
@@ -75,10 +75,6 @@ RSpec.describe 'Roasters', type: :system do
         end
 
         it_behaves_like "shows roaster's informations"
-
-        pending 'ロースター詳細ページに電話番号を表示する' do
-          expect(page).to have_content roaster.phone_number
-        end
 
         it 'does not display a edit button' do
           subject
@@ -107,12 +103,11 @@ RSpec.describe 'Roasters', type: :system do
           expect(page).to have_content '編集'
         end
 
-        it 'shows an offer and shows edit and delete link' do
+        it 'shows an offer and does not show edit and delete link' do
           subject
           expect(page).to have_content bean.name
           expect(page).to have_selector("a[href='/offers/#{offer.id}']")
-          expect(page).to have_selector("a[href='/offers/#{offer.id}/edit']")
-          expect(page).to have_selector('a[data-method=delete]', text: '削除')
+          expect(page).to_not have_selector("a[href='/offers/#{offer.id}/edit']")
         end
       end
 
@@ -139,7 +134,7 @@ RSpec.describe 'Roasters', type: :system do
         end
 
         it 'does not desplay link for /roasters/new but /roasters/[:id]/edit in users/edit' do
-          click_link 'my page'
+          click_link 'User'
           click_link '編集'
           expect(page).to_not have_selector("a[href='/roasters/new']")
           expect(page).to have_selector("a[href='/roasters/#{roaster.id}/edit']")
@@ -149,13 +144,13 @@ RSpec.describe 'Roasters', type: :system do
           subject { click_button '更新' }
 
           it "updates the roaster's information" do
-            click_link 'roaster'
+            click_link 'Roaster'
             click_link '編集'
             fill_in '店舗名', with: 'アップデートロースター'
             fill_in '電話番号', with: '0000000000'
-            select '大阪府', from: '都道府県'
+            find('#roaster_prefecture_code').select '大阪府'
             fill_in '住所', with: '難波市***-****'
-            fill_in '店舗紹介', with: 'アップデートメッセージ'
+            find('#roaster_describe').fill_in with: 'アップデートメッセージ'
             subject
             expect(current_path).to eq roaster_path roaster
             expect(page).to have_content 'ロースター情報を更新しました'
@@ -163,8 +158,6 @@ RSpec.describe 'Roasters', type: :system do
             expect(page).to have_content '大阪府'
             expect(page).to have_content '難波市***-****'
             expect(page).to have_content 'アップデートメッセージ'
-          end
-          pending 'ロースター詳細ページ��電話番号を表示する' do
             expect(page).to have_content '000000000'
           end
         end
@@ -175,9 +168,9 @@ RSpec.describe 'Roasters', type: :system do
       before do
         sign_in user_belonging_a_roaster
         visit root_path
-        click_link 'roaster'
+        click_link 'Roaster'
         click_link '編集'
-        click_link 'ロースターを削除する'
+        click_link '削除する'
       end
 
       context 'When user select "OK" in the confirmation' do

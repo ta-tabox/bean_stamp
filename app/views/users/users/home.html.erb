@@ -1,13 +1,15 @@
 <% provide(:title, "ホーム") %>
-<h1 class="text-center">ユーザーのホーム</h1>
-<hr class="mb-3">
-<div class="container">
-  <div class="w-200 pt-12 mx-auto">
-    <% if @offers.any? %>
-      <ol>
-        <%= render partial: 'shared/offer', collection: @offers %>
-      </ol>
-      <%== pagy_nav_js(@pagy) %>
-    <% end %>
+<header class="header">
+  <div class="h-full w-11/12 mx-auto flex justify-start items-end">
+    <h1 class="page-title">ホーム</h1>
   </div>
-</div>
+</header>
+<section class="mt-4">
+  <% if @offers.any? %>
+    <%= render partial: 'shared/offer', collection: @offers %>
+    <%== pagy_nav_js(@pagy) %>
+  <% end %>
+</section>
+<% content_for :aside do%>
+  <% render partial: 'shared/user_aside' %>
+<% end %>

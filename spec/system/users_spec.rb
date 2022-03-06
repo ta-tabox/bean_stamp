@@ -14,10 +14,10 @@ RSpec.describe 'Users', type: :system do
         before do
           click_link 'メールアドレスで登録'
           fill_in '名前', with: 'テストユーザー'
-          fill_in 'Eメール', with: 'test@example.com'
-          select '広島県', from: 'エリア'
-          fill_in 'パスワード', with: 'password'
-          fill_in 'パスワード（確認用）', with: 'password'
+          fill_in 'メールアドレス', with: 'test@example.com'
+          find('#user_prefecture_code').select '広島県'
+          find('#user_password').fill_in with: 'password'
+          find('#user_password_confirmation').fill_in with: 'password'
         end
 
         context 'with correct form' do
@@ -34,7 +34,7 @@ RSpec.describe 'Users', type: :system do
 
         before do
           click_link 'ログイン'
-          fill_in 'Eメール', with: user.email
+          fill_in 'メールアドレス', with: user.email
           fill_in 'パスワード', with: user.password
         end
 
@@ -43,16 +43,15 @@ RSpec.describe 'Users', type: :system do
             subject
             expect(current_path).to eq home_users_path
             expect(page).to have_content 'ログインしました'
-            expect(page).to have_content user.name
           end
         end
 
         context 'with no email' do
           it 'does not create a new session' do
-            fill_in 'Eメール', with: nil
+            fill_in 'メールアドレス', with: nil
             subject
             expect(current_path).to eq new_user_session_path
-            expect(page).to have_content 'Eメールまたはパスワードが違います'
+            expect(page).to have_content 'メールアドレスまたはパスワードが違います'
           end
         end
 
@@ -61,7 +60,7 @@ RSpec.describe 'Users', type: :system do
             fill_in 'パスワード', with: 'wrong_password'
             subject
             expect(current_path).to eq new_user_session_path
-            expect(page).to have_content 'Eメールまたはパスワードが違います'
+            expect(page).to have_content 'メールアドレスまたはパスワードが違います'
           end
         end
       end
@@ -76,16 +75,16 @@ RSpec.describe 'Users', type: :system do
       describe 'user editing feature' do
         subject { click_button '更新' }
         before do
-          click_link 'my page'
+          click_link 'User'
           click_link '編集'
         end
 
         context 'with correct form without password' do
           it 'updates the user information' do
             fill_in '名前', with: 'アップデートユーザー'
-            fill_in 'Eメール', with: 'update@example.com'
-            select '東京都', from: 'エリア'
-            fill_in '自己紹介', with: 'テストメッセージ'
+            fill_in 'メールアドレス', with: 'update@example.com'
+            find('#user_prefecture_code').select '東京都'
+            find('#user_describe').fill_in with: 'テストメッセージ'
             subject
             expect(current_path).to eq user_path user
             expect(page).to have_content 'アカウント情報を変更しました。'
@@ -116,16 +115,18 @@ RSpec.describe 'Users', type: :system do
 
         context 'with no email' do
           it 'does not update the user information' do
-            fill_in 'Eメール', with: nil
+            fill_in 'メールアドレス', with: nil
             subject
             expect(current_path).to eq user_registration_path
-            expect(page).to have_content 'Eメールを入力してください'
+            expect(page).to have_content 'メールアドレスを入力してください'
           end
         end
 
         context 'with too much text in describe' do
           it 'does not update the user information' do
-            fill_in '自己紹介', with: ('a' * 141).to_s
+            find('#user_describe').fill_in with: ('a' * 141).to_s
+
+            # fill_in '自己紹介', with: ('a' * 141).to_s
             subject
             expect(current_path).to eq user_registration_path
             expect(page).to have_content '140文字まで投稿'
@@ -134,9 +135,9 @@ RSpec.describe 'Users', type: :system do
 
         describe 'change password feature' do
           before do
-            fill_in '現在のパスワード', with: user.password
-            fill_in 'パスワード', with: 'new_password'
-            fill_in 'パスワード（確認用）', with: 'new_password'
+            find('#user_current_password').fill_in with: user.password
+            find('#user_password').fill_in with: 'new_password'
+            find('#user_password_confirmation').fill_in with: 'new_password'
           end
 
           context 'with correct password' do
@@ -149,7 +150,8 @@ RSpec.describe 'Users', type: :system do
 
           context 'with no current password' do
             it 'does not update a new password' do
-              fill_in '現在のパスワード', with: nil
+              # fill_in '現在のパスワード', with: nil
+              find('#user_current_password').fill_in with: nil
               subject
               expect(current_path).to eq user_registration_path
               expect(page).to have_content '現在のパスワードを入力してください'
@@ -158,10 +160,11 @@ RSpec.describe 'Users', type: :system do
 
           context 'with wrong password' do
             it 'does not update a new password' do
-              fill_in 'パスワード', with: 'wrong_password'
+              find('#user_current_password').fill_in with: 'wrong_password'
+              # fill_in '現在のパスワード', with: 'wrong_password'
               subject
               expect(current_path).to eq user_registration_path
-              expect(page).to have_content 'パスワードの入力が一致しません'
+              expect(page).to have_content '現在のパスワードは不正な値です'
             end
           end
         end
