@@ -1,50 +1,55 @@
 <% provide(:title, "ログイン") %>
-<div class="form-container">
-  <div class="form-header">
-    <p class="mb-4 text-center text-sm text-gray-400 font-light">閲覧用</p>
-    <div>
-      <div class="flex items-center justify-center space-x-4">
-        <%= button_to 'ゲストログイン', users_guest_sign_in_path, method: :post, class: "btn-secondary btn-pop text-sm" %>
+<div class="top-background">
+  <div id="flash-messages" class="opacity-60 fixed top-0 inset-x-0">
+    <%= render 'layouts/flash_messages' %>
+  </div>
+  <div class="sign-form-container mt-20">
+    <div class="sign-form-header">
+      <p class="mb-4 text-center text-sm text-gray-800 font-light">閲覧用</p>
+      <div>
+        <div class="flex items-center justify-center space-x-4">
+          <%= button_to 'ゲストログイン', users_guest_sign_in_path, method: :post, class: "btn-secondary btn-pop text-sm" %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="form-main">
-    <p class="form-title">ログイン</p>
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <%= render "shared/error_messages", resource: f.object %>
-      <%# メールアドレスフィールド %>
-      <div class="input-container">
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder:"メールアドレス", class: "input-field" %>
-        <div class="input-icon-field">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"  fill="currentColor">
-            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
-          </svg>
+    <div class="sign-form-main">
+      <p class="sign-form-title">ログイン</p>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <%= render "shared/error_messages", resource: f.object %>
+        <%# メールアドレスフィールド %>
+        <div class="input-container">
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder:"メールアドレス", class: "input-field" %>
+          <div class="input-icon-field">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"  fill="currentColor">
+              <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+            </svg>
+          </div>
         </div>
-      </div>
-      <%# パスワードフィールド %>
-      <div class="input-container">
-        <%= f.password_field :password,
+        <%# パスワードフィールド %>
+        <div class="input-container">
+          <%= f.password_field :password,
       autocomplete: "current-password", placeholder:"パスワード", class: "input-field" %>
-        <div class="input-icon-field">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"  fill="currentColor">
-            <path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z"/>
-          </svg>
+          <div class="input-icon-field">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"  fill="currentColor">
+              <path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z"/>
+            </svg>
+          </div>
         </div>
-      </div>
-      <%# ログインの記録 %>
-      <% if devise_mapping.rememberable? %>
-        <div class="mt-2 ml-2 flex items-center text-gray-500">
-          <%= f.check_box :remember_me, class: "mr-3" %> <%= f.label :remember_me, class:
+        <%# ログインの記録 %>
+        <% if devise_mapping.rememberable? %>
+          <div class="mt-2 ml-2 flex items-center text-gray-800">
+            <%= f.check_box :remember_me, class: "mr-3" %> <%= f.label :remember_me, class:
         "" %>
-        </div>
+          </div>
+        <% end %>
+        <div class="flex items-center justify-center mt-4"><%= f.submit "ログイン", class: "btn-primary btn-pop" %></div>
       <% end %>
-      <div class="flex items-center justify-center mt-4"><%= f.submit "ログイン", class: "btn-primary btn-pop" %></div>
-    <% end %>
-  </div>
-  <div class="form-footer">
-    <p class="text-sm text-gray-600">パスワードを忘れましたか？
-      <%= link_to 'パスワード再設定', new_user_password_path, class: "ml-2 link" %></p>
-    <p class="text-sm text-gray-600">アカウントをお持ちではありませんか？
-      <%= link_to 'サインアップ', new_user_registration_path, class: "ml-2 link" %></p>
+    </div>
+    <div class="sign-form-footer">
+      <p class="pb-2">パスワードを忘れましたか？
+        <%= link_to 'パスワード再設定', new_user_password_path, class: "ml-2 link" %></p>
+      <p>アカウントをお持ちではありませんか？
+        <%= link_to 'サインアップ', new_user_registration_path, class: "ml-2 link" %></p>
+    </div>
   </div>
 </div>

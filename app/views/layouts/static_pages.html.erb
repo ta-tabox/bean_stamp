@@ -3,30 +3,25 @@
   <%= render 'layouts/head' %>
   <body class="bg-gray-50 md:bg-white">
     <div class="max-w-screen-2xl mx-auto">
-      <!--
-        <%# フラッシュメッセージ %>
-        <div id="flash-messages" class="mt-14">
-          <%#= render 'layouts/flash_messages' %>
-        </div>
-        -->
       <%# メインコンテンツ %>
-      <main class="container mx-auto min-h-screen">
-        <div class="mt-14">
-          <%= yield %>
+      <main class="mx-auto min-h-screen">
+        <div id="flash-messages" class="opacity-60 fixed top-0 inset-x-0">
+          <%= render 'layouts/flash_messages' %>
         </div>
+        <%= yield %>
       </main>
-      <footer class="h-14 border-b border-gray-100 bg-gray-100 md:bg-gray-50">
+      <footer class="h-14 border-b z-50 text-black border-gray-100 bg-gray-100 opacity-60">
         <div class="h-full flex items-center justify-between">
           <!-- TOPアイコン -->
           <div class="pl-8 md:pl-20">
             <div><%= link_to 'Beans!', root_path %></div>
           </div>
           <!-- 切り替えアイコン -->
-          <nav class="pr-8 md:pl-20">
-            <ul class="flex">
-              <li class="pr-4 nav-item"><%= link_to 'Home', root_path %></li>
-              <li class="pr-4 nav-item"><%= link_to 'Beansについて', about_path %></li>
-              <li class="nav-item"><%= link_to 'ヘルプ', help_path %></li>
+          <nav class="pr-2 md:pl-16 h-full">
+            <ul class="flex h-full">
+              <li><%= link_to 'HOME', root_path, class: "nav-item" %></li>
+              <li><%= link_to 'ABOUT', about_path, class: "nav-item" %></li>
+              <li><%= link_to 'HELP', help_path, class: "nav-item" %></li>
             </ul>
           </nav>
         </div>
