@@ -36,11 +36,15 @@ page-title
 }
 
 .side-nav-text {
-  @apply transition opacity-0 group-hover:opacity-100;
+  @apply text-gray-500 transition opacity-0 group-hover:opacity-100;
 }
 
 .mobile-nav-item {
   @apply text-gray-500 hover:text-gray-800 transition duration-200;
+}
+
+.nav-item {
+  @apply text-gray-500 text-sm block hover:text-gray-800;
 }
 
 /* header */

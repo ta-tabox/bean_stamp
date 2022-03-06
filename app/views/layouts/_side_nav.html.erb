@@ -6,13 +6,9 @@
   <div class="w-12 mx-auto">
     <hr class="border-gray-200">
   </div>
-  <!-- アイコン -->
+  <!-- ナビアイコン -->
   <div class="ml-14">
-    <% if user_signed_in? %>
-      <%= render 'layouts/signed_in_nav' %>
-    <% else %>
-      <%= render 'layouts/signed_out_nav' %>
-    <% end %>
+    <%= render 'layouts/signed_in_nav' %>
   </div>
   <div class="w-12 mx-auto">
     <hr class="border-gray-200">

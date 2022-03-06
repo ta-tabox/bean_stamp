@@ -9,6 +9,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   prepend_before_action :authenticate_scope!,
                         only: %i[edit update destroy cancel]
   before_action :ensure_normal_user, only: %i[update destroy]
+  layout 'static_pages', only: [:new]
 
   # prepend_before_action :set_minimum_password_length,
   #                       only: %i[new edit]

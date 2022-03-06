@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <%= render 'layouts/head' %>
+  <body class="bg-gray-50 md:bg-white">
+    <div class="max-w-screen-2xl mx-auto">
+      <!--
+        <%# フラッシュメッセージ %>
+        <div id="flash-messages" class="mt-14">
+          <%#= render 'layouts/flash_messages' %>
+        </div>
+        -->
+      <%# メインコンテンツ %>
+      <main class="container mx-auto min-h-screen">
+        <div class="mt-14">
+          <%= yield %>
+        </div>
+      </main>
+      <footer class="h-14 border-b border-gray-100 bg-gray-100 md:bg-gray-50">
+        <div class="h-full flex items-center justify-between">
+          <!-- TOPアイコン -->
+          <div class="pl-8 md:pl-20">
+            <div><%= link_to 'Beans!', root_path %></div>
+          </div>
+          <!-- 切り替えアイコン -->
+          <nav class="pr-8 md:pl-20">
+            <ul class="flex">
+              <li class="pr-4 nav-item"><%= link_to 'Home', root_path %></li>
+              <li class="pr-4 nav-item"><%= link_to 'Beansについて', about_path %></li>
+              <li class="nav-item"><%= link_to 'ヘルプ', help_path %></li>
+            </ul>
+          </nav>
+        </div>
+      </footer>
+    </div>
+    <%#= debug(params) if Rails.env.development? %>
+  </body>
+</html>
