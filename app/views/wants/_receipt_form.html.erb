@@ -1,17 +1,13 @@
-<% if want.offer.receipt_started_at <= Date.current %>
-  <div class="form form-container">
-    <p>ステータス</p>
-    <div id="want-receipt-form">
-      <% if want.receipted_at? %>
-        <input type="submit" class="btn btn-disabled" value="受け取り完了">
+<%# if want.offer.receipt_started_at <= Date.current %>
+<section class="px-8">
+  <div id="want-receipt-form">
+    <%= form_with(url: receipt_want_path, method: "patch", local: false) do |f| %>
+      <% if want.offer.receipt_started_at <= Date.current &&! want.receipted_at? %>
+        <%= f.submit "受け取り完了", class: "btn-primary" %>
       <% else %>
-        <%= form_with(url: receipt_want_path, method: "patch", local: false) do |f| %>
-          <%= f.submit "受け取り完了", class: "btn btn-primary" %>
-        <% end %>
+        <%= f.submit "受け取り完了", class: "btn-primary", disabled: "disabled" %>
       <% end %>
-    </div>
-    <div id="want-rating-area">
-      <%= render partial: 'wants/rating_form', locals: { want: want } if want.receipted_at?%>
-    </div>
+    <% end %>
   </div>
-<% end %>
+</section>
+<%# end %>

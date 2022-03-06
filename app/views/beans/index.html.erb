@@ -1,14 +1,18 @@
 <% provide(:title, "コーヒー豆一覧") %>
-<h1 class="mb-1">コーヒー豆一覧</h1>
-<hr class="mb-3">
-<div class="container">
-  <%= link_to "新規作成", new_bean_path, class: "mr-4 mb-8 btn-primary" %>
-  <div class="w-200 pt-12 mx-auto">
-    <% if @beans.any? %>
-      <ol>
-        <%= render @beans %>
-      </ol>
-      <%== pagy_nav_js(@pagy) %>
-    <% end %>
+<header class="header">
+  <div class="h-full w-11/12 mx-auto flex justify-between items-end">
+    <h1 class="page-title">コーヒー豆一覧</h1>
+    <div class="">
+      <%= link_to "新規作成", new_bean_path, class: "btn-primary" %>
+    </div>
   </div>
-</div>
+</header>
+<section class="mt-4">
+  <% if @beans.any? %>
+    <%= render @beans %>
+    <%== pagy_nav_js(@pagy) %>
+  <% end %>
+</section>
+<% content_for :aside do%>
+  <% render partial: 'shared/user_aside' %>
+<% end %>

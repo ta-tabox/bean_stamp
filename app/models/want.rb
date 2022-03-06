@@ -10,7 +10,7 @@ class Want < ApplicationRecord
   validates :offer_id, presence: true
 
   scope :recent, -> { order(created_at: :desc) }
-  scope :active, -> { joins(:offer).merge(Offer.active).with_associations }
-  scope :search_status, ->(status) { joins(:offer).where(offer: { status: status }).with_associations }
-  scope :with_associations, -> { includes(:roaster, bean: :bean_images) }
+  scope :active, -> { joins(:offer).merge(Offer.active) }
+  # scope :active, -> { where('offers.receipt_ended_at > ?', Date.current).references(:offers) }
+  scope :search_status, ->(status) { joins(:offer).where(offer: { status: status }) }
 end

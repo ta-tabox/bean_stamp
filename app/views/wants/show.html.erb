@@ -1,15 +1,26 @@
 <% provide(:title, "ウォンツ詳細") %>
-<h1 class="mb-1">ウォンツ詳細</h1>
-<hr class="mb-3">
-<div class="container">
-  <div class="w-200 pt-12 mx-auto">
-    <div class="bg-white w-200 mx-auto">
+<header class="header">
+  <div class="h-full w-11/12 mx-auto flex justify-between items-end">
+    <h1 class="page-title">ウォンツ詳細</h1>
+    <div class="mt-8">
       <%= render partial: 'wants/receipt_form', locals: { want: @want, offer: @want.offer } %>
-      <%= show_thumbnail(@want.roaster) %>
-      <p><%= @want.roaster.name %><span class="ml-3">＠<%= @want.roaster.full_address %></span></p>
-      <div><%= render partial: 'offers/offer_info', locals: { offer: @want.offer } %></div>
-      <hr class="mb-3">
     </div>
   </div>
+</header>
+<section class="container lg:w-11/12 mx-auto py-4 text-gray-600 body-font">
+  <div id="want-rating-area">
+    <div id="want-rating-form">
+      <% if @want.receipted_at? && @want.unrated? %>
+        <%= render partial: 'rating_form', locals: { want: @want, status: false } %>
+      <% else %>
+        <%= render partial: 'rating_form', locals: { want: @want, status: true } %>
+      <% end %>
+    </div>
+  </div>
+</section>
+<div class="mt-16">
+  <%= render partial: 'offers/offer_info', locals: { offer: @want.offer } %>
 </div>
-<%= render partial: 'beans/bean_info', locals: { bean: @want.bean } %>
+<div class="mt-8 mb-20">
+  <%= render partial: 'beans/bean_info', locals: { bean: @want.bean } %>
+</div>

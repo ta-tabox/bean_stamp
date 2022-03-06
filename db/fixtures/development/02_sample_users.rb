@@ -7,5 +7,6 @@
     s.password = 'password'
     s.password_confirmation = 'password'
     s.describe = Faker::Lorem.sentence(word_count: 5)
+    s.image = File.open(Rails.root.join('db/fixtures/images/users/user_1.jpg'))
   end
 end

@@ -82,4 +82,7 @@ yarn-debug.log*
 
 # vscode設定ファイル
 .vscode/
-.solargraph.yml 
+.solargraph.yml
+
+# tailwind_default file
+tailwind_default.config.js

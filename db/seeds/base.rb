@@ -6,6 +6,7 @@ User.create!(
   password: 'password',
   password_confirmation: 'password',
   describe: '閲覧用のユーザーです',
+  image: File.open(Rails.root.join('db/fixtures/images/users/user_1.jpg')),
   guest: true,
 )
 
@@ -17,6 +18,7 @@ user.create_roaster!(
   prefecture_code: '13',
   address: '**区**丁目**-**',
   describe: '閲覧用のロースターです',
+  image: File.open(Rails.root.join('db/fixtures/images/roasters/roaster_1.jpg')),
   guest: true,
 )
 user.save!

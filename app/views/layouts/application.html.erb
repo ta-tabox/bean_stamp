@@ -4,28 +4,47 @@
     <title><%= yield(:title) %> | BeansApp</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta charset="utf-8" />
+    <script src="https://kit.fontawesome.com/2a4ad365af.js" crossorigin="anonymous"></script>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-  <body class="bg-white">
-    <header class="h-28 bg-gray-100 border-b-2 border-gray-200 py-15 flex items-center">
-      <h1 class="ml-28"><strong><%= link_to 'Beans!', root_path %></strong></h1>
-      <nav class="ml-5">
-        <% if user_signed_in? %>
-          <%= render 'layouts/signed_in_nav' %>
-        <% else %>
-          <%= render 'layouts/signed_out_nav' %>
-        <% end %>
-      </nav>
-    </header>
-    <div class="container bg-blue-50 mx-auto">
-      <div id="flash-messages">
-        <%= render 'layouts/flash_messages' %>
+  <body class="bg-gray-50 md:bg-white">
+    <div class="container max-w-screen-2xl md:mx-auto">
+      <div class="flex flex-col md:flex-row">
+        <%# ナビコンテンツ %>
+        <nav class=" bg-gray-50">
+          <%# モバイルトップナビ %>
+          <div class="md:hidden">
+            <%= render 'layouts/mobile_top_nav' %>
+          </div>
+          <%# モバイルボトムナビ %>
+          <div class="md:hidden">
+            <%= render 'layouts/mobile_bottom_nav' %>
+          </div>
+          <%# デスクトップサイドナビ %>
+          <div class="h-full w-28 hidden md:block">
+            <%= render 'layouts/side_nav' %>
+          </div>
+        </nav>
+        <%# メインコンテンツ %>
+        <main class="md:w-9/12">
+          <div class="container mx-auto my-14 md:my-0">
+            <div id="flash-messages">
+              <%= render 'layouts/flash_messages' %>
+            </div>
+            <%= yield %>
+          </div>
+        </main>
+        <%# サイドコンテンツ %>
+        <aside class="hidden md:block w-3/12 bg-gray-50">
+          <div class="h-full px-4 border-l border-gray-100">
+            <%= yield :aside %>
+          </div>
+        </aside>
       </div>
-      <%= yield %>
     </div>
-    <%= debug(params) if Rails.env.development? %>
+    <!--  <#%= debug(params) if Rails.env.development? %> -->
   </body>
 </html>

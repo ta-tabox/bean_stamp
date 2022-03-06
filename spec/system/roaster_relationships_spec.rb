@@ -33,7 +33,7 @@ RSpec.describe 'RoasterRelationships', type: :system do
     before do
       user.following_roasters << following_roaster
       visit home_users_path
-      click_link 'follow'
+      click_link 'Follow'
     end
     # フォローしているロースターのみ表示しているか
     it 'shows a roaster who followed by the user' do

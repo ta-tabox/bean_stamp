@@ -1,13 +1,14 @@
 <% provide(:title, "アカウントの削除") %>
-<div class="form-container mb-4">
-  <div class="form">
+<div class="form-container">
+  <div class="form-main">
+    <h1 class="form-title">アカウントを削除しますか？</h1>
     <%= render "shared/error_messages", resource: resource %>
-    <h1 class="text-center mb-4">アカウントを削除しますか？</h1>
-    <p class="text-center text-xs mb-4">
-      アカウントの削除を行います。<br>
-      削除後はユーザー名、コメントは表示されなくなります。<br>
-      同アカウントによるウォンツやフォローなどのデータは全て失われます
+    <p class="text-center text-xs text-gray-400">
+      アカウントの削除後はユーザー名、コメントは表示されなくなります。<br>
+      同アカウントによるウォンツやフォローなどのデータは全て失われます。
     </p>
-    <%= button_to "退会する", registration_path(resource_name), data: { confirm: "本当に退会しますか?" }, method: :delete, class: "btn-primary" %>
+    <div class="form-button-field mt-4">
+      <%= button_to "退会する", registration_path(resource_name), data: { confirm: "本当に退会しますか?" }, method: :delete, class: "btn-secondary btn-pop" %>
+    </div>
   </div>
 </div>

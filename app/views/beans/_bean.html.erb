@@ -1,19 +1,55 @@
-<div class="bg-white w-200 mx-auto">
-  <li id="bean-<%= bean.id %>">
-    <%= show_thumbnail(bean) %>
-    <span><%= link_to bean.name, bean %></span>
-    <span>
-      <% if current_user.had_bean?(bean) %>
-        <%= link_to "オファー", new_bean_offer_path(bean), class: "link ml-4" %>
-        <%= link_to "編集", edit_bean_path(bean), class: "link ml-4" %>
-        <%= link_to "削除", bean, method: :delete, data: { confirm: "本当に削除しますか?" }, class: "link ml-4" %>
+<!-- コーヒー豆一覧アイテム -->
+<article id="bean-<%= bean.id %>" class="pb-4">
+  <div class="card px-8 mt-16">
+    <div class="flex justify-center -mt-16 md:justify-end items-end">
+      <% if bean.bean_images.any? %>
+        <% bean.bean_images.each do |bean_image| %>
+          <%= image_tag bean_image.image.thumb.url, class: "thumbnail" if bean_image.image? %>
+        <% end %>
       <% end %>
-    </span>
-    <p> <%= time_ago_in_words(bean.created_at) %> 前</p>
-    <div>
-      <%= bean.country %>
-      <%= bean.process %>
     </div>
-    <hr class="mb-3">
-  </li>
-</div>
+    <div class="mt-2 lg:flex items-baseline">
+      <h1 class="md:mt-2 text-xl lg:text-2xl font-semibold text-gray-800 lg:mt-0"><%= bean.name %></h1>
+      <div class="mt-2 mr-4 flex justify-end">
+        <%= link_to "オファー", new_bean_offer_path(bean), class: "btn-primary ml-4" %>
+        <div class="text-right"><%= link_to '詳細', bean_path(bean), class: "btn-secondary ml-4" %></div>
+      </div>
+    </div>
+    <div class="flex justify-end items-end">
+    </div>
+    <section class= "mt-4 grid-container grid-cols-2">
+      <div class="grid-item">
+        <span class="text-gray-500">生産国</span>
+        <span class="ml-auto text-gray-900"><%= bean&.country %></span>
+      </div>
+      <div class="grid-item">
+        <span class="text-gray-500">焙煎度</span>
+        <span class="ml-auto text-gray-900"><%= bean.roast_level&.name %></span>
+      </div>
+      <div class="grid-item">
+        <span class="text-gray-500">地域</span>
+        <span class="ml-auto text-gray-900"><%= bean&.subregion %></span>
+      </div>
+      <div class="grid-item">
+        <span class="text-gray-500">農園</span>
+        <span class="ml-auto text-gray-900"><%= bean&.farm %></span>
+      </div>
+      <div class="grid-item">
+        <span class="text-gray-500">品種</span>
+        <span class="ml-auto text-gray-900"><%= bean&.variety %></span>
+      </div>
+      <div class="grid-item">
+        <span class="text-gray-500">精製方法</span>
+        <span class="ml-auto text-gray-900"><%= bean&.process %></span>
+      </div>
+      <div class="grid-item">
+        <span class="text-gray-500">標高</span>
+        <span class="ml-auto text-gray-900"><%= "#{bean&.elevation} m" %></span>
+      </div>
+      <div class="grid-item">
+        <span class="text-gray-500">収穫</span>
+        <span class="ml-auto text-gray-900"><%= "#{bean.cropped_at&.year}年 #{bean.cropped_at&.month}月" %></span>
+      </div>
+    </section>
+  </div>
+</article>

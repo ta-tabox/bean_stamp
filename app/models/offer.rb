@@ -19,12 +19,11 @@ class Offer < ApplicationRecord
   validate :receipt_ended_at_cannot_be_earlier_than_receipt_started_at
 
   scope :following_by, lambda { |user|
-    joins(:bean).where('roaster_id IN (?)', user.following_roaster_ids).with_associations
+    joins(:bean).where('roaster_id IN (?)', user.following_roaster_ids)
   }
   scope :recent, -> { order(created_at: :desc) }
-  scope :active, -> { where('receipt_ended_at > ?', Date.current).with_associations }
-  scope :search_status, ->(status) { where(status: status).with_associations }
-  scope :with_associations, -> { includes(:roaster, bean: :bean_images) }
+  scope :active, -> { where('receipt_ended_at > ?', Date.current) }
+  scope :search_status, ->(status) { where(status: status) }
 
   def update_status
     today = Date.current

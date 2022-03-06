@@ -6,5 +6,6 @@
     s.prefecture_code = Faker::Number.within(range: 1..47)
     s.address = Faker::Address.city
     s.describe = Faker::Lorem.sentence(word_count: 5)
+    s.image = File.open(Rails.root.join('db/fixtures/images/roasters/roaster_1.jpg'))
   end
 end

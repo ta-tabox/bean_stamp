@@ -1,8 +1,0 @@
-<%= form_with( model: want, url: rate_want_path, method: "patch", local: false) do |f| %>
-  <% Want.rates.each do |rate| %>
-    <% next if rate[0] == 'unrated' %>
-    <%= f.label rate[0] %>
-    <%= f.radio_button :rate, rate[0], disabled: 'disabled' %>
-  <% end %>
-  <%= f.submit "評価済み", disabled: 'disabled', class: "btn btn-disabled" %>
-<% end %>
