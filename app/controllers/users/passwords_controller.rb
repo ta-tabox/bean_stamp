@@ -3,7 +3,7 @@
 class Users::PasswordsController < Devise::PasswordsController
   # rubocop:disable all
   before_action :ensure_normal_user, only: :create
-  layout 'static_pages', only: [:new, :create]
+  layout 'static_pages'
 
   # rubocop:disable all
 

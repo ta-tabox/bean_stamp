@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="ja">
   <%= render 'layouts/head' %>
-  <body class="bg-gray-50 md:bg-white">
+  <body class="bg-white">
     <div class="max-w-screen-2xl mx-auto">
       <%# メインコンテンツ %>
       <main class="mx-auto min-h-screen">
-        <div id="flash-messages" class="opacity-60 fixed top-0 inset-x-0">
+        <div id="flash-messages" class="fixed top-0 inset-x-0">
           <%= render 'layouts/flash_messages' %>
         </div>
         <%= yield %>

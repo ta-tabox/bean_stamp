@@ -1,19 +1,8 @@
 <% provide(:title, "ログイン") %>
-<div class="top-background">
-  <div id="flash-messages" class="opacity-60 fixed top-0 inset-x-0">
-    <%= render 'layouts/flash_messages' %>
-  </div>
-  <div class="sign-form-container mt-20">
-    <div class="sign-form-header">
-      <p class="mb-4 text-center text-sm text-gray-800 font-light">閲覧用</p>
-      <div>
-        <div class="flex items-center justify-center space-x-4">
-          <%= button_to 'ゲストログイン', users_guest_sign_in_path, method: :post, class: "btn-secondary btn-pop text-sm" %>
-        </div>
-      </div>
-    </div>
-    <div class="sign-form-main">
-      <p class="sign-form-title">ログイン</p>
+<div class="fixed inset-0 flex items-center">
+  <div class="form-container">
+    <div class="form-main">
+      <h1 class="form-title">ログイン</h1>
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
         <%= render "shared/error_messages", resource: f.object %>
         <%# メールアドレスフィールド %>
@@ -45,11 +34,19 @@
         <div class="flex items-center justify-center mt-4"><%= f.submit "ログイン", class: "btn-primary btn-pop" %></div>
       <% end %>
     </div>
-    <div class="sign-form-footer">
-      <p class="pb-2">パスワードを忘れましたか？
-        <%= link_to 'パスワード再設定', new_user_password_path, class: "ml-2 link" %></p>
-      <p>アカウントをお持ちではありませんか？
-        <%= link_to 'サインアップ', new_user_registration_path, class: "ml-2 link" %></p>
+    <div class="form-footer">
+      <h4 class="pb-2">パスワードを忘れましたか？
+        <%= link_to 'パスワード再設定', new_user_password_path, class: "ml-2 link" %></h4>
+      <h4>アカウントをお持ちではありませんか？
+        <%= link_to 'サインアップ', new_user_registration_path, class: "ml-2 link" %></h4>
+      <h4 class="pt-4 text-center text-sm text-gray-800 font-light">閲覧用</h4>
+      <div>
+        <div class="flex justify-center">
+          <%= button_to 'ゲストログイン', users_guest_sign_in_path, method: :post, class: "btn-secondary btn-pop text-sm" %>
+        </div>
+      </div>
+    </div>
+    <div class="form-footer">
     </div>
   </div>
 </div>

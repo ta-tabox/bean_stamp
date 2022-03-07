@@ -1,12 +1,9 @@
 <% provide(:title, "パスワード再設定") %>
-<div class="top-background">
-  <div id="flash-messages" class="opacity-60 fixed top-0 inset-x-0">
-    <%= render 'layouts/flash_messages' %>
-  </div>
-  <div class="sign-form-container mt-40">
-    <div class="sign-form-main">
+<div class="fixed inset-0 flex items-center">
+  <div class="form-container">
+    <div class="form-main">
       <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-        <h1 class="sign-form-title">パスワード再設定</h1>
+        <h1 class="form-title">パスワード再設定</h1>
         <%= render "shared/error_messages", resource: f.object %>
         <p class="text-center text-xs text-gray-800">
           パスワードを再設定するには<br>

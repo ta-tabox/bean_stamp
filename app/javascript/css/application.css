@@ -21,7 +21,7 @@ page-title
 }
 
 .btn-primary {
-  @apply py-1 px-3 bg-indigo-500 border border-indigo-600 text-white rounded hover:bg-indigo-600 active:bg-indigo-700 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed inline-block;
+  @apply py-1 px-3 bg-indigo-500 border border-indigo-600 text-white rounded hover:bg-indigo-600 active:bg-indigo-700 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed inline-block text-center;
 }
 
 .btn-secondary {
@@ -69,15 +69,11 @@ page-title
 
 /* form design  */
 .form-container {
-  @apply p-8 max-w-xl mx-auto;
-}
-
-.form-header {
-  @apply bg-white p-8 rounded-t-lg;
+  @apply p-8 max-w-xl mx-auto container;
 }
 
 .form-main {
-  @apply bg-gray-100 py-10 px-4 md:rounded-lg;
+  @apply bg-gray-100 py-10 px-4 rounded-lg;
 }
 .form-title {
   @apply pb-6 text-center text-sm text-gray-600 font-light;
@@ -91,7 +87,7 @@ page-title
 }
 
 .form-footer {
-  @apply flex flex-col items-center justify-center py-4 text-center bg-white text-sm text-gray-600 rounded-b-lg;
+  @apply flex flex-col items-center justify-center py-4 text-center text-sm text-gray-600;
 }
 
 /* sign_in, sign_up form */
