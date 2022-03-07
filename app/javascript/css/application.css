@@ -17,15 +17,15 @@ page-title
 
 /* button, link */
 .btn {
-  @apply bg-white text-gray-800 font-semibold py-1 px-3 border border-gray-400 rounded shadow cursor-pointer disabled:cursor-not-allowed;
+  @apply py-1 px-3 border rounded disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed inline-block text-center text-sm font-semibold;
 }
 
 .btn-primary {
-  @apply py-1 px-3 bg-indigo-500 border border-indigo-600 text-white rounded hover:bg-indigo-600 active:bg-indigo-700 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed inline-block text-center;
+  @apply bg-indigo-500 border-indigo-600 text-white hover:bg-indigo-600 active:bg-indigo-700;
 }
 
 .btn-secondary {
-  @apply py-1 px-3 bg-white border border-gray-200 text-gray-600 rounded hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed inline-block;
+  @apply bg-white border-gray-200 text-gray-600 hover:bg-gray-100 active:bg-gray-200;
 }
 
 .btn-pop {

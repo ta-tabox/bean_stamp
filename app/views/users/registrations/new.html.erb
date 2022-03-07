@@ -51,8 +51,8 @@
           </div>
         </div>
         <div class="form-button-field mt-4">
-          <%= link_to "キャンセル", root_path, class: "mr-3 btn-secondary btn-pop", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>
-          <%= f.submit "登録", class: "btn-primary btn-pop" %>
+          <%= link_to "キャンセル", root_path, class: "mr-3 btn btn-secondary btn-pop", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>
+          <%= f.submit "登録", class: "btn btn-primary btn-pop" %>
         </div>
       <% end %>
     </div>
@@ -62,7 +62,7 @@
       </h4>
       <h4 class="pt-4 text-center text-sm text-gray-800 font-light">閲覧用</h4>
       <div class="flex justify-center">
-        <%= button_to 'ゲストログイン', users_guest_sign_in_path, method: :post, class: "btn-secondary btn-pop text-sm" %>
+        <%= button_to 'ゲストログイン', users_guest_sign_in_path, method: :post, class: "btn btn-secondary btn-pop" %>
       </div>
     </div>
   </div>
