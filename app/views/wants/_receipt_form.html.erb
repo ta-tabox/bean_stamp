@@ -3,9 +3,9 @@
   <div id="want-receipt-form">
     <%= form_with(url: receipt_want_path, method: "patch", local: false) do |f| %>
       <% if want.offer.receipt_started_at <= Date.current &&! want.receipted_at? %>
-        <%= f.submit "受け取り完了", class: "btn-primary" %>
+        <%= f.submit "受け取り完了", class: "btn btn-primary" %>
       <% else %>
-        <%= f.submit "受け取り完了", class: "btn-primary", disabled: "disabled" %>
+        <%= f.submit "受け取り完了", class: "btn btn-primary", disabled: "disabled" %>
       <% end %>
     <% end %>
   </div>

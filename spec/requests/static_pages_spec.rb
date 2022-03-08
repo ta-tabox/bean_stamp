@@ -11,7 +11,7 @@ RSpec.describe 'StaticPages', type: :request do
       it 'gets home' do
         subject
         expect(response).to have_http_status(:success)
-        expect(response.body).to include("<title>Top#{base_title}</title>")
+        expect(response.body).to include("<title>Home#{base_title}</title>")
       end
     end
 

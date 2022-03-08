@@ -12,7 +12,7 @@ RSpec.describe 'Users', type: :system do
         subject { proc { click_button '登録' } }
 
         before do
-          click_link 'メールアドレスで登録'
+          click_link '登録する'
           fill_in '名前', with: 'テストユーザー'
           fill_in 'メールアドレス', with: 'test@example.com'
           find('#user_prefecture_code').select '広島県'

@@ -4,22 +4,48 @@
 
 /* typography  */
 /*
+logo-font
 title-font
 body-font
 page-title
 */
+/* Background-image */
+.top-background {
+  @apply fixed inset-0 bg-center bg-cover bg-no-repeat h-screen;
+  background-image: url("../images/top-coffee.jpg");
+}
+
+/* about, helpページ */
+.about-content h1,
+.help-content h1 {
+  @apply p-4 text-indigo-700 font-bold text-3xl;
+}
+.about-content .image-container,
+.help-content .image-container {
+  @apply rounded-xl max-h-96 overflow-hidden;
+}
+
+.about-content h2,
+.help-content h2 {
+  @apply pl-4 pt-2 lg:pt-8 border-b border-gray-500 text-lg;
+}
+
+.about-content p,
+.help-content p {
+  @apply pt-2 lg:pt-8 px-4 mb-8 leading-relaxed tracking-wide;
+}
 
 /* button, link */
 .btn {
-  @apply bg-white text-gray-800 font-semibold py-1 px-3 border border-gray-400 rounded shadow cursor-pointer disabled:cursor-not-allowed;
+  @apply py-1 px-3 border rounded disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed inline-block text-center text-sm font-semibold;
 }
 
 .btn-primary {
-  @apply py-1 px-3 bg-indigo-500 border border-indigo-200 text-white rounded hover:bg-indigo-600 active:bg-indigo-700 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed inline-block;
+  @apply bg-indigo-500 border-indigo-600 text-white hover:bg-indigo-600 active:bg-indigo-700;
 }
 
 .btn-secondary {
-  @apply py-1 px-3 bg-white border border-gray-200 text-gray-600 rounded hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed inline-block;
+  @apply bg-white border-gray-200 text-gray-600 hover:bg-gray-100 active:bg-gray-200;
 }
 
 .btn-pop {
@@ -36,11 +62,15 @@ page-title
 }
 
 .side-nav-text {
-  @apply transition opacity-0 group-hover:opacity-100;
+  @apply text-gray-500 transition opacity-0 group-hover:opacity-100;
 }
 
 .mobile-nav-item {
   @apply text-gray-500 hover:text-gray-800 transition duration-200;
+}
+
+.nav-item {
+  @apply w-16 h-full px-2 flex justify-center items-center text-sm text-gray-900 hover:text-white hover:bg-gray-800;
 }
 
 /* header */
@@ -59,15 +89,11 @@ page-title
 
 /* form design  */
 .form-container {
-  @apply p-8 max-w-xl mx-auto;
-}
-
-.form-header {
-  @apply bg-white p-8 rounded-t-lg;
+  @apply p-8 max-w-xl mx-auto container;
 }
 
 .form-main {
-  @apply bg-gray-100 py-10 px-4 md:rounded-lg;
+  @apply bg-gray-100 py-10 px-4 rounded-lg;
 }
 .form-title {
   @apply pb-6 text-center text-sm text-gray-600 font-light;
@@ -81,7 +107,27 @@ page-title
 }
 
 .form-footer {
-  @apply flex flex-col items-center justify-center py-4 text-center bg-white text-sm text-gray-600 rounded-b-lg;
+  @apply flex flex-col items-center justify-center py-4 text-center text-sm text-gray-600;
+}
+
+/* sign_in, sign_up form */
+.sign-form-container {
+  @apply p-8 max-w-xl mx-auto;
+}
+
+.sign-form-header {
+  @apply bg-gray-100 pt-4 bg-opacity-60;
+}
+
+.sign-form-main {
+  @apply bg-gray-100 py-8 px-4 bg-opacity-60;
+}
+.sign-form-title {
+  @apply pb-2 text-center text-lg text-gray-800 font-light;
+}
+
+.sign-form-footer {
+  @apply flex flex-col items-center justify-center pb-4 text-center bg-gray-100 text-sm text-gray-800 bg-opacity-60;
 }
 
 /* input-field */

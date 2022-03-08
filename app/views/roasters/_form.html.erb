@@ -56,9 +56,9 @@
         </div>
       </div>
       <div class="form-button-field mt-4">
-        <%= link_to "キャンセル", :back, class: "mr-4 btn-secondary btn-pop", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>
+        <%= link_to "キャンセル", :back, class: "mr-4 btn btn-secondary btn-pop", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>
         <div class="actions">
-          <%= f.submit yield(:button_text), class: "btn-primary btn-pop" %>
+          <%= f.submit yield(:button_text), class: "btn btn-primary btn-pop" %>
         </div>
       </div>
     <% end %>
