@@ -20,9 +20,9 @@ page-title
 .help-content h1 {
   @apply p-4 text-indigo-700 font-bold text-3xl;
 }
-.about-content img,
-.help-content img {
-  @apply rounded-xl hover:shadow-xl overflow-hidden;
+.about-content .image-container,
+.help-content .image-container {
+  @apply rounded-xl max-h-96 overflow-hidden;
 }
 
 .about-content h2,
