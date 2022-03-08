@@ -37,9 +37,9 @@
       <div class="input-icon-field"><i class="fa-solid fa-cubes fa-lg"></i></div>
     </div>
     <div class="form-button-field mt-4">
-      <%= link_to "一覧に戻る", beans_path , class: "mr-3 btn-secondary btn-pop", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>
+      <%= link_to "一覧に戻る", beans_path , class: "mr-3 btn btn-secondary btn-pop", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>
       <div class="actions">
-        <%= f.submit yield(:button_text), class: "btn-primary btn-pop" %>
+        <%= f.submit yield(:button_text), class: "btn btn-primary btn-pop" %>
       </div>
     </div>
   <% end %>

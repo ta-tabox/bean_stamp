@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
+  layout 'static_pages', only: [:new]
   # before_action :configure_sign_in_params, only: [:create]
 
   # ゲストログイン

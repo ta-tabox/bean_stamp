@@ -1,11 +1,21 @@
-<% provide(:title, "Top") %>
-<p><%= l Time.now, format: :long%></p>
-<h1 class="text-center">Beans</h1>
-<img src="#" alt="ホーム画像">
-<h2>あなたにとっての<br>
-  一杯のコーヒー<br>
-  探していきませんか？</h2>
-<p>Beansに参加しよう</p>
-<%= link_to 'メールアドレスで登録', new_user_registration_path , class: "btn-primary" %>
-<p>アカウントをお持ちの方は<%= link_to 'ログイン', new_user_session_path, class: "link" %></p>
-<p><%= link_to 'ゲストログイン（閲覧用）', users_guest_sign_in_path, method: :post, class: "link" %></p>
+<% provide(:title, "Home") %>
+<div class="top-background">
+  <div id="flash-messages" class="opacity-60 fixed top-0 inset-x-0">
+    <%= render 'layouts/flash_messages' %>
+  </div>
+  <div class="items-center justify-center flex flex-col mt-28">
+    <div class="items-center justify-center w-full p-8 flex flex-col">
+      <div class="bg-gray-100 items-center justify-center md:w-1/2 w-full shadow-md p-5 h-auto rounded-lg  bg-opacity-60 flex flex-col col-span-12">
+        <hr class="w-48 border-2 border-solid border-indigo-500">
+        <h2 class="mt-20 text-yellow-800 text-lg text-center">あなたにとっての一杯のコーヒー<br>
+          探していきませんか？</h2>
+        <h1 class="text-gray-800 text-5xl text-center mt-2 mb-10 logo-font">Beans</h1>
+        <%= link_to '登録する', new_user_registration_path , class: "text-center hover:text-gray-300 bg-yellow-800 text-white hover:bg-black w-56 p-4 text-2xl font-bold rounded btn-pop" %>
+        <div class="p-8 flex flex-col md:flex-row md:space-x-8 space-y-4 md:space-y-0">
+          <%= link_to 'ログイン', new_user_session_path, class: "btn btn-primary btn-pop" %>
+          <%= link_to 'ゲストログイン', users_guest_sign_in_path, method: :post, class: "btn btn-secondary btn-pop" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

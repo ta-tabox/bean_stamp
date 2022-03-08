@@ -1,30 +1,31 @@
 <% provide(:title, "About") %>
-<h1>Beansとは</h1>
-<section class="mt-10">
-  <img src="#" alt="画像" />
-  <h2>コーヒーはフルーツ！</h2>
-  <hr />
-  <p>
-    遠く離れた国々で赤々と熟したコーヒーの実は<br />
-    コーヒービーンズに精製されて日本にやってきます<br />
-    コーヒーの生豆はコーヒーロースターに焙煎されることで香りが花開きます<br />
-    まるでフルーツがパティシエの手により美味しいケーキに生まれ変わるように
-  </p>
-  <p class="my-3">
-    そして農作物であるコーヒー豆は他の様々なフルーツと同じく<br />
-    美味しい「期間」があります
-  </p>
-</section>
-<section class="mt-10">
-  <img src="#" alt="画像" />
-  <h2>ロースターはパートナー</h2>
-  <hr />
-  <p>
-    焙煎したコーヒー豆をおいしく味わえる期間は<br />
-    豆の状態で1ヶ月<br />
-    粉に挽いてしまうと1週間、なんて言われています<br />
-    焙煎して一番美味しい状態のコーヒー豆を提案してくれるロースターは<br />
-    あなたのコーヒーライフにとってまさに「パートナー」<br />
-    BEANSであなたにとってのパートナーを探しに行きましょう!
-  </p>
-</section>
+<div class="container mx-auto about-content pb-8">
+  <h1 class="mt-10 title-font">
+    Beansとは
+  </h1>
+  <div class="p-4 grid grid-cols-1 lg:grid-cols-2 lg:gap-8">
+    <div class="image-container order-1">
+      <%= image_pack_tag 'media/images/about-cherry.jpg', class: "w-full"%>
+    </div>
+    <div class="order-2">
+      <h2>コーヒーはフルーツ！</h2>
+      <p>
+        遠く離れた国々で赤々と熟したコーヒーの実はコーヒービーンズに精製されて日本にやってきます。
+        コーヒーの生豆はコーヒーロースターに焙煎されることで香りが花開きます。
+        まるでフルーツがパティシエの手により美味しいケーキに生まれ変わるように。
+        そして農作物であるコーヒー豆は他の様々なフルーツと同じく、美味しい「期間」があります。
+      </p>
+    </div>
+    <div class="order-4 lg:order-3">
+      <h2>ロースターはパートナー</h2>
+      <p>
+        焙煎したコーヒー豆をおいしく味わえる期間は豆の状態で1ヶ月、粉に挽いてしまうと1週間、なんて言われています。
+        焙煎して一番美味しい状態のコーヒー豆を提案してくれるロースターは、あなたのコーヒーライフにとってまさに「パートナー」。
+        BEANSであなたにとってのパートナーを探しに行きましょう!
+      </p>
+    </div>
+    <div class="image-container order-3 lg:order-4">
+      <%= image_pack_tag 'media/images/about-coffee.jpg', class: "w-full"%>
+    </div>
+  </div>
+</div>
