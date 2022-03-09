@@ -14,9 +14,17 @@
     <hr class="border-gray-200">
   </div>
   <!-- 切り替えアイコン -->
-  <div class="mb-8 pt-8">
-    <%= link_to root_path do %>
-      アイコン
-    <% end %>
-  </div>
+  <% if current_user.roaster.id? %>
+    <div class="mb-8 pt-8">
+      <% if cookies[:roaster_id] == nil %>
+        <%= link_to home_roasters_path do %>
+          ロースターに切り替え
+        <% end %>
+      <% else %>
+        <%= link_to home_users_path do %>
+          ユーザーに切り替え
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
 </div>

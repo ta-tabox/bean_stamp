@@ -1,6 +1,7 @@
 class Users::UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user, only: %i[show following]
+  before_action :reset_roaster_id_cookie, only: :home
 
   def home
     # enum型のon_offeringでオファー中のオファーを引っ張るとオファーが終了しているのに、
@@ -20,5 +21,12 @@ class Users::UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  # users#home用にcookiesのroaster_idを削除する
+  def reset_roaster_id_cookie
+    return unless cookies[:roaster_id]
+
+    cookies.delete(:roaster_id)
   end
 end

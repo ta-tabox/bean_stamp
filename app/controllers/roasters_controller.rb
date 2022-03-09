@@ -5,6 +5,13 @@ class RoastersController < ApplicationController
   before_action :set_roaster, only: %i[show edit update destroy followers]
   before_action :correct_roaster, only: %i[edit update destroy]
   before_action :ensure_normal_roaster, only: %i[update destroy]
+  before_action :set_roaster_with_cookie, only: :home
+
+  def home
+    offers = @roaster.offers
+    offers&.map(&:update_status)
+    @pagy, @offers = pagy(offers.includes(:roaster, bean: :bean_images))
+  end
 
   def index; end
 
@@ -72,6 +79,19 @@ class RoastersController < ApplicationController
 
   def set_roaster
     @roaster = Roaster.find(params[:id])
+  end
+
+  # roasters#home用にcookiesからroaster.idを取得し、setする
+  def set_roaster_with_cookie
+    if cookies[:roaster_id].blank?
+      cookies[:roaster_id] = current_user.roaster.id
+    end
+    @roaster = Roaster.find_by(id: cookies[:roaster_id])
+
+    return if @roaster && current_user.belonged_roaster?(@roaster)
+
+    redirect_to root_path,
+                alert: 'ロースターを登録をしてください'
   end
 
   def correct_roaster
