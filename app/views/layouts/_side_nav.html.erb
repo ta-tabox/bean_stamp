@@ -16,15 +16,7 @@
   <!-- 切り替えアイコン -->
   <% if current_user.roaster.id? %>
     <div class="mb-8 pt-8">
-      <% if cookies[:roaster_id] == nil %>
-        <%= link_to home_roasters_path do %>
-          ロースターに切り替え
-        <% end %>
-      <% else %>
-        <%= link_to home_users_path do %>
-          ユーザーに切り替え
-        <% end %>
-      <% end %>
+      <%= toggle_user_and_roaster %>
     </div>
   <% end %>
 </div>

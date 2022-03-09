@@ -9,7 +9,7 @@ module ApplicationHelper
                 else
                   "default_#{obj.class.name.downcase}.png"
                 end
-    link_to image_tag(image_url, class: 'thumbnail', alt: "#{obj.name}の画像"), obj
+    image_tag(image_url, class: 'thumbnail', alt: "#{obj.name}の画像")
   end
 
   def show_bean_thumbnail(bean)
@@ -29,6 +29,14 @@ module ApplicationHelper
                   "default_#{obj.class.name.downcase}.png"
                 end
     image_tag(image_url, class: 'object-cover object-center w-full h-48 lg:h-64 rounded-md shadow', alt: "#{obj.name}の画像")
+  end
+
+  def toggle_user_and_roaster
+    if cookies[:roaster_id]
+      link_to show_thumbnail(current_user), home_users_path
+    else
+      link_to show_thumbnail(current_user.roaster), home_roasters_path
+    end
   end
 
   private
