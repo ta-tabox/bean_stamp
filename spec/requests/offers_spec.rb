@@ -19,6 +19,7 @@ RSpec.describe 'Offers', type: :request do
       it 'gets offers/index with no offers' do
         subject
         expect(response).to have_http_status(:success)
+        expect(response.cookies['roaster_id']).to eq user_without_beans_and_offers.roaster.id.to_s
         expect(response.body).to include("<title>オファー一覧#{base_title}</title>")
         expect(response.body).not_to include(offer.bean.name)
       end
@@ -28,6 +29,7 @@ RSpec.describe 'Offers', type: :request do
       it 'gets offers/index with a offer' do
         subject
         expect(response).to have_http_status(:success)
+        expect(response.cookies['roaster_id']).to eq user_with_a_offer.roaster.id.to_s
         expect(response.body).to include("<title>オファー一覧#{base_title}</title>")
         expect(response.body).to include(offer.bean.name)
       end
@@ -41,6 +43,7 @@ RSpec.describe 'Offers', type: :request do
       it "gets offers/show and shows the bean's name of the offer" do
         subject
         expect(response).to have_http_status(:success)
+        expect(response.cookies['roaster_id']).to be_falsey
         expect(response.body).to include("<title>オファー詳細#{base_title}</title>")
       end
     end
@@ -49,6 +52,7 @@ RSpec.describe 'Offers', type: :request do
       it "gets offers/show and shows the bean's name of the offer" do
         subject
         expect(response).to have_http_status(:success)
+        expect(response.cookies['roaster_id']).to be_falsey
         expect(response.body).to include("<title>オファー詳細#{base_title}</title>")
       end
     end
@@ -57,6 +61,7 @@ RSpec.describe 'Offers', type: :request do
       it "gets offers/show and shows the bean's name of the offer" do
         subject
         expect(response).to have_http_status(:success)
+        expect(response.cookies['roaster_id']).to be_falsey
         expect(response.body).to include("<title>オファー詳細#{base_title}</title>")
       end
     end
@@ -78,6 +83,7 @@ RSpec.describe 'Offers', type: :request do
       it 'gets offers/new' do
         subject
         expect(response).to have_http_status(:success)
+        expect(response.cookies['roaster_id']).to eq user_with_a_offer.roaster.id.to_s
         expect(response.body).to include("<title>オファー作成#{base_title}</title>")
       end
     end
@@ -251,6 +257,7 @@ RSpec.describe 'Offers', type: :request do
       it 'gets offers/edit' do
         subject
         expect(response).to have_http_status(:success)
+        expect(response.cookies['roaster_id']).to eq user_with_a_offer.roaster.id.to_s
         expect(response.body).to include("<title>オファー編集#{base_title}</title>")
       end
     end
@@ -546,6 +553,7 @@ RSpec.describe 'Offers', type: :request do
       it 'gets offers/index with no offers' do
         subject
         expect(response).to have_http_status(:success)
+        expect(response.cookies['roaster_id']).to eq user_with_a_offer.roaster.id.to_s
         expect(response.body).to include("<title>ウォンツしたユーザー#{base_title}</title>")
       end
     end

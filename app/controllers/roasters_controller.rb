@@ -1,11 +1,12 @@
 class RoastersController < ApplicationController
   before_action :user_signed_in_required
   before_action :user_not_belonged_to_roaster_required, only: %i[new create]
-  before_action :user_belonged_to_roaster_required, only: %i[edit update destroy cancel]
-  before_action :set_roaster, only: %i[show edit update destroy followers]
-  before_action :correct_roaster, only: %i[edit update destroy]
-  before_action :ensure_normal_roaster, only: %i[update destroy]
+  before_action :user_belonged_to_roaster_required, only: %i[home edit update destroy cancel]
+  before_action :set_roaster_id_cookie, only: %i[home edit cancel]
+  before_action :set_roaster_with_params, only: %i[show edit update destroy followers]
   before_action :set_roaster_with_cookie, only: :home
+  before_action :correct_roaster, only: %i[home edit update destroy]
+  before_action :ensure_normal_roaster, only: %i[update destroy]
 
   def home
     offers = @roaster.offers
@@ -77,21 +78,13 @@ class RoastersController < ApplicationController
       )
   end
 
-  def set_roaster
+  def set_roaster_with_params
     @roaster = Roaster.find(params[:id])
   end
 
   # roasters#home用にcookiesからroaster.idを取得し、setする
   def set_roaster_with_cookie
-    if cookies[:roaster_id].blank?
-      cookies[:roaster_id] = current_user.roaster.id
-    end
     @roaster = Roaster.find_by(id: cookies[:roaster_id])
-
-    return if @roaster && current_user.belonged_roaster?(@roaster)
-
-    redirect_to root_path,
-                alert: 'ロースターを登録をしてください'
   end
 
   def correct_roaster

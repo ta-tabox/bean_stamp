@@ -218,4 +218,30 @@ RSpec.describe 'Users', type: :system do
       end
     end
   end
+
+  describe 'User#home' do
+    context 'when a user does not belonged to roaster' do
+      before do
+        sign_in user
+        visit home_users_path
+      end
+      it 'shows link to users_home but does not show link to roasters_home' do
+        expect(page).to have_selector("a[href='/users/home']")
+        expect(page).to_not have_selector("a[href='/roasters/home']")
+      end
+    end
+
+    context 'when a user belonged to roaster' do
+      let(:user_belonged_to_roaster) { create(:user, roaster: roaster) }
+      let(:roaster) { create(:roaster) }
+      before do
+        sign_in user_belonged_to_roaster
+        visit home_users_path
+      end
+      it 'shows link to users_home and roasters_home' do
+        expect(page).to have_selector("a[href='/users/home']")
+        expect(page).to have_selector("a[href='/roasters/home']")
+      end
+    end
+  end
 end

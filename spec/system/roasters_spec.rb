@@ -187,4 +187,33 @@ RSpec.describe 'Roasters', type: :system do
       end
     end
   end
+
+  describe 'Roaster#home' do
+    let(:user) { create(:user, roaster: roaster) }
+    let(:roaster) { create(:roaster) }
+
+    before do
+      sign_in user
+      visit home_users_path
+    end
+
+    context 'with side-toggle' do
+      it 'toggle user to roasters/home and navs' do
+        click_link 'side-toggle'
+        expect(page).to have_selector("a[href='/roasters/home']")
+        expect(page).to have_selector("a[href='/roasters/#{roaster.id}']")
+        expect(page).to have_selector("a[href='/beans']")
+        expect(page).to have_selector("a[href='/offers']")
+        expect(page).to have_selector("a[href='/users/home']")
+        click_link 'side-toggle'
+        expect(page).to have_selector("a[href='/users/home']")
+        expect(page).to have_selector("a[href='/users/#{user.id}']")
+        expect(page).to have_selector("a[href='/users/#{user.id}/following']")
+        expect(page).to have_selector("a[href='/wants']")
+        expect(page).to have_selector("a[href='/users/sign_out']")
+        # expect(page).to have_selector("a[href='/likes']")
+        # expect(page).to have_selector("a[href='/search']")
+      end
+    end
+  end
 end
