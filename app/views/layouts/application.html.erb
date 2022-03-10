@@ -31,7 +31,11 @@
         <%# サイドコンテンツ %>
         <aside class="hidden md:block w-3/12 bg-gray-50">
           <div class="h-full px-4 border-l border-gray-100">
-            <%= yield :aside %>
+            <% if cookies[:roaster_id] %>
+              <%= render partial: 'shared/roaster_aside', locals: { roaster: current_user.roaster} %>
+            <% else %>
+              <%= render partial: 'shared/user_aside', locals: { user: current_user} %>
+            <% end %>
           </div>
         </aside>
       </div>

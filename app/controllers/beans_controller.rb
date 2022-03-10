@@ -1,6 +1,7 @@
 class BeansController < ApplicationController
   before_action :user_signed_in_required
   before_action :user_belonged_to_roaster_required
+  before_action :set_roaster_id_cookie, only: %i[index show new edit]
   before_action :set_bean, only: %i[show edit update destroy]
 
   def index

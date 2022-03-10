@@ -25,6 +25,11 @@ class ApplicationController < ActionController::Base
     redirect_to(root_url)
   end
 
+  # ロースター用のクッキーを作成する
+  def set_roaster_id_cookie
+    cookies[:roaster_id] = current_user.roaster.id
+  end
+
   # ログイン中のユーザーが所属するロースターを返す
   def current_roaster
     current_user.roaster

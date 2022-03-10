@@ -2,7 +2,7 @@
 <article id="want-<%= want.id %>" class="pb-4">
   <div class="card px-8 mt-16">
     <div class="flex justify-center -mt-16 md:justify-end items-end">
-      <%= show_thumbnail(want.offer.roaster) %>
+      <%= link_to show_thumbnail(want.offer.roaster), want.offer.roaster %>
     </div>
     <div class="flex justify-between">
       <div class="font-semibold mb-4 <%=want.offer.status%>"><%= want.offer.status_i18n %></div>

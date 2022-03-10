@@ -18,6 +18,7 @@ RSpec.describe 'Beans', type: :request do
       it 'gets beans/index' do
         get beans_path
         expect(response).to have_http_status(:success)
+        expect(response.cookies['roaster_id']).to eq user_without_beans.roaster.id.to_s
         expect(response.body).to include("<title>コーヒー豆一覧#{base_title}</title>")
         expect(response.body).not_to include(bean.name)
       end
@@ -36,6 +37,7 @@ RSpec.describe 'Beans', type: :request do
       it 'gets beans/new' do
         get new_bean_path
         expect(response).to have_http_status(:success)
+        expect(response.cookies['roaster_id']).to eq user_without_beans.roaster.id.to_s
         expect(response.body).to include("<title>コーヒー豆登録#{base_title}</title>")
       end
     end
@@ -157,6 +159,7 @@ RSpec.describe 'Beans', type: :request do
       it "gets beans/index and shows the bean's name" do
         get beans_path
         expect(response).to have_http_status(:success)
+        expect(response.cookies['roaster_id']).to eq user_with_beans.roaster.id.to_s
         expect(response.body).to include("<title>コーヒー豆一覧#{base_title}</title>")
         expect(response.body).to include(bean.name)
       end
@@ -166,6 +169,7 @@ RSpec.describe 'Beans', type: :request do
       it "gets beans/show and shows the bean's name" do
         get bean_path bean
         expect(response).to have_http_status(:success)
+        expect(response.cookies['roaster_id']).to eq user_with_beans.roaster.id.to_s
         expect(response.body).to include("<title>コーヒー豆詳細#{base_title}</title>")
         expect(response.body).to include(bean.name)
       end
@@ -179,6 +183,7 @@ RSpec.describe 'Beans', type: :request do
       end
       it 'gets beans/edit' do
         expect(response).to have_http_status(:success)
+        expect(response.cookies['roaster_id']).to eq user_with_beans.roaster.id.to_s
         expect(response.body).to include("<title>コーヒー豆情報編集#{base_title}</title>")
       end
       it "shows bean's name" do
