@@ -144,6 +144,7 @@ RSpec.describe 'Roasters', type: :system do
           subject { click_button '更新' }
 
           it "updates the roaster's information" do
+            visit home_roasters_path
             click_link 'Roaster'
             click_link '編集'
             fill_in '店舗名', with: 'アップデートロースター'
@@ -167,7 +168,7 @@ RSpec.describe 'Roasters', type: :system do
     describe 'delete roaster feature' do
       before do
         sign_in user_belonging_a_roaster
-        visit root_path
+        visit home_roasters_path
         click_link 'Roaster'
         click_link '編集'
         click_link '削除する'
