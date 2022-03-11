@@ -16,23 +16,20 @@ page-title
 }
 
 /* about, helpページ */
-.about-content h1,
-.help-content h1 {
-  @apply p-4 text-indigo-700 font-bold text-3xl;
-}
-.about-content .image-container,
-.help-content .image-container {
-  @apply rounded-xl max-h-96 overflow-hidden;
-}
-
-.about-content h2,
-.help-content h2 {
-  @apply pl-4 pt-2 lg:pt-8 border-b border-gray-500 text-lg;
-}
-
-.about-content p,
-.help-content p {
-  @apply pt-2 lg:pt-8 px-4 mb-8 leading-relaxed tracking-wide;
+.help-content,
+.about-content {
+  h1 {
+    @apply p-4 text-indigo-700 font-bold text-3xl;
+  }
+  h2 {
+    @apply pl-4 pt-2 lg:pt-8 border-b border-gray-500 text-lg;
+  }
+  p {
+    @apply pt-2 lg:pt-8 px-4 mb-8 leading-relaxed tracking-wide;
+  }
+  .image-container {
+    @apply rounded-xl max-h-96 overflow-hidden;
+  }
 }
 
 /* button, link */
@@ -282,43 +279,45 @@ page-title
 /* rating */
 .radio-tile-group {
   @apply flex justify-center;
-}
-.radio-tile-group .input-container {
-  width: 4.5rem;
-  height: 4.5rem;
-  @apply relative m-1 sm:m-2;
-}
-.radio-tile-group .input-container .radio-button {
-  @apply opacity-0 absolute top-0 left-0 h-full w-full m-0 cursor-pointer z-50;
-}
-.radio-tile-group .input-container .radio-tile {
-  @apply flex flex-col items-center justify-center w-full h-full border-2 border-indigo-500 rounded p-1 transition transform duration-300 ease-in-out;
-}
-.radio-tile-group .input-container .icon i {
-  @apply fill-current text-indigo-500;
-}
-.radio-tile-group .input-container .radio-tile-label {
-  @apply text-center text-xs font-normal uppercase tracking-tight text-indigo-500 duration-300 ease-in-out;
-}
-.radio-tile-group .input-container .radio-button:checked + .radio-tile {
-  @apply bg-indigo-500 border-2 border-indigo-500 text-white scale-110;
-}
-.radio-tile-group .input-container .radio-button:checked + .radio-tile .icon i {
-  @apply fill-current text-white border-indigo-500;
-}
-.radio-tile-group
-  .input-container
-  .radio-button:checked
-  + .radio-tile
-  .radio-tile-label {
-  @apply text-white;
-}
-.radio-tile-group .input-container .radio-button:disabled + .radio-tile,
-.radio-tile-group .input-container .radio-button:disabled + .radio-tile .icon i,
-.radio-tile-group
-  .input-container
-  .radio-button:disabled
-  + .radio-tile
-  .radio-tile-label {
-  @apply opacity-50;
+
+  .input-container {
+    width: 4.5rem;
+    height: 4.5rem;
+    @apply relative m-1 sm:m-2;
+
+    .radio-tile {
+      @apply flex flex-col items-center justify-center w-full h-full border-2 border-indigo-500 rounded p-1 transition transform duration-300 ease-in-out;
+    }
+    .icon i {
+      @apply fill-current text-indigo-500;
+    }
+    .radio-tile-label {
+      @apply text-center text-xs font-normal uppercase tracking-tight text-indigo-500 duration-300 ease-in-out;
+    }
+    .radio-button {
+      @apply opacity-0 absolute top-0 left-0 h-full w-full m-0 cursor-pointer z-50;
+    }
+
+    .radio-button:checked {
+      + .radio-tile {
+        @apply bg-indigo-500 border-2 border-indigo-500 text-white scale-110;
+
+        .icon i {
+          @apply fill-current text-white border-indigo-500;
+        }
+
+        .radio-tile-label {
+          @apply text-white;
+        }
+      }
+    }
+
+    .radio-button:disabled {
+      + .radio-tile,
+      + .radio-tile .icon i,
+      + .radio-tile .radio-tile-label {
+        @apply opacity-50;
+      }
+    }
+  }
 }
