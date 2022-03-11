@@ -2,6 +2,11 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+:root {
+  /* swiperのベースカラー設定 */
+  --swiper-theme-color: indigo;
+}
+
 /* typography  */
 /*
 logo-font

@@ -4,6 +4,18 @@
     <h1 class="page-title">ホーム</h1>
   </div>
 </header>
+<div class="swiper mySwiper w-80 h-64 my-20">
+  <!-- Additional required wrapper -->
+  <div class="swiper-wrapper">
+    <!-- Slides -->
+    <div class="swiper-slide"><%= image_tag "default_bean.png" %></div>
+    <div class="swiper-slide"><%= image_tag "default_roaster.png" %></div>
+    <div class="swiper-slide"><%= image_tag "default_user.png" %></div>
+  </div>
+  <div class="swiper-button-next text-gray-800"></div>
+  <div class="swiper-button-prev text-gray-800"></div>
+  <div class="swiper-pagination text-gray-800"></div>
+</div>
 <section class="mt-4">
   <% if @offers.any? %>
     <%= render partial: 'shared/offer', collection: @offers %>

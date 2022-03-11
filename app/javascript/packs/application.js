@@ -7,13 +7,14 @@ import Rails from "@rails/ujs";
 import Turbolinks from "turbolinks";
 import * as ActiveStorage from "@rails/activestorage";
 import "channels";
-import "../css/application.css";
-import "../shared/pagy.js.erb";
-const images = require.context("../images", true);
-const imagePath = (name) => images(name, true);
-
 // JavaScriptファイルの読み込み
 import "../shared/input_image_preview";
+import "../shared/swiper";
+import "../shared/pagy.js.erb";
+// cssファイルの読み込み
+import "../css/application.css";
+const images = require.context("../images", true);
+const imagePath = (name) => images(name, true);
 
 Rails.start();
 Turbolinks.start();
