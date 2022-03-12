@@ -9,9 +9,10 @@ import * as ActiveStorage from "@rails/activestorage";
 import "channels";
 // JavaScriptファイルの読み込み
 import "../shared/input_image_preview";
-import "../shared/swiper";
 import "../shared/pagy.js.erb";
+import "../shared/swiper";
 import "../shared/tab";
+import "../shared/hamburger";
 // cssファイルの読み込み
 import "../css/application.css";
 const images = require.context("../images", true);
