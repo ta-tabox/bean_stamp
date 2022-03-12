@@ -328,6 +328,26 @@ page-title
   @apply text-gray-200;
 }
 :root {
-  /* swiperのベースカラー設定 */
-  --swiper-theme-color: rgba(99, 102, 241); /* indigo-500 */
+  /* swiperのベースカラー設定 paginationの色 */
+  --swiper-theme-color: rgba(229, 231, 235); /* gray-520 */
+}
+
+/* Tab */
+.tab-group {
+  @apply flex;
+}
+.tab {
+  @apply flex-grow border-b-2 border-gray-300 py-2 text-lg px-1 list-none cursor-pointer;
+}
+.tab.is-active {
+  @apply border-l-2 text-indigo-500 border-indigo-500;
+}
+.panel-group {
+  @apply w-full lg:h-80;
+}
+.panel {
+  @apply hidden;
+}
+.panel.is-show {
+  @apply block;
 }

@@ -25,49 +25,84 @@
       </div>
     </header>
     <div class="w-11/12 mx-auto flex flex-wrap">
-      <section class="lg:w-1/2 w-full lg:pr-10 lg:py-2 mb-6 lg:mb-0">
-        <div class="flex mb-4">
-          <a class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg px-1">Description</a>
-          <a class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">Detail</a>
-          <a class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">Schedule</a>
+      <div class="tab-panel w-full lg:w-1/2 lg:pr-4 mb-4 lg:mb-0">
+        <!--タブ-->
+        <ul class="tab-group">
+          <li class="tab is-active">Description</li>
+          <li class="tab">Detail</li>
+          <li class="tab">Schedule</li>
+        </ul>
+        <!--コンテンツ-->
+        <div class="panel-group">
+          <!-- 紹介文 -->
+          <section class="offer-description panel is-show">
+            <p class="leading-relaxed pt-4"><%= offer.bean&.describe %></p>
+          </section>
+          <!-- 詳細 -->
+          <section class="offer-detail panel" >
+            <div class="flex border-t border-gray-200 py-2">
+              <span class="text-gray-500">生産国</span>
+              <span class="ml-auto text-gray-900"><%= offer.bean&.country %></span>
+            </div>
+            <div class="flex border-t border-gray-200 py-2">
+              <span class="text-gray-500">焙煎度</span>
+              <span class="ml-auto text-gray-900"><%= offer.bean.roast_level&.name %></span>
+            </div>
+            <div class="flex border-t border-gray-200 py-2">
+              <span class="text-gray-500">地域</span>
+              <span class="ml-auto text-gray-900"><%= offer.bean&.subregion %></span>
+            </div>
+            <div class="flex border-t border-gray-200 py-2">
+              <span class="text-gray-500">農園</span>
+              <span class="ml-auto text-gray-900"><%= offer.bean&.farm %></span>
+            </div>
+            <div class="flex border-t border-gray-200 py-2">
+              <span class="text-gray-500">品種</span>
+              <span class="ml-auto text-gray-900"><%= offer.bean&.variety %></span>
+            </div>
+            <div class="flex border-t border-gray-200 py-2">
+              <span class="text-gray-500">精製方法</span>
+              <span class="ml-auto text-gray-900"><%= offer.bean&.process %></span>
+            </div>
+            <div class="flex border-t border-gray-200 py-2">
+              <span class="text-gray-500">標高</span>
+              <span class="ml-auto text-gray-900"><%= "#{offer.bean&.elevation} m" %></span>
+            </div>
+            <div class="flex border-t border-gray-200 py-2">
+              <span class="text-gray-500">収穫</span>
+              <span class="ml-auto text-gray-900"><%= "#{offer.bean.cropped_at&.year}年 #{offer.bean.cropped_at&.month}月" %></span>
+            </div>
+          </section>
+          <!-- スケジュール -->
+          <section class="offer-schedule panel" >
+            <div class="flex border-t border-gray-200 py-2">
+              <span class="text-gray-500">オファー作成日</span>
+              <span class="ml-auto text-gray-900"><%= offer.created_at.strftime("%Y/%m/%d")%></span>
+            </div>
+            <div class="flex border-t border-gray-200 py-2">
+              <span class="text-gray-500">オファー終了日</span>
+              <span class="ml-auto text-gray-900"><%= l offer&.ended_at%></span>
+            </div>
+            <div class="flex border-t border-gray-200 py-2">
+              <span class="text-gray-500">ロースト日</span>
+              <span class="ml-auto text-gray-900"><%= l offer&.roasted_at %></span>
+            </div>
+            <div class="flex border-t border-gray-200 py-2">
+              <span class="text-gray-500">受け取り開始日</span>
+              <span class="ml-auto text-gray-900"><%= l offer&.receipt_started_at %></span>
+            </div>
+            <div class="flex border-t border-gray-200 py-2">
+              <span class="text-gray-500">受け取り終了日</span>
+              <span class="ml-auto text-gray-900"><%= l offer&.receipt_ended_at %></span>
+            </div>
+          </section>
         </div>
-        <p class="leading-relaxed mb-4"><%= offer.bean&.describe %></p>
-        <div class="flex border-t border-gray-200 py-2">
-          <span class="text-gray-500">生産国</span>
-          <span class="ml-auto text-gray-900"><%= offer.bean&.country %></span>
+        <!-- 価格 -->
+        <div class="mt-4 flex justify-end">
+          <%= render partial:'offers/price_weight', locals: { offer: offer } %>
         </div>
-        <div class="flex border-t border-gray-200 py-2">
-          <span class="text-gray-500">焙煎度</span>
-          <span class="ml-auto text-gray-900"><%= offer.bean.roast_level&.name %></span>
-        </div>
-        <div class="flex border-t border-gray-200 py-2">
-          <span class="text-gray-500">地域</span>
-          <span class="ml-auto text-gray-900"><%= offer.bean&.subregion %></span>
-        </div>
-        <div class="flex border-t border-gray-200 py-2">
-          <span class="text-gray-500">農園</span>
-          <span class="ml-auto text-gray-900"><%= offer.bean&.farm %></span>
-        </div>
-        <div class="flex border-t border-gray-200 py-2">
-          <span class="text-gray-500">品種</span>
-          <span class="ml-auto text-gray-900"><%= offer.bean&.variety %></span>
-        </div>
-        <div class="flex border-t border-gray-200 py-2">
-          <span class="text-gray-500">精製方法</span>
-          <span class="ml-auto text-gray-900"><%= offer.bean&.process %></span>
-        </div>
-        <div class="flex border-t border-gray-200 py-2">
-          <span class="text-gray-500">標高</span>
-          <span class="ml-auto text-gray-900"><%= "#{offer.bean&.elevation} m" %></span>
-        </div>
-        <div class="flex border-t border-gray-200 py-2">
-          <span class="text-gray-500">収穫</span>
-          <span class="ml-auto text-gray-900"><%= "#{offer.bean.cropped_at&.year}年 #{offer.bean.cropped_at&.month}月" %></span>
-        </div>
-        <div class="mt-2 mb-2 flex justify-end">
-          <div class="title-font font-medium text-2xl text-gray-900"><%= offer.price%>円 / <%= offer.weight%>g</div>
-        </div>
-      </section>
+      </div>
+      <!-- 画像 -->
       <%= render partial:'beans/images_swiper', locals: { bean: offer.bean, cls: "w-full lg:w-1/2 h-54 lg:h-auto" } %>
     </div>
   </div>

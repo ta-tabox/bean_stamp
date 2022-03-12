@@ -11,6 +11,7 @@ import "channels";
 import "../shared/input_image_preview";
 import "../shared/swiper";
 import "../shared/pagy.js.erb";
+import "../shared/tab";
 // cssファイルの読み込み
 import "../css/application.css";
 const images = require.context("../images", true);
