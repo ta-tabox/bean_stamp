@@ -3,7 +3,7 @@
   <div class="card my-14">
     <header>
       <div class="w-11/12 mb-2 mx-auto">
-        <div class="flex justify-center -mt-16 md:justify-end">
+        <div class="flex justify-center -mt-16 lg:justify-end">
           <%= link_to show_thumbnail(offer.roaster), offer.roaster %>
         </div>
         <div class="flex justify-between">
@@ -103,7 +103,7 @@
         </div>
       </div>
       <!-- 画像 -->
-      <%= render partial:'beans/images_swiper', locals: { bean: offer.bean, cls: "w-full lg:w-1/2 h-54 lg:h-auto" } %>
+      <%= render partial:'beans/images_swiper', locals: { bean: offer.bean, cls: "w-full lg:w-1/2 h-64 md:h-96 lg:h-auto" } %>
     </div>
   </div>
 </article>
