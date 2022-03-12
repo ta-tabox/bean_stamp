@@ -68,11 +68,7 @@
           <div class="title-font font-medium text-2xl text-gray-900"><%= offer.price%>円 / <%= offer.weight%>g</div>
         </div>
       </section>
-      <% if offer.bean.bean_images.any? %>
-        <% offer.bean.bean_images.each do |bean_image| %>
-          <%= image_tag bean_image.image.url, class: "lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded", alt: "#{offer.bean.name}の画像" if bean_image.image? %>
-        <% end %>
-      <% end %>
+      <%= render partial:'beans/images_swiper', locals: { bean: offer.bean, cls: "w-full lg:w-1/2 h-54 lg:h-auto" } %>
     </div>
   </div>
 </article>

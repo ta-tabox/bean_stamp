@@ -2,11 +2,7 @@
 <article id="bean-<%= bean.id %>" class="pb-4">
   <div class="card px-8 mt-16">
     <div class="flex justify-center -mt-16 md:justify-end items-end">
-      <% if bean.bean_images.any? %>
-        <% bean.bean_images.each do |bean_image| %>
-          <%= image_tag bean_image.image.thumb.url, class: "thumbnail" if bean_image.image? %>
-        <% end %>
-      <% end %>
+      <%= render partial: 'beans/bean_thumbnail', locals: { bean: bean } %>
     </div>
     <div class="mt-2 lg:flex items-baseline">
       <h1 class="md:mt-2 text-xl lg:text-2xl font-semibold text-gray-800 lg:mt-0"><%= bean.name %></h1>
