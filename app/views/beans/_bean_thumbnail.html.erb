@@ -1,0 +1,3 @@
+<% if bean.bean_images.any? %>
+  <%= image_tag bean.bean_images[0].image.thumb.url, class: "thumbnail" if bean.bean_images[0].image? %>
+<% end %>

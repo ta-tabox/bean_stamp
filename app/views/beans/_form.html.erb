@@ -5,13 +5,10 @@
       <%= render "shared/error_messages", resource: f.object %>
       <h2>〜 Images 〜</h2>
       <% if @bean.bean_images.ids.any? %>
-        <div class="image-container mt-2">
-          <% @bean.bean_images.each do |bean_image| %>
-            <%= image_tag bean_image.image.thumb.url, class: "image-item" if bean_image.image? %>
-          <% end %>
-        </div>
+        <%# カルーセル %>
+        <%= render partial:'beans/images_swiper', locals: { bean: @bean, cls: "w-full h-64 lg:h-96 my-2" } %>
       <% end %>
-      <div id="preview" class="image-container mt-2"></div>
+      <div id="preview" class="image-container pt-2"></div>
       <%= f.fields_for @upload_image do |i|%>
         <div class="input-container bg-white">
           <%= i.file_field :image, multiple: true, accept:"image/*", class: "input-field", id: 'input-image', name: "bean_images[image][]" %>

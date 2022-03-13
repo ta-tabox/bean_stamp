@@ -1,0 +1,12 @@
+<% if bean.bean_images.any? %>
+  <div class="swiper <%= cls.to_s %>">
+    <div class="swiper-wrapper">
+      <% bean.bean_images.each do |bean_image| %>
+        <%= image_tag bean_image.image.url, class: "swiper-slide w-full h-full object-cover object-center rounded-lg", alt: "#{bean.name}の画像" if bean_image.image? %>
+      <% end %>
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
+  </div>
+<% end %>
