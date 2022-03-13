@@ -144,6 +144,7 @@ RSpec.describe 'Roasters', type: :system do
           subject { click_button '更新' }
 
           it "updates the roaster's information" do
+            visit home_roasters_path
             click_link 'Roaster'
             click_link '編集'
             fill_in '店舗名', with: 'アップデートロースター'
@@ -167,7 +168,7 @@ RSpec.describe 'Roasters', type: :system do
     describe 'delete roaster feature' do
       before do
         sign_in user_belonging_a_roaster
-        visit root_path
+        visit home_roasters_path
         click_link 'Roaster'
         click_link '編集'
         click_link '削除する'
@@ -183,6 +184,35 @@ RSpec.describe 'Roasters', type: :system do
           expect(page).to have_content "ロースター「#{roaster.name}」を削除しました"
           expect(page).to_not have_selector("a[href='/roasters/#{roaster.id}]")
         end
+      end
+    end
+  end
+
+  describe 'Roaster#home' do
+    let(:user) { create(:user, roaster: roaster) }
+    let(:roaster) { create(:roaster) }
+
+    before do
+      sign_in user
+      visit home_users_path
+    end
+
+    context 'with side-toggle' do
+      it 'toggle user to roasters/home and navs' do
+        click_link 'side-toggle'
+        expect(page).to have_selector("a[href='/roasters/home']")
+        expect(page).to have_selector("a[href='/roasters/#{roaster.id}']")
+        expect(page).to have_selector("a[href='/beans']")
+        expect(page).to have_selector("a[href='/offers']")
+        expect(page).to have_selector("a[href='/users/home']")
+        click_link 'side-toggle'
+        expect(page).to have_selector("a[href='/users/home']")
+        expect(page).to have_selector("a[href='/users/#{user.id}']")
+        expect(page).to have_selector("a[href='/users/#{user.id}/following']")
+        expect(page).to have_selector("a[href='/wants']")
+        expect(page).to have_selector("a[href='/users/sign_out']")
+        # expect(page).to have_selector("a[href='/likes']")
+        # expect(page).to have_selector("a[href='/search']")
       end
     end
   end

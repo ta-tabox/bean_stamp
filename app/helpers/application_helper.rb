@@ -9,7 +9,7 @@ module ApplicationHelper
                 else
                   "default_#{obj.class.name.downcase}.png"
                 end
-    link_to image_tag(image_url, class: 'thumbnail', alt: "#{obj.name}の画像"), obj
+    image_tag(image_url, class: 'thumbnail', alt: "#{obj.name}の画像")
   end
 
   def show_bean_thumbnail(bean)

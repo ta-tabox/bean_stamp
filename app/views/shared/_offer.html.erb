@@ -4,7 +4,7 @@
     <header>
       <div class="w-11/12 mb-2 mx-auto">
         <div class="flex justify-center -mt-16 md:justify-end">
-          <%= show_thumbnail(offer.roaster) %>
+          <%= link_to show_thumbnail(offer.roaster), offer.roaster %>
         </div>
         <div class="flex justify-between">
           <div class="font-semibold mb-4 <%=offer.status%>"><%= offer.status_i18n %></div>

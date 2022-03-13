@@ -18,6 +18,7 @@ RSpec.describe 'Roasters', type: :request do
         expect(response).to have_http_status(:success)
         skip 'roaster/indexのタイトル' do
           # roaster/indexのタイトルを決めたらテストする（search機能実装時）
+          expect(response.cookies['roaster_id']).to be_falsey
           expect(response.body).to include("<title>#{base_title}</title>")
         end
       end
@@ -27,6 +28,7 @@ RSpec.describe 'Roasters', type: :request do
       it 'gets roasters/show' do
         get roaster_path roaster
         expect(response).to have_http_status(:success)
+        expect(response.cookies['roaster_id']).to be_falsey
         expect(response.body).to include("<title>ロースター#{base_title}</title>")
       end
     end
@@ -35,6 +37,7 @@ RSpec.describe 'Roasters', type: :request do
       it 'gets roasters/new' do
         get new_roaster_path
         expect(response).to have_http_status(:success)
+        expect(response.cookies['roaster_id']).to be_falsey
         expect(response.body).to include("<title>ロースター登録#{base_title}</title>")
       end
     end
@@ -168,6 +171,7 @@ RSpec.describe 'Roasters', type: :request do
       it 'gets roasters/followers' do
         subject
         expect(response).to have_http_status(:success)
+        expect(response.cookies['roaster_id']).to be_falsey
         expect(response.body).to include("<title>フォローユーザー#{base_title}</title>")
       end
     end
@@ -185,6 +189,7 @@ RSpec.describe 'Roasters', type: :request do
         expect(response).to have_http_status(:success)
         skip 'roaster/indexのタイトル' do
           # roaster/indexのタイトルを決めたらテストする（search機能実装時）
+
           expect(response.body).to include("<title>#{base_title}</title>")
         end
       end
@@ -194,6 +199,7 @@ RSpec.describe 'Roasters', type: :request do
       it 'gets roasters/show' do
         get roaster_path roaster
         expect(response).to have_http_status(:success)
+        expect(response.cookies['roaster_id']).to be_falsey
         expect(response.body).to include("<title>ロースター#{base_title}</title>")
       end
     end
@@ -220,6 +226,7 @@ RSpec.describe 'Roasters', type: :request do
       end
       it 'gets roasters/edit' do
         expect(response).to have_http_status(:success)
+        expect(response.cookies['roaster_id']).to eq roaster.id.to_s
         expect(response.body).to include("<title>ロースター情報編集#{base_title}</title>")
       end
       it "shows roaster's name" do
@@ -333,6 +340,7 @@ RSpec.describe 'Roasters', type: :request do
       it 'gets roasters/cancel' do
         get cancel_roasters_path
         expect(response).to have_http_status(:success)
+        expect(response.cookies['roaster_id']).to eq roaster.id.to_s
         expect(response.body).to include("<title>ロースターの削除#{base_title}</title>")
         expect(response.body).to include("ロースター(#{roaster.name})の削除を行います")
       end

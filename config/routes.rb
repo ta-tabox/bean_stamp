@@ -19,7 +19,10 @@ Rails.application.routes.draw do
     end
   end
   resources :roasters do
-    collection { get 'cancel' }
+    collection do
+      get 'home'
+      get 'cancel'
+    end
     member { get 'followers' }
   end
   resources :beans do

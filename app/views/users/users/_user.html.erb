@@ -2,7 +2,7 @@
 <li id="user-<%= user.id %>" class="flex flex-col items-center justify-between p-4 duration-300 sm:flex-row sm:py-4 sm:px-8 hover:bg-gray-100">
   <div class="flex items-center text-center flex-col sm:flex-row sm:text-left">
     <div class="mb-2.5 sm:mb-0 sm:mr-4">
-      <%= show_thumbnail(user) %>
+      <%= link_to show_thumbnail(user), user %>
     </div>
     <div class="flex flex-col mb-4 sm:mb-0 sm:mr-4">
       <div><%= link_to user.name, user, class: "font-medium" %><span class="ml-3">＠<%=  "#{user.prefecture.name}" %></span></div>
