@@ -1,5 +1,5 @@
 <%= form_with(model: [current_user.wants.find_by(offer_id: offer.id)],
-    html: { method: :delete }, local: true) do |f| %>
+    html: { method: :delete }, local: false) do |f| %>
   <% if offer.ended_at >= Date.current %>
     <%= f.button type:"submit", id:"unwant-button" do %>
       <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 20 20" fill="currentColor">

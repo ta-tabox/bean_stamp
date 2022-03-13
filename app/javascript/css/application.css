@@ -76,7 +76,7 @@ page-title
 
 /* header */
 .header {
-  @apply lg:sticky top-0 z-50 h-20 pb-2 px-2 mb-4 bg-gray-50 bg-opacity-95 border-b border-gray-100;
+  @apply lg:sticky top-0 z-50 h-20 pb-2 px-2 mb-4 bg-gray-50 border-b border-gray-200;
 }
 
 /* thumbnail, image */
