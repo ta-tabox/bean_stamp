@@ -2,26 +2,26 @@
 <html lang="ja">
   <%= render 'layouts/head' %>
   <body class="bg-white">
-    <div class="container max-w-screen-2xl md:mx-auto">
-      <div class="flex flex-col md:flex-row">
+    <div class="container max-w-screen-2xl lg:mx-auto">
+      <div class="flex flex-col lg:flex-row">
         <%# ナビコンテンツ %>
         <nav class=" bg-gray-50">
           <%# モバイルトップナビ %>
-          <div class="md:hidden">
+          <div class="lg:hidden">
             <%= render 'layouts/mobile_top_nav' %>
           </div>
           <%# モバイルボトムナビ %>
-          <div class="md:hidden">
+          <div class="lg:hidden">
             <%= render 'layouts/mobile_bottom_nav' %>
           </div>
           <%# デスクトップサイドナビ %>
-          <div class="h-full w-28 hidden md:block">
+          <div class="h-full w-28 hidden lg:block">
             <%= render 'layouts/side_nav' %>
           </div>
         </nav>
         <%# メインコンテンツ %>
-        <main class="md:w-9/12">
-          <div class="container mx-auto my-14 md:my-0">
+        <main class="lg:w-9/12">
+          <div class="container mx-auto my-14 lg:my-0">
             <div id="flash-messages">
               <%= render 'layouts/flash_messages' %>
             </div>
@@ -29,7 +29,7 @@
           </div>
         </main>
         <%# サイドコンテンツ %>
-        <aside class="hidden md:block w-3/12 bg-gray-50">
+        <aside class="hidden lg:block w-3/12 bg-gray-50">
           <div class="h-full px-4 border-l border-gray-100">
             <% if cookies[:roaster_id] %>
               <%= render partial: 'shared/roaster_aside', locals: { roaster: current_user.roaster} %>

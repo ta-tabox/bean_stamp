@@ -2,11 +2,7 @@
 <article id="offer-<%= offer.id %>" class="pb-4">
   <div class="card px-8 mt-16">
     <div class="flex justify-center -mt-16 md:justify-end items-end">
-      <% if offer.bean.bean_images.any? %>
-        <% offer.bean.bean_images.each do |bean_image| %>
-          <%= image_tag bean_image.image.thumb.url, class: "thumbnail" if bean_image.image? %>
-        <% end %>
-      <% end %>
+      <%= render partial: 'beans/bean_thumbnail', locals: { bean: offer.bean } %>
     </div>
     <div class="flex justify-between">
       <div class="font-semibold mb-4 <%=offer.status%>"><%= offer.status_i18n %></div>
