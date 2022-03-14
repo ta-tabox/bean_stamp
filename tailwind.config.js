@@ -2,7 +2,12 @@ module.exports = {
   purge: ["./app/**/*.html.erb"],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        noto: ["Noto Sans JP"],
+        notoserif: ["Noto Serif"],
+      },
+    },
   },
   variants: {
     extend: {

@@ -5,11 +5,11 @@
       <%= link_to show_thumbnail(want.offer.roaster), want.offer.roaster %>
     </div>
     <div class="flex justify-between">
-      <div class="font-semibold mb-4 <%=want.offer.status%>"><%= want.offer.status_i18n %></div>
+      <div class="font-medium mb-4 <%=want.offer.status%>"><%= want.offer.status_i18n %></div>
       <h2 class="text-md title-font text-gray-500 tracking-widest hover:text-gray-800"><%= link_to want.offer.roaster.name, want.offer.roaster %></h2>
     </div>
     <div class="md:flex items-baseline">
-      <h1 class="md:mt-2 text-xl lg:text-2xl font-semibold text-gray-800 lg:mt-0"><%= want.offer.bean.name %></h1>
+      <h1 class="md:mt-2 text-xl lg:text-2xl font-medium text-gray-800 lg:mt-0"><%= want.offer.bean.name %></h1>
       <div class="text-right"><%= link_to '詳細', want_path(want), class: "btn btn-secondary ml-4" %></div>
     </div>
     <section class= "mt-4 grid-container grid-cols-2">

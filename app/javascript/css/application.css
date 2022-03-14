@@ -1,14 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif:ital,wght@0,400;1,400;1,700&display=swap");
+
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
 /* typography  */
-/*
-logo-font
-title-font
-body-font
-page-title
-*/
+@layer base {
+  html {
+    font-family: "Noto Sans JP", sans-serif;
+  }
+}
+
+.logo-font {
+  @apply font-notoserif italic;
+}
+.title-font {
+  @apply font-noto font-medium;
+}
+.e-font {
+  @apply font-notoserif;
+}
+
+/* shared */
+.page-title {
+  @apply font-noto font-medium text-2xl text-gray-800;
+}
+
 /* Background-image */
 .top-background {
   @apply fixed inset-0 bg-center bg-cover bg-no-repeat h-screen;
@@ -19,7 +36,7 @@ page-title
 .help-content,
 .about-content {
   h1 {
-    @apply p-4 text-indigo-700 font-bold text-3xl;
+    @apply p-4 text-indigo-700 font-medium text-3xl;
   }
   h2 {
     @apply pl-4 pt-2 lg:pt-8 border-b border-gray-500 text-lg;
@@ -32,9 +49,11 @@ page-title
   }
 }
 
+/* components */
+
 /* button, link */
 .btn {
-  @apply py-1 px-3 border rounded disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed inline-block text-center text-sm font-semibold;
+  @apply py-1 px-3 border rounded disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed inline-block text-center text-sm font-medium;
 }
 
 .btn-primary {
@@ -54,7 +73,7 @@ page-title
 }
 
 .toggle_btn {
-  @apply pl-8 pr-2 py-1 lg:pl-2 lg:pt-6 border rounded cursor-pointer block text-center text-lg font-semibold;
+  @apply pl-8 pr-2 py-1 lg:pl-2 lg:pt-6 border rounded cursor-pointer block text-center text-lg font-medium;
 }
 
 /* nav */
@@ -63,15 +82,15 @@ page-title
 }
 
 .side-nav-text {
-  @apply text-gray-500 transition opacity-0 group-hover:opacity-100;
+  @apply font-notoserif italic text-gray-500 transition opacity-0 group-hover:opacity-100;
 }
 
 .mobile-nav-item {
   @apply text-gray-500 hover:text-gray-800 transition duration-200 cursor-pointer;
 }
 
-.nav-item {
-  @apply w-16 h-full px-2 flex justify-center items-center text-sm text-gray-900 hover:text-white hover:bg-gray-800;
+.static-nav-item {
+  @apply w-20 h-full px-2 flex justify-center items-center text-gray-900 hover:text-white hover:bg-gray-800;
 }
 
 /* header */
@@ -157,7 +176,7 @@ page-title
 }
 
 .label {
-  @apply text-gray-500 text-sm font-bold;
+  @apply text-gray-500 text-sm font-medium;
 }
 
 /* image preview */

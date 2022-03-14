@@ -9,8 +9,8 @@
         <hr class="w-48 border-2 border-solid border-indigo-500">
         <h2 class="mt-20 text-yellow-800 text-lg text-center">あなたにとっての一杯のコーヒー<br>
           探していきませんか？</h2>
-        <h1 class="text-gray-800 text-5xl text-center mt-2 mb-10 logo-font">Beans</h1>
-        <%= link_to '登録する', new_user_registration_path , class: "text-center hover:text-gray-300 bg-yellow-800 text-white hover:bg-black w-56 p-4 text-2xl font-bold rounded btn-pop" %>
+        <h1 class="text-gray-800 text-5xl text-center mt-2 mb-10 font-bold logo-font">Beans</h1>
+        <%= link_to '登録する', new_user_registration_path , class: "text-center hover:text-gray-300 bg-yellow-800 text-white hover:bg-black w-56 p-4 text-2xl font-medium rounded btn-pop" %>
         <div class="p-8 flex flex-col md:flex-row md:space-x-8 space-y-4 md:space-y-0">
           <%= link_to 'ログイン', new_user_session_path, class: "btn btn-primary btn-pop" %>
           <%= link_to 'ゲストログイン', users_guest_sign_in_path, method: :post, class: "btn btn-secondary btn-pop" %>
