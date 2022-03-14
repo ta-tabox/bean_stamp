@@ -278,21 +278,21 @@
   @apply text-gray-900 cursor-default bg-gray-300 font-medium;
 }
 
-/* offer */
+/* offer status */
 .on_offering {
-  @apply bg-blue-500 rounded-full text-white px-3 py-1 text-xs uppercase font-medium;
+  @apply bg-blue-500 rounded-full text-center text-white px-4 py-1 text-sm font-light;
 }
 .on_roasting {
-  @apply bg-green-500 rounded-full text-white px-3 py-1 text-xs uppercase font-medium;
+  @apply bg-green-500 rounded-full text-center text-white px-4 py-1 text-sm font-light;
 }
 .on_preparing {
-  @apply bg-green-500 rounded-full text-white px-3 py-1 text-xs uppercase font-medium;
+  @apply bg-green-500 rounded-full text-center text-white px-4 py-1 text-sm font-light;
 }
 .on_selling {
-  @apply bg-red-500 rounded-full text-white px-3 py-1 text-xs uppercase font-medium;
+  @apply bg-red-500 rounded-full text-center text-white px-4 py-1 text-sm font-light;
 }
 .end_of_sales {
-  @apply bg-gray-700 rounded-full text-white px-3 py-1 text-xs uppercase font-medium;
+  @apply bg-gray-700 rounded-full text-center text-white px-4 py-1 text-sm font-light;
 }
 
 /* rating */

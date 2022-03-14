@@ -7,12 +7,8 @@
     <div class="text-center lg:w-10/12 w-full pt-4">
       <p class="leading-relaxed"><%= bean&.describe %></p>
       <section class= "w-11/12 mx-auto pt-4">
-        <div class="text-center text-lg e-font">〜 Flavor 〜</div>
-        <div class="pt-2 flex justify-center space-x-3">
-          <%bean.taste_tags.each do |taste_tag|%>
-            <%= tag.div taste_tag.name, class: 'rounded-full py-1 px-4 border bg-white border-gray-300 text-center font-normal text-gray-500 text-sm ' if taste_tag.id?%>
-          <%end%>
-        </div>
+        <div class="mb-2 text-center text-lg e-font">〜 Flavor 〜</div>
+        <%= render partial: 'beans/taste_tag', locals: { bean: bean } %>
       </section>
       <section class= "pt-4 grid-container grid-cols-2">
         <div class="col-span-2 mb-2 text-lg e-font">〜 Detail 〜</div>

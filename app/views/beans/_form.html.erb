@@ -3,7 +3,7 @@
     <%= form_with(model: @bean) do |f| %>
       <h1 class="form-title"><%= yield(:form_title) %></h1>
       <%= render "shared/error_messages", resource: f.object %>
-      <h2>〜 Images 〜</h2>
+      <h2 class="e-font">〜 Images 〜</h2>
       <% if @bean.bean_images.ids.any? %>
         <%# カルーセル %>
         <%= render partial:'beans/images_swiper', locals: { bean: @bean, cls: "w-full h-64 lg:h-96 my-2" } %>
@@ -16,7 +16,7 @@
         </div>
       <% end %>
       <section class="mt-4">
-        <h2>〜 Detail 〜</h2>
+        <h2 class="e-font">〜 Detail 〜</h2>
         <%# タイトル %>
         <div class="input-container">
           <%= f.text_field :name, autofocus: true, placeholder: "タイトル", class: "input-field" %>
@@ -99,10 +99,10 @@
       </section>
       <%# タグ %>
       <section class="my-4">
-        <h2>〜 Flavor 〜</h2>
+        <h2 class="e-font">〜 Flavor 〜</h2>
         <%= f.fields_for :bean_taste_tags do |tag| %>
           <div class="input-container">
-            <%= tag.collection_select :mst_taste_tag_id, MstTasteTag.all, :id, :name, { default: 0 }, class: "select-box" %>
+            <%= tag.collection_select :mst_taste_tag_id, MstTasteTag.all, :id, :name_for_select, { default: 0 }, class: "select-box" %>
             <i class="fa-solid fa-angle-down select-box-arrow"></i>
           </div>
         <% end %>
