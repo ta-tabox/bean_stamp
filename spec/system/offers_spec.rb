@@ -31,7 +31,7 @@ RSpec.describe 'Offers', type: :system do
       subject { proc { click_button 'オファーする' } }
 
       before do
-        click_link 'Beans'
+        visit beans_path
         find("article#bean-#{bean.id}").click_link 'オファー'
         fill_in 'オファー終了日', with: Time.zone.today.next_day(5)
         fill_in '焙煎日', with: Time.zone.today.next_day(10)
