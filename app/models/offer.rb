@@ -3,6 +3,8 @@ class Offer < ApplicationRecord
   has_one :roaster, through: :bean
   has_many :wants, dependent: :restrict_with_error
   has_many :wanted_users, through: :wants, source: :user
+  has_many :likes, dependent: :destroy
+  has_many :liked_users, through: :likes, source: :user
 
   enum status: { on_offering: 0, on_roasting: 1, on_preparing: 2, on_selling: 3, end_of_sales: 4 }
 

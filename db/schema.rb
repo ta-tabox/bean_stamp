@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_10_130742) do
+ActiveRecord::Schema.define(version: 2022_03_16_124853) do
 
   create_table "bean_images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "image"
@@ -53,6 +53,16 @@ ActiveRecord::Schema.define(version: 2022_02_10_130742) do
     t.index ["roast_level_id"], name: "index_beans_on_roast_level_id"
     t.index ["roaster_id", "created_at"], name: "index_beans_on_roaster_id_and_created_at"
     t.index ["roaster_id"], name: "index_beans_on_roaster_id"
+  end
+
+  create_table "likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "offer_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["offer_id"], name: "index_likes_on_offer_id"
+    t.index ["user_id", "offer_id"], name: "index_likes_on_user_id_and_offer_id", unique: true
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "mst_roast_levels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -144,6 +154,8 @@ ActiveRecord::Schema.define(version: 2022_02_10_130742) do
   add_foreign_key "bean_taste_tags", "mst_taste_tags"
   add_foreign_key "beans", "mst_roast_levels", column: "roast_level_id"
   add_foreign_key "beans", "roasters"
+  add_foreign_key "likes", "offers"
+  add_foreign_key "likes", "users"
   add_foreign_key "offers", "beans"
   add_foreign_key "roaster_relationships", "roasters"
   add_foreign_key "roaster_relationships", "users", column: "follower_id"
