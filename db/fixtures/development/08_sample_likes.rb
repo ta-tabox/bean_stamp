@@ -5,7 +5,7 @@ id = 1
 
 users.count.times do |m|
   offers.count.times do |i|
-    Want.seed_once do |s|
+    Like.seed_once do |s|
       s.id = id
       s.user_id = users[m].id
       s.offer_id = offers[i].id
@@ -15,11 +15,11 @@ users.count.times do |m|
   id += 1
 end
 
-# Offerの日程に応じた状態確認用テストウォンツ
+# guest_user用のlikes、sample_wantsと同様にオファーの状態は全てを含むようにしている
 beans = Bean.order(:created_at).where.not(roaster_id: guest_user.roaster.id).take(5)
 beans.each do |bean|
   bean.offers.count.times do |offer_num|
-    Want.seed_once do |s|
+    Like.seed_once do |s|
       s.id = id
       s.user_id = guest_user.id
       s.offer_id = bean.offers[offer_num].id

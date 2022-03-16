@@ -42,7 +42,6 @@ my_and_other_beans << guest_roaster_beans.first
 other_beans.each do |other_bean|
   my_and_other_beans << other_bean
 end
-# my_and_other_beans << Bean.order(:created_at).where.not(roaster_id: guest_roaster.id).last
 
 # on-roasting
 my_and_other_beans.count.times do |bean_num|
@@ -125,7 +124,7 @@ amount_max_beans.count.times do |bean_num|
     s.receipt_ended_at = Faker::Date.between(from: Date.current.next_day(29), to: Date.current.next_day(35))
     s.price = 1000
     s.weight = 100
-    s.amount = 10
+    s.amount = 5
   end
   id += 1
 end
