@@ -6,7 +6,8 @@ RSpec.describe Offer, type: :model do
     it { is_expected.to have_many(:wants) }
     it { is_expected.to have_many(:wanted_users).through(:wants) }
     it { is_expected.to have_one(:roaster).through(:bean) }
-    pending { is_expected.to have_many(:likes) }
+    it { is_expected.to have_many(:likes) }
+    it { is_expected.to have_many(:liked_users).through(:likes) }
     pending { is_expected.to have_many(:comments) }
   end
 

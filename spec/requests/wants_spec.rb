@@ -118,7 +118,7 @@ RSpec.describe 'Wants', type: :request do
     let(:want) { user.wants.find_by(offer_id: offer.id) }
     subject { proc { delete want_path(want), headers: { 'HTTP_REFERER' => wants_url } } }
     before do
-      user.wanting_offers << offer
+      user.want_offers << offer
     end
     context 'when user is not signed in' do
       it 'redirects to new_user_session_path ' do
@@ -201,7 +201,7 @@ RSpec.describe 'Wants', type: :request do
     before do
       sign_in user
       offers = [offering_offer, roasting_offer, preparing_offer, start_selling_offer, selling_offer, sold_offer]
-      offers.each { |offer| user.wanting_offers << offer }
+      offers.each { |offer| user.want_offers << offer }
     end
 
     # 境界値のテストを含む
