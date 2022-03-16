@@ -1,7 +1,7 @@
 <div class="min-h-screen w-full sticky flex flex-col justify-between items-center top-0 z-50 border-r border-gray-100">
   <!-- TOPアイコン -->
-  <div class="mx-8 mt-12 pb-8 text-center">
-    <div><%= link_to 'Beans!', root_path %></div>
+  <div class="mx-8 mt-12 pb-8 text-center logo-font text-xl">
+    <div><%= link_to 'Beans', root_path %></div>
   </div>
   <div class="w-12 mx-auto">
     <hr class="border-gray-200">
@@ -21,8 +21,8 @@
       <% else %>
         <%= link_to show_thumbnail(current_user.roaster), home_roasters_path, id:"side-toggle" %>
       <% end %>
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto text-gray-600 mt-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+      <svg class="h-6 w-6 mx-auto text-gray-600 mt-2">
+        <use xlink:href="#switch-horizontal"></use>
       </svg>
     <% end %>
   </div>

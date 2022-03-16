@@ -13,4 +13,8 @@ class MstTasteTag < ApplicationRecord
   # @taste_tag.taste_groupで自身が所属する親tasteを取得
   # @taste_tag.taste_group.membersで自身と同じ親tasteを持ったレコードを取得
   belongs_to :taste_group, class_name: 'MstTasteTag'
+
+  def name_for_select
+    name.capitalize
+  end
 end
