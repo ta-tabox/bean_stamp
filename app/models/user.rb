@@ -13,6 +13,8 @@ class User < ApplicationRecord
   has_many :following_roasters, through: :roaster_relationships, source: :roaster
   has_many :wants, dependent: :destroy
   has_many :wanting_offers, through: :wants, source: :offer
+  has_many :likes, dependent: :destroy
+  has_many :like_offers, through: :likes, source: :offer
   mount_uploader :image, ImageUploader
   jp_prefecture :prefecture_code
 
