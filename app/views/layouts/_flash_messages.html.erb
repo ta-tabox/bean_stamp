@@ -1,4 +1,5 @@
 <% flash.each do |message_type, message| %>
+  <% next unless message.is_a? String %>
   <div class="flash-<%= message_type %>">
     <div class="flex items-center">
       <svg class="w-6 h-6 mr-2"><use xlink:href="#information-circle"></use></svg>
