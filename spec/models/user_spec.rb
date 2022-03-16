@@ -6,7 +6,9 @@ RSpec.describe User, type: :model do
     it { is_expected.to have_many(:roaster_relationships).with_foreign_key('follower_id').inverse_of(:follower).dependent(:destroy) }
     it { is_expected.to have_many(:following_roasters).through(:roaster_relationships) }
     it { is_expected.to have_many(:wants) }
-    it { is_expected.to have_many(:wanting_offers).through(:wants) }
+    it { is_expected.to have_many(:want_offers).through(:wants) }
+    it { is_expected.to have_many(:likes) }
+    it { is_expected.to have_many(:like_offers).through(:likes) }
   end
 
   describe 'validations' do
