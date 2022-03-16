@@ -29,8 +29,7 @@ class WantsController < ApplicationController
     current_user.wanting_offers.delete(@offer)
     respond_to do |format|
       format.html { redirect_to request.referer }
-      # Ajaxで行うとusers/wantsにてdestroyしたときにwant詳細ページへのリンクが壊れる。JSで非表示にするようにできたらAjaxで処理する
-      # format.js
+      format.js
     end
   end
 

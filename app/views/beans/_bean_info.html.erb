@@ -1,21 +1,17 @@
 <%# コーヒー豆詳細情報 %>
-<section class="card text-gray-600 body-font">
-  <h1 class="w-11/12 mx-auto text-center pb-2 text-gray-900 text-xl lg:text-2xl title-font font-medium"><%= bean.name %></h1>
+<section class="card text-gray-600">
+  <h1 class="w-11/12 mx-auto text-center pb-2 text-gray-900 text-xl lg:text-2xl title-font"><%= bean.name %></h1>
   <div class="w-11/12 mx-auto flex flex-col justify-center items-center">
     <%# カルーセル %>
     <%= render partial:'beans/images_swiper', locals: { bean: bean, cls: "w-full lg:w-10/12 h-64 lg:h-96" } %>
     <div class="text-center lg:w-10/12 w-full pt-4">
       <p class="leading-relaxed"><%= bean&.describe %></p>
       <section class= "w-11/12 mx-auto pt-4">
-        <div class="text-center text-lg">〜 Flavor 〜</div>
-        <div class="pt-2 flex justify-center space-x-3">
-          <%bean.taste_tags.each do |taste_tag|%>
-            <%= tag.div taste_tag.name, class: 'rounded-full py-1 px-4 font-medium border bg-white border-gray-300 text-center' if taste_tag.id?%>
-          <%end%>
-        </div>
+        <div class="mb-2 text-center text-lg e-font">〜 Flavor 〜</div>
+        <%= render partial: 'beans/taste_tag', locals: { bean: bean } %>
       </section>
       <section class= "pt-4 grid-container grid-cols-2">
-        <div class="col-span-2 mb-2 text-lg">〜 Detail 〜</div>
+        <div class="col-span-2 mb-2 text-lg e-font">〜 Detail 〜</div>
         <div class="grid-item">
           <span class="text-gray-500">生産国</span>
           <span class="ml-auto text-gray-900"><%= bean&.country %></span>
@@ -50,7 +46,7 @@
         </div>
       </section>
       <section class= "pt-4 grid grid-cols-2 lg:grid-cols-3 content-between">
-        <div class="col-span-2 lg:col-span-3 mb-2 text-lg">〜 Taste 〜</div>
+        <div class="col-span-2 lg:col-span-3 mb-2 text-lg e-font">〜 Taste 〜</div>
         <div class="grid-item">
           <span class="text-gray-500">酸味</span>
           <span class="ml-auto text-gray-900"><%= bean&.acidity %></span>

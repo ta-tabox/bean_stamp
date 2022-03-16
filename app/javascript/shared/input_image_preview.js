@@ -20,6 +20,7 @@ document.addEventListener("turbolinks:load", function () {
       const previewTitle = document.createElement("h2");
       previewTitle.textContent = "〜 Preview 〜";
       previewTitle.id = "preview-title";
+      previewTitle.classList = "e-font";
       preview.before(previewTitle);
     }
 

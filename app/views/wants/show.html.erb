@@ -2,12 +2,18 @@
 <header class="header">
   <div class="h-full w-11/12 mx-auto flex justify-between items-end">
     <h1 class="page-title">ウォンツ詳細</h1>
-    <div class="mt-8">
+    <div class="flex items-end">
+      <div class="hidden lg:block">
+        <%= link_to "ウォンツ一覧", wants_path, class: "link mr-4" %>
+      </div>
       <%= render partial: 'wants/receipt_form', locals: { want: @want, offer: @want.offer } %>
     </div>
   </div>
 </header>
-<section class="container lg:w-11/12 mx-auto py-4 text-gray-600 body-font">
+<div class="block lg:hidden text-right">
+  <%= link_to "ウォンツ一覧", wants_path, class: "link mr-4" %>
+</div>
+<section class="container lg:w-11/12 mx-auto py-4 text-gray-600">
   <div id="want-rating-area">
     <div id="want-rating-form">
       <% if @want.receipted_at? && @want.unrated? %>

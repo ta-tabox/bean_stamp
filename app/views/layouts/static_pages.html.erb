@@ -2,6 +2,7 @@
 <html lang="ja">
   <%= render 'layouts/head' %>
   <body class="bg-white">
+    <%= render 'shared/svg' %>
     <div class="max-w-screen-2xl mx-auto">
       <%# メインコンテンツ %>
       <main class="mx-auto min-h-screen">
@@ -13,15 +14,15 @@
       <footer class="h-14 border-t z-50 text-black border-gray-200 bg-gray-100 opacity-60">
         <div class="h-full flex items-center justify-between">
           <!-- TOPアイコン -->
-          <div class="pl-8 md:pl-20">
-            <div><%= link_to 'Beans!', root_path %></div>
+          <div class="h-full pl-8 md:pl-20 logo-font text-xl">
+            <%= link_to 'Beans', root_path, class: "static-nav-item" %>
           </div>
           <!-- 切り替えアイコン -->
           <nav class="pr-2 md:pl-16 h-full">
             <ul class="flex h-full">
-              <li><%= link_to 'HOME', root_path, class: "nav-item" %></li>
-              <li><%= link_to 'ABOUT', about_path, class: "nav-item" %></li>
-              <li><%= link_to 'HELP', help_path, class: "nav-item" %></li>
+              <li><%= link_to 'HOME', root_path, class: "static-nav-item e-font" %></li>
+              <li><%= link_to 'ABOUT', about_path, class: "static-nav-item e-font" %></li>
+              <li><%= link_to 'HELP', help_path, class: "static-nav-item e-font" %></li>
             </ul>
           </nav>
         </div>

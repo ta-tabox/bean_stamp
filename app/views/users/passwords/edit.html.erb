@@ -9,16 +9,12 @@
         <%# パスワードフィールド %>
         <div class="input-container">
           <%= f.password_field :password, autocomplete: "new-password", placeholder:"新しいパスワード(#{@minimum_password_length}文字以上)", class: "input-field" %>
-          <div class="input-icon-field">
-            <i class="fa-solid fa-unlock"></i>
-          </div>
+          <div class="input-icon-field"><svg><use xlink:href="#unlock"></use></svg></div>
         </div>
         <%# パスワード確認フィールド %>
         <div class="input-container">
           <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder:"パスワード(確認)", class: "input-field" %>
-          <div class="input-icon-field">
-            <i class="fa-solid fa-unlock"></i>
-          </div>
+          <div class="input-icon-field"><svg><use xlink:href="#unlock"></use></svg></div>
         </div>
         <div class="form-button-field mt-4">
           <%= link_to "キャンセル", root_path, class: "mr-3 btn btn-secondary btn-pop", data: { confirm: '入力中のデータは削除されます。キャンセルしますか？'} %>

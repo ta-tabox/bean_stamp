@@ -14,7 +14,7 @@ RSpec.describe 'Beans', type: :system do
     describe 'index feature' do
       let(:recent_bean) { create(:bean, :with_image, :with_3_taste_tags, name: 'recent_bean', created_at: Time.current, roaster: user.roaster) }
       let(:old_bean) { create(:bean, :with_image, :with_3_taste_tags, name: 'old_bean', created_at: Time.current.ago(3.days), roaster: user.roaster) }
-      subject { click_link 'Beans' }
+      subject { within('ul') { click_link 'Beans' } }
 
       it 'displays beans in order desc' do
         recent_bean
@@ -29,7 +29,7 @@ RSpec.describe 'Beans', type: :system do
       subject { proc { click_button '登録' } }
 
       before do
-        click_link 'Beans'
+        within('ul') { click_link 'Beans' }
         click_link '新規作成'
         fill_in 'タイトル', with: 'テストビーンズ'
         fill_in '生産国', with: 'エチオピア'
@@ -43,9 +43,9 @@ RSpec.describe 'Beans', type: :system do
         # fill_in '収穫時期', with: '2022-01'
         # page.find('#bean_cropped_at').set('2020-01-01')
         find('#bean_describe').fill_in with: 'テストメッセージ'
-        select 'FLORAL', from: 'bean[bean_taste_tags_attributes][0][mst_taste_tag_id]'
-        select 'BLACK TEA', from: 'bean[bean_taste_tags_attributes][1][mst_taste_tag_id]'
-        select 'CHAMOMILE', from: 'bean[bean_taste_tags_attributes][2][mst_taste_tag_id]'
+        select 'loral', from: 'bean[bean_taste_tags_attributes][0][mst_taste_tag_id]'
+        select 'Black tea', from: 'bean[bean_taste_tags_attributes][1][mst_taste_tag_id]'
+        select 'Chamomile', from: 'bean[bean_taste_tags_attributes][2][mst_taste_tag_id]'
       end
 
       context 'with correct form' do
@@ -99,7 +99,7 @@ RSpec.describe 'Beans', type: :system do
       subject { click_button '更新' }
 
       it "updates the bean's information" do
-        click_link 'Beans'
+        within('ul') { click_link 'Beans' }
         find("article#bean-#{bean.id}").click_link '詳細'
         click_link '編集'
         fill_in 'タイトル', with: 'アップデートビーンズ'
@@ -111,9 +111,9 @@ RSpec.describe 'Beans', type: :system do
         fill_in '標高', with: '800'
         fill_in '精製方法', with: 'ウォッシュド'
         find('#bean_describe').fill_in with: 'アップデートメッセージ'
-        select 'ROSE', from: 'bean[bean_taste_tags_attributes][0][mst_taste_tag_id]'
-        select 'JASMINE', from: 'bean[bean_taste_tags_attributes][1][mst_taste_tag_id]'
-        select 'BERRY', from: 'bean[bean_taste_tags_attributes][2][mst_taste_tag_id]'
+        select 'Rose', from: 'bean[bean_taste_tags_attributes][0][mst_taste_tag_id]'
+        select 'Jasmine', from: 'bean[bean_taste_tags_attributes][1][mst_taste_tag_id]'
+        select 'Berry', from: 'bean[bean_taste_tags_attributes][2][mst_taste_tag_id]'
         subject
         expect(current_path).to eq bean_path bean
         expect(page).to have_content 'コーヒー豆情報を更新しました'
@@ -132,7 +132,7 @@ RSpec.describe 'Beans', type: :system do
     end
 
     describe 'delete bean feature' do
-      before { click_link 'Beans' }
+      before { within('ul') { click_link 'Beans' } }
 
       it 'deletes a bean' do
         expect do

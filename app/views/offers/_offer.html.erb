@@ -1,20 +1,22 @@
 <!-- オファー所有者向け -->
 <article id="offer-<%= offer.id %>" class="pb-4">
   <div class="card px-8 mt-16">
-    <div class="flex justify-center -mt-16 md:justify-end items-end">
-      <%= render partial: 'beans/bean_thumbnail', locals: { bean: offer.bean } %>
-    </div>
-    <div class="flex justify-between">
-      <div class="font-semibold mb-4 <%=offer.status%>"><%= offer.status_i18n %></div>
-      <h2 class="text-md title-font text-gray-500 tracking-widest hover:text-gray-800"><%= link_to offer.roaster.name, offer.roaster %></h2>
-    </div>
-    <div class="md:flex items-baseline">
-      <h1 class="md:mt-2 text-xl lg:text-2xl font-semibold text-gray-800 lg:mt-0"><%= offer.bean.name %></h1>
-      <div class="text-right"><%= link_to '詳細', offer_path(offer), class: "btn btn-secondary mr-4 md:ml-4" %></div>
-    </div>
-    <div class="flex justify-end items-end">
-      <div class="mr-4"><%= render partial: 'offers/stats', locals: { offer: offer } %></div>
-    </div>
+    <header>
+      <div class="flex justify-center -mt-16 md:justify-end items-end">
+        <%= render partial: 'beans/bean_thumbnail', locals: { bean: offer.bean } %>
+      </div>
+      <div class="flex justify-between">
+        <div class="font-medium mb-4 <%=offer.status%>"><%= offer.status_i18n %></div>
+        <h2 class="text-md title-font text-gray-500 tracking-widest hover:text-gray-800"><%= link_to offer.roaster.name, offer.roaster %></h2>
+      </div>
+      <div class="md:flex items-baseline">
+        <h1 class="md:mt-2 text-xl lg:text-2xl font-medium text-gray-800 lg:mt-0"><%= offer.bean.name %></h1>
+        <div class="text-right"><%= link_to '詳細', offer_path(offer), class: "btn btn-secondary mr-4 md:ml-4" %></div>
+      </div>
+      <div class="flex justify-end items-end">
+        <div class="mr-4"><%= render partial: 'offers/stats', locals: { offer: offer } %></div>
+      </div>
+    </header>
     <section class= "mt-4 grid-container grid-cols-2">
       <div class="grid-item">
         <span class="text-gray-500">生産国</span>
