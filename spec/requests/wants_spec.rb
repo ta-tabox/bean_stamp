@@ -131,7 +131,7 @@ RSpec.describe 'Wants', type: :request do
       it { is_expected.to change(Want, :count).by(-1) }
       it { is_expected.to change(user.wants, :count).by(-1) }
       it { is_expected.to change(offer.wants, :count).by(-1) }
-      skip 'with Ajax' do
+      context 'with Ajax' do
         subject { proc { delete want_path(want), xhr: true } }
         it { is_expected.to change(Want, :count).by(-1) }
       end
