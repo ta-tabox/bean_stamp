@@ -2,11 +2,11 @@
     html: { method: :delete }, local: false) do |f| %>
   <% if offer.ended_at >= Date.current %>
     <%= f.button type:"submit", id:"unwant-button" do %>
-      <svg class="w-10 h-10"><use xlink:href="#check-circle-solid"></use></svg>
+      <svg class="w-10 h-10 text-indigo-500"><use xlink:href="#check-circle-solid"></use></svg>
     <% end %>
   <% else %>
     <%= f.button type:"submit", disabled: 'disabled', id:"unwant-button" ,class:"cursor-not-allowed" do%>
-      <svg class="w-10 h-10"><use xlink:href="#x-circle-solid"></use></svg>
+      <svg class="w-10 h-10 text-indigo-500 opacity-50"><use xlink:href="#check-circle-solid"></use></svg>
     <% end %>
   <% end %>
 <% end %>
