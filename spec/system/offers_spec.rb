@@ -107,7 +107,7 @@ RSpec.describe 'Offers', type: :system do
           expect(current_path).to eq offers_path
         end.to change(Offer, :count).by(-1)
         expect(page).to have_content "コーヒー豆「#{offer.bean.name}」のオファーを1件削除しました"
-        expect(page).to_not have_selector("a[href='/offers/#{offer.id}]")
+        expect(page).to_not have_selector("a[href='/offers/#{offer.id}']")
       end
       it 'deletes a offer at offers#edit' do
         visit edit_offer_path offer
