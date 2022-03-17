@@ -33,7 +33,6 @@ Rails.application.routes.draw do
     collection { get 'search' }
     member do
       get 'wanted_users'
-      get 'liked_users'
     end
     resources :wants, only: %i[create]
     resources :likes, only: %i[create]
