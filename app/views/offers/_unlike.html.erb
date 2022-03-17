@@ -1,0 +1,6 @@
+<%= form_with(model: [current_user.likes.find_by(offer_id: offer.id)],
+    html: { method: :delete }, local: false) do |f| %>
+  <%= f.button type:"submit", id:"unlike-button" do %>
+    <svg class="w-10 h-10"><use xlink:href="#check-circle-solid"></use></svg>
+  <% end %>
+<% end %>

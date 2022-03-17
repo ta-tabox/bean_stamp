@@ -12,16 +12,16 @@ class LikesController < ApplicationController
     current_user.like_offers << @offer
     respond_to do |format|
       format.html { redirect_to request.referer }
-      # format.js
+      format.js
     end
   end
 
   def destroy
-    @offer = Want.find(params[:id]).offer
+    @offer = Like.find(params[:id]).offer
     current_user.like_offers.delete(@offer)
     respond_to do |format|
       format.html { redirect_to request.referer }
-      # format.js
+      format.js
     end
   end
 end

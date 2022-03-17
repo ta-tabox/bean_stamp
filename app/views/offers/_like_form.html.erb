@@ -1,0 +1,9 @@
+<% unless current_user.had_offer?(offer) %>
+  <div id="offer-<%= offer.id %>-like-form">
+    <% if current_user.like_offers.include?(offer) %>
+      <%= render partial: 'offers/unlike', locals: { offer: offer } %>
+    <% else %>
+      <%= render partial: 'offers/like', locals: { offer: offer } %>
+    <% end %>
+  </div>
+<% end %>
