@@ -2,11 +2,11 @@
   <div><%= hidden_field_tag :offer_id, offer.id %></div>
   <% if offer.wants.count < offer.amount && offer.ended_at >= Date.current %>
     <%= f.button type:"submit", id:"want-button" do %>
-      <svg class="w-10 h-10"><use xlink:href="#plus-circle"></use></svg>
+      <svg class="w-10 h-10 text-indigo-600"><use xlink:href="#check-circle" ></use></svg>
     <% end %>
   <% else %>
     <%= f.button type:"submit", disabled: 'disabled', id:"want-button", class:"cursor-not-allowed" do %>
-      <svg class="w-10 h-10"><use xlink:href="#plus-circle"></use></svg>
+      <svg class="w-10 h-10 text-indigo-600 opacity-50"><use xlink:href="#check-circle"></use></svg>
     <% end %>
   <% end %>
 <% end %>

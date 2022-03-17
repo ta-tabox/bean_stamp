@@ -278,23 +278,6 @@
   @apply text-gray-900 cursor-default bg-gray-300 font-medium;
 }
 
-/* offer status */
-.on_offering {
-  @apply bg-blue-500 rounded-full text-center text-white px-4 py-1 text-sm font-light;
-}
-.on_roasting {
-  @apply bg-green-500 rounded-full text-center text-white px-4 py-1 text-sm font-light;
-}
-.on_preparing {
-  @apply bg-green-500 rounded-full text-center text-white px-4 py-1 text-sm font-light;
-}
-.on_selling {
-  @apply bg-red-500 rounded-full text-center text-white px-4 py-1 text-sm font-light;
-}
-.end_of_sales {
-  @apply bg-gray-700 rounded-full text-center text-white px-4 py-1 text-sm font-light;
-}
-
 /* rating */
 .radio-tile-group {
   @apply flex justify-center;
@@ -349,6 +332,29 @@
 :root {
   /* swiperのベースカラー設定 paginationの色 */
   --swiper-theme-color: rgba(229, 231, 235); /* gray-520 */
+}
+
+/* offerアイテム */
+/* icon */
+.icon-text {
+  @apply absolute -bottom-1 inset-x-0 text-xs text-center;
+}
+
+/* offer status */
+.on_offering {
+  @apply bg-blue-500 rounded-full text-center text-white px-4 py-1 text-sm font-light;
+}
+.on_roasting {
+  @apply bg-green-500 rounded-full text-center text-white px-4 py-1 text-sm font-light;
+}
+.on_preparing {
+  @apply bg-green-500 rounded-full text-center text-white px-4 py-1 text-sm font-light;
+}
+.on_selling {
+  @apply bg-red-500 rounded-full text-center text-white px-4 py-1 text-sm font-light;
+}
+.end_of_sales {
+  @apply bg-gray-700 rounded-full text-center text-white px-4 py-1 text-sm font-light;
 }
 
 /* Tab */
