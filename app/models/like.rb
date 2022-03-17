@@ -6,4 +6,6 @@ class Like < ApplicationRecord
 
   validates :user_id, presence: true
   validates :offer_id, presence: true
+
+  scope :recent, -> { order(created_at: :desc) }
 end
