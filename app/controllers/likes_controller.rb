@@ -24,4 +24,15 @@ class LikesController < ApplicationController
       format.js
     end
   end
+
+  def search
+    status = params[:search]
+    likes = if status.blank?
+              current_user.likes.includes(offer: [:roaster, { bean: :roast_level }]).recent
+            else
+              current_user.likes.includes(offer: [:roaster, { bean: :roast_level }]).search_status(status)
+            end
+    @pagy, @likes = pagy(likes)
+    render 'index'
+  end
 end

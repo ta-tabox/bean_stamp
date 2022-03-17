@@ -8,4 +8,5 @@ class Like < ApplicationRecord
   validates :offer_id, presence: true
 
   scope :recent, -> { order(created_at: :desc) }
+  scope :search_status, ->(status) { joins(:offer).where(offer: { status: status }) }
 end
