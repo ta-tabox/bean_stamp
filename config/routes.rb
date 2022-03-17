@@ -46,5 +46,7 @@ Rails.application.routes.draw do
       patch 'rate', to: 'wants#rate'
     end
   end
-  resources :likes, only: %i[index destroy]
+  resources :likes, only: %i[index destroy] do
+    collection { get 'search' }
+  end
 end
