@@ -2,9 +2,9 @@ class LikesController < ApplicationController
   before_action :user_signed_in_required
 
   def index
-    offers = current_user.like_offers
-    offers&.map { |offer| offer.update_status }
-    @pagy, @offers = pagy(offers.includes(:roaster, { bean: :roast_level }).recent)
+    likes = current_user.likes.includes(:offer)
+    likes&.map { |want| want.offer.update_status }
+    @pagy, @likes = pagy(likes.includes(offer: [:roaster, { bean: :roast_level }]).recent)
   end
 
   def create
