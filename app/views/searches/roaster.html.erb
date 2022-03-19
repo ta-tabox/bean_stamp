@@ -1,2 +1,41 @@
-<h1>Searches#roaster</h1>
-<p>Find me in app/views/searches/roaster.html.erb</p>
+<% provide(:title, "ロースター検索") %>
+<header class="header">
+  <div class="h-full w-11/12 mx-auto flex justify-start items-end">
+    <h1 class="page-title">ロースター検索</h1>
+  </div>
+</header>
+<div class="form-container">
+  <div class="form-main">
+    <%= search_form_for @q, url: roaster_searches_path do |f| %>
+      <h1 class="form-title">ロースター検索</h1>
+      <%# 店舗名検索 %>
+      <div class="input-container">
+        <%= f.search_field :name_cont, placeholder: Roaster.human_attribute_name(:name), class: 'input-field' %>
+        <div class="input-icon-field"><i class="fa-solid fa-mug-saucer text-gray-300"></i></div>
+      </div>
+      <%# 都道府県検索 %>
+      <div class="input-container">
+        <%= f.collection_select :prefecture_code_eq, JpPrefecture::Prefecture.all, :code, :name, { include_blank: "都道府県 指定なし" }, class: 'input-field' %>
+        <div class="input-icon-field">
+          <svg><use xlink:href="#location-marker"></use></svg>
+        </div>
+        <i class="fa-solid fa-angle-down select-box-arrow"></i>
+      </div>
+      <div class="form-button-field mt-4">
+        <%= link_to "クリア", roaster_searches_path , class: "mr-4 btn btn-secondary btn-pop" %>
+        <div class="actions">
+          <%= f.submit "検索", class: "btn btn-primary btn-pop" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="mt-4 mx-2 border-b border-gray-200"></div>
+<% if @roasters.any? %>
+  <section class="card mt-4 mb-20 py-4 text-gray-600">
+    <ol>
+      <%= render partial: 'roasters/roaster', collection: @roasters %>
+    </ol>
+    <%== pagy_nav_js(@pagy) %>
+  </section>
+<% end %>
