@@ -1,5 +1,4 @@
-<%= search_form_for @roasters_q, as: :roasters_q, url: roaster_searches_path do |f| %>
-  <h1 class="form-title">ロースター検索</h1>
+<%= search_form_for @roaster_search, as: :roaster_search, url: roaster_searches_path do |f| %>
   <%# 店舗名検索 %>
   <div class="input-container">
     <%= f.search_field :name_cont, placeholder: Roaster.human_attribute_name(:name), class: 'input-field' %>
@@ -7,7 +6,7 @@
   </div>
   <%# 都道府県検索 %>
   <div class="input-container">
-    <%= f.collection_select :prefecture_code_eq, JpPrefecture::Prefecture.all, :code, :name, { include_blank: "都道府県 指定なし" }, class: 'input-field' %>
+    <%= f.collection_select :prefecture_code_eq, JpPrefecture::Prefecture.all, :code, :name, { include_blank: "都道府県" }, class: 'input-field' %>
     <div class="input-icon-field">
       <svg><use xlink:href="#location-marker"></use></svg>
     </div>

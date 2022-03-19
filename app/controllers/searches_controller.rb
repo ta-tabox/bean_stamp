@@ -1,19 +1,27 @@
 class SearchesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_search_query
 
-  def index
-    @roasters_q = Roaster.ransack(params[:roasters_q], search_key: :roasters_q)
-    @pagy, @roasters = pagy(@roasters_q.result(distinct: true))
-  end
+  def index; end
 
   def roaster
-    @roasters_q = Roaster.ransack(params[:roasters_q], search_key: :roasters_q)
-    flash.now[:alert] = 'ロースターが見つかりませんでした' unless @roasters_q.result.any?
-    @pagy, @roasters = pagy(@roasters_q.result(distinct: true))
+    flash.now[:alert] = 'ロースターが見つかりませんでした' unless @roaster_search.result.any?
+    @pagy, @roasters = pagy(@roaster_search.result(distinct: true))
+    render 'index'
   end
 
-  # def offer
-  #   @q = Offer.ransack(params[:q])
-  #   @offers = @q.result(distinct: true)
-  # end
+  def offer
+    flash.now[:alert] = 'オファーが見つかりませんでした' unless @offer_search.result.any?
+    offers = @offer_search.result(distinct: true)
+    offers&.map(&:update_status)
+    @pagy, @offers = pagy(offers.recent.includes(:roaster, { bean: %i[roast_level bean_images taste_tags] }))
+    render 'index'
+  end
+
+  private
+
+  def set_search_query
+    @roaster_search = Roaster.ransack(params[:roaster_search], search_key: :roaster_search)
+    @offer_search = Offer.active.ransack(params[:offer_search], search_key: :offer_search)
+  end
 end

@@ -1,2 +1,12 @@
-<h1>Searches#offer</h1>
-<p>Find me in app/views/searches/offer.html.erb</p>
+<% provide(:title, "オファー検索") %>
+<header class="header">
+  <div class="h-full w-11/12 mx-auto flex justify-start items-end">
+    <h1 class="page-title">オファー検索</h1>
+  </div>
+</header>
+<%= render 'search_form' %>
+<div class="mt-4 mx-2 border-b border-gray-200"></div>
+<% if @offers.any? %>
+  <%= render partial: 'shared/offer', collection: @offers %>
+  <%== pagy_nav_js(@pagy) %>
+<% end %>
