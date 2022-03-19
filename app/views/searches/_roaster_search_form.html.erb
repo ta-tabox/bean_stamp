@@ -1,4 +1,4 @@
-<%= search_form_for @roaster_search, as: :roaster_search, url: roaster_searches_path do |f| %>
+<%= search_form_for(@roaster_search, as: :roaster_search, url: roaster_searches_path, local: false) do |f| %>
   <%# 店舗名検索 %>
   <div class="input-container">
     <%= f.search_field :name_cont, placeholder: Roaster.human_attribute_name(:name), class: 'input-field' %>

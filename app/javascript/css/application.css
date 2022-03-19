@@ -367,9 +367,6 @@
 .tab.is-active {
   @apply border-l-2 text-indigo-500 border-indigo-500;
 }
-.panel-group {
-  @apply w-full lg:h-80;
-}
 .panel {
   @apply hidden;
 }

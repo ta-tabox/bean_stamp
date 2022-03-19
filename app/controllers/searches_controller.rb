@@ -2,11 +2,14 @@ class SearchesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_search_query
 
-  def index; end
+  def index
+    @active_tab = 'roaster'
+  end
 
   def roaster
     flash.now[:alert] = 'ロースターが見つかりませんでした' unless @roaster_search.result.any?
     @pagy, @roasters = pagy(@roaster_search.result(distinct: true))
+    @active_tab = 'roaster'
     render 'index'
   end
 
@@ -15,6 +18,7 @@ class SearchesController < ApplicationController
     offers = @offer_search.result(distinct: true)
     offers&.map(&:update_status)
     @pagy, @offers = pagy(offers.recent.includes(:roaster, { bean: %i[roast_level bean_images taste_tags] }))
+    @active_tab = 'offer'
     render 'index'
   end
 
