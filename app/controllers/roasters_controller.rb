@@ -14,7 +14,9 @@ class RoastersController < ApplicationController
     @pagy, @offers = pagy(offers.includes(:roaster, bean: :bean_images))
   end
 
-  def index; end
+  def index
+    redirect_to roaster_searches_path
+  end
 
   def show
     offers = @roaster.offers
