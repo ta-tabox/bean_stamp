@@ -1,5 +1,5 @@
 class OffersController < ApplicationController
-  before_action :user_signed_in_required
+  before_action :authenticate_user!
   before_action :user_belonged_to_roaster_required, except: %i[show]
   before_action :set_roaster_id_cookie, only: %i[index new edit search wanted_users]
   before_action :roaster_had_bean_requierd, only: %i[create]

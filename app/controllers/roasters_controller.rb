@@ -1,5 +1,5 @@
 class RoastersController < ApplicationController
-  before_action :user_signed_in_required
+  before_action :authenticate_user!
   before_action :user_not_belonged_to_roaster_required, only: %i[new create]
   before_action :user_belonged_to_roaster_required, only: %i[home edit update destroy cancel]
   before_action :set_roaster_id_cookie, only: %i[home edit cancel]
