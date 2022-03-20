@@ -43,7 +43,7 @@ RSpec.describe 'Beans', type: :system do
         # fill_in '収穫時期', with: '2022-01'
         # page.find('#bean_cropped_at').set('2020-01-01')
         find('#bean_describe').fill_in with: 'テストメッセージ'
-        select 'loral', from: 'bean[bean_taste_tags_attributes][0][mst_taste_tag_id]'
+        select 'Floral', from: 'bean[bean_taste_tags_attributes][0][mst_taste_tag_id]'
         select 'Black tea', from: 'bean[bean_taste_tags_attributes][1][mst_taste_tag_id]'
         select 'Chamomile', from: 'bean[bean_taste_tags_attributes][2][mst_taste_tag_id]'
       end
@@ -87,9 +87,9 @@ RSpec.describe 'Beans', type: :system do
         expect(page).to have_content bean.body
         expect(page).to have_content bean.bitterness
         expect(page).to have_content bean.sweetness
-        expect(page).to have_content bean.taste_tags[0].name
-        expect(page).to have_content bean.taste_tags[1].name
-        expect(page).to have_content bean.taste_tags[2].name
+        expect(page).to have_content bean.taste_tags[0].name.capitalize
+        expect(page).to have_content bean.taste_tags[1].name.capitalize
+        expect(page).to have_content bean.taste_tags[2].name.capitalize
         expect(page).to have_content '編集'
         expect(page).to have_selector("a[href='/beans/#{bean.id}/edit']")
       end
@@ -125,9 +125,9 @@ RSpec.describe 'Beans', type: :system do
         expect(page).to have_content '800 m'
         expect(page).to have_content 'ウォッシュド'
         expect(page).to have_content 'アップデートメッセージ'
-        expect(page).to have_content 'ROSE'
-        expect(page).to have_content 'JASMINE'
-        expect(page).to have_content 'BERRY'
+        expect(page).to have_content 'Rose'
+        expect(page).to have_content 'Jasmine'
+        expect(page).to have_content 'Berry'
       end
     end
 
