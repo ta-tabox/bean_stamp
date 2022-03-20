@@ -19,12 +19,12 @@
         <h2 class="e-font">〜 Detail 〜</h2>
         <%# タイトル %>
         <div class="input-container">
-          <%= f.text_field :name, autofocus: true, placeholder: "タイトル", class: "input-field" %>
+          <%= f.text_field :name, autofocus: true, placeholder: Bean.human_attribute_name(:name), class: "input-field" %>
           <div class="input-icon-field"><i class="fa-solid fa-heading fa-lg"></i></div>
         </div>
         <%# 生産国 %>
         <div class="input-container">
-          <%= f.text_field :country, placeholder: "生産国", class: "input-field" %>
+          <%= f.text_field :country, placeholder: Bean.human_attribute_name(:country), class: "input-field" %>
           <div class="input-icon-field"><i class="fa-solid fa-earth-asia fa-lg"></i></div>
         </div>
         <%# 焙煎度 %>
@@ -35,39 +35,39 @@
         </div>
         <%# 地域 %>
         <div class="input-container">
-          <%= f.text_field :subregion, placeholder: "地域", class: "input-field" %>
+          <%= f.text_field :subregion, placeholder: Bean.human_attribute_name(:subregion), class: "input-field" %>
           <div class="input-icon-field">
             <svg><use xlink:href="#location-marker"></use></svg>
           </div>
         </div>
         <%# 農園 %>
         <div class="input-container">
-          <%= f.text_field :farm, placeholder: "農園", class: "input-field" %>
+          <%= f.text_field :farm, placeholder: Bean.human_attribute_name(:farm), class: "input-field" %>
           <div class="input-icon-field"><i class="fa-solid fa-tractor fa-lg"></i></div>
         </div>
         <%# 品種 %>
         <div class="input-container">
-          <%= f.text_field :variety, placeholder: "品種", class: "input-field" %>
+          <%= f.text_field :variety, placeholder: Bean.human_attribute_name(:variety), class: "input-field" %>
           <div class="input-icon-field"><i class="fa-solid fa-leaf fa-lg"></i></div>
         </div>
         <%# 標高 %>
         <div class="input-container">
-          <%= f.number_field :elevation, placeholder: "標高", maxlength:"4", class: "input-field" %>
+          <%= f.number_field :elevation, placeholder: Bean.human_attribute_name(:elevation), maxlength:"4", class: "input-field" %>
           <div class="input-icon-field"><i class="fa-solid fa-mountain fa-lg"></i></div>
         </div>
         <%# 精製方法 %>
         <div class="input-container">
-          <%= f.text_field :process, placeholder: "精製方法", class: "input-field" %>
+          <%= f.text_field :process, placeholder: Bean.human_attribute_name(:process), class: "input-field" %>
           <div class="input-icon-field"><i class="fa-solid fa-industry fa-lg"></i></div>
         </div>
         <%# 収穫期 %>
         <div class="input-container">
-          <%= f.month_field :cropped_at, placeholder: "収穫期", class: "input-field" %>
+          <%= f.month_field :cropped_at, placeholder: Bean.human_attribute_name(:cropped_at), class: "input-field" %>
           <div class="input-icon-field"><i class="fa-regular fa-calendar fa-lg"></i></div>
         </div>
         <%# 紹介文 %>
         <div class="input-container">
-          <%= f.text_area :describe, placeholder: "紹介文(300文字まで)", class: "input-field" %>
+          <%= f.text_area :describe, placeholder: "#{Bean.human_attribute_name(:describe)} (300文字まで)", class: "input-field" %>
           <div class="input-icon-field"><i class="fa-solid fa-pen-to-square fa-lg"></i></div>
         </div>
       </section>

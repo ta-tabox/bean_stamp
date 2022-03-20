@@ -7,13 +7,13 @@
         <%= render "shared/error_messages", resource: f.object %>
         <%# メールアドレスフィールド %>
         <div class="input-container">
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder:"メールアドレス", class: "input-field" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: User.human_attribute_name(:email), class: "input-field" %>
           <div class="input-icon-field"><svg><use xlink:href="#mail"></use></svg></div>
         </div>
         <%# パスワードフィールド %>
         <div class="input-container">
           <%= f.password_field :password,
-      autocomplete: "current-password", placeholder:"パスワード", class: "input-field" %>
+      autocomplete: "current-password", placeholder: User.human_attribute_name(:password), class: "input-field" %>
           <div class="input-icon-field"><svg><use xlink:href="#unlock"></use></svg></div>
         </div>
         <%# ログインの記録 %>

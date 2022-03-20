@@ -18,12 +18,12 @@
       </div>
       <%# 店舗名フィールド %>
       <div class=input-container>
-        <%= f.text_field :name, autofocus: true, placeholder: "店舗名", class: "input-field" %>
+        <%= f.text_field :name, autofocus: true, placeholder: Roaster.human_attribute_name(:name), class: "input-field" %>
         <div class="input-icon-field"><i class="fa-solid fa-mug-saucer text-gray-300"></i></div>
       </div>
       <%# 電話番号フィールド %>
       <div class=input-container>
-        <%= f.telephone_field :phone_number, placeholder: "電話番号", pattern: '\d{10,11}', title: "半角数字で記入してください", maxlength:"11", class: "input-field" %>
+        <%= f.telephone_field :phone_number, placeholder: Roaster.human_attribute_name(:phone_number), pattern: '\d{10,11}', title: "半角数字で記入してください", maxlength:"11", class: "input-field" %>
         <div class="input-icon-field"><i class="fa-solid fa-phone"></i></div>
       </div>
       <%# 都道府県フィールド %>
@@ -36,14 +36,14 @@
       </div>
       <%# 住所フィールド %>
       <div class=input-container>
-        <%= f.text_field :address, placeholder: "住所", class: "input-field" %>
+        <%= f.text_field :address, placeholder: Roaster.human_attribute_name(:address), class: "input-field" %>
         <div class="input-icon-field">
           <svg><use xlink:href="#map"></use></svg>
         </div>
       </div>
       <%# 店舗紹介フィールド %>
       <div class=input-container>
-        <%= f.text_area :describe, placeholder:"店舗紹介(300文字まで)", class: "input-field" %>
+        <%= f.text_area :describe, placeholder: "#{Roaster.human_attribute_name(:describe)} (300文字まで)", class: "input-field" %>
         <div class="input-icon-field">
           <svg><use xlink:href="#pencil"></use></svg>
         </div>
