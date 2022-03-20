@@ -6,7 +6,7 @@
     <div class="container max-w-screen-2xl lg:mx-auto">
       <div class="flex flex-col lg:flex-row">
         <%# ナビコンテンツ %>
-        <nav class=" bg-gray-50">
+        <nav class="bg-gray-50">
           <%# モバイルトップナビ %>
           <div class="lg:hidden">
             <%= render 'layouts/mobile_top_nav' %>
@@ -30,13 +30,15 @@
           </div>
         </main>
         <%# サイドコンテンツ %>
-        <aside class="hidden lg:block w-3/12 bg-gray-50">
-          <div class="h-full px-4 border-l border-gray-100">
-            <% if cookies[:roaster_id] %>
-              <%= render partial: 'shared/roaster_aside', locals: { roaster: current_user.roaster} %>
-            <% else %>
-              <%= render partial: 'shared/user_aside', locals: { user: current_user} %>
-            <% end %>
+        <aside class="w-3/12 hidden lg:block bg-gray-50">
+          <div class="h-full w-full">
+            <div class="min-h-screen px-4 border-l border-gray-100 sticky top-0">
+              <% if cookies[:roaster_id] %>
+                <%= render partial: 'shared/roaster_aside', locals: { roaster: current_user.roaster} %>
+              <% else %>
+                <%= render partial: 'shared/user_aside', locals: { user: current_user} %>
+              <% end %>
+            </div>
           </div>
         </aside>
       </div>
