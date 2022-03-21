@@ -26,6 +26,10 @@
   @apply font-noto font-medium text-2xl text-gray-800;
 }
 
+.copyright {
+  @apply font-noto font-light text-xs text-gray-500;
+}
+
 /* Background-image */
 .top-background {
   @apply fixed inset-0 bg-center bg-cover bg-no-repeat h-screen;
@@ -202,11 +206,11 @@
 
 /* search-box */
 .search-form {
-  @apply relative bg-gray-100 rounded border border-gray-200 flex items-center;
+  @apply relative bg-gray-100 rounded-full border border-gray-200 flex items-center;
 }
 
 .search-button {
-  @apply py-2 px-4 bg-white text-gray-600 rounded-l border-r border-gray-200 hover:bg-gray-50 active:bg-gray-200 disabled:opacity-50 inline-flex items-center focus:outline-none;
+  @apply py-2 px-4 bg-white rounded-l-full text-gray-600 border-r border-gray-200 hover:bg-gray-50 active:bg-gray-200 disabled:opacity-50 inline-flex items-center focus:outline-none;
 }
 
 .search-field {
