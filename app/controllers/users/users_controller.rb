@@ -2,6 +2,7 @@ class Users::UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user, only: %i[show following]
   before_action :reset_roaster_id_cookie, only: :home
+  before_action :update_want_offers_status, only: :home
 
   def home
     # enum型のon_offeringでオファー中のオファーを引っ張るとオファーが終了しているのに、
@@ -28,5 +29,13 @@ class Users::UsersController < ApplicationController
     return unless cookies[:roaster_id]
 
     cookies.delete(:roaster_id)
+  end
+
+  # users#home時にwant_offersのステータス更新→1時間置きに実行
+  def update_want_offers_status
+    return if cookies[:want_update]
+
+    current_user.want_offers&.map(&:update_status)
+    cookies[:want_update] = { value: true, expires: 1.hour.from_now }
   end
 end

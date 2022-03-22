@@ -2,6 +2,12 @@
   <div class="mt-10">
     <%= render 'shared/search_link' %>
   </div>
+  <section class="mt-8 flex flex-col justify-center space-y-1">
+    <h1 class="text-md text-gray-600 text-center e-font">Notification</h1>
+    <%= note_for_no_actions(current_user.roaster.offers) %>
+    <%= note_for_on_roasting(current_user.roaster.offers)%>
+    <%= note_for_on_selling(current_user.roaster.offers)%>
+  </section>
   <div class="mt-auto mb-4">
     <%= render 'shared/copyright' %>
   </div>
