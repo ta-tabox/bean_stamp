@@ -361,6 +361,15 @@
   @apply bg-gray-700 rounded-full text-center text-white px-4 py-1 text-sm font-light;
 }
 
+/* want receipted_badge */
+.unreceipted {
+  @apply bg-indigo-500 rounded-full text-center text-white px-4 py-1 text-sm font-light;
+}
+
+.receipted {
+  @apply bg-gray-700 rounded-full text-center text-white px-4 py-1 text-sm font-light;
+}
+
 /* Tab */
 .tab-group {
   @apply flex;

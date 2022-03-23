@@ -34,9 +34,9 @@
           <div class="h-full w-full">
             <div class="h-screen px-4 border-l border-gray-200 sticky top-0">
               <% if cookies[:roaster_id] %>
-                <%= render partial: 'shared/roaster_aside', locals: { roaster: current_user.roaster} %>
+                <%= render partial: 'shared/roaster_aside' %>
               <% else %>
-                <%= render partial: 'shared/user_aside', locals: { user: current_user} %>
+                <%= render partial: 'shared/user_aside' %>
               <% end %>
             </div>
           </div>
