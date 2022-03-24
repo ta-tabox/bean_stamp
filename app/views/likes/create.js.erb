@@ -1,0 +1,1 @@
+document.getElementById('offer-<%= @offer.id %>-like-form').innerHTML = '<%= escape_javascript(render partial: 'offers/unlike', locals: { offer: @offer }) %>';

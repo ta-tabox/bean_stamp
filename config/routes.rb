@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'likes/index'
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
   root 'static_pages#home'
   get 'home', to: 'static_pages#home', as: 'home'
@@ -30,9 +31,11 @@ Rails.application.routes.draw do
   end
   resources :offers do
     collection { get 'search' }
-    member { get 'wanted_users' }
-    resources :wants, only: %i[create] do
+    member do
+      get 'wanted_users'
     end
+    resources :wants, only: %i[create]
+    resources :likes, only: %i[create]
   end
   resources :roaster_relationships, only: %i[create destroy]
   resources :wants, only: %i[index show destroy] do
@@ -41,5 +44,8 @@ Rails.application.routes.draw do
       patch 'receipt', to: 'wants#receipt'
       patch 'rate', to: 'wants#rate'
     end
+  end
+  resources :likes, only: %i[index destroy] do
+    collection { get 'search' }
   end
 end

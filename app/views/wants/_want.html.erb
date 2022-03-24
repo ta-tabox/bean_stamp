@@ -12,38 +12,6 @@
       <h1 class="md:mt-2 text-xl lg:text-2xl font-medium text-gray-800 lg:mt-0"><%= want.offer.bean.name %></h1>
       <div class="text-right"><%= link_to '詳細', want_path(want), class: "btn btn-secondary ml-4" %></div>
     </div>
-    <section class= "mt-4 grid-container grid-cols-2">
-      <div class="grid-item">
-        <span class="text-gray-500">生産国</span>
-        <span class="ml-auto text-gray-900"><%= want.offer.bean&.country %></span>
-      </div>
-      <div class="lg:ml-4 grid-item">
-        <span class="text-gray-500">焙煎度</span>
-        <span class="ml-auto text-gray-900"><%= want.offer.bean.roast_level&.name %></span>
-      </div>
-      <div class="grid-item">
-        <span class="text-gray-500">精製方法</span>
-        <span class="ml-auto text-gray-900"><%= want.offer.bean&.process %></span>
-      </div>
-      <div class="col-start-1 grid-item">
-        <span class="text-gray-500">オファー終了日</span>
-        <span class="ml-auto text-gray-900"><%= l want.offer&.ended_at%></span>
-      </div>
-      <div class="lg:ml-4 grid-item">
-        <span class="text-gray-500">ロースト日</span>
-        <span class="ml-auto text-gray-900"><%= l want.offer&.roasted_at %></span>
-      </div>
-      <div class="grid-item">
-        <span class="text-gray-500">受け取り開始日</span>
-        <span class="ml-auto text-gray-900"><%= l want.offer&.receipt_started_at %></span>
-      </div>
-      <div class="lg:ml-4 grid-item">
-        <span class="text-gray-500">受け取り終了日</span>
-        <span class="ml-auto text-gray-900"><%= l want.offer&.receipt_ended_at %></span>
-      </div>
-      <div class="col-span-2 w-11/12 lg:w-full mx-auto pr-2 flex justify-end">
-        <%= render partial:'offers/price_weight', locals: { offer: want.offer } %>
-      </div>
-    </section>
+    <%= render partial: 'offers/offer_info_sort', locals: { offer: want.offer } %>
   </div>
 </article>

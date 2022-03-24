@@ -13,7 +13,7 @@ RSpec.describe 'Wants', type: :system do
       let!(:another_offer) { create(:offer, bean: another_bean) }
       before do
         sign_in user
-        user.wanting_offers << offer
+        user.want_offers << offer
         visit home_users_path
       end
       it 'shows wanting offers' do
@@ -43,7 +43,7 @@ RSpec.describe 'Wants', type: :system do
 
       context 'when a user has a want for a offer' do
         before do
-          user.wanting_offers << offer
+          user.want_offers << offer
           visit home_users_path
         end
         it 'should delete a want for an offer' do
@@ -61,7 +61,7 @@ RSpec.describe 'Wants', type: :system do
 
       before do
         sign_in user_belonging_a_roaster
-        another_user.wanting_offers << offer
+        another_user.want_offers << offer
         visit offers_path
       end
       it 'shows wanting offers' do

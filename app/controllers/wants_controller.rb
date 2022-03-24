@@ -17,7 +17,7 @@ class WantsController < ApplicationController
   end
 
   def create
-    current_user.wanting_offers << @offer
+    current_user.want_offers << @offer
     respond_to do |format|
       format.html { redirect_to request.referer }
       format.js
@@ -26,7 +26,7 @@ class WantsController < ApplicationController
 
   def destroy
     @offer = Want.find(params[:id]).offer
-    current_user.wanting_offers.delete(@offer)
+    current_user.want_offers.delete(@offer)
     respond_to do |format|
       format.html { redirect_to request.referer }
       format.js

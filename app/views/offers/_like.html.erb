@@ -1,0 +1,6 @@
+<%= form_with(model: [offer, current_user.likes.build], local: false) do |f| %>
+  <div><%= hidden_field_tag :offer_id, offer.id %></div>
+  <%= f.button type:"submit", id:"like-button" do %>
+    <svg class="w-10 h-10 text-pink-600"><use xlink:href="#heart"></use></svg>
+  <% end %>
+<% end %>

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Want, type: :model do
+RSpec.describe Like, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to belong_to(:offer) }
@@ -13,7 +13,6 @@ RSpec.describe Want, type: :model do
     it { is_expected.to validate_presence_of :offer_id }
   end
 
-  # 検索で使用するスコープのテスト
   describe '#search_status' do
     let(:user) { create(:user) }
     let(:bean) { create(:bean, :with_image, :with_3_taste_tags) }
@@ -23,10 +22,10 @@ RSpec.describe Want, type: :model do
     let(:selling_offer) { create(:offer, :on_selling, bean: bean) }
     let(:sold_offer) { create(:offer, :end_of_sales, bean: bean) }
 
-    subject { user.wants.search_status(status).take }
+    subject { user.likes.search_status(status).take }
 
     before do
-      user.want_offers.push(offering_offer, roasting_offer, preparing_offer, selling_offer, sold_offer)
+      user.like_offers.push(offering_offer, roasting_offer, preparing_offer, selling_offer, sold_offer)
     end
 
     context 'when search status is on_offering' do
