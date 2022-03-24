@@ -13,14 +13,9 @@ RSpec.describe 'Roasters', type: :request do
     end
 
     describe 'GET #index' do
-      it 'gets roasters/index' do
+      it 'gets searches/index and show offers' do
         get roasters_path
-        expect(response).to have_http_status(:success)
-        skip 'roaster/indexのタイトル' do
-          # roaster/indexのタイトルを決めたらテストする（search機能実装時）
-          expect(response.cookies['roaster_id']).to be_falsey
-          expect(response.body).to include("<title>#{base_title}</title>")
-        end
+        expect(response).to redirect_to roaster_searches_path
       end
     end
 
@@ -181,18 +176,6 @@ RSpec.describe 'Roasters', type: :request do
   context 'when a user is belonging to the roaster' do
     before do
       sign_in user_belonging_a_roaster
-    end
-
-    describe 'GET #index' do
-      it 'gets roasters/index' do
-        get roasters_path
-        expect(response).to have_http_status(:success)
-        skip 'roaster/indexのタイトル' do
-          # roaster/indexのタイトルを決めたらテストする（search機能実装時）
-
-          expect(response.body).to include("<title>#{base_title}</title>")
-        end
-      end
     end
 
     describe 'GET #show' do

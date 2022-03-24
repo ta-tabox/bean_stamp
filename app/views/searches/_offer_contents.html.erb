@@ -1,0 +1,4 @@
+  <% if @offers&.any? %>
+  <%= render partial: 'shared/offer', collection: @offers %>
+  <%== pagy_nav_js(@pagy) %>
+<% end %>

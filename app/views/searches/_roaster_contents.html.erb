@@ -1,0 +1,8 @@
+  <% if @roasters&.any? %>
+  <section class="card mt-4 mb-20 py-4 text-gray-600">
+    <ol>
+      <%= render partial: 'roasters/roaster', collection: @roasters %>
+    </ol>
+    <%== pagy_nav_js(@pagy) %>
+  </section>
+<% end %>
