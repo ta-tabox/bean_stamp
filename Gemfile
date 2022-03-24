@@ -34,7 +34,6 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'faker'
-  gem 'ransack'
   gem 'rspec-rails', '~> 5.0'
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
@@ -78,6 +77,7 @@ gem 'jp_prefecture', '~> 1.0'
 gem 'mini_magick', '~> 4.11'
 gem 'pagy', '~> 5.3'
 gem 'rails-i18n', '~> 6.0.0'
+gem 'ransack'
 gem 'seed-fu', '~> 2.3'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
