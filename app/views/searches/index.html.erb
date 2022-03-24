@@ -1,0 +1,11 @@
+<% provide(:title, "検索") %>
+<header class="header">
+  <div class="h-full w-11/12 mx-auto flex justify-start items-end">
+    <h1 class="page-title">検索</h1>
+  </div>
+</header>
+<%= render 'search_form' %>
+<div id="search-contents">
+  <%= render 'roaster_contents' %>
+  <%= render 'offer_contents' %>
+</div>

@@ -1,0 +1,30 @@
+<div class="form-container tab-panel">
+  <ul class="tab-group">
+    <% if @active_tab == 'roaster' %>
+      <li id="roaster-tab" class="py-2 text-lg pl-8 e-font italic tab is-active">Roaster</li>
+      <li id="offer-tab" class="py-2 text-lg pl-8 e-font italic tab">Offer</li>
+    <% elsif @active_tab == 'offer' %>
+      <li id="roaster-tab" class="py-2 text-lg pl-8 e-font italic tab">Roaster</li>
+      <li id="offer-tab" class="py-2 text-lg pl-8 e-font italic tab is-active">Offer</li>
+    <% end %>
+  </ul>
+  <div class="form-main mt-8">
+    <div class="panel-group">
+      <% if @active_tab == 'roaster' %>
+        <div id="roaster-panel" class="panel is-show">
+          <%= render 'roaster_search_form' %>
+        </div>
+        <div id="offer-panel" class="panel">
+          <%= render 'offer_search_form' %>
+        </div>
+      <% elsif @active_tab == 'offer' %>
+        <div id="roaster-panel" class="panel">
+          <%= render 'roaster_search_form' %>
+        </div>
+        <div id="offer-panel" class="panel is-show">
+          <%= render 'offer_search_form' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

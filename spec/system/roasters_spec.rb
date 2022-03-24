@@ -8,10 +8,6 @@ RSpec.describe 'Roasters', type: :system do
     let(:user_belonging_a_roaster) { create(:user, roaster: roaster) }
     let(:user_belonging_an_another_roaster) { create(:user, roaster: another_roaster) }
 
-    describe 'index feature' do
-      pending 'ロースター一覧表示機能、検索機能のテスト'
-    end
-
     describe 'new registration feature' do
       subject { proc { click_button '登録' } }
 

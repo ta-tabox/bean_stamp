@@ -1,0 +1,33 @@
+<%= search_form_for @offer_search, as: :offer_search, url: offer_searches_path do |f| %>
+  <%# ロースターの地域検索 %>
+  <div class="input-container">
+    <%= f.collection_select :bean_roaster_prefecture_code_eq, JpPrefecture::Prefecture.all, :code, :name, { include_blank: "ロースター 都道府県" }, class: 'input-field' %>
+    <div class="input-icon-field">
+      <svg><use xlink:href="#location-marker"></use></svg>
+    </div>
+    <i class="fa-solid fa-angle-down select-box-arrow"></i>
+  </div>
+  <%# 生産国検索 %>
+  <div class="input-container">
+    <%= f.search_field :bean_country_cont, placeholder: Bean.human_attribute_name(:country), class: 'input-field' %>
+    <div class="input-icon-field"><i class="fa-solid fa-earth-asia fa-lg"></i></div>
+  </div>
+  <%# 焙煎度検索 %>
+  <div class="input-container">
+    <%= f.collection_select :bean_roast_level_id_eq, MstRoastLevel.where.not('id=0'), :id, :name, { include_blank: "焙煎度" }, class: 'input-field' %>
+    <div class="input-icon-field"><i class="fa-solid fa-fire-flame-curved fa-lg"></i></div>
+    <i class="fa-solid fa-angle-down select-box-arrow"></i>
+  </div>
+  <%# Flavor検索 %>
+  <div class="input-container">
+    <%= f.collection_select :bean_taste_tags_id_eq, MstTasteTag.where.not('id=0'), :id, :name_for_select, { include_blank: "フレーバー" }, class: 'input-field' %>
+    <div class="input-icon-field"><i class="fa-solid fa-mug-hot fa-lg"></i></div>
+    <i class="fa-solid fa-angle-down select-box-arrow"></i>
+  </div>
+  <div class="form-button-field mt-4">
+    <%= link_to "クリア", offer_searches_path, class: "mr-4 btn btn-secondary btn-pop" %>
+    <div class="actions">
+      <%= f.submit "検索", class: "btn btn-primary btn-pop" %>
+    </div>
+  </div>
+<% end %>
