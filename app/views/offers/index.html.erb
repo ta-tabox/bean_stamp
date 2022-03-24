@@ -25,9 +25,9 @@
 <div class="block lg:hidden text-right">
   <%= link_to "コーヒー豆一覧", beans_path, class: "link mr-4" %>
 </div>
-<section class="mt-4">
-  <% if @offers.any? %>
+<% if @offers.any? %>
+  <section class="mt-4">
     <%= render partial: @offers %>
     <%== pagy_nav_js(@pagy) %>
-  <% end %>
-</section>
+  </section>
+<% end %>

@@ -1,5 +1,5 @@
 class LikesController < ApplicationController
-  before_action :user_signed_in_required
+  before_action :authenticate_user!
 
   def index
     likes = current_user.likes.includes(:offer)

@@ -25,15 +25,15 @@
         </div>
       </div>
       <div class="input-container">
-        <%= f.number_field :price, placeholder: "販売価格（円）", min: 0, class: "input-field" %>
+        <%= f.number_field :price, placeholder: "#{Offer.human_attribute_name(:price)} （円）", min: 0, class: "input-field" %>
         <div class="input-icon-field"><i class="fa-solid fa-coins fa-lg"></i></i></div>
     </div>
     <div class="input-container">
-      <%= f.number_field :weight, placeholder: "内容量（g）", min: 50, step: 50, class: "input-field" %>
+      <%= f.number_field :weight, placeholder: "#{Offer.human_attribute_name(:weight)}（g）", min: 50, step: 50, class: "input-field" %>
       <div class="input-icon-field"><i class="fa-solid fa-scale-balanced fa-lg"></i></div>
     </div>
     <div class="input-container">
-      <%= f.number_field :amount, placeholder: "数量（個）", min: 1, class: "input-field" %>
+      <%= f.number_field :amount, placeholder: "#{Offer.human_attribute_name(:amount)}（個）", min: 1, class: "input-field" %>
       <div class="input-icon-field"><i class="fa-solid fa-cubes fa-lg"></i></div>
     </div>
     <div class="form-button-field mt-4">

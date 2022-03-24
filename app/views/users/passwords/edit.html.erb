@@ -8,12 +8,12 @@
         <%= f.hidden_field :reset_password_token %>
         <%# パスワードフィールド %>
         <div class="input-container">
-          <%= f.password_field :password, autocomplete: "new-password", placeholder:"新しいパスワード(#{@minimum_password_length}文字以上)", class: "input-field" %>
+          <%= f.password_field :password, autocomplete: "new-password", placeholder: "新しい#{User.human_attribute_name(:password)} (#{@minimum_password_length}文字以上)", class: "input-field" %>
           <div class="input-icon-field"><svg><use xlink:href="#unlock"></use></svg></div>
         </div>
         <%# パスワード確認フィールド %>
         <div class="input-container">
-          <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder:"パスワード(確認)", class: "input-field" %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: User.human_attribute_name(:password_confirmation), class: "input-field" %>
           <div class="input-icon-field"><svg><use xlink:href="#unlock"></use></svg></div>
         </div>
         <div class="form-button-field mt-4">

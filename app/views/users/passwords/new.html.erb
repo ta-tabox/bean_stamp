@@ -10,7 +10,7 @@
           登録したメールアドレスを入力してください
         </p>
         <div class="input-container">
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "メールアドレス", class: "input-field" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: User.human_attribute_name(:email), class: "input-field" %>
           <div class="input-icon-field"><svg><use xlink:href="#mail"></use></svg></div>
         </div>
         <div class="form-button-field mt-4">

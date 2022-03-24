@@ -17,9 +17,9 @@
     </div>
   </div>
 </header>
-<section class="mt-4">
-  <% if @wants.any? %>
+<% if @wants.any? %>
+  <section class="mt-4">
     <%= render partial: 'wants/want', collection: @wants %>
     <%== pagy_nav_js(@pagy) %>
-  <% end %>
-</section>
+  </section>
+<% end %>

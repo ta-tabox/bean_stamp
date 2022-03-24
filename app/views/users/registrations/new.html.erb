@@ -7,12 +7,12 @@
         <%= render "shared/error_messages", resource: f.object %>
         <%# 名前フィールド %>
         <div class="input-container">
-          <%= f.text_field :name, autofocus: true, placeholder:"名前", class: "input-field" %>
+          <%= f.text_field :name, autofocus: true, placeholder: User.human_attribute_name(:name), class: "input-field" %>
           <div class="input-icon-field"><svg><use xlink:href="#academic-cap"></use></svg></div>
         </div>
         <%# メールアドレスフィールド %>
         <div class="input-container">
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder:"メールアドレス", class: "input-field" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: User.human_attribute_name(:email), class: "input-field" %>
           <div class="input-icon-field"><svg><use xlink:href="#mail"></use></svg></div>
         </div>
         <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
@@ -26,12 +26,12 @@
         </div>
         <%# パスワードフィールド %>
         <div class="input-container">
-          <%= f.password_field :password, autocomplete: "new-password", placeholder:"パスワード(#{@minimum_password_length}文字以上)", class: "input-field" %>
+          <%= f.password_field :password, autocomplete: "new-password", placeholder: "#{User.human_attribute_name(:password)} (#{@minimum_password_length}文字以上)", class: "input-field" %>
           <div class="input-icon-field"><svg><use xlink:href="#unlock"></use></svg></div>
         </div>
         <%# パスワード確認フィールド %>
         <div class="input-container">
-          <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder:"パスワード(確認)", class: "input-field" %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: User.human_attribute_name(:password_confirmation), class: "input-field" %>
           <div class="input-icon-field"><svg><use xlink:href="#unlock"></use></svg></div>
         </div>
         <div class="form-button-field mt-4">

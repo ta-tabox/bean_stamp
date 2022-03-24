@@ -26,15 +26,15 @@ FactoryBot.define do
     trait :with_3_taste_tags do
       after(:build) do |bean|
         bean.taste_tags << MstTasteTag.find(1)
-        bean.taste_tags << MstTasteTag.find(2)
         bean.taste_tags << MstTasteTag.find(3)
+        bean.taste_tags << MstTasteTag.find(10)
       end
     end
 
     trait :with_2_taste_tags do
       after(:build) do |bean|
         bean.taste_tags << MstTasteTag.find(1)
-        bean.taste_tags << MstTasteTag.find(2)
+        bean.taste_tags << MstTasteTag.find(10)
       end
     end
 
@@ -50,8 +50,8 @@ FactoryBot.define do
       after(:build) do |bean|
         bean.bean_images << build(:bean_image, bean: bean)
         bean.taste_tags << MstTasteTag.find(1)
-        bean.taste_tags << MstTasteTag.find(2)
         bean.taste_tags << MstTasteTag.find(3)
+        bean.taste_tags << MstTasteTag.find(10)
       end
     end
   end
