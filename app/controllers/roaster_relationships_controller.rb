@@ -1,5 +1,5 @@
 class RoasterRelationshipsController < ApplicationController
-  before_action :user_signed_in_required
+  before_action :authenticate_user!
   def create
     @roaster = Roaster.find(params[:roaster_id])
     current_user.following_roasters << @roaster

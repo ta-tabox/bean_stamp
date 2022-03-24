@@ -7,9 +7,9 @@
     </div>
   </div>
 </header>
-<section class="mt-4">
-  <% if @beans.any? %>
+<% if @beans.any? %>
+  <section class="mt-4">
     <%= render @beans %>
     <%== pagy_nav_js(@pagy) %>
-  <% end %>
-</section>
+  </section>
+<% end %>
