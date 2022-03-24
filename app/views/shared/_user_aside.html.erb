@@ -1,4 +1,14 @@
-<div>
-  <%= current_user.name %>
-  ユーザーアサイドコンテンツ
+<div id="user-aside" class="h-full flex flex-col items-center">
+  <div class="mt-10">
+    <%= render 'shared/search_link' %>
+  </div>
+  <section class="mt-8 flex flex-col justify-center space-y-1">
+    <h1 class="text-md text-gray-600 text-center e-font">Notification</h1>
+    <%= no_notes_for_user(current_user.wants) %>
+    <%= note_for_on_roasting_wants(current_user.wants)%>
+    <%= note_for_unreceipted_wants(current_user.wants)%>
+  </section>
+  <div class="mt-auto mb-4">
+    <%= render 'shared/copyright' %>
+  </div>
 </div>
