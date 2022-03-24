@@ -78,13 +78,13 @@ RSpec.describe 'Likes', type: :request do
   end
 
   describe 'GET #search' do
-    let!(:bean) { create(:bean, :with_image_and_tags) }
+    let(:bean) { create(:bean, :with_image_and_tags) }
     let(:offering_offer) { create(:offer, bean: bean) }
     let(:preparing_offer) { create(:offer, :on_preparing, bean: bean) }
     let(:selling_offer) { create(:offer, :on_selling, bean: bean) }
     let(:sold_offer) { create(:offer, :end_of_sales, bean: bean) }
     # ターゲット
-    let!(:roasting_bean) { create(:bean, :with_image_and_tags, name: 'roasting_bean') }
+    let(:roasting_bean) { create(:bean, :with_image_and_tags, name: 'roasting_bean') }
     let(:roasting_offer) { create(:offer, :on_roasting, bean: roasting_bean) }
 
     before do

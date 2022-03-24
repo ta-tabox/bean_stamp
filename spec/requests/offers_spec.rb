@@ -419,107 +419,24 @@ RSpec.describe 'Offers', type: :request do
   end
 
   describe 'GET #search' do
-    subject { get search_offers_path, params: { search: status } }
-
-    # beanの名前を変えることでincludesで正しいofferが抽出できているかテストする
-    let!(:offering_bean) { create(:bean, :with_image_and_tags, roaster: user_with_a_offer.roaster, name: 'offering_bean') }
-    let!(:roasting_bean) { create(:bean, :with_image_and_tags, roaster: user_with_a_offer.roaster, name: 'roasting_bean') }
-    let!(:preparing_bean) { create(:bean, :with_image_and_tags, roaster: user_with_a_offer.roaster, name: 'preparing_bean') }
-    let!(:start_selling_bean) { create(:bean, :with_image_and_tags, roaster: user_with_a_offer.roaster, name: 'start_selling_bean') }
-    let!(:selling_bean) { create(:bean, :with_image_and_tags, roaster: user_with_a_offer.roaster, name: 'selling_bean') }
-    let!(:sold_bean) { create(:bean, :with_image_and_tags, roaster: user_with_a_offer.roaster, name: 'sold_bean') }
-    # 本日でオファー終わり
-    let!(:offering_offer) { create(:offer, ended_at: Date.current, bean: offering_bean) }
-    # 本日までロースト中
-    let!(:roasting_offer) { create(:offer, :on_roasting, roasted_at: Date.current, bean: roasting_bean) }
-    # 本日まで準備中、明日から受付開始
-    let!(:preparing_offer) { create(:offer, :on_preparing, receipt_started_at: Date.current.next_day(1), bean: preparing_bean) }
-    # 本日から受付開始
-    let!(:start_selling_offer) { create(:offer, :on_selling, receipt_started_at: Date.current, bean: start_selling_bean) }
-    # 本日まで受付中
-    let!(:selling_offer) { create(:offer, :on_selling, receipt_ended_at: Date.current, bean: selling_bean) }
-    # 昨日まで受付中、本日は受付終了
-    let!(:sold_offer) { create(:offer, :end_of_sales, receipt_ended_at: Date.current.prev_day(1), bean: sold_bean) }
+    let(:bean) { create(:bean, :with_image_and_tags, roaster: user_with_a_offer.roaster) }
+    let!(:offering_offer) { create(:offer, bean: bean) }
+    let!(:preparing_offer) { create(:offer, :on_preparing, bean: bean) }
+    let!(:selling_offer) { create(:offer, :on_selling, bean: bean) }
+    let!(:sold_offer) { create(:offer, :end_of_sales, bean: bean) }
+    # ターゲット
+    let!(:roasting_bean) { create(:bean, :with_image_and_tags, name: 'roasting_bean', roaster: user_with_a_offer.roaster) }
+    let!(:roasting_offer) { create(:offer, :on_roasting, bean: roasting_bean) }
 
     before { sign_in user_with_a_offer }
-
-    # 境界値のテストを含む
+    # ロースト中のウォンツをsearch
     context 'when search for on_offering' do
-      let(:status) { 'on_offering' }
-      it 'displays a offer on_offering not others' do
-        subject
-        expect(response).to have_http_status(:success)
-        # 本日までオファー中の豆を表示する
-        expect(response.body).to include offering_bean.name
-        expect(response.body).to_not include roasting_bean.name
-        expect(response.body).to_not include preparing_bean.name
-        expect(response.body).to_not include start_selling_bean.name
-        expect(response.body).to_not include selling_bean.name
-        expect(response.body).to_not include sold_bean.name
-      end
-    end
-
-    context 'when search for on_roasting' do
       let(:status) { 'on_roasting' }
       it 'displays a offer on_roasting not others' do
-        subject
+        get search_offers_path, params: { search: status }
         expect(response).to have_http_status(:success)
-        # 本日がended_atのオファーを表示しない
-        expect(response.body).to_not include offering_bean.name
-        # 本日がroasted_atのオファーを表示する
         expect(response.body).to include roasting_bean.name
-        expect(response.body).to_not include preparing_bean.name
-        expect(response.body).to_not include start_selling_bean.name
-        expect(response.body).to_not include selling_bean.name
-        expect(response.body).to_not include sold_bean.name
-      end
-    end
-
-    context 'when search for on_preparing' do
-      let(:status) { 'on_preparing' }
-      it 'displays a offer on_preparing not others' do
-        subject
-        expect(response).to have_http_status(:success)
-        expect(response.body).to_not include offering_bean.name
-        # 本日がroasted_atのオファーを表示しない
-        expect(response.body).to_not include roasting_bean.name
-        # 明日がreceipt_started_atのオファーを表示する
-        expect(response.body).to include preparing_bean.name
-        expect(response.body).to_not include start_selling_bean.name
-        expect(response.body).to_not include selling_bean.name
-        expect(response.body).to_not include sold_bean.name
-      end
-    end
-
-    context 'when search for on_selling' do
-      let(:status) { 'on_selling' }
-      it 'displays a offer on_selling not others' do
-        subject
-        expect(response).to have_http_status(:success)
-        expect(response.body).to_not include offering_bean.name
-        expect(response.body).to_not include roasting_bean.name
-        expect(response.body).to_not include preparing_bean.name
-        # 本日がreceipt_started_atのオファーを表示する
-        expect(response.body).to include start_selling_bean.name
-        # 本日がreceipt_ended_atのオファーを表示する
-        expect(response.body).to include selling_bean.name
-        expect(response.body).to_not include sold_bean.name
-      end
-    end
-
-    context 'when search for end_of_sales' do
-      let(:status) { 'end_of_sales' }
-      it 'displays a offer end_of_sales not others' do
-        subject
-        expect(response).to have_http_status(:success)
-        expect(response.body).to_not include offering_bean.name
-        expect(response.body).to_not include roasting_bean.name
-        expect(response.body).to_not include preparing_bean.name
-        expect(response.body).to_not include start_selling_bean.name
-        # 本日がreceipt_ended_atのオファーを表示しない
-        expect(response.body).to_not include selling_bean.name
-        # 昨日がreceipt_ended_atのオファーを表示する
-        expect(response.body).to include sold_bean.name
+        expect(response.body).to_not include bean.name
       end
     end
   end
