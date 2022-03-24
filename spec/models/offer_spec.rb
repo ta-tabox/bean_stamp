@@ -26,6 +26,7 @@ RSpec.describe Offer, type: :model do
   end
 
   describe '#update_status' do
+    # upsate_statusでステータスを更新する
     before { test_offer.update_status }
     let!(:bean) { create(:bean, :with_image, :with_3_taste_tags) }
     let(:offer) { create(:offer, bean: bean) }
