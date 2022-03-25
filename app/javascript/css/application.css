@@ -120,7 +120,7 @@
   @apply bg-gray-100 py-10 px-4 rounded-lg;
 }
 .form-title {
-  @apply pb-6 text-center text-sm text-gray-600 font-light;
+  @apply mb-6 text-center text-sm text-gray-600 font-light;
 }
 .form-container h2 {
   @apply text-gray-500 text-center text-sm;
