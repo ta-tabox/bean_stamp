@@ -81,12 +81,7 @@ RSpec.describe 'Beans', type: :system do
         expect(page).to have_content bean.process
         expect(page).to have_content "#{bean.elevation} m"
         expect(page).to have_content "#{bean.cropped_at.year}年 #{bean.cropped_at.month}月"
-        expect(page).to have_content bean.describe
-        expect(page).to have_content bean.acidity
-        expect(page).to have_content bean.flavor
-        expect(page).to have_content bean.body
-        expect(page).to have_content bean.bitterness
-        expect(page).to have_content bean.sweetness
+        expect(page).to have_css "#bean-#{bean.id}-taste-chart"
         expect(page).to have_content bean.taste_tags[0].name.capitalize
         expect(page).to have_content bean.taste_tags[1].name.capitalize
         expect(page).to have_content bean.taste_tags[2].name.capitalize
