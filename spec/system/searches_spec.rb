@@ -18,7 +18,7 @@ RSpec.describe 'Searches', type: :system do
       visit home_users_path
     end
 
-    it 'shows search form', ls: true do
+    it 'shows search form', js: true do
       click_link 'Search'
       expect(current_path).to eq searches_path
       expect(page).to have_content '検索'

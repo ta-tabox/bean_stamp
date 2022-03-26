@@ -1,0 +1,73 @@
+<canvas id=<%= "bean-#{bean.id}-taste-chart"%>></canvas>
+<script>
+  var beanId = "<%= "bean-#{bean.id}-taste-chart" %>"
+  var ctx = document.getElementById(beanId);
+  var myRadorChart = new Chart(ctx, {
+    type: "radar",
+    data: {
+      /* 各項目のラベル(上から時計回り) */
+      labels: [
+        "<%= Bean.human_attribute_name(:acidity) %>",
+        "<%= Bean.human_attribute_name(:flavor) %>",
+        "<%= Bean.human_attribute_name(:body) %>",
+        "<%= Bean.human_attribute_name(:bitterness) %>",
+        "<%= Bean.human_attribute_name(:sweetness) %>",
+      ],
+      /* データの設定 */
+      datasets: [
+        {
+          /* グラフのデータ(上から時計回り) */
+          data: [
+            "<%= bean.acidity %>",
+            "<%= bean.flavor %>",
+            "<%= bean.body %>",
+            "<%= bean.bitterness %>",
+            "<%= bean.sweetness %>",
+            ],
+          /* 塗りつぶし */
+          fill: true,
+          /* 背景色 */
+          backgroundColor: "rgba(99, 102, 241, 0.2)", //indigo-500
+          /* 枠線色 */
+          borderColor: "rgb(99, 102, 241)",
+          /* ポイントを塗りつぶす色 */
+          pointBackgroundColor: "rgb(99, 102, 241)",
+          /* ポイントの枠線色 */
+          pointBorderColor: "#fff",
+          /* ホバー時のポイントの背景色 */
+          pointHoverBackgroundColor: "#fff",
+          /* ホバー時のポイントの枠線色 */
+          pointHoverBorderColor: "rgb(99, 102, 241)",
+        },
+      ],
+    },
+    //オプションの設定
+    options: {
+      // 凡例の設定
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
+      // メモリの設定
+      scales: {
+          r: {
+              angleLines: {
+                  display: false
+              },
+              max: 5,
+              min: 0,
+              ticks: {
+                  stepSize: 1
+              }
+          }
+      },
+      elements: {
+        line: {
+          /* 枠線の太さ */
+          borderWidth: 2,
+        },
+      },
+    },
+  });
+</script>

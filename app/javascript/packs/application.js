@@ -6,6 +6,7 @@
 import Rails from "@rails/ujs";
 import Turbolinks from "turbolinks";
 import * as ActiveStorage from "@rails/activestorage";
+import Chart from "chart.js/auto";
 import "channels";
 // JavaScriptファイルの読み込み
 import "../shared/input_image_preview";
@@ -21,3 +22,4 @@ const imagePath = (name) => images(name, true);
 Rails.start();
 Turbolinks.start();
 ActiveStorage.start();
+global.Chart = Chart;
