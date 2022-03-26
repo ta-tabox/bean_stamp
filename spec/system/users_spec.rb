@@ -161,7 +161,6 @@ RSpec.describe 'Users', type: :system do
           context 'with wrong password' do
             it 'does not update a new password' do
               find('#user_current_password').fill_in with: 'wrong_password'
-              # fill_in '現在のパスワード', with: 'wrong_password'
               subject
               expect(current_path).to eq user_registration_path
               expect(page).to have_content '現在のパスワードは不正な値です'
@@ -220,27 +219,63 @@ RSpec.describe 'Users', type: :system do
   end
 
   describe 'User#home' do
-    context 'when a user does not belonged to roaster' do
-      before do
-        sign_in user
-        visit home_users_path
+    let(:roaster) { create(:roaster) }
+    let(:another_roaster) { create(:roaster, name: 'another_roaster') }
+    let(:bean) { create(:bean, :with_image, :with_3_taste_tags, name: 'following_bean', roaster: roaster) }
+    let!(:offer) { create(:offer, bean: bean) }
+    let(:another_bean) { create(:bean, :with_image, :with_3_taste_tags, name: 'another_bean') }
+    let!(:another_offer) { create(:offer, bean: another_bean) }
+
+    describe 'switch link for user/roaster' do
+      context 'when a user does not belonged to roaster' do
+        before do
+          sign_in user
+          visit home_users_path
+        end
+        it 'shows link to users_home but does not show link to roasters_home' do
+          expect(page).to have_selector("a[href='/users/home']")
+          expect(page).to_not have_selector("a[href='/roasters/home']")
+        end
       end
-      it 'shows link to users_home but does not show link to roasters_home' do
-        expect(page).to have_selector("a[href='/users/home']")
-        expect(page).to_not have_selector("a[href='/roasters/home']")
+
+      context 'when a user belonged to roaster' do
+        let(:user_belonged_to_roaster) { create(:user, roaster: roaster) }
+        let(:roaster) { create(:roaster) }
+        before do
+          sign_in user_belonged_to_roaster
+          visit home_users_path
+        end
+        it 'shows link to users_home and roasters_home' do
+          expect(page).to have_selector("a[href='/users/home']")
+          expect(page).to have_selector("a[href='/roasters/home']")
+        end
       end
     end
 
-    context 'when a user belonged to roaster' do
-      let(:user_belonged_to_roaster) { create(:user, roaster: roaster) }
-      let(:roaster) { create(:roaster) }
+    describe 'Offer contents', js: true do
       before do
-        sign_in user_belonged_to_roaster
+        sign_in user
+        user.following_roasters << roaster
         visit home_users_path
       end
-      it 'shows link to users_home and roasters_home' do
-        expect(page).to have_selector("a[href='/users/home']")
-        expect(page).to have_selector("a[href='/roasters/home']")
+      # フォローユーザーのオファーのみを表示させる
+      it 'shows an offer which is had by the roaster a user follow' do
+        expect(page).to have_content bean.name
+        expect(page).to have_content roaster.name
+        expect(page).to_not have_content another_bean.name
+        expect(page).to_not have_content another_roaster.name
+      end
+      # オファーコンテンツの内容のテスト
+      it 'shows offer infomation in tags' do
+        # Overviewタグの表示
+        find('.offer-overview-tag').click
+        expect(page).to have_content offer.bean.country
+        # Tasteタグの表示
+        find('.offer-taste-tag').click
+        expect(page).to have_css "#bean-#{offer.bean.id}-taste-chart"
+        # Sheduleタグの表示
+        find('.offer-schedule-tag').click
+        expect(page).to have_content offer.roasted_at.strftime('%Y/%m/%d')
       end
     end
   end

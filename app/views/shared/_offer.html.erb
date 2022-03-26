@@ -29,18 +29,14 @@
       <div class="tab-panel w-full lg:w-1/2 lg:pr-4 mb-4 lg:mb-0">
         <!--タブ-->
         <ul class="tab-group">
-          <li class="py-2 text-lg px-1 tab is-active e-font">Description</li>
-          <li class="py-2 text-lg px-1 tab e-font">Detail</li>
-          <li class="py-2 text-lg px-1 tab e-font">Schedule</li>
+          <li class="offer-overview-tag py-2 text-lg px-1 tab is-active e-font">Overview</li>
+          <li class="offer-taste-tag py-2 text-lg px-1 tab e-font">Taste</li>
+          <li class="offer-schedule-tag py-2 text-lg px-1 tab e-font">Schedule</li>
         </ul>
         <!--コンテンツ-->
         <div class="panel-group w-full lg:h-80">
-          <!-- 紹介文 -->
-          <section class="offer-description panel is-show">
-            <p class="leading-relaxed pt-4"><%= offer.bean&.describe %></p>
-          </section>
           <!-- 詳細 -->
-          <section class="offer-detail panel" >
+          <section class="offer-overview panel is-show" >
             <div class="flex border-t border-gray-200 py-2">
               <span class="text-gray-500">生産国</span>
               <span class="ml-auto text-gray-900"><%= offer.bean&.country %></span>
@@ -74,6 +70,12 @@
               <span class="ml-auto text-gray-900"><%= "#{offer.bean.cropped_at&.year}年 #{offer.bean.cropped_at&.month}月" %></span>
             </div>
           </section>
+          <!-- テイストチャート -->
+          <section class="offer-taste panel">
+            <div class="max-w-sm mx-auto">
+              <%= render partial: 'beans/taste_chart', locals: { bean: offer.bean } %>
+            </div>
+          </section>
           <!-- スケジュール -->
           <section class="offer-schedule panel" >
             <div class="flex border-t border-gray-200 py-2">
@@ -99,7 +101,7 @@
           </section>
         </div>
         <!-- 価格 -->
-        <div class="mt-4 flex justify-end">
+        <div class="pt-4 flex justify-end">
           <%= render partial:'offers/price_weight', locals: { offer: offer } %>
         </div>
       </div>
