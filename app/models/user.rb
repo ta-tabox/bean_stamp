@@ -39,4 +39,33 @@ class User < ApplicationRecord
   def had_offer?(offer)
     roaster == offer.roaster
   end
+
+  # ユーザーの好みのtaste_groupをids_count個のid一覧で返す
+  def favorite_taste_group_ids(ids_count)
+    # 評価済みのwantを取得
+    wants = self.wants.where.not(rate: :unrated).includes(bean: :taste_tags)
+    rating_list = []
+
+    # want毎に評価をもとにコーヒー豆のtaste_tagsに点数をつける
+    # taste_tagsは上位グループのtaste_group_idに変換する
+    wants.each do |want|
+      taste_group_ids = want.bean.taste_tags.map(&:taste_group_id)
+      rating_list << taste_group_ids.map { |id| { id: id, rate: Want.rates[want.rate] } }
+    end
+    # 評価データリストをtaste_group_id毎に集計する
+    sum_rating_list = merge_taste_rating_hash(rating_list)
+    # 評価データの上位ids_count個文を取得する
+    sum_rating_list.sort_by { |x| -x[:rate_sum] }.take(ids_count).map { |rate| rate[:taste_group_id] }
+  end
+
+  private
+
+  # taste_group_idとrateのハッシュのリストを受け取り、taste_group_id別の合計値を配列で返す
+  def merge_taste_rating_hash(*rating_list)
+    rating_list
+      .flatten
+      .map(&:values)
+      .each_with_object(Hash.new(0)) { |(id, num), hash| hash[id] += num }
+      .map { |id, num| { taste_group_id: id, rate_sum: num } }
+  end
 end
