@@ -15,6 +15,6 @@
       <h1 class="md:mt-2 text-xl lg:text-2xl font-medium text-gray-800 lg:mt-0"><%= want.offer.bean.name %></h1>
       <div class="text-right"><%= link_to '詳細', want_path(want), class: "btn btn-secondary ml-4" %></div>
     </div>
-    <%= render partial: 'offers/offer_info_sort', locals: { offer: want.offer } %>
+    <%= render partial: 'offers/offer_info_short', locals: { offer: want.offer } %>
   </div>
 </article>
