@@ -31,7 +31,7 @@ class Offer < ApplicationRecord
   scope :recommended_for, lambda { |user|
     joins(bean: %i[roaster taste_tags])
       .where('mst_taste_tags.taste_group_id IN (?) AND roasters.prefecture_code = (?) AND roasters.id != (?)',
-             user.favorite_taste_group_ids(2), user.prefecture_code, user.roaster.id)
+             user.favorite_taste_group_ids(2), user.prefecture_code, user.roaster&.id)
       .distinct
   }
 
