@@ -1,7 +1,7 @@
 <% provide(:title, "オファー詳細") %>
 <header class="header">
   <div class="h-full w-11/12 mx-auto flex justify-between items-end">
-    <h1 class="page-title">オファー豆詳細</h1>
+    <h1 class="page-title">オファー詳細</h1>
     <div class="flex items-end">
       <% if current_user.had_offer?(@offer) %>
         <%= link_to "編集", edit_offer_path(@offer), class: "btn btn-secondary ml-4" %>

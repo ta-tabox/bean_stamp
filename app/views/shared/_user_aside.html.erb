@@ -1,16 +1,22 @@
 <div id="user-aside" class="h-full flex flex-col items-center">
-  <div class="mt-10">
-    <%= render 'shared/search_link' %>
+  <div class="px-4 sticky top-0 h-60 bg-gray-50 z-50">
+    <div class="mt-10">
+      <%= render 'shared/search_link' %>
+    </div>
+    <section class="mt-8 flex flex-col justify-center space-y-1">
+      <h1 class="text-md text-gray-600 text-center e-font">Notification</h1>
+      <div id="user-notification">
+        <%= render 'shared/user_notification' %>
+      </div>
+    </section>
   </div>
-  <div id="user-notification">
-    <%= render 'shared/user_notification' %>
-  </div>
-  <section>
-    <% @recommended_offers.each do |offer| %>
-      <p><%= offer.id %></p>
-    <% end %>
+  <section class='w-full pb-8 flex flex-col justify-center items-center space-y-1'>
+    <h1 class="w-full pt-4 text-md bg-gray-50 z-40 text-gray-600 text-center e-font sticky top-56">Recommendation</h1>
+    <div id="user-recommendation" class="bg-gray-50 z-30">
+      <%= render partial: 'shared/recommended_offer', collection: @recommended_offers, as: :offer %>
+    </div>
   </section>
-  <div class="mt-auto mb-4">
+  <div class="fixed bottom-4 z-10">
     <%= render 'shared/copyright' %>
   </div>
 </div>
