@@ -28,10 +28,11 @@ class Offer < ApplicationRecord
   scope :search_status, ->(status) { where(status: status) }
   # userと同都道府県のロースター 且つ favorite_taste_group_idsのタグを持つコーヒー豆
   # 且つ ユーザーが所属するロースター以外のオファーを返す
+  # user.roaster.id = nilの場合null以外で検索→レコードが取得できない → '0' 以外で検索するようにする
   scope :recommended_for, lambda { |user|
     joins(bean: %i[roaster taste_tags])
-      .where('mst_taste_tags.taste_group_id IN (?) AND roasters.prefecture_code = (?) AND roasters.id != (?)',
-             user.favorite_taste_group_ids(2), user.prefecture_code, user.roaster&.id)
+      .where('mst_taste_tags.taste_group_id IN (?) AND roasters.prefecture_code = (?)',
+             user.favorite_taste_group_ids(2), user.prefecture_code).where.not('roasters.id = (?)', user.roaster&.id || 0)
       .distinct
   }
 

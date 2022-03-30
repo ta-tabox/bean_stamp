@@ -30,6 +30,9 @@ class ApplicationController < ActionController::Base
     return if cookies[:roaster_id]
 
     @recommended_offers = Offer.on_offering.recommended_for(current_user).sample(3)
+    return if @recommended_offers.any?
+
+    @recommended_offers = Offer.on_offering.joins(bean: %i[roaster taste_tags]).where('roasters.prefecture_code = (?)', current_user.prefecture_code).sample(3)
   end
 
   # ログイン中のユーザーが所属するロースターを返す
