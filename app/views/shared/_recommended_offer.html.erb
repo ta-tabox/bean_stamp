@@ -1,0 +1,29 @@
+<article id="recommended-offer-<%= offer.id %>" class="mb-8">
+  <%= link_to offer do %>
+    <div class="w-52 bg-white shadow rounded border border-transparent hover:border-indigo-500 cursor-pointer">
+      <div class="pt-4 px-4 pb-1 border-t border-gray-200 flex flex-col space-y-1">
+        <h1 class="text-gray-600 font-medium text-sm"><%= offer.bean.roaster.name %></h1>
+        <div class="pb-1">
+          <div class="flex items-center relative">
+            <i class="fa-solid fa-earth-asia fa-xs mr-1 text-gray-400 absolute top-2 left-1"></i>
+            <p class="pl-8 text-gray-400 font-light text-xs"><%= offer.bean.country %></p>
+          </div>
+          <div class="flex items-center relative">
+            <i class="fa-solid fa-industry fa-xs mr-1 text-gray-400 absolute top-2 left-1"></i>
+            <p class="pl-8 text-gray-400 font-light text-xs"><%= offer.bean.process %></p>
+          </div>
+          <div class="flex items-center relative">
+            <i class="fa-solid fa-fire-flame-curved fa-xs mr-1 text-gray-400 absolute top-2 left-1"></i>
+            <p class="pl-8 text-gray-400 font-light text-xs"><%= offer.bean.roast_level.name %></p>
+          </div>
+        </div>
+        <div class="flex flex-wrap justify-start">
+          <% offer.bean.taste_tags.each do |taste_tag|%>
+            <%= tag.div taste_tag.name, class: 'rounded-full py-1 px-1 mb-1 border bg-white border-gray-200 text-center font-light text-gray-400 text-xs capitalize' if taste_tag.id?%>
+          <%end%>
+        </div>
+      </div>
+      <%= image_tag offer.bean.bean_images[0].image.url, class: "w-full h-full object-cover object-center rounded-b"%>
+    </div>
+  <% end %>
+</article>

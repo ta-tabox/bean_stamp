@@ -112,4 +112,49 @@ RSpec.describe Offer, type: :model do
       end
     end
   end
+
+  # おすすめ機能のスコープのテスト
+  describe '#recommended_for' do
+    subject { Offer.on_offering.recommended_for(user) }
+    let(:user) { create(:user) }
+    # 条件設定データ
+    let(:floral_offer) { create(:offer, bean: floral_bean) }
+    let(:berry_offer) { create(:offer, bean: berry_bean) }
+    let(:fruit_offer) { create(:offer, bean: fruit_bean) }
+    let(:floral_bean) { create(:bean, :with_image, :with_floral_tags) }
+    let(:berry_bean) { create(:bean, :with_image, :with_berry_tags) }
+    let(:fruit_bean) { create(:bean, :with_image, :with_fruit_tags) }
+    # テストデータ
+    let!(:floral_berry_offer) { create(:offer, :on_offering, bean: floral_berry_bean) }
+    let!(:floral_other_offer) { create(:offer, :on_offering, bean: floral_other_bean) }
+    let!(:berry_other_offer) { create(:offer, :on_offering, bean: berry_other_bean) }
+    let!(:other_other_offer) { create(:offer, :on_offering, bean: other_other_bean) }
+    let(:floral_berry_bean) { create(:bean, :with_image, :with_floral_berry_tags) }
+    let(:floral_other_bean) { create(:bean, :with_image, :with_floral_other_tags) }
+    let(:berry_other_bean) { create(:bean, :with_image, :with_berry_other_tags) }
+    let(:other_other_bean) { create(:bean, :with_image, :with_other_other_tags) }
+
+    before do
+      user.want_offers.push(floral_offer, berry_offer, fruit_offer)
+      user.wants.each { |want| want.update(receipted_at: Date.current) }
+      user.wants.find_by(offer_id: floral_offer.id).excellent! # taste_group_id = 1
+      user.wants.find_by(offer_id: berry_offer.id).good! # taste_group_id = 6
+      user.wants.find_by(offer_id: fruit_offer.id).so_so! # taste_group_id = 14
+    end
+
+    context "user's favorite_taste_group are floral and berry" do
+      it 'returns floral and berry taste offer' do
+        expect(subject).to include(floral_berry_offer)
+      end
+      it 'returns floral taste offer' do
+        expect(subject).to include(floral_other_offer)
+      end
+      it 'returns berry taste offer' do
+        expect(subject).to include(berry_other_offer)
+      end
+      it 'returns not other taste offer' do
+        expect(subject).to_not include(other_other_offer)
+      end
+    end
+  end
 end

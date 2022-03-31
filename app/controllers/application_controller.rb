@@ -25,6 +25,16 @@ class ApplicationController < ActionController::Base
     cookies[:roaster_id] = current_user.roaster.id
   end
 
+  # ユーザー用におすすめのオファーをセットする
+  def set_recommended_offers
+    return if cookies[:roaster_id]
+
+    @recommended_offers = Offer.on_offering.recommended_for(current_user).sample(3)
+    return if @recommended_offers.any?
+
+    @recommended_offers = Offer.on_offering.near_for(current_user).sample(3)
+  end
+
   # ログイン中のユーザーが所属するロースターを返す
   def current_roaster
     current_user.roaster

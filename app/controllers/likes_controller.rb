@@ -1,5 +1,6 @@
 class LikesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_recommended_offers, only: %i[index search]
 
   def index
     likes = current_user.likes.includes(:offer)

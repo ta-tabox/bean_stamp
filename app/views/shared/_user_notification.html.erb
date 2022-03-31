@@ -1,0 +1,5 @@
+<ul>
+  <li><%= no_notes_for_user(current_user.wants) %></li>
+  <li><%= note_for_on_roasting_wants(current_user.wants)%></li>
+  <li><%= note_for_unreceipted_wants(current_user.wants)%></li>
+</ul>
