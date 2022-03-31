@@ -1,17 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe 'Offers', type: :system do
-  # ロースターに所属したユーザーを定義
-  let(:user) { create(:user, :with_roaster) }
-  let!(:bean) { create(:bean, :with_image, :with_3_taste_tags, roaster: user.roaster) }
-  let!(:offer) { create(:offer, bean: bean) }
-
-  before do
-    sign_in user
-    visit home_roasters_path
-  end
-
   describe 'Offer CRUD' do
+    # ロースターに所属したユーザーを定義
+    let(:user) { create(:user, :with_roaster) }
+    let!(:bean) { create(:bean, :with_image, :with_3_taste_tags, roaster: user.roaster) }
+    let!(:offer) { create(:offer, bean: bean) }
+
+    before do
+      sign_in user
+      visit home_roasters_path
+    end
+
     describe 'index feature' do
       let(:recent_offer) { create(:offer, created_at: Time.current, bean: bean) }
       let(:old_offer) { create(:offer, created_at: Time.current.ago(3.days), bean: bean) }
@@ -118,6 +118,104 @@ RSpec.describe 'Offers', type: :system do
         end.to change(Offer, :count).by(-1)
         expect(page).to have_content "コーヒー豆「#{offer.bean.name}」のオファーを1件削除しました"
         expect(page).to_not have_selector("a[href='/offers/#{offer.id}]")
+      end
+    end
+  end
+
+  describe 'recommended offer feature' do
+    let(:user_without_roaster) { create(:user) }
+    let(:user_with_roaster) { create(:user, :with_roaster) }
+
+    shared_context 'have rate for wants' do
+      # 条件設定データ
+      let(:floral_offer) { create(:offer, :end_of_sales, bean: floral_bean) }
+      let(:berry_offer) { create(:offer, :end_of_sales, bean: berry_bean) }
+      let(:floral_bean) { create(:bean, :with_image, :with_floral_tags) }
+      let(:berry_bean) { create(:bean, :with_image, :with_berry_tags) }
+
+      before do
+        user.want_offers.push(floral_offer, berry_offer)
+        user.wants.each { |want| want.update(receipted_at: Date.current) }
+        user.wants.find_by(offer_id: floral_offer.id).excellent! # taste_group_id = 1
+        user.wants.find_by(offer_id: berry_offer.id).good! # taste_group_id = 6
+      end
+    end
+
+    before { sign_in user }
+
+    context 'when a user not belonging to a roaster' do
+      let(:user) { user_without_roaster }
+
+      context 'when a user have no rate for wants' do
+        # テストデータ
+        let!(:same_area_offer) { create(:offer, bean: same_area_bean) }
+        let(:same_area_bean) { create(:bean, :with_image, :with_3_taste_tags) }
+        let!(:another_area_offer) { create(:offer, bean: another_area_bean) }
+        let(:another_area_bean) { create(:bean, :with_image, :with_3_taste_tags, roaster: another_area_roaster) }
+        let(:another_area_roaster) { create(:roaster, prefecture_code: '1') }
+
+        it 'shows a same area offer' do
+          visit home_users_path
+          within '#user-aside' do
+            expect(page).to have_selector("article#recommended-offer-#{same_area_offer.id}")
+            expect(page).to_not have_selector("article#recommended-offer-#{another_area_offer.id}")
+          end
+        end
+      end
+
+      context 'when a user have rate for wants' do
+        let!(:favorite_offer) { create(:offer, :on_offering, bean: favorite_bean) }
+        let!(:not_favorite_offer) { create(:offer, :on_offering, bean: not_favorite_bean) }
+        let(:favorite_bean) { create(:bean, :with_image, :with_floral_berry_tags) }
+        let(:not_favorite_bean) { create(:bean, :with_image, :with_other_other_tags) }
+
+        include_context 'have rate for wants'
+        it 'shows a favorite taste group offer' do
+          visit home_users_path
+          within '#user-aside' do
+            expect(page).to have_selector("article#recommended-offer-#{favorite_offer.id}")
+            expect(page).to_not have_selector("article#recommended-offer-#{not_favorite_offer.id}")
+          end
+        end
+      end
+    end
+
+    context 'when a user belonging to a roaster' do
+      let(:user) { user_with_roaster }
+
+      # テストデータ
+      let!(:my_offer) { create(:offer, bean: my_bean) }
+      let(:my_bean) { create(:bean, :with_image, :with_3_taste_tags, roaster: user.roaster) }
+      let!(:another_offer) { create(:offer, bean: another_bean) }
+      let(:another_bean) { create(:bean, :with_image, :with_3_taste_tags) }
+
+      context 'when a user have no rate for wants' do
+        it 'shows a same area offer' do
+          visit home_users_path
+          within '#user-aside' do
+            expect(page).to have_selector("article#recommended-offer-#{another_offer.id}")
+            expect(page).to_not have_selector("article#recommended-offer-#{my_offer.id}")
+          end
+        end
+      end
+
+      context 'when a user have rate for wants' do
+        let!(:my_favorite_offer) { create(:offer, :on_offering, bean: my_favorite_bean) }
+        let(:my_favorite_bean) { create(:bean, :with_image, :with_floral_berry_tags, roaster: user.roaster) }
+        let!(:another_favorite_offer) { create(:offer, :on_offering, bean: another_favorite_bean) }
+        let(:another_favorite_bean) { create(:bean, :with_image, :with_floral_berry_tags) }
+        let!(:not_favorite_offer) { create(:offer, :on_offering, bean: not_favorite_bean) }
+        let(:not_favorite_bean) { create(:bean, :with_image, :with_other_other_tags) }
+
+        include_context 'have rate for wants'
+        it 'shows a favorite taste group offer' do
+          visit home_users_path
+          within '#user-aside' do
+            expect(page).to have_selector("article#recommended-offer-#{another_favorite_offer.id}")
+            expect(page).to_not have_selector("article#recommended-offer-#{my_favorite_offer.id}")
+            expect(page).to_not have_selector("article#recommended-offer-#{not_favorite_offer.id}")
+          end
+        end
       end
     end
   end
