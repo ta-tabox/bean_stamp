@@ -147,7 +147,6 @@ RSpec.describe 'Offers', type: :system do
       let(:user) { user_without_roaster }
 
       context 'when a user have no rate for wants' do
-        # テストデータ
         let!(:same_area_offer) { create(:offer, bean: same_area_bean) }
         let(:same_area_bean) { create(:bean, :with_image, :with_3_taste_tags) }
         let!(:another_area_offer) { create(:offer, bean: another_area_bean) }
@@ -183,7 +182,6 @@ RSpec.describe 'Offers', type: :system do
     context 'when a user belonging to a roaster' do
       let(:user) { user_with_roaster }
 
-      # テストデータ
       let!(:my_offer) { create(:offer, bean: my_bean) }
       let(:my_bean) { create(:bean, :with_image, :with_3_taste_tags, roaster: user.roaster) }
       let!(:another_offer) { create(:offer, bean: another_bean) }
