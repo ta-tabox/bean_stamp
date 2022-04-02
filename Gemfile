@@ -70,12 +70,14 @@ group :test do
   gem 'webdrivers'
 end
 
+gem 'cancancan'
 gem 'carrierwave', '~> 2.2'
 gem 'devise'
 gem 'enum_help'
 gem 'jp_prefecture', '~> 1.0'
 gem 'mini_magick', '~> 4.11'
 gem 'pagy', '~> 5.3'
+gem 'rails_admin', '~> 3.0'
 gem 'rails-i18n', '~> 6.0.0'
 gem 'ransack'
 gem 'seed-fu', '~> 2.3'
