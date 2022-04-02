@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_16_124853) do
+ActiveRecord::Schema.define(version: 2022_04_02_093109) do
 
   create_table "bean_images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "image"
@@ -132,6 +132,7 @@ ActiveRecord::Schema.define(version: 2022_03_16_124853) do
     t.string "image"
     t.bigint "roaster_id"
     t.boolean "guest", default: false
+    t.boolean "admin", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["roaster_id"], name: "index_users_on_roaster_id"
