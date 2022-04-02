@@ -3,6 +3,7 @@ class Users::UsersController < ApplicationController
   before_action :set_user, only: %i[show following]
   before_action :reset_roaster_id_cookie, only: :home
   before_action :update_want_offers_status, only: :home
+  before_action :set_recommended_offers
 
   def home
     # enum型のon_offeringでオファー中のオファーを引っ張るとオファーが終了しているのに、

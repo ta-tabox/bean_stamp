@@ -3,6 +3,8 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   # rubocop:disable all
   layout 'static_pages', only: [:new, :create]
+  before_action :set_recommended_offers, only: %i[edit update]
+
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: %i[update]
 

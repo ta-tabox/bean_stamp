@@ -13,7 +13,7 @@ RSpec.describe Like, type: :model do
     it { is_expected.to validate_presence_of :offer_id }
   end
 
-  describe '#search_status' do
+  describe '.search_status' do
     let(:user) { create(:user) }
     let(:bean) { create(:bean, :with_image, :with_3_taste_tags) }
     let(:offering_offer) { create(:offer, bean: bean) }

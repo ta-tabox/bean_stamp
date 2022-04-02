@@ -14,7 +14,7 @@ RSpec.describe Want, type: :model do
   end
 
   # 検索で使用するスコープのテスト
-  describe '#search_status' do
+  describe '.search_status' do
     let(:user) { create(:user) }
     let(:bean) { create(:bean, :with_image, :with_3_taste_tags) }
     let(:offering_offer) { create(:offer, bean: bean) }

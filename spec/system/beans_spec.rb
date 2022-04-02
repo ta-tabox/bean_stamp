@@ -14,7 +14,7 @@ RSpec.describe 'Beans', type: :system do
     describe 'index feature' do
       let(:recent_bean) { create(:bean, :with_image, :with_3_taste_tags, name: 'recent_bean', created_at: Time.current, roaster: user.roaster) }
       let(:old_bean) { create(:bean, :with_image, :with_3_taste_tags, name: 'old_bean', created_at: Time.current.ago(3.days), roaster: user.roaster) }
-      subject { within('ul') { click_link 'Beans' } }
+      subject { within('nav ul') { click_link 'Beans' } }
 
       it 'displays beans in order desc' do
         recent_bean
@@ -29,7 +29,7 @@ RSpec.describe 'Beans', type: :system do
       subject { proc { click_button '登録' } }
 
       before do
-        within('ul') { click_link 'Beans' }
+        within('nav ul') { click_link 'Beans' }
         click_link '新規作成'
         fill_in 'タイトル', with: 'テストビーンズ'
         fill_in '生産国', with: 'エチオピア'
@@ -94,7 +94,7 @@ RSpec.describe 'Beans', type: :system do
       subject { click_button '更新' }
 
       it "updates the bean's information" do
-        within('ul') { click_link 'Beans' }
+        within('nav ul') { click_link 'Beans' }
         find("article#bean-#{bean.id}").click_link '詳細'
         click_link '編集'
         fill_in 'タイトル', with: 'アップデートビーンズ'
@@ -127,7 +127,7 @@ RSpec.describe 'Beans', type: :system do
     end
 
     describe 'delete bean feature' do
-      before { within('ul') { click_link 'Beans' } }
+      before { within('nav ul') { click_link 'Beans' } }
 
       it 'deletes a bean' do
         expect do

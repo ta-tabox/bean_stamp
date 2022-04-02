@@ -38,6 +38,57 @@ FactoryBot.define do
       end
     end
 
+    # User#favorite_taste_group_idsテストで使用
+    trait :with_floral_tags do
+      after(:build) do |bean|
+        bean.taste_tags << MstTasteTag.find(1) # floral
+        bean.taste_tags << MstTasteTag.find(2) # blach tea
+        bean.taste_tags << MstTasteTag.find(3) # chamomile
+      end
+    end
+
+    trait :with_berry_tags do
+      after(:build) do |bean|
+        bean.taste_tags << MstTasteTag.find(6) # berry
+        bean.taste_tags << MstTasteTag.find(7) # blackberry
+        bean.taste_tags << MstTasteTag.find(8) # raspberry
+      end
+    end
+
+    trait :with_fruit_tags do
+      after(:build) do |bean|
+        bean.taste_tags << MstTasteTag.find(14) # fruit
+        bean.taste_tags << MstTasteTag.find(15) # coconut
+        bean.taste_tags << MstTasteTag.find(16) # cherry
+      end
+    end
+
+    # Offer#recommended_forテストで使用
+    trait :with_floral_berry_tags do
+      after(:build) do |bean|
+        bean.taste_tags << MstTasteTag.find(1) # floral
+        bean.taste_tags << MstTasteTag.find(6) # berry
+      end
+    end
+    trait :with_floral_other_tags do
+      after(:build) do |bean|
+        bean.taste_tags << MstTasteTag.find(1) # floral
+        bean.taste_tags << MstTasteTag.find(22) # citrus
+      end
+    end
+    trait :with_berry_other_tags do
+      after(:build) do |bean|
+        bean.taste_tags << MstTasteTag.find(6) # berry
+        bean.taste_tags << MstTasteTag.find(22) # citrus
+      end
+    end
+    trait :with_other_other_tags do
+      after(:build) do |bean|
+        bean.taste_tags << MstTasteTag.find(22) # citrus
+        bean.taste_tags << MstTasteTag.find(27) # fermented
+      end
+    end
+
     trait :invalid do
       name { nil }
     end

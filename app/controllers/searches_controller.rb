@@ -1,5 +1,6 @@
 class SearchesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_recommended_offers
   before_action :set_search_query
 
   def index
