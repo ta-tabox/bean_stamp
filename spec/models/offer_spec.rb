@@ -70,7 +70,7 @@ RSpec.describe Offer, type: :model do
   end
 
   # 検索で使用するスコープのテスト
-  describe '#search_status' do
+  describe '.search_status' do
     let(:user) { create(:user, :with_roaster) }
     let(:bean) { create(:bean, :with_image, :with_3_taste_tags) }
     let!(:offering_offer) { create(:offer, roaster: user.roaster, bean: bean) }
@@ -114,8 +114,8 @@ RSpec.describe Offer, type: :model do
   end
 
   # おすすめ機能のスコープのテスト
-  describe '#recommended_for' do
-    subject { Offer.on_offering.recommended_for(user) }
+  describe '.recommended_for' do
+    subject { described_class.on_offering.recommended_for(user) }
     let(:user) { create(:user) }
     # 条件設定データ
     let(:floral_offer) { create(:offer, bean: floral_bean) }
@@ -143,16 +143,10 @@ RSpec.describe Offer, type: :model do
     end
 
     context "user's favorite_taste_group are floral and berry" do
-      it 'returns floral and berry taste offer' do
+      it 'returns correct taste offers and not an other taste offer' do
         expect(subject).to include(floral_berry_offer)
-      end
-      it 'returns floral taste offer' do
         expect(subject).to include(floral_other_offer)
-      end
-      it 'returns berry taste offer' do
         expect(subject).to include(berry_other_offer)
-      end
-      it 'returns not other taste offer' do
         expect(subject).to_not include(other_other_offer)
       end
     end

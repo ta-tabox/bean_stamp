@@ -42,6 +42,7 @@ class User < ApplicationRecord
   end
 
   # ユーザーの好みのtaste_groupをids_count個のid一覧で返す
+  # 今後より処理が複雑になる場合はバッチでスコア化して扱うように検討する
   def favorite_taste_group_ids(ids_count)
     # 評価済みのwantを取得
     wants = self.wants.where.not(rate: :unrated).includes(bean: :taste_tags)
