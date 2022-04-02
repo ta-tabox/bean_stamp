@@ -70,6 +70,7 @@ group :test do
   gem 'webdrivers'
 end
 
+gem 'cancancan'
 gem 'carrierwave', '~> 2.2'
 gem 'devise'
 gem 'enum_help'

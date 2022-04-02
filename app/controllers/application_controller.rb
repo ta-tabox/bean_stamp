@@ -2,6 +2,11 @@ class ApplicationController < ActionController::Base
   # Pagyによるpagination
   include Pagy::Backend
 
+  # /adminページへのサクセス制限でcancanのエラーが出た場合の処理
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to main_app.root_path, alert: exception.message
+  end
+
   private
 
   # ユーザーにロースター所属を求める
