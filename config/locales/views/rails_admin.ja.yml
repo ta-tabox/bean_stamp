@@ -1,4 +1,9 @@
 ja:
+  # cancancanの日本語化
+  unauthorized:
+    manage:
+      all: アクセス権限がありません
+  # rails_adminの日本語化
   admin:
     js:
       true: True
