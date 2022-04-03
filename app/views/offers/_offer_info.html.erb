@@ -5,7 +5,7 @@
     </div>
     <div class="flex justify-between">
       <div class="font-medium mb-4 <%=offer.status%>"><%= offer.status_i18n %></div>
-      <h2 class="text-md title-font text-gray-500 tracking-widest hover:text-gray-800"><%= link_to offer.roaster.name, offer.roaster %></h2>
+      <h2 class="roaster-name"><%= link_to offer.roaster.name, offer.roaster %></h2>
     </div>
     <div class="flex justify-between items-end">
       <div class="flex">
