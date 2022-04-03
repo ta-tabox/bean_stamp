@@ -1,19 +1,19 @@
 <div class="h-14 fixed top-0 inset-x-0 z-40 border-b border-gray-200 bg-gray-100">
   <div class="h-full flex items-center justify-between">
     <!-- TOPアイコン -->
-    <div class="pl-8">
+    <div class="pl-4 logo-font text-lg">
       <div><%= link_to 'Beans', root_path %></div>
     </div>
     <!-- 切り替えアイコン -->
     <% if current_user.roaster&.id? %>
-      <div id="top-toggle" class="pr-8 relative">
-        <svg class="h-4 w-4 text-white absolute top-3 left-2">
+      <div id="top-toggle" class="pr-4 relative">
+        <svg class="h-4 w-4 text-white absolute top-2 left-2">
           <use xlink:href="#switch-horizontal"></use>
         </svg>
         <% if cookies[:roaster_id] %>
-          <%= link_to User, home_users_path, class: "toggle_btn btn-primary pl-8"%>
+          <%= link_to User, home_users_path, class: "toggle_btn btn-primary"%>
         <% else %>
-          <%= link_to Roaster, home_roasters_path, class: "toggle_btn btn-primary pl-8"%>
+          <%= link_to Roaster, home_roasters_path, class: "toggle_btn btn-primary"%>
         <% end %>
       </div>
     <% end %>

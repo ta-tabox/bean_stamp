@@ -1,4 +1,4 @@
-<div class="flex justify-center items-center space-x-3">
+<div class="flex justify-center items-center space-x-1">
   <%bean.taste_tags.each do |taste_tag|%>
     <%= tag.div taste_tag.name, class: 'rounded-full py-1 px-4 border bg-white border-gray-300 text-center font-normal text-gray-500 text-sm capitalize' if taste_tag.id?%>
   <%end%>
