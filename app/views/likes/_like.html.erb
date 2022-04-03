@@ -6,7 +6,7 @@
     </div>
     <div class="flex justify-between">
       <div class="font-medium mb-4 <%=like.offer.status%>"><%= like.offer.status_i18n %></div>
-      <h2 class="text-md title-font text-gray-500 tracking-widest hover:text-gray-800"><%= link_to like.offer.roaster.name, like.offer.roaster %></h2>
+      <h2 class="roaster-name"><%= link_to like.offer.roaster.name, like.offer.roaster %></h2>
     </div>
     <div class="md:flex items-baseline">
       <h1 class="md:mt-2 text-xl lg:text-2xl font-medium text-gray-800 lg:mt-0"><%= like.offer.bean.name %></h1>

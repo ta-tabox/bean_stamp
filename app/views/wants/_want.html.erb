@@ -9,7 +9,7 @@
         <div class="font-medium <%=want.offer.status%>"><%= want.offer.status_i18n %></div>
         <%= receipted_badge(want) %>
       </div>
-      <h2 class="text-md title-font text-gray-500 tracking-widest hover:text-gray-800"><%= link_to want.offer.roaster.name, want.offer.roaster %></h2>
+      <h2 class="roaster-name"><%= link_to want.offer.roaster.name, want.offer.roaster %></h2>
     </div>
     <div class="md:flex items-baseline">
       <h1 class="md:mt-2 text-xl lg:text-2xl font-medium text-gray-800 lg:mt-0"><%= want.offer.bean.name %></h1>
