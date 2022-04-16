@@ -71,8 +71,8 @@ GEM
     bcrypt (3.1.16)
     benchmark (0.2.0)
     bindex (0.8.1)
-    bootsnap (1.9.1)
-      msgpack (~> 1.0)
+    bootsnap (1.11.1)
+      msgpack (~> 1.2)
     builder (3.2.4)
     bullet (6.1.5)
       activesupport (>= 3.0.0)
@@ -173,7 +173,7 @@ GEM
     mini_magick (4.11.0)
     mini_mime (1.1.2)
     minitest (5.14.4)
-    msgpack (1.4.2)
+    msgpack (1.5.1)
     mysql2 (0.5.3)
     nested_form (0.3.2)
     nio4r (2.5.8)
@@ -420,7 +420,7 @@ DEPENDENCIES
   webpacker (~> 5.0)
 
 RUBY VERSION
-   ruby 3.0.2p107
+   ruby 3.0.4p208
 
 BUNDLED WITH
-   2.2.28
+   2.2.33
