@@ -48,7 +48,7 @@ RSpec.describe 'Beans', type: :system do
         select 'Chamomile', from: 'bean[bean_taste_tags_attributes][2][mst_taste_tag_id]'
       end
 
-      context 'with correct form' do
+      context 'with correct form', focus: true do
         before { attach_file 'bean_images[image][]', Rails.root.join('spec/fixtures/sample.jpg') }
         it 'creates a new Bean' do
           is_expected.to change(Bean, :count).by(1)
