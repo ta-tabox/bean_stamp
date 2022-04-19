@@ -3,21 +3,22 @@ services:
   db:
     image: mysql:8.0.28
     environment:
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:
       - "3306:3306"
     # mysqlの認証プラグインをmysql_native_passwordに変更
     command: --default-authentication-plugin=mysql_native_password
     # mysqlのデータ領域をホストにボリュームとしてマウントする
     volumes:
-      - mysql-data:/var/lib/mysql
+      - db-data:/var/lib/mysql
 
   web: &app_base
     build: .
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - .:/beans_app # カレントディレクトリをbindマウント
-      - rails-uploads:/beans_app/public/uploads # carrierwaveによる画像保存先をボリュームとしてマウント
+      - bundle:/usr/local/bundle
+      - uploads:/beans_app/public/uploads # carrierwaveによる画像保存先をボリュームとしてマウント
     ports:
       - "3000:3000"
     depends_on:
@@ -53,5 +54,6 @@ services:
       WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
 
 volumes:
-  mysql-data: {}
-  rails-uploads: {}
+  db-data: {}
+  uploads: {}
+  bundle: {}
