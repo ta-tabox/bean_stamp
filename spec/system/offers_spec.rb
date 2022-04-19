@@ -97,7 +97,7 @@ RSpec.describe 'Offers', type: :system do
       end
     end
 
-    describe 'delete offer feature' do
+    describe 'delete offer feature', js: true do
       before { click_link 'Offers' }
       it 'deletes a offer at offers#index' do
         find("article#offer-#{offer.id}").click_link '詳細'

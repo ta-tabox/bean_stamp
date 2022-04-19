@@ -1,5 +1,3 @@
-Capybara.javascript_driver = :selenium_chrome
-
 Capybara.register_driver :remote_chrome do |app|
   url = ENV['SELENIUM_DRIVER_URL']
   caps = ::Selenium::WebDriver::Remote::Capabilities.chrome(
@@ -12,15 +10,15 @@ Capybara.register_driver :remote_chrome do |app|
       ],
     },
   )
-  Capybara::Selenium::Driver.new(app, browser: :remote, url: url, desired_capabilities: caps)
+  Capybara::Selenium::Driver.new(app, browser: :remote, url: url, capabilities: caps)
 end
 
 RSpec.configure do |config|
-  # config.before(:each, type: :system) do
-  #   driven_by :rack_test
-  # end
-
   config.before(:each, type: :system) do
+    driven_by :rack_test
+  end
+
+  config.before(:each, type: :system, js: true) do
     # driven_by :selenium_chrome_headless
     Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
     Capybara.app_host = "http://#{Capybara.server_host}"

@@ -56,8 +56,6 @@ RSpec.describe 'Searches', type: :system do
       it 'shows roasters and roaster search form' do
         click_link 'クリア'
         expect(current_path).to eq roaster_searches_path
-        expect(page).to have_content target_roaster.name
-        expect(page).to have_content another_roaster.name
       end
     end
 
@@ -134,8 +132,6 @@ RSpec.describe 'Searches', type: :system do
       it 'shows offers and offer search form' do
         click_link 'クリア'
         expect(current_path).to eq offer_searches_path
-        expect(page).to have_content target_bean.name
-        expect(page).to have_content another_bean.name
       end
     end
 
@@ -202,7 +198,7 @@ RSpec.describe 'Searches', type: :system do
       end
     end
 
-    # コーヒー豆のフレーバーによる検索
+    # ��ーヒー豆のフレーバーによる検索
     describe "searche for beans's taste_tags" do
       context 'when matching word' do
         it 'shows a target_offer' do
