@@ -12,13 +12,19 @@ services:
     volumes:
       - db-data:/var/lib/mysql
 
-  web: &app_base
+  app: &app_base
     build: .
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    # rails server起動用
+    # command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    # nginx -> puma用
+    command: bundle exec puma -C config/puma.rb
     volumes:
       - .:/beans_app # カレントディレクトリをbindマウント
       - bundle:/usr/local/bundle
       - uploads:/beans_app/public/uploads # carrierwaveによる画像保存先をボリュームとしてマウント
+      - public-data:/webapp/public # nginxと静的ページを共有
+      - tmp-data:/beans_app/tmp # nginxとのsocket通信に使用
+      - log-data:/beans_app/log
     ports:
       - "3000:3000"
     depends_on:
@@ -29,6 +35,17 @@ services:
     environment:
       SELENIUM_DRIVER_URL: http://selenium_chrome:4444/wd/hub
       WEBPACKER_DEV_SERVER_HOST: webpacker
+
+  web:
+    build:
+      context: containers/nginx
+    volumes:
+      - public-data:/beans_app/public
+      - tmp-data:/beans_app/tmp
+    ports:
+      - 80:80
+    depends_on:
+      - app
 
   selenium_chrome:
     image: selenium/standalone-chrome-debug:latest
@@ -43,7 +60,7 @@ services:
     <<: *app_base
     command: bash -c "bundle exec bin/webpack-dev-server"
     depends_on:
-      - web
+      - app
     ports:
       - "3035:3035"
     tty: false
@@ -57,3 +74,6 @@ volumes:
   db-data: {}
   uploads: {}
   bundle: {}
+  public-data: {}
+  tmp-data: {}
+  log-data: {}
