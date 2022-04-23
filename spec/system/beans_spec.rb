@@ -10,7 +10,7 @@ RSpec.describe 'Beans', type: :system do
     visit home_roasters_path
   end
 
-  describe 'Bean CRUD' do
+  describe 'Bean CRUD', js: true do
     describe 'index feature' do
       let(:recent_bean) { create(:bean, :with_image, :with_3_taste_tags, name: 'recent_bean', created_at: Time.current, roaster: user.roaster) }
       let(:old_bean) { create(:bean, :with_image, :with_3_taste_tags, name: 'old_bean', created_at: Time.current.ago(3.days), roaster: user.roaster) }

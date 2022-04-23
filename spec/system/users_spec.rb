@@ -199,7 +199,7 @@ RSpec.describe 'Users', type: :system do
         end
       end
 
-      describe 'user member canceling feature' do
+      describe 'user member canceling feature', js: true do
         before do
           visit edit_user_registration_path
           click_link '退会する'

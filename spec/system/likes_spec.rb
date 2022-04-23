@@ -24,7 +24,7 @@ RSpec.describe 'Likes', type: :system do
       end
     end
 
-    describe 'create/delete feature' do
+    describe 'create/delete feature', js: true do
       before do
         sign_in user
         user.following_roasters << roaster

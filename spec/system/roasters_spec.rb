@@ -8,7 +8,7 @@ RSpec.describe 'Roasters', type: :system do
     let(:user_belonging_a_roaster) { create(:user, roaster: roaster) }
     let(:user_belonging_an_another_roaster) { create(:user, roaster: another_roaster) }
 
-    describe 'new registration feature' do
+    describe 'new registration feature', js: true do
       subject { proc { click_button '登録' } }
 
       context 'when user is not belonging to a roaster' do
@@ -122,7 +122,7 @@ RSpec.describe 'Roasters', type: :system do
       end
     end
 
-    describe 'roaster editing feature' do
+    describe 'roaster editing feature', js: true do
       context 'when user is belonging to a roaseter' do
         before do
           sign_in user_belonging_a_roaster
@@ -161,7 +161,7 @@ RSpec.describe 'Roasters', type: :system do
       end
     end
 
-    describe 'delete roaster feature' do
+    describe 'delete roaster feature', js: true do
       before do
         sign_in user_belonging_a_roaster
         visit home_roasters_path
