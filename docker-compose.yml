@@ -15,9 +15,9 @@ services:
   app: &app_base
     build: .
     # rails server起動用
-    # command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     # nginx -> puma用
-    command: bundle exec puma -C config/puma.rb
+    # command: bundle exec puma -C config/puma.rb
     volumes:
       - .:/beans_app # カレントディレクトリをbindマウント
       - bundle:/usr/local/bundle
@@ -37,16 +37,17 @@ services:
       SELENIUM_DRIVER_URL: http://selenium_chrome:4444/wd/hub
       WEBPACKER_DEV_SERVER_HOST: webpacker
 
-  web:
-    build:
-      context: containers/nginx
-    volumes:
-      - public-data:/beans_app/public
-      - tmp-data:/beans_app/tmp
-    ports:
-      - 80:80
-    depends_on:
-      - app
+  # nginxをリバースプロキシとして使用する時に使用
+  # web:
+  #   build:
+  #     context: containers/nginx
+  #   volumes:
+  #     - public-data:/beans_app/public
+  #     - tmp-data:/beans_app/tmp
+  #   ports:
+  #     - 80:80
+  #   depends_on:
+  #     - app
 
   selenium_chrome:
     image: selenium/standalone-chrome-debug:latest
