@@ -41,9 +41,8 @@ pidfile ENV.fetch('PIDFILE') { 'tmp/pids/server.pid' }
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
+# Dockerによるnginx用の設定
+# app_root = File.expand_path('..', __dir__)
+# bind "unix://#{app_root}/tmp/sockets/puma.sock"
 
-# nginx用の設定
-app_root = File.expand_path('..', __dir__)
-bind "unix://#{app_root}/tmp/sockets/puma.sock"
-
-stdout_redirect "#{app_root}/log/puma.stdout.log", "#{app_root}/log/puma.stderr.log", true
+# stdout_redirect "#{app_root}/log/puma.stdout.log", "#{app_root}/log/puma.stderr.log", true
