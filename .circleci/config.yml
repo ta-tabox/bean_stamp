@@ -10,14 +10,10 @@ jobs:
   build:
     docker:
       - image: cimg/ruby:3.0.4-browsers # ruby3.0.4, node, selenium含むイメージ
-        # auth:
-        #   username: tatadkn
-        #   password: $DOCKERHUB_PASSWORD  # コンテキスト/ プロジェクト UI の環境変数を参照します。
     steps:
       - checkout # Git コードをプルダウン
       - ruby/install-deps # Ruby Orb を使って依存関係をインストール
       # Node Orb を使ってパッケージをインストール
-      # Yarn の使用および 依存関係のキャッシュに yarn.lock の使用を指定
       - node/install-packages:
           pkg-manager: yarn
 
@@ -26,13 +22,12 @@ jobs:
     parallelism: 3
     docker:
       - image: cimg/ruby:3.0.4-browsers # プライマリ Docker イメージです。ここでステップコマンドが実行されます。
-
+        environment:
+          RAILS_ENV: test
       - image: cimg/mysql:8.0.28 # mysqlイメージ, 開発環境のDocker環境と合わせる
+        command: mysqld --default-authentication-plugin=mysql_native_password
         environment: # mysql用の環境変数
           MYSQL_ALLOW_EMPTY_PASSWORD: "true"
-          MYSQL_HOST: "db"
-        name:
-          db
           # database.ymlに設定済み？
           # MYSQL_USER: 'root'
           # MYSQL_ROOT_PASSWORD: 'password'
@@ -42,7 +37,6 @@ jobs:
     environment:
       BUNDLE_JOBS: "3"
       BUNDLE_RETRY: "3"
-      RAILS_ENV: test
     # 実行する一連のステップ
     steps:
       - checkout
