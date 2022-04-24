@@ -48,7 +48,7 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn
       - run:
-          command: "dockerize -wait tcp://localhost:5432 -timeout 1m"
+          command: "dockerize -wait tcp://localhost:3306 -timeout 1m"
           name: Wait for DB
       # データベース上で実行する前にセカンダリコンテナが起動することを確認
       - run:
