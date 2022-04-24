@@ -28,6 +28,7 @@ jobs:
         command: mysqld --default-authentication-plugin=mysql_native_password
         environment: # mysql用の環境変数
           MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+          MYSQL_ROOT_HOST: "%"
           # database.ymlに設定済み？
           # MYSQL_USER: 'root'
           # MYSQL_ROOT_PASSWORD: 'password'
