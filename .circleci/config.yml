@@ -42,7 +42,7 @@ jobs:
       BUNDLE_JOBS: "3"
       BUNDLE_RETRY: "3"
       RAILS_ENV: test
-    # 実行する一連のステップです。「ビルド」のステップと似たステップもあります。
+    # 実行する一連のステップ
     steps:
       - checkout
       - ruby/install-deps
@@ -52,23 +52,17 @@ jobs:
       - run:
           command: "dockerize -wait tcp://localhost:5432 -timeout 1m"
           name: Wait for DB
-      # ここでは、データベース上で実行する前に
-      # セカンダリコンテナが起動することを確認します。
+      # データベース上で実行する前にセカンダリコンテナが起動することを確認
       - run:
           command: "bundle exec rails db:schema:load --trace"
           name: Database setup
       - ruby/rspec-test:
-          # RSpec を並列実行します。
+          # RSpec を並列実行
           include: spec/**/*_spec.rb
-
-# ワークフローを使って上記で宣言したジョブをオーケストレーションします。
-
 workflows:
-  version: 2
-  build_and_test: # ワークフローの名前は "build_and_test" です。
-    jobs: # このワークフローの一部として実行するジョブのリストです。
-      - build # まず、ビルドを実行します。
-
-      - test: # 次に、テストを実行します。
-          requires: # テストを実行するにはビルドを渡す必要があります。
-            - build # 最後に、ビルドしたジョブを実行します。
+  build_and_test: # ワークフローの名前は "build_and_test"
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
