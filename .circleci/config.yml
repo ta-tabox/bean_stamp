@@ -22,13 +22,14 @@ jobs:
     parallelism: 3
     docker:
       - image: cimg/ruby:3.0.4-browsers # プライマリ Docker イメージです。ここでステップコマンドが実行されます。
-        environment:
-          RAILS_ENV: test
       - image: cimg/mysql:8.0.28 # mysqlイメージ, 開発環境のDocker環境と合わせる
-        command: mysqld --default-authentication-plugin=mysql_native_password
+        command: --default-authentication-plugin=mysql_native_password
         environment: # mysql用の環境変数
           MYSQL_ALLOW_EMPTY_PASSWORD: "true"
           MYSQL_ROOT_HOST: "%"
+          MYSQL_HOST: db
+        name:
+          db
           # database.ymlに設定済み？
           # MYSQL_USER: 'root'
           # MYSQL_ROOT_PASSWORD: 'password'
@@ -38,6 +39,8 @@ jobs:
     environment:
       BUNDLE_JOBS: "3"
       BUNDLE_RETRY: "3"
+      MYSQL_HOST: db
+      RAILS_ENV: test
     # 実行する一連のステップ
     steps:
       - checkout
@@ -45,7 +48,7 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn
       - run:
-          command: "dockerize -wait tcp://localhost:3306 -timeout 1m"
+          command: "dockerize -wait tcp://db:3306 -timeout 1m"
           name: Wait for DB
       # データベース上で実行する前にセカンダリコンテナが起動することを確認
       - run:
