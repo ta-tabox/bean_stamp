@@ -19,8 +19,8 @@ jobs:
       # Node Orb を使ってパッケージをインストール
       # Yarn の使用および 依存関係のキャッシュに yarn.lock の使用を指定
       - node/install-packages:
+          cache-key: yarn.lock
           pkg-manager: yarn
-          cache-key: "yarn.lock"
 
   test:
     # テストを高速化するために「並列ジョブコンテナ」を実行
