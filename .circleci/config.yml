@@ -1,0 +1,74 @@
+version: 2.1 # 2.1 を使うと Orb や他の機能を使用することができる
+
+# 設定で使用する Orb を宣言
+
+orbs:
+  ruby: circleci/ruby@1.7.1
+  node: circleci/node@5.0.2
+
+jobs:
+  build:
+    docker:
+      - image: cimg/ruby:3.0.4-browsers # ruby3.0.4, node, selenium含むイメージ
+        # auth:
+        #   username: tatadkn
+        #   password: $DOCKERHUB_PASSWORD  # コンテキスト/ プロジェクト UI の環境変数を参照します。
+    steps:
+      - checkout # Git コードをプルダウン
+      - ruby/install-deps # Ruby Orb を使って依存関係をインストール
+      # Node Orb を使ってパッケージをインストール
+      # Yarn の使用および 依存関係のキャッシュに yarn.lock の使用を指定
+      - node/install-packages:
+          pkg-manager: yarn
+          cache-key: "yarn.lock"
+
+  test:
+    # テストを高速化するために「並列ジョブコンテナ」を実行
+    parallelism: 3
+    docker:
+      - image: cimg/ruby:3.0.4-browsers # プライマリ Docker イメージです。ここでステップコマンドが実行されます。
+
+      - image: cimg/mysql:8.0.28 # mysqlイメージ, 開発環境のDocker環境と合わせる
+        environment: # mysql用の環境変数
+          MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+          # database.ymlに設定済み？
+          # MYSQL_USER: 'root'
+          # MYSQL_ROOT_PASSWORD: 'password'
+          # MYSQL_PASSWORD: 'password'
+          # MYSQL_DATABASE: 'webapp_test'
+          # MYSQL_HOST: 'db'
+    # Ruby/Rails 固有の環境変数をプライマリコンテナに適用
+    environment:
+      BUNDLE_JOBS: "3"
+      BUNDLE_RETRY: "3"
+      RAILS_ENV: test
+    # 実行する一連のステップです。「ビルド」のステップと似たステップもあります。
+    steps:
+      - checkout
+      - ruby/install-deps
+      - node/install-packages:
+          cache-key: yarn.lock
+          pkg-manager: yarn
+      - run:
+          command: "dockerize -wait tcp://localhost:5432 -timeout 1m"
+          name: Wait for DB
+      # ここでは、データベース上で実行する前に
+      # セカンダリコンテナが起動することを確認します。
+      - run:
+          command: "bundle exec rails db:schema:load --trace"
+          name: Database setup
+      - ruby/rspec-test:
+          # RSpec を並列実行します。
+          include: spec/**/*_spec.rb
+
+# ワークフローを使って上記で宣言したジョブをオーケストレーションします。
+
+workflows:
+  version: 2
+  build_and_test: # ワークフローの名前は "build_and_test" です。
+    jobs: # このワークフローの一部として実行するジョブのリストです。
+      - build # まず、ビルドを実行します。
+
+      - test: # 次に、テストを実行します。
+          requires: # テストを実行するにはビルドを渡す必要があります。
+            - build # 最後に、ビルドしたジョブを実行します。
