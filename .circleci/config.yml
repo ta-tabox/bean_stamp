@@ -28,12 +28,11 @@ jobs:
       - image: cimg/ruby:3.0.4-browsers # プライマリ Docker イメージです。ここでステップコマンドが実行されます。
         environment:
           MYSQL_HOST: "db"
-          MYSQL_PORT: 3306
 
       - image: cimg/mysql:8.0.28 # mysqlイメージ, 開発環境のDocker環境と合わせる
         environment: # mysql用の環境変数
           MYSQL_ALLOW_EMPTY_PASSWORD: "true"
-          # MYSQL_PORT: 3306
+          MYSQL_PORT: 3306
           MYSQL_HOST: "db"
         name:
           db
