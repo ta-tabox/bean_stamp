@@ -26,8 +26,6 @@ jobs:
     parallelism: 3
     docker:
       - image: cimg/ruby:3.0.4-browsers # プライマリ Docker イメージです。ここでステップコマンドが実行されます。
-        environment:
-          MYSQL_HOST: "db"
 
       - image: cimg/mysql:8.0.28 # mysqlイメージ, 開発環境のDocker環境と合わせる
         environment: # mysql用の環境変数
