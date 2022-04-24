@@ -28,13 +28,9 @@ jobs:
           MYSQL_ALLOW_EMPTY_PASSWORD: "true"
           MYSQL_ROOT_HOST: "%"
           MYSQL_HOST: db
-        name:
-          db
-          # database.ymlに設定済み？
-          # MYSQL_USER: 'root'
-          # MYSQL_ROOT_PASSWORD: 'password'
-          # MYSQL_PASSWORD: 'password'
-          # MYSQL_DATABASE: 'webapp_test'
+        name: db
+      - image: selenium/standalone-chrome-debug:latest
+        name: chrome
     # Ruby/Rails 固有の環境変数をプライマリコンテナに適用
     environment:
       BUNDLE_JOBS: "3"
