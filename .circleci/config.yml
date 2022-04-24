@@ -47,10 +47,14 @@ jobs:
       - ruby/install-deps
       - node/install-packages:
           pkg-manager: yarn
+
+      # データベース上で実行する前にセカンダリコンテナが起動することを確認
       - run:
           command: "dockerize -wait tcp://db:3306 -timeout 1m"
           name: Wait for DB
-      # データベース上で実行する前にセカンダリコンテナが起動することを確認
+      - run:
+          command: "bundle exec rails db:create"
+          name: Database create
       - run:
           command: "bundle exec rails db:schema:load --trace"
           name: Database setup
