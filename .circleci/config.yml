@@ -4,6 +4,7 @@ version: 2.1 # 2.1 を使うと Orb や他の機能を使用することがで�
 orbs:
   ruby: circleci/ruby@1.7.1
   node: circleci/node@5.0.2
+  heroku: circleci/heroku@1.2.6
 
 jobs:
   build:
@@ -66,10 +67,21 @@ jobs:
           include: spec/**/*_spec.rb
 
 workflows:
-  build_and_test:
+  build_test_and_deploy:
     jobs:
       - build
       - checking
       - test:
           requires:
             - build
+      - heroku/deploy-via-git: # herokuへ自動デプロイ
+          requires:
+            - build
+            - test
+          filters:
+            branches:
+              only:
+                - master
+          branch: master
+          post-steps:
+            - run: "heroku run rails db:migrate --app $HEROKU_APP_NAME"
