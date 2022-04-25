@@ -78,6 +78,10 @@ workflows:
           requires:
             - build
             - test
+          filters:
+            branches:
+              only:
+                - master
           branch: master
           post-steps:
             - run: "heroku run rails db:migrate --app $HEROKU_APP_NAME"
