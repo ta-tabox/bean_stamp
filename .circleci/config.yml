@@ -79,12 +79,13 @@ workflows:
   build_test_and_deploy:
     jobs:
       - build
-      - checking:
+      - checking
       - test:
           requires:
             - build
       - deploy:
           requires:
+            - build
             - test
           filters:
             branches:
