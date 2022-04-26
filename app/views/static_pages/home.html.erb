@@ -1,14 +1,14 @@
 <% provide(:title, "Home") %>
 <div class="min-h-screen">
-  <div class="top-background">
-    <div id="flash-messages" class="opacity-60 fixed top-0 inset-x-0">
+  <div class="top-background relative">
+    <div id="flash-messages" class="opacity-60 top-0 inset-x-0">
       <%= render 'layouts/flash_messages' %>
     </div>
-    <div class="items-center justify-center flex flex-col mt-14 lg:mt-28">
+    <div class="container items-center justify-center flex flex-col absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
       <div class="items-center justify-center w-full p-8 flex flex-col">
-        <div class="bg-gray-100 items-center justify-center md:w-1/2 w-full shadow-md p-5 h-auto rounded-lg  bg-opacity-60 flex flex-col col-span-12">
+        <div class="w-11/12 md:w-96 bg-gray-100 items-center justify-center shadow-md p-5 h-auto rounded-lg  bg-opacity-60 flex flex-col col-span-12">
           <hr class="w-48 border-2 border-solid border-indigo-500">
-          <h2 class="mt-20 text-yellow-800 text-lg text-center">あなたにとっての一杯のコーヒー<br>
+          <h2 class="mt-20 text-yellow-800 text-sm md:text-lg text-center">あなたにとっての一杯のコーヒー<br>
             探していきませんか？</h2>
           <h1 class="text-gray-800 text-5xl text-center mt-2 mb-10 font-bold logo-font">Beans</h1>
           <%= link_to '登録する', new_user_registration_path , class: "text-center hover:text-gray-300 bg-yellow-800 text-white hover:bg-black w-56 p-4 text-2xl font-medium rounded btn-pop" %>
@@ -21,3 +21,4 @@
     </div>
   </div>
 </div>
+<%= render 'layouts/static_pages_nav' %>
