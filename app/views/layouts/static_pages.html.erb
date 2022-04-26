@@ -3,31 +3,12 @@
   <%= render 'layouts/head' %>
   <body class="bg-white">
     <%= render 'shared/svg' %>
-    <div class="min-h-screen max-w-screen-2xl mx-auto flex flex-col justify-between">
+    <div class="max-w-screen-2xl mx-auto">
+      <%= render 'layouts/static_pages_nav' %>
+      <%= render 'layouts/flash_messages' %>
       <%# メインコンテンツ %>
-      <main class="mx-auto">
-        <div id="flash-messages" class="fixed top-0 inset-x-0">
-          <%= render 'layouts/flash_messages' %>
-        </div>
+      <main>
         <%= yield %>
       </main>
-      <footer class="h-14 border-t z-50 text-black border-gray-200 bg-gray-100 opacity-60">
-        <div class="h-full flex items-center justify-between">
-          <!-- TOPアイコン -->
-          <div class="h-full pl-8 md:pl-20 logo-font text-xl">
-            <%= link_to 'Beans', root_path, class: "static-nav-item" %>
-          </div>
-          <!-- 切り替えアイコン -->
-          <nav class="pr-2 md:pl-16 h-full">
-            <ul class="flex h-full">
-              <li><%= link_to 'HOME', root_path, class: "static-nav-item e-font" %></li>
-              <li><%= link_to 'ABOUT', about_path, class: "static-nav-item e-font" %></li>
-              <li><%= link_to 'HELP', help_path, class: "static-nav-item e-font" %></li>
-            </ul>
-          </nav>
-        </div>
-      </footer>
-    </div>
-    <%#= debug(params) if Rails.env.development? %>
-  </body>
-</html>
+    </body>
+  </html>

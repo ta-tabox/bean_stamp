@@ -1,0 +1,16 @@
+<section class="h-14 border-t border-b z-50 text-black border-gray-200 bg-gray-100 opacity-60 inset-x-0">
+  <div class="h-full flex items-center justify-between">
+    <!-- TOPアイコン -->
+    <div class="h-full pl-2 md:pl-12 logo-font text-xl">
+      <%= link_to 'Beans', root_path, class: "static-nav-item" %>
+    </div>
+    <!-- 切り替えアイコン -->
+    <nav class="pr-2 md:pr-12 h-full">
+      <ul class="flex h-full">
+        <li><%= link_to 'HOME', root_path, class: "static-nav-item e-font" %></li>
+        <li><%= link_to 'ABOUT', about_path, class: "static-nav-item e-font" %></li>
+        <li><%= link_to 'HELP', help_path, class: "static-nav-item e-font" %></li>
+      </ul>
+    </nav>
+  </div>
+</section>
