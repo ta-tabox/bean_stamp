@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
 
-rm -f /beans_app/tmp/pids/server.pid
+rm -f /bean_stamp/tmp/pids/server.pid
 
 exec "$@"
