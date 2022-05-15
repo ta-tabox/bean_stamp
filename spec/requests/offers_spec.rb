@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Offers', type: :request do
-  let(:base_title) { ' | BeansApp' }
+  let(:base_title) { ' | BeanStamp' }
   # ロースターに所属しないユーザー
   let(:user) { create(:user) }
   # コーヒー豆、オファーを持たないロースターに所属したユーザー
