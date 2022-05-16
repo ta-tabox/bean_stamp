@@ -19,13 +19,13 @@ services:
     # nginx -> puma用
     # command: bundle exec puma -C config/puma.rb
     volumes:
-      - .:/beans_app # カレントディレクトリをbindマウント
+      - .:/bean_stamp # カレントディレクトリをbindマウント
       - bundle:/usr/local/bundle
-      - uploads:/beans_app/public/uploads # carrierwaveによる画像保存先をボリュームとしてマウント
-      - public-data:/webapp/public # nginxと静的ページを共有
-      - tmp-data:/beans_app/tmp # nginxとのsocket通信に使用
-      - ./tmp/screenshots:/beans_app/tmp/screenshots # systemテストのscreenshotをホスト環境で確認
-      - log-data:/beans_app/log
+      - uploads:/bean_stamp/public/uploads # carrierwaveによる画像保存先をボリュームとしてマウント
+      # - public-data:/bean_stamp/public # nginxと静的ページを共有
+      # - tmp-data:/bean_stamp/tmp # nginxとのsocket通信に使用
+      - ./tmp/screenshots:/bean_stamp/tmp/screenshots # systemテストのscreenshotをホスト環境で確認
+      - log-data:/bean_stamp/log
     ports:
       - "3000:3000"
     depends_on:
@@ -36,18 +36,6 @@ services:
     environment:
       SELENIUM_DRIVER_URL: http://selenium_chrome:4444/wd/hub
       WEBPACKER_DEV_SERVER_HOST: webpacker
-
-  # nginxをリバースプロキシとして使用する時に使用
-  # web:
-  #   build:
-  #     context: containers/nginx
-  #   volumes:
-  #     - public-data:/beans_app/public
-  #     - tmp-data:/beans_app/tmp
-  #   ports:
-  #     - 80:80
-  #   depends_on:
-  #     - app
 
   selenium_chrome:
     image: selenium/standalone-chrome-debug:latest
@@ -72,10 +60,22 @@ services:
       RAILS_ENV: development
       WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
 
+  # nginxをリバースプロキシとして使用する時に使用
+  # web:
+  #   build:
+  #     context: containers/nginx
+  #   volumes:
+  #     - public-data:/bean_stamp/public
+  #     - tmp-data:/bean_stamp/tmp
+  #   ports:
+  #     - 80:80
+  #   depends_on:
+  #     - app
+
 volumes:
   db-data: {}
   uploads: {}
   bundle: {}
-  public-data: {}
-  tmp-data: {}
   log-data: {}
+  # public-data: {}
+  # tmp-data: {}

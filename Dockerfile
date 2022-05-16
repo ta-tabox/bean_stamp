@@ -9,11 +9,11 @@ apt-get update && apt-get install -y yarn
 # 必要なパッケージインストール
 # mariadb-> mysqlクライアント, imagemagick -> CarrierWaveで使用
 RUN apt-get update -qq && apt-get install -y nodejs yarn mariadb-client imagemagick
-WORKDIR /beans_app
-COPY Gemfile /beans_app/Gemfile
-COPY Gemfile.lock /beans_app/Gemfile.lock
+WORKDIR /bean_stamp
+COPY Gemfile /bean_stamp/Gemfile
+COPY Gemfile.lock /bean_stamp/Gemfile.lock
 RUN bundle install
-COPY . /beans_app
+COPY . /bean_stamp
 
 RUN yarn install --check-files
 RUN bundle exec rails webpacker:compile

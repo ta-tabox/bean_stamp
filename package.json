@@ -1,5 +1,5 @@
 {
-  "name": "beans-app",
+  "name":"bean_stamp",
   "private": true,
   "dependencies": {
     "@rails/actioncable": "^6.0.0",

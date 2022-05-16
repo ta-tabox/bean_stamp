@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Searches', type: :request do
-  let(:base_title) { ' | BeansApp' }
+  let(:base_title) { ' | BeanStamp' }
   let(:user) { create(:user) }
   let!(:roaster) { create(:roaster) }
   let!(:bean) { create(:bean, :with_image, :with_3_taste_tags, roaster: roaster) }

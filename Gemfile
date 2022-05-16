@@ -57,6 +57,7 @@ group :development do
   gem 'irb', '>= 1.3.6'
   gem 'letter_opener_web', '~> 1.0'
   gem 'pre-commit', require: false
+  gem 'rename'
   gem 'spring'
 end
 
