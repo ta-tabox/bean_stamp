@@ -18,14 +18,14 @@ default: &default
 
 development:
   <<: *default
-  database: beans_app_development
+  database: bean_stamp_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: beans_app_test
+  database: bean_stamp_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -49,10 +49,11 @@ test:
 #
 production:
   <<: *default
-  # database: beans_app_production
-  # username: beans_app
-  # password: <%= ENV['BEANS_APP_DATABASE_PASSWORD'] %>
+  # database: bean_stamp_production
+  # username: bean_stamp
+  # password: <%= ENV['bean_stamp_DATABASE_PASSWORD'] %>
 
+  # heroku configにて設定
   database: <%= ENV['DATABASE_URL'] %>
   username: <%= ENV['DB_USERNAME'] %>
   password: <%= ENV['DB_PASSWORD'] %>

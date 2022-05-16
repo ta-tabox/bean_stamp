@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'StaticPages', type: :request do
-  let(:base_title) { ' | BeansApp' }
+  let(:base_title) { ' | BeanStamp' }
   let(:user) { create(:user) }
 
   describe 'GET #home' do
