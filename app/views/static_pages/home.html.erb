@@ -1,12 +1,13 @@
 <% provide(:title, "Home") %>
 <div class="min-h-screen">
   <div class="top-background relative">
-    <div id="flash-messages" class="opacity-60 top-0 inset-x-0">
+    <%= render 'layouts/static_pages_nav' %>
+    <div  class="opacity-60 top-0 inset-x-0">
       <%= render 'layouts/flash_messages' %>
     </div>
-    <div class="container items-center justify-center flex flex-col absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
+    <div class="container items-center justify-center flex flex-col absolute top-1/2 left-1/2 lg:left-2/3 transform -translate-y-1/2 -translate-x-1/2">
       <div class="items-center justify-center w-full p-8 flex flex-col">
-        <div class="w-11/12 md:w-96 bg-gray-100 items-center justify-center shadow-md p-5 h-auto rounded-lg  bg-opacity-60 flex flex-col col-span-12">
+        <div class="w-11/12 md:w-96 bg-gray-100 items-center justify-center shadow-md p-5 h-auto rounded-lg  bg-opacity-80 flex flex-col col-span-12">
           <hr class="w-48 border-2 border-solid border-indigo-500">
           <h2 class="mt-20 text-yellow-800 text-sm md:text-lg text-center">あなたにとっての一杯のコーヒー<br>
             探していきませんか？</h2>
@@ -21,4 +22,3 @@
     </div>
   </div>
 </div>
-<%= render 'layouts/static_pages_nav' %>
