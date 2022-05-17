@@ -33,7 +33,7 @@
 /* Background-image */
 .top-background {
   @apply fixed inset-0 bg-center bg-cover bg-no-repeat h-screen;
-  background-image: url("../images/top-coffee.jpg");
+  background-image: url("../images/top-image.jpg");
 }
 
 /* about, helpページ */
