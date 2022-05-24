@@ -7,8 +7,8 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.lis
 apt-get update && apt-get install -y yarn
 
 # 必要なパッケージインストール
-# mariadb-> mysqlクライアント, imagemagick -> CarrierWaveで使用
-RUN apt-get update -qq && apt-get install -y nodejs yarn mariadb-client imagemagick
+# magemagick -> CarrierWaveで使用
+RUN apt-get update -qq && apt-get install -y nodejs yarn default-mysql-client imagemagick
 WORKDIR /bean_stamp
 COPY Gemfile /bean_stamp/Gemfile
 COPY Gemfile.lock /bean_stamp/Gemfile.lock
