@@ -86,3 +86,5 @@ yarn-debug.log*
 
 # tailwind_default file
 /tailwind_default.config.js
+
+/config/credentials/production.key
