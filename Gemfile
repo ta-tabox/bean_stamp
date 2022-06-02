@@ -42,12 +42,13 @@ group :development, :test do
 end
 
 group :development do
+  gem 'bcrypt_pbkdf'
   gem 'bullet'
   gem 'capistrano', require: false
   gem 'capistrano3-puma'
-  gem 'capistrano-bundler'
   gem 'capistrano-rails', require: false
   gem 'capistrano-rbenv'
+  gem 'ed25519'
   gem 'htmlbeautifier'
   # rails consoleの文字化けを解消する
   gem 'irb', '>= 1.3.6'
