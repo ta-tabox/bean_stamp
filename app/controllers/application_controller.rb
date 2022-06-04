@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+  # CSRF対策メソッド
+  protect_from_forgery
+
   # Pagyによるpagination
   include Pagy::Backend
 
