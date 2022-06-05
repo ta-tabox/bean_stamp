@@ -91,20 +91,9 @@ workflows:
       - test:
           requires:
             - build
-      - deploy
-        # requires:
-        #   - test
-        # filters:
-        #   branches:
-        #     only: master
-      # - heroku/deploy-via-git: # herokuへ自動デプロイ
-      #     requires:
-      #       - build
-      #       - test
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
-      #     branch: master
-      #     post-steps:
-      #       - run: "heroku run rails db:migrate --app $HEROKU_APP_NAME"
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
