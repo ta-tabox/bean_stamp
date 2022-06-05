@@ -18,7 +18,7 @@ jobs:
 
   checking:
     docker:
-      - image: "cimg/ruby:3.0.4-node"
+      - image: cimg/ruby:3.0.4-node
     steps:
       - checkout
       - ruby/install-deps
@@ -66,6 +66,23 @@ jobs:
       - ruby/rspec-test:
           include: spec/**/*_spec.rb
 
+  deploy:
+    docker:
+      - image: cimg/ruby:3.0.4-node
+        environment:
+          BUNDLER_VERSION: 2.2.33
+    steps:
+      - checkout
+      - ruby/install-deps
+      # - node/install-packages:
+      #     pkg-manager: yarn
+      #     cache-path: "yarn.lock"
+      - add_ssh_keys:
+          fingerprints: "f3:40:df:8b:91:b2:82:6d:3c:2d:42:6e:6a:ea:af:b4"
+      - deploy:
+          name: Capistrano deploy
+          command: bundle exec cap production deploy
+
 workflows:
   build_test_and_deploy:
     jobs:
@@ -74,14 +91,20 @@ workflows:
       - test:
           requires:
             - build
-      - heroku/deploy-via-git: # herokuへ自動デプロイ
-          requires:
-            - build
-            - test
-          filters:
-            branches:
-              only:
-                - master
-          branch: master
-          post-steps:
-            - run: "heroku run rails db:migrate --app $HEROKU_APP_NAME"
+      - deploy
+        # requires:
+        #   - test
+        # filters:
+        #   branches:
+        #     only: master
+      # - heroku/deploy-via-git: # herokuへ自動デプロイ
+      #     requires:
+      #       - build
+      #       - test
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
+      #     branch: master
+      #     post-steps:
+      #       - run: "heroku run rails db:migrate --app $HEROKU_APP_NAME"

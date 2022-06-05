@@ -26,6 +26,7 @@ services:
       # - tmp-data:/bean_stamp/tmp # nginxとのsocket通信に使用
       - ./tmp/screenshots:/bean_stamp/tmp/screenshots # systemテストのscreenshotをホスト環境で確認
       - log-data:/bean_stamp/log
+      - ~/.ssh/bean-stamp:/root/.ssh # EC2インスタンス接続用の鍵を配置
     ports:
       - "3000:3000"
     depends_on:
