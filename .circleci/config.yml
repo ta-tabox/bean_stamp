@@ -74,9 +74,9 @@ jobs:
     steps:
       - checkout
       - ruby/install-deps
-      - node/install-packages:
-          pkg-manager: yarn
-          cache-path: "yarn.lock"
+      # - node/install-packages:
+      #     pkg-manager: yarn
+      #     cache-path: "yarn.lock"
       - add_ssh_keys:
           fingerprints: "f3:40:df:8b:91:b2:82:6d:3c:2d:42:6e:6a:ea:af:b4"
       - deploy:
@@ -91,12 +91,12 @@ workflows:
       - test:
           requires:
             - build
-      - deploy:
-          requires:
-            - test
-          # filters:
-          #   branches:
-          #     only: master
+      - deploy
+        # requires:
+        #   - test
+        # filters:
+        #   branches:
+        #     only: master
       # - heroku/deploy-via-git: # herokuへ自動デプロイ
       #     requires:
       #       - build

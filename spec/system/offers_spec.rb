@@ -104,6 +104,7 @@ RSpec.describe 'Offers', type: :system do
         click_link '削除'
         expect do
           accept_confirm
+          # TODO: テストが落ちやすいので用修正
           expect(current_path).to eq offers_path
         end.to change(Offer, :count).by(-1)
         expect(page).to have_content "コーヒー豆「#{offer.bean.name}」のオファーを1件削除しました"
