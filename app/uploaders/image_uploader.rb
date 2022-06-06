@@ -1,17 +1,20 @@
 class ImageUploader < CarrierWave::Uploader::Base
-  # Include RMagick or MiniMagick support:
-  # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
 
-  # Choose what kind of storage to use for this uploader:
-  storage :file
+  if Rails.env.production?
+    storage :fog
+  else
+    storage :file
+  end
 
-  # storage :fog
-
-  # Override the directory where uploaded files will be stored.
-  # This is a sensible default for uploaders that are meant to be mounted:
+  # 保存ディレクトリ
   def store_dir
-    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    if modle.present?
+      "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    else
+      # modelに紐つかないファイルはuploads/直下に保存
+      'uploads/content_image/'
+    end
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
@@ -24,7 +27,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # end
 
   # リサイズ
-  process resize_to_fit: [600, 600]
+  process resize_to_fit: [400, 400]
 
   # Process files as they are uploaded:
   # process scale: [200, 300]
@@ -33,13 +36,11 @@ class ImageUploader < CarrierWave::Uploader::Base
   #   # do something
   # end
 
-  # Create different versions of your uploaded files: image.thumb.urlで表示できる
+  # thumb用のバージョン image.thumb.urlで表示できる
   version :thumb do
     process resize_to_fit: [200, 200]
   end
 
-  # Add an allowlist of extensions which are allowed to be uploaded.
-  # For images you might use something like this:
   def extension_allowlist
     %w[jpg jpeg gif png]
   end
@@ -48,10 +49,4 @@ class ImageUploader < CarrierWave::Uploader::Base
   def size_range
     1..5.megabytes
   end
-
-  # Override the filename of the uploaded files:
-  # Avoid using model.id or version_name here, see uploader/store.rb for details.
-  # def filename
-  #   "something.jpg" if original_filename
-  # end
 end
