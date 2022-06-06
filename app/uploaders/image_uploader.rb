@@ -9,7 +9,7 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   # 保存ディレクトリ
   def store_dir
-    if modle.present?
+    if model.present?
       "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
     else
       # modelに紐つかないファイルはuploads/直下に保存
