@@ -14,12 +14,10 @@ RSpec.describe 'Roasters', type: :system do
       context 'when user is not belonging to a roaster' do
         before do
           sign_in user_not_belonging_a_roaster
-          visit root_path
+          visit edit_user_registration_path
         end
 
         before do
-          click_link 'User'
-          click_link '編集'
           click_link 'ロースターとして登録する'
           fill_in '店舗名', with: 'テストロースター'
           fill_in '電話番号', with: '0123456789'

@@ -97,16 +97,16 @@ RSpec.describe 'Offers', type: :system do
       end
     end
 
-    describe 'delete offer feature', js: true, focus: true do
+    describe 'delete offer feature', js: true do
       before { click_link 'Offers' }
       it 'deletes a offer at offers#index' do
         expect do
           find("article#offer-#{offer.id}").click_link '詳細'
           click_link '削除'
           accept_confirm
-          expect(current_path).to eq offers_path
           expect(page).to have_content "コーヒー豆「#{offer.bean.name}」のオファーを1件削除しました"
           expect(page).to_not have_selector("a[href='/offers/#{offer.id}']")
+          expect(current_path).to eq offers_path
         end.to change(Offer, :count).by(-1)
       end
       it 'deletes a offer at offers#edit' do
@@ -114,9 +114,9 @@ RSpec.describe 'Offers', type: :system do
           visit edit_offer_path offer
           click_link '削除する'
           accept_confirm
-          expect(current_path).to eq offers_path
           expect(page).to have_content "コーヒー豆「#{offer.bean.name}」のオファーを1件削除しました"
           expect(page).to_not have_selector("a[href='/offers/#{offer.id}]")
+          expect(current_path).to eq offers_path
         end.to change(Offer, :count).by(-1)
       end
     end
