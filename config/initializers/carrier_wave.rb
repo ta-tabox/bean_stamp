@@ -4,7 +4,7 @@ if Rails.env.production?
     config.fog_credentials = {
       # Amazon S3用の設定
       provider: 'AWS',
-      region: Rails.application.credentials.dig(:aws, :s3_region),     # 例: 'ap-northeast-1'
+      region: Rails.application.credentials.dig(:aws, :s3_region),
       use_iam_profile: true,
     }
     config.fog_directory = Rails.application.credentials.dig(:aws, :s3_bucket)

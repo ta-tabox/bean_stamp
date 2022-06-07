@@ -27,14 +27,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # end
 
   # リサイズ
-  process resize_to_fit: [400, 400]
-
-  # Process files as they are uploaded:
-  # process scale: [200, 300]
-  #
-  # def scale(width, height)
-  #   # do something
-  # end
+  process resize_to_fit: [600, 600]
 
   # thumb用のバージョン image.thumb.urlで表示できる
   version :thumb do
