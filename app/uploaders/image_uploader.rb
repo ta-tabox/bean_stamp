@@ -27,11 +27,11 @@ class ImageUploader < CarrierWave::Uploader::Base
   # end
 
   # リサイズ
-  process resize_to_fit: [600, 600]
+  process resize_to_fit: [800, 800]
 
   # thumb用のバージョン image.thumb.urlで表示できる
   version :thumb do
-    process resize_to_fit: [200, 200]
+    process resize_to_fit: [300, 300]
   end
 
   def extension_allowlist
