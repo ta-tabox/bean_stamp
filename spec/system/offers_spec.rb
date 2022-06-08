@@ -100,25 +100,24 @@ RSpec.describe 'Offers', type: :system do
     describe 'delete offer feature', js: true do
       before { click_link 'Offers' }
       it 'deletes a offer at offers#index' do
-        find("article#offer-#{offer.id}").click_link '詳細'
-        click_link '削除'
         expect do
+          find("article#offer-#{offer.id}").click_link '詳細'
+          click_link '削除'
           accept_confirm
-          # TODO: テストが落ちやすいので用修正
+          expect(page).to have_content "コーヒー豆「#{offer.bean.name}」のオファーを1件削除しました"
+          expect(page).to_not have_selector("a[href='/offers/#{offer.id}']")
           expect(current_path).to eq offers_path
         end.to change(Offer, :count).by(-1)
-        expect(page).to have_content "コーヒー豆「#{offer.bean.name}」のオファーを1件削除しました"
-        expect(page).to_not have_selector("a[href='/offers/#{offer.id}']")
       end
       it 'deletes a offer at offers#edit' do
-        visit edit_offer_path offer
-        click_link '削除する'
         expect do
+          visit edit_offer_path offer
+          click_link '削除する'
           accept_confirm
+          expect(page).to have_content "コーヒー豆「#{offer.bean.name}」のオファーを1件削除しました"
+          expect(page).to_not have_selector("a[href='/offers/#{offer.id}]")
           expect(current_path).to eq offers_path
         end.to change(Offer, :count).by(-1)
-        expect(page).to have_content "コーヒー豆「#{offer.bean.name}」のオファーを1件削除しました"
-        expect(page).to_not have_selector("a[href='/offers/#{offer.id}]")
       end
     end
   end
