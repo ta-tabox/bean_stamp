@@ -31,10 +31,10 @@ Rails.application.configure do
   config.assets.compile = true
 
   # Herokuデプロイ時に設定
-  config.assets.initialize_on_precompile = false
+  # config.assets.initialize_on_precompile = false
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  # config.asset_host = 'http://assets.example.com'
+  config.asset_host = Rails.application.credentials.dig(:aws, :s3_host)
 
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
