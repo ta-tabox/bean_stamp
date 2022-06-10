@@ -44,14 +44,20 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   # urlメソッドのオーバーライド、S3で保存した画像にCloudFrontを介してアクセスする
-  def url
-    if path.present?
-      # 保存先がローカルの場合
-      return "#{super}?updatedAt=#{model.updated_at.to_i}" if Rails.env.development? || Rails.env.test?
+  # def url
+  #   if path.present?
+  #     # 保存先がローカルの場合
+  #     return "#{super}?updatedAt=#{model.updated_at.to_i}" if Rails.env.development? || Rails.env.test?
 
-      # 保存先がS3の場合
-      return "#{Settings.asset_host}/#{path}?updatedAt=#{model.updated_at.to_i}"
+  #     # 保存先がS3の場合
+  #     return "#{Settings.asset_host}/#{path}?updatedAt=#{model.updated_at.to_i}"
+  #   end
+  #   super
+  # end
+
+  def url(*_args)
+    if Rails.env.production?
+      "#{Settings.asset_host}/#{store_dir}/#{identifier}"
     end
-    super
   end
 end
