@@ -42,4 +42,16 @@ class ImageUploader < CarrierWave::Uploader::Base
   def size_range
     1..5.megabytes
   end
+
+  # urlメソッドのオーバーライド、S3で保存した画像にCloudFrontを介してアクセスする
+  def url
+    if path.present?
+      # 保存先がローカルの場合
+      return "#{super}?updatedAt=#{model.updated_at.to_i}" if Rails.env.development? || Rails.env.test?
+
+      # 保存先がS3の場合
+      return "#{Settings.asset_host}/#{path}?updatedAt=#{model.updated_at.to_i}"
+    end
+    super
+  end
 end
