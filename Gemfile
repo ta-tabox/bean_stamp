@@ -2,11 +2,13 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.4'
+gem 'asset_sync'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'cancancan'
 gem 'carrierwave', '~> 2.2'
 gem 'devise'
 gem 'enum_help'
+gem 'fog-aws'
 gem 'jbuilder', '~> 2.7'
 gem 'jp_prefecture', '~> 1.0'
 gem 'mini_magick', '~> 4.11'
@@ -63,9 +65,4 @@ group :test do
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
   gem 'webdrivers', require: !ENV['SELENIUM_DRIVER_URL']
-end
-
-group :production do
-  gem 'asset_sync'
-  gem 'fog-aws'
 end
