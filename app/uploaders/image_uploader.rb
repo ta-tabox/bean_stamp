@@ -57,7 +57,7 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   def url(*_args)
     if Rails.env.production?
-      "#{Settings.asset_host}/#{store_dir}/#{identifier}"
+      "#{asset_host}/#{store_dir}/#{identifier}"
     end
   end
 end
