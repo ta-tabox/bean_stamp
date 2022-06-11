@@ -7,6 +7,13 @@ class ImageUploader < CarrierWave::Uploader::Base
     storage :file
   end
 
+  def initialize(*)
+    super
+    return unless Rails.env.production?
+
+    self.asset_host = Rails.application.credentials.dig(:aws, :s3_host)
+  end
+
   # 保存ディレクトリ
   def store_dir
     if model.present?
@@ -43,21 +50,15 @@ class ImageUploader < CarrierWave::Uploader::Base
     1..5.megabytes
   end
 
-  # urlメソッドのオーバーライド、S3で保存した画像にCloudFrontを介してアクセスする
-  # def url
-  #   if path.present?
-  #     # 保存先がローカルの場合
-  #     return "#{super}?updatedAt=#{model.updated_at.to_i}" if Rails.env.development? || Rails.env.test?
+  def url
+    if path.present?
+      # 保存先がローカルの場合
+      return "#{super}?updatedAt=#{model.updated_at.to_i}" if Rails.env.development? || Rails.env.test?
 
-  #     # 保存先がS3の場合
-  #     return "#{Settings.asset_host}/#{path}?updatedAt=#{model.updated_at.to_i}"
-  #   end
-  #   super
-  # end
-
-  def url(*_args)
-    if Rails.env.production?
-      "#{asset_host}/#{store_dir}/#{identifier}"
+      # 保存先がS3の場合
+      return "#{asset_host}/#{store_dir}/#{identifier}?updatedAt=#{model.updated_at.to_i}"
     end
+
+    super
   end
 end
