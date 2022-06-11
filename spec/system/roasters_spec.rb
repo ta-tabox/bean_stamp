@@ -40,7 +40,7 @@ RSpec.describe 'Roasters', type: :system do
             is_expected.to change(Roaster, :count).by(1)
             expect(current_path).to eq roaster_path Roaster.last
             expect(page).to have_content 'ロースター登録が完了しました'
-            expect(page).to have_selector("img[src$='sample.jpg']")
+            expect(page).to have_selector("img[src*='sample.jpg']")
           end
         end
       end
@@ -59,7 +59,7 @@ RSpec.describe 'Roasters', type: :system do
           expect(page).to have_content roaster.address
           expect(page).to have_content roaster.phone_number
           expect(page).to have_content roaster.describe
-          expect(page).to have_selector("img[src$='sample.jpg']")
+          expect(page).to have_selector("img[src*='sample.jpg']")
         }
       end
 

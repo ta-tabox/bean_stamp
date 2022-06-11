@@ -100,7 +100,7 @@ RSpec.describe 'Users', type: :system do
             subject
             expect(current_path).to eq user_path user
             expect(page).to have_content 'アカウント情報を変更しました。'
-            expect(page).to have_selector("img[src$='sample.jpg']")
+            expect(page).to have_selector("img[src*='sample.jpg']")
           end
         end
 
