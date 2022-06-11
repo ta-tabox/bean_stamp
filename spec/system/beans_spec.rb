@@ -71,7 +71,7 @@ RSpec.describe 'Beans', type: :system do
 
       it "shows bean's informations" do
         subject
-        expect(page).to have_selector("img[src$='sample.jpg']")
+        expect(page).to have_selector("img[src*='sample.jpg']")
         expect(page).to have_content bean.name
         expect(page).to have_content bean.country
         expect(page).to have_content bean.roast_level.name

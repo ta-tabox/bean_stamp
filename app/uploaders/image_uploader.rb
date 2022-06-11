@@ -7,6 +7,13 @@ class ImageUploader < CarrierWave::Uploader::Base
     storage :file
   end
 
+  def initialize(*)
+    super
+    return unless Rails.env.production?
+
+    self.asset_host = Rails.application.credentials.dig(:aws, :s3_host)
+  end
+
   # 保存ディレクトリ
   def store_dir
     if model.present?
@@ -41,5 +48,17 @@ class ImageUploader < CarrierWave::Uploader::Base
   # アップロードできるサイズ
   def size_range
     1..5.megabytes
+  end
+
+  def url
+    if path.present?
+      # 保存先がローカルの場合
+      return "#{super}?updatedAt=#{model.updated_at.to_i}" if Rails.env.development? || Rails.env.test?
+
+      # 保存先がS3の場合
+      return "#{asset_host}/#{store_dir}/#{identifier}?updatedAt=#{model.updated_at.to_i}"
+    end
+
+    super
   end
 end
