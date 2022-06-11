@@ -8,7 +8,6 @@ if Rails.env.production?
       use_iam_profile: true,
     }
     config.fog_directory = Rails.application.credentials.dig(:aws, :s3_bucket)
-    # config.asset_host = Rails.application.credentials.dig(:aws, :s3_host)
-    config.asset_host = 'https://static.bean-stamp.com'
+    config.asset_host = Rails.application.credentials.dig(:aws, :s3_host)
   end
 end
