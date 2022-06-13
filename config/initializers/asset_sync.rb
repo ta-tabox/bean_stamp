@@ -9,9 +9,6 @@ if defined?(AssetSync)
     config.aws_access_key_id = Rails.application.credentials.dig(:aws, :access_key_id)
     config.aws_secret_access_key = Rails.application.credentials.dig(:aws, :secret_access_key)
 
-    # EC2に設定しているrolesからIDとkeyを取得
-    # config.aws_iam_roles = true
-
     # 元ファイルをそのまま残す
     config.existing_remote_files = 'keep'
     config.gzip_compression = true
