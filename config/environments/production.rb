@@ -35,7 +35,7 @@ Rails.application.configure do
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # AWS CloudFrontを設定
-  config.action_controller.asset_host = Rails.application.credentials.dig(:aws, :s3_host)
+  # config.action_controller.asset_host = Rails.application.credentials.dig(:aws, :s3_host)
   config.asset_host = Rails.application.credentials.dig(:aws, :s3_host)
 
   # Specifies the header that your server uses for sending files.

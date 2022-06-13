@@ -6,15 +6,17 @@ if defined?(AssetSync)
     config.fog_provider = 'AWS'
     config.fog_directory = Rails.application.credentials.dig(:aws, :s3_bucket)
     config.fog_region = Rails.application.credentials.dig(:aws, :s3_region)
+    config.aws_access_key_id = Rails.application.credentials.dig(:aws, :access_key_id)
+    config.aws_secret_access_key = Rails.application.credentials.dig(:aws, :secret_access_key)
+
+    # EC2に設定しているrolesからIDとkeyを取得
+    # config.aws_iam_roles = true
 
     # 元ファイルをそのまま残す
     config.existing_remote_files = 'keep'
     config.gzip_compression = true
 
     config.aws_session_token = ENV['AWS_SESSION_TOKEN'] if ENV.key?('AWS_SESSION_TOKEN')
-
-    # EC2に設定しているrolesからIDとkeyを取得
-    config.aws_iam_roles = true
 
     # webpackerに対応
     config.run_on_precompile = false
