@@ -10,7 +10,7 @@ if defined?(AssetSync)
     config.aws_access_key_id = Rails.application.credentials.dig(:aws, :access_key_id)
     config.aws_secret_access_key = Rails.application.credentials.dig(:aws, :secret_access_key)
 
-    # 元ファイルをそのまま残す
+    # S3にある元のアセットファイルを保持する
     config.existing_remote_files = 'keep'
     config.gzip_compression = true
 
