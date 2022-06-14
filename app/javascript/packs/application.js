@@ -14,7 +14,9 @@ import "../shared/pagy.js.erb";
 import "../shared/swiper";
 import "../shared/tab";
 import "../shared/hamburger";
+import "rails_admin/src/rails_admin/base";
 // cssファイルの読み込み
+import "../stylesheets/rails_admin";
 import "../css/application.css";
 const images = require.context("../images", true);
 const imagePath = (name) => images(name, true);
