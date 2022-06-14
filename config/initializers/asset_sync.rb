@@ -1,5 +1,6 @@
 if defined?(AssetSync)
   AssetSync.configure do |config|
+    config.enabled = false if Rails.env.development?
     config.fog_public = false
 
     # AWSの設定

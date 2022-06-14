@@ -37,7 +37,7 @@ namespace :deploy do
   task :compile_assets_locally do
     run_locally do
       with rails_env: fetch(:stage) do
-        execute 'bundle exec rails assets:precompile'
+        execute 'bundle exec rails assets:precompile RAILS_ENV=production'
       end
     end
   end
