@@ -4,10 +4,10 @@ if Rails.env.production?
     config.fog_credentials = {
       # Amazon S3用の設定
       provider: 'AWS',
-      # aws_access_key_id: Rails.application.credentials.dig(:aws, :access_key_id),
-      # aws_secret_access_key: Rails.application.credentials.dig(:aws, :secret_access_key),
+      # ローカルプリコンパイルで個々の設定が入りそう→これがないとpuroduction環境でコンパイルができない
+      aws_access_key_id: Rails.application.credentials.dig(:aws, :access_key_id),
+      aws_secret_access_key: Rails.application.credentials.dig(:aws, :secret_access_key),
       region: Rails.application.credentials.dig(:aws, :s3_region),
-      use_iam_profile: true,
     }
     config.fog_directory = Rails.application.credentials.dig(:aws, :s3_bucket)
     config.asset_host = Rails.application.credentials.dig(:aws, :s3_host)
