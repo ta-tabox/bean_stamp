@@ -79,6 +79,9 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
+  # 開発環境用のコンパイルファイル
+  config.assets.prefix = '/dev-assets'
+
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 

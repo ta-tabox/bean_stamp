@@ -21,6 +21,7 @@ services:
     volumes:
       - .:/bean_stamp # カレントディレクトリをbindマウント
       - bundle:/usr/local/bundle
+      - node_modules:/bean_stamp/node_modules
       - uploads:/bean_stamp/public/uploads # carrierwaveによる画像保存先をボリュームとしてマウント
       # - public-data:/bean_stamp/public # nginxと静的ページを共有
       # - tmp-data:/bean_stamp/tmp # nginxとのsocket通信に使用
@@ -77,6 +78,7 @@ volumes:
   db-data: {}
   uploads: {}
   bundle: {}
+  node_modules: {}
   log-data: {}
   # public-data: {}
   # tmp-data: {}
