@@ -11,7 +11,7 @@ set :branch, ENV['BRANCH'] || 'master'
 set :deploy_to, '/var/www/bean_stamp'
 
 # リリース間で共有するファイル、フォルダ
-append :linked_files, 'config/database.yml', 'config/credentials/production.key'
+append :linked_files, 'config/database.yml', 'config/master.key'
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'tmp/webpacker', 'public/system', 'vendor', 'storage', 'node_modules'
 
 # 出力するログレベル
