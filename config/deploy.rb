@@ -7,7 +7,7 @@ set :user, 'deploy'
 
 # pullするリポジトリ
 set :repo_url, 'git@github.com:tanktabox/bean_stamp.git'
-set :branch, ENV['BRANCH'] || 'master'
+set :branch, ENV['BRANCH'] || 'main'
 set :deploy_to, '/var/www/bean_stamp'
 
 # リリース間で共有するファイル、フォルダ
