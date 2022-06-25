@@ -1,5 +1,10 @@
 FROM ruby:3.0.4
 
+ENV HOME="/bean_stamp" \
+    LANG=C.UTF-8 \
+    TZ=Asia/Tokyo \
+    RAILS_ENV=production
+
 # yarnパッケージ管理ツールをインストール
 RUN apt-get update && apt-get install -y curl apt-transport-https wget && \
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
@@ -7,13 +12,12 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.lis
 apt-get update && apt-get install -y yarn
 
 # 必要なパッケージインストール
-# magemagick -> CarrierWaveで使用
 RUN apt-get update -qq && apt-get install -y nodejs yarn default-mysql-client imagemagick
-WORKDIR /bean_stamp
-COPY Gemfile /bean_stamp/Gemfile
-COPY Gemfile.lock /bean_stamp/Gemfile.lock
+WORKDIR ${HOME}
+COPY Gemfile ${HOME}/Gemfile
+COPY Gemfile.lock ${HOME}/Gemfile.lock
 RUN bundle install
-COPY . /bean_stamp
+COPY . ${HOME}
 
 RUN yarn install --check-files
 RUN bundle exec rails webpacker:compile
@@ -24,5 +28,10 @@ RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
 
-# Rails サーバ起動
-CMD ["rails", "server", "-b", "0.0.0.0"]
+RUN mkdir -p tmp/sockets
+RUN mkdir -p tmp/pids
+
+VOLUME /myapp/public
+VOLUME /myapp/tmp
+
+CMD /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb"
