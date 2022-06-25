@@ -1,9 +1,7 @@
-.rspec/
+# .rspec/
 db/*.sqlite3
 db/*.sqlite3-journal
-vendor/assets/
 node_modules/
-.git/
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -21,14 +19,6 @@ node_modules/
 !/storage/.keep
 /public/uploads
 
-# Ignore yarn files
-/yarn-error.log
-yarn-debug.log*
-.yarn-integrity
-
 # vscode設定ファイル
 .vscode/
 .solargraph.yml
-
-# tailwind_default file
-/tailwind_default.config.js
