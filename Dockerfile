@@ -31,7 +31,7 @@ EXPOSE 3000
 RUN mkdir -p tmp/sockets
 RUN mkdir -p tmp/pids
 
-VOLUME /myapp/public
-VOLUME /myapp/tmp
+VOLUME /${HOME}/public
+VOLUME /${HOME}/tmp
 
-CMD /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb"
+CMD /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma/production.rb"

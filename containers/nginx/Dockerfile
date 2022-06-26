@@ -4,9 +4,6 @@ FROM nginx:alpine
 RUN rm -f /etc/nginx/conf.d/*
 
 # Nginxの設定ファイルをコンテナにコピー
-ADD nginx.conf /etc/nginx/conf.d/webapp.conf
-
-# Nginxの設定ファイルをコンテナにコピー
 ADD ./containers/nginx/nginx.conf /etc/nginx/conf.d/myapp.conf
 
 # ビルド完了後にNginxを起動
