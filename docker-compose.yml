@@ -13,20 +13,19 @@ services:
       - db-data:/var/lib/mysql
 
   app: &app_base
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile_dev
     # rails server起動用
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    # command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     # nginx -> puma用
-    # command: bundle exec puma -C config/puma.rb
+    command: bundle exec puma -C config/puma/development.rb
     volumes:
       - .:/bean_stamp # カレントディレクトリをbindマウント
       - bundle:/usr/local/bundle
-      - node_modules:/bean_stamp/node_modules
       - uploads:/bean_stamp/public/uploads # carrierwaveによる画像保存先をボリュームとしてマウント
       # - public-data:/bean_stamp/public # nginxと静的ページを共有
       # - tmp-data:/bean_stamp/tmp # nginxとのsocket通信に使用
-      - ./tmp/screenshots:/bean_stamp/tmp/screenshots # systemテストのscreenshotをホスト環境で確認
-      - log-data:/bean_stamp/log
       - ~/.ssh/bean-stamp:/root/.ssh # EC2インスタンス接続用の鍵を配置
     ports:
       - "3000:3000"
@@ -65,7 +64,8 @@ services:
   # nginxをリバースプロキシとして使用する時に使用
   # web:
   #   build:
-  #     context: containers/nginx
+  #     context: .
+  #     dockerfile: ./containers/nginx/Dockerfile
   #   volumes:
   #     - public-data:/bean_stamp/public
   #     - tmp-data:/bean_stamp/tmp
@@ -78,7 +78,5 @@ volumes:
   db-data: {}
   uploads: {}
   bundle: {}
-  node_modules: {}
-  log-data: {}
   # public-data: {}
   # tmp-data: {}
