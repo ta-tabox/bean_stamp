@@ -111,12 +111,12 @@ workflows:
           # aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           create-repo: true # ECRにリポジトリがなかったら作るか？
           dockerfile: ./Dockerfile
-          repo: '${MY_APP_PREFIX}-ror' # ECRリポジトリ名
+          repo: "${MY_APP_PREFIX}-ror" # ECRリポジトリ名
           tag: "${CIRCLE_SHA1}"
       - aws-ecs/deploy-service-update:
           requires:
             - aws-ecr/build-and-push-image
-          family: '${MY_APP_PREFIX}-prod-task' # ECSタスク定義名
-          cluster-name: '${MY_APP_PREFIX}-prod-cluster' # ECSクラスタ名 or ARNフルパス
-          service-name: '${MY_APP_PREFIX}-prod-service' # サービス名
-          container-image-name-updates: 'container=${MY_APP_PREFIX}-ror,tag=${CIRCLE_SHA1}'' # containerはタスク定義で設定したコンテナ名
+          family: "${MY_APP_PREFIX}-prod-task" # ECSタスク定義名
+          cluster-name: "${MY_APP_PREFIX}-prod-cluster" # ECSクラスタ名 or ARNフルパス
+          service-name: "${MY_APP_PREFIX}-prod-service" # サービス名
+          container-image-name-updates: "container=${MY_APP_PREFIX}-ror,tag=${CIRCLE_SHA1}" # containerはタスク定義で設定したコンテナ名
