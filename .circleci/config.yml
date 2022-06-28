@@ -89,9 +89,9 @@ workflows:
     jobs:
       - build
       - checking
-      - test:
-          requires:
-            - build
+      # - test:
+      #     requires:
+      #       - build
       # - deploy:
       #     requires:
       #       - test
@@ -100,8 +100,8 @@ workflows:
       #         only: main
       # ECRへイメージをbuild -> push
       - aws-ecr/build-and-push-image:
-          requires:
-            - test
+          # requires:
+          #   - test
           # filters:
           #   branches:
           #     only: main
