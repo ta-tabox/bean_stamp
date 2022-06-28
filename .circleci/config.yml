@@ -80,7 +80,7 @@ jobs:
           name: Get last task definition
           command: >
             TASK_DEFINITION_ARN=$(aws ecs describe-task-definition \
-                --task-definition ${MY_APP_PREFIX}-prod-service \
+                --task-definition ${MY_APP_PREFIX}-prod-task \
                 --output text \
                 --query 'taskDefinition.taskDefinitionArn')
             echo "export TASK_DEFINITION_ARN='${TASK_DEFINITION_ARN}'" >>
