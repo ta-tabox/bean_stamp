@@ -1,13 +1,9 @@
 FROM ruby:3.0.4
 
-ARG RAILS_MASTER_KEY
-ENV RAILS_MASTER_KEY ${RAILS_MASTER_KEY}
-ARG RAILS_ENV
-ENV RAILS_ENV ${RAILS_ENV}
-
 ENV HOME="/bean_stamp" \
     LANG=C.UTF-8 \
-    TZ=Asia/Tokyo
+    TZ=Asia/Tokyo \
+    RAILS_ENV=development
 
 # yarnパッケージ管理ツールをインストール
 RUN apt-get update && apt-get install -y curl apt-transport-https wget && \
@@ -16,6 +12,7 @@ RUN apt-get update && apt-get install -y curl apt-transport-https wget && \
     apt-get update && apt-get install -y yarn
 
 # 必要なパッケージインストール
+# magemagick -> CarrierWaveで使用
 RUN apt-get update -qq && apt-get install -y \
     nodejs \
     yarn \
@@ -32,15 +29,10 @@ RUN yarn install --check-files
 RUN bundle exec rails webpacker:compile
 
 # コンテナ起動時に実行させるスクリプトを追加
-COPY entrypoint.sh /usr/bin/
+COPY containers/app/entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
 
-RUN mkdir -p tmp/sockets
-RUN mkdir -p tmp/pids
-
-VOLUME /${HOME}/public
-VOLUME /${HOME}/tmp
-
-CMD /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma/production.rb"
+# Rails サーバ起動
+CMD ["rails", "server", "-b", "0.0.0.0"]

@@ -1,6 +1,5 @@
-version: 2.1 # 2.1 を使うと Orb や他の機能を使用することができる
+version: 2.1
 
-# 設定で使用する Orb を宣言
 orbs:
   ruby: circleci/ruby@1.7.1
   node: circleci/node@5.0.2
@@ -73,11 +72,9 @@ jobs:
     executor: aws-cli/default
     steps:
       - aws-cli/install
-      # - aws-cli/configure:
-      #     aws-access-key-id: $AWS_ACCESS_KEY_ID
-      #     aws-region: $AWS_REGION
       - run:
           name: Get last task definition
+          # タスク定義名を指定
           command: >
             TASK_DEFINITION_ARN=$(aws ecs describe-task-definition \
                 --task-definition ${MY_APP_PREFIX}-prod-task \
@@ -89,22 +86,6 @@ jobs:
           family: "${MY_APP_PREFIX}-prod-service"
           cluster-name: "${MY_APP_PREFIX}-prod-cluster"
           task-definition-arn: "${TASK_DEFINITION_ARN}"
-
-  # Capistranoによる自動デプロイ
-  # deploy:
-  #   docker:
-  #     - image: cimg/ruby:3.0.4-node
-  #       environment:
-  #         BUNDLER_VERSION: 2.2.33
-  #   steps:
-  #     - checkout
-  #     - ruby/install-deps
-  #     - aws-cli/install
-  #     - add_ssh_keys:
-  #         fingerprints: "f3:40:df:8b:91:b2:82:6d:3c:2d:42:6e:6a:ea:af:b4"
-  #     - deploy:
-  #         name: Capistrano deploy
-  #         command: ./deploy.sh # シェルスクリプト内でcapを実行
 
 workflows:
   build_test_and_deploy:
@@ -120,25 +101,25 @@ workflows:
       #     filters:
       #       branches:
       #         only: main
-      # ECRへイメージをbuild -> push
-      - aws-ecr/build-and-push-image:
-          # requires:
-          #   - test
-          # filters:
-          #   branches:
-          #     only: main
+      - aws-ecr/build-and-push-image: # ECRへイメージをbuild -> push
+          requires:
+            - test
+          filters:
+            branches:
+              only: main
           create-repo: true # ECRにリポジトリがなかったら作るか？
-          dockerfile: ./Dockerfile
+          dockerfile: ./containers/app/Dockerfile
           repo: "${MY_APP_PREFIX}-ror" # ECRリポジトリ名
-          tag: "latest,${CIRCLE_SHA1}" # latestタグ＋ハッシュ
+          tag: "${CIRCLE_SHA1}" # latestタグ＋ハッシュ
+          # tag: "latest,${CIRCLE_SHA1}" # latestタグ＋ハッシュ
           extra-build-args: "--build-arg RAILS_MASTER_KEY=${RAILS_MASTER_KEY} --build-arg RAILS_ENV=${RAILS_ENV}" # コンテナビルド時に使用する環境変数を渡す
-      - aws-ecs/deploy-service-update:
-          requires:
-            - aws-ecr/build-and-push-image
-          family: "${MY_APP_PREFIX}-prod-task" # ECSタスク定義名
-          cluster-name: "${MY_APP_PREFIX}-prod-cluster" # ECSクラスタ名 or ARNフルパス
-          service-name: "${MY_APP_PREFIX}-prod-service" # サービス名
-          container-image-name-updates: "container=${MY_APP_PREFIX}-ror,tag=${CIRCLE_SHA1}" # containerはタスク定義で設定したコンテナ名
-      - verify-deployment:
-          requires:
-            - aws-ecs/deploy-service-update
+      # - aws-ecs/deploy-service-update:
+      #     requires:
+      #       - aws-ecr/build-and-push-image
+      #     family: "${MY_APP_PREFIX}-prod-task" # ECSタスク定義名
+      #     cluster-name: "${MY_APP_PREFIX}-prod-cluster" # ECSクラスタ名 or ARNフルパス
+      #     service-name: "${MY_APP_PREFIX}-prod-service" # サービス名
+      #     container-image-name-updates: "container=${MY_APP_PREFIX}-ror,tag=${CIRCLE_SHA1}" # containerはタスク定義で設定したコンテナ名
+      # - verify-deployment: # コンテナデプロイの検証
+      #     requires:
+      #       - aws-ecs/deploy-service-update
