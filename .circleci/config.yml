@@ -73,9 +73,9 @@ jobs:
     executor: aws-cli/default
     steps:
       - aws-cli/install
-      - aws-cli/configure:
-          aws-access-key-id: $AWS_ACCESS_KEY_ID
-          aws-region: $AWS_REGION
+      # - aws-cli/configure:
+      #     aws-access-key-id: $AWS_ACCESS_KEY_ID
+      #     aws-region: $AWS_REGION
       - run:
           name: Get last task definition
           command: >
