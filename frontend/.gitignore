@@ -25,3 +25,6 @@ dist-ssr
 
 # history
 .ash_history
+
+# npm
+.npm
