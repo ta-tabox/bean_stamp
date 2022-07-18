@@ -11,7 +11,7 @@ jobs:
   backend_build:
     docker:
       - image: cimg/ruby:3.0.4-node # ruby3.0.4, nodeを含むイメージ
-    working_directory: "~/${MY_APP_PREFIX}/backend"
+    working_directory: ~/${MY_APP_PREFIX}/backend
     steps:
       - checkout:
           path: "~/${MY_APP_PREFIX}"
@@ -22,7 +22,7 @@ jobs:
   backend_checking:
     docker:
       - image: cimg/ruby:3.0.4-node
-    working_directory: "~/${MY_APP_PREFIX}/backend"
+    working_directory: ~/${MY_APP_PREFIX}/backend
     steps:
       - checkout:
           path: "~/${MY_APP_PREFIX}"
@@ -47,7 +47,7 @@ jobs:
         name: db
       - image: selenium/standalone-chrome-debug:latest # capybaraによるテストで使用する
         name: chrome
-    working_directory: "~/${MY_APP_PREFIX}/backend"
+    working_directory: ~/${MY_APP_PREFIX}/backend
     # Ruby/Rails 固有の環境変数をプライマリコンテナに適用
     environment:
       BUNDLE_JOBS: "3"
