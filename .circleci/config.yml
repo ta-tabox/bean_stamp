@@ -8,26 +8,30 @@ orbs:
   aws-ecs: circleci/aws-ecs@2.3.0
 
 jobs:
-  build:
+  backend_build:
     docker:
       - image: cimg/ruby:3.0.4-node # ruby3.0.4, nodeを含むイメージ
+    working_directory: "~/${MY_APP_PREFIX}/backend"
     steps:
-      - checkout # Git コードをプルダウン
+      - checkout:
+          path: "~/${MY_APP_PREFIX}"
       - ruby/install-deps # Ruby Orb を使って依存関係をインストール
       - node/install-packages: # Node Orb を使ってパッケージをインストール
           pkg-manager: yarn
 
-  checking:
+  backend_checking:
     docker:
       - image: cimg/ruby:3.0.4-node
+    working_directory: "~/${MY_APP_PREFIX}/backend"
     steps:
-      - checkout
+      - checkout:
+          path: "~/${MY_APP_PREFIX}"
       - ruby/install-deps
       - ruby/rubocop-check:
           format: progress
           label: Inspecting with Rubocop
 
-  test:
+  backend_test:
     # テストを高速化するために「並列ジョブコンテナ」を実行
     parallelism: 3
     docker:
@@ -43,6 +47,7 @@ jobs:
         name: db
       - image: selenium/standalone-chrome-debug:latest # capybaraによるテストで使用する
         name: chrome
+    working_directory: "~/${MY_APP_PREFIX}/backend"
     # Ruby/Rails 固有の環境変数をプライマリコンテナに適用
     environment:
       BUNDLE_JOBS: "3"
@@ -50,7 +55,8 @@ jobs:
       MYSQL_HOST: db
       RAILS_ENV: test
     steps:
-      - checkout
+      - checkout:
+          path: "~/${MY_APP_PREFIX}"
       - ruby/install-deps
       - node/install-packages:
           pkg-manager: yarn
@@ -90,19 +96,20 @@ jobs:
 workflows:
   build_test_and_deploy:
     jobs:
-      - build
-      - checking
-      - test:
+      - backend_build
+      - backend_checking
+      - backend_test:
           requires:
-            - build
-      - aws-ecr/build-and-push-image: # ECRへイメージをbuild -> push
+            - backend_build
+      # backendコンテナイメージをECRへbuild-> push
+      - aws-ecr/build-and-push-image:
           requires:
-            - test
+            - backend_test
           filters:
             branches:
               only: main
           create-repo: true # ECRにリポジトリがなかったら作るか？
-          dockerfile: ./containers/app/Dockerfile
+          dockerfile: .backend/containers/app/Dockerfile
           repo: "${MY_APP_PREFIX}-ror" # ECRリポジトリ名
           tag: "latest,${CIRCLE_SHA1}" # latestタグ＋ハッシュ
           extra-build-args: "--build-arg RAILS_MASTER_KEY=${RAILS_MASTER_KEY} --build-arg RAILS_ENV=${RAILS_ENV}" # コンテナビルド時に使用する環境変数を渡す
