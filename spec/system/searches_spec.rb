@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Searches', type: :system do
+RSpec.describe 'Searches', type: :system, skip: true do
   let(:user) { create(:user) }
   let(:roaster) { create(:roaster) }
   let(:target_roaster) { create(:roaster, name: 'target_roaster', prefecture_code: '13') } # 東京

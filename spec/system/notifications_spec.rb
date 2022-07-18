@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Notifications', type: :system do
+RSpec.describe 'Notifications', type: :system, skip: true do
   let(:user) { create(:user, roaster: roaster) }
   let(:roaster) { create(:roaster) }
   let(:bean) { create(:bean, :with_image, :with_3_taste_tags, roaster: roaster) }
