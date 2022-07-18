@@ -12,18 +12,17 @@ services:
     volumes:
       - db-data:/var/lib/mysql
 
-  app: &app_base
+  back: &back_base
     build:
       context: backend
       dockerfile: ./containers/app/Dockerfile.dev
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
-      - ./backend/:/bean_stamp # ルートディレクトリをbindマウント
+      - ./backend/:/app_back # ルートディレクトリをbindマウント
       - bundle:/usr/local/bundle
-      - uploads:/bean_stamp/public/uploads # carrierwaveによる画像保存先をボリュームとしてマウント
-
+      - uploads:/app_back/public/uploads # carrierwaveによる画像保存先をボリュームとしてマウント
     ports:
-      - "3010:3000" # APIとしてホスト側は3010番ポートを開ける
+      - "3010:3000" # apiとしてホスト側は3010番ポートを開ける
     depends_on:
       - db
       - selenium_chrome
@@ -43,10 +42,10 @@ services:
       CONNECTION_TIMEOUT: 600000
 
   webpacker:
-    <<: *app_base
+    <<: *back_base
     command: bash -c "bundle exec bin/webpack-dev-server"
     depends_on:
-      - app
+      - back
     ports:
       - "3035:3035"
     tty: false
@@ -55,6 +54,22 @@ services:
       NODE_ENV: development
       RAILS_ENV: development
       WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
+
+  front:
+    build:
+      context: frontend
+      dockerfile: ./containers/Dockerfile
+    volumes:
+      - ./frontend:/app_front
+    command: sh -c "yarn run dev"
+    depends_on:
+      - back
+    ports:
+      - "3000:3000"
+    tty: true #コンテナが勝手に終了しないための設定
+    stdin_open: true #標準入出力とエラー出力をコンテナに結びつける設定
+    environment:
+      - CHOKIDAR_USEPOLLING=true #ホットリロードを行う設定
 
 volumes:
   db-data: {}

@@ -1,6 +1,6 @@
 FROM ruby:3.0.4
 
-ENV HOME="/bean_stamp" \
+ENV HOME="/app_back" \
     LANG=C.UTF-8 \
     TZ=Asia/Tokyo \
     RAILS_ENV=development
