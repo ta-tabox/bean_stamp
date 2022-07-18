@@ -11,10 +11,10 @@ jobs:
   backend_build:
     docker:
       - image: cimg/ruby:3.0.4-node # ruby3.0.4, nodeを含むイメージ
-    working_directory: ~/${MY_APP_PREFIX}/backend
+    working_directory: ~/my_app/backend
     steps:
       - checkout:
-          path: "~/${MY_APP_PREFIX}"
+          path: "~/my_app"
       - ruby/install-deps # Ruby Orb を使って依存関係をインストール
       - node/install-packages: # Node Orb を使ってパッケージをインストール
           pkg-manager: yarn
@@ -22,10 +22,10 @@ jobs:
   backend_checking:
     docker:
       - image: cimg/ruby:3.0.4-node
-    working_directory: ~/${MY_APP_PREFIX}/backend
+    working_directory: ~/my_app/backend
     steps:
       - checkout:
-          path: "~/${MY_APP_PREFIX}"
+          path: "~/my_app"
       - ruby/install-deps
       - ruby/rubocop-check:
           format: progress
@@ -47,7 +47,7 @@ jobs:
         name: db
       - image: selenium/standalone-chrome-debug:latest # capybaraによるテストで使用する
         name: chrome
-    working_directory: ~/${MY_APP_PREFIX}/backend
+    working_directory: ~/my_app/backend
     # Ruby/Rails 固有の環境変数をプライマリコンテナに適用
     environment:
       BUNDLE_JOBS: "3"
@@ -56,7 +56,7 @@ jobs:
       RAILS_ENV: test
     steps:
       - checkout:
-          path: "~/${MY_APP_PREFIX}"
+          path: "~/my_app"
       - ruby/install-deps
       - node/install-packages:
           pkg-manager: yarn
