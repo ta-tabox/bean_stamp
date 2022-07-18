@@ -14,18 +14,14 @@ services:
 
   app: &app_base
     build:
-      context: ../
-      dockerfile: containers/app/Dockerfile.dev
-    # rails server起動用
+      context: backend
+      dockerfile: ./containers/app/Dockerfile.dev
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
-    # nginx -> puma用
-    # command: bundle exec puma -C config/puma/development.rb
     volumes:
-      - ../:/bean_stamp # ルートディレクトリをbindマウント
+      - ./backend/:/bean_stamp # ルートディレクトリをbindマウント
       - bundle:/usr/local/bundle
       - uploads:/bean_stamp/public/uploads # carrierwaveによる画像保存先をボリュームとしてマウント
-      # - public-data:/bean_stamp/public # nginxと静的ページを共有
-      # - tmp-data:/bean_stamp/tmp # nginxとのsocket通信に使用
+
     ports:
       - "3010:3000" # APIとしてホスト側は3010番ポートを開ける
     depends_on:
@@ -60,22 +56,7 @@ services:
       RAILS_ENV: development
       WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
 
-  # nginxをリバースプロキシとして使用する時に使用
-  # web:
-  #   build:
-  #     context: ../
-  #     dockerfile: ./containers/nginx/Dockerfile
-  #   volumes:
-  #     - public-data:/bean_stamp/public
-  #     - tmp-data:/bean_stamp/tmp
-  #   ports:
-  #     - 80:80
-  #   depends_on:
-  #     - app
-
 volumes:
   db-data: {}
   uploads: {}
   bundle: {}
-  # public-data: {}
-  # tmp-data: {}
