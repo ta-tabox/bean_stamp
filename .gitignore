@@ -90,3 +90,6 @@ yarn-debug.log*
 /tailwind_default.config.js
 
 /config/credentials/production.key
+
+# history
+.bash_history
