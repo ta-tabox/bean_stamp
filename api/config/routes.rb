@@ -54,4 +54,8 @@ Rails.application.routes.draw do
       get 'offer'
     end
   end
+
+  namespace :api do
+    get '/health_check', to: 'health_check#index'
+  end
 end
