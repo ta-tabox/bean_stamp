@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Likes', type: :request, skip: true do
+RSpec.describe 'Likes', type: :request do
   let(:base_title) { ' | BeanStamp' }
   let(:user) { create(:user) }
   let(:another_user) { create(:user, name: '他のユーザー') }

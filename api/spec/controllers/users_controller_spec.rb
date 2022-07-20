@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Users::UsersController, type: :controller, skip: true do
+RSpec.describe Users::UsersController, type: :controller do
   let(:user) { create(:user) }
 
   # ユーザー未ログイン時におけるusers/users_controller各アクションへのアクセス制限のテスト

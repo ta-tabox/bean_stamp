@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe OffersController, type: :controller, skip: true do
+RSpec.describe OffersController, type: :controller do
   let(:user) { create(:user) }
   let(:roaster) { create(:roaster) }
   let(:bean) { create(:bean, :with_image, :with_3_taste_tags, roaster: roaster) }

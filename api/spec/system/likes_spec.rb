@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Likes', type: :system, skip: true do
+RSpec.describe 'Likes', type: :system do
   let(:user) { create(:user) }
   let!(:roaster) { create(:roaster) }
   let!(:bean) { create(:bean, :with_image, :with_3_taste_tags, roaster: roaster) }

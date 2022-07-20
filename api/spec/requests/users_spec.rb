@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Users', type: :request, skip: true do
+RSpec.describe 'Users', type: :request do
   let(:base_title) { ' | BeanStamp' }
   let(:user) { create(:user) }
 

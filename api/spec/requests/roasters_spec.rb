@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Roasters', type: :request, skip: true do
+RSpec.describe 'Roasters', type: :request do
   let(:base_title) { ' | BeanStamp' }
   let!(:roaster) { create(:roaster) }
   let(:user_belonging_a_roaster) { create(:user, roaster: roaster) }

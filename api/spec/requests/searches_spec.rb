@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Searches', type: :request, skip: true do
+RSpec.describe 'Searches', type: :request do
   let(:base_title) { ' | BeanStamp' }
   let(:user) { create(:user) }
   let!(:roaster) { create(:roaster) }

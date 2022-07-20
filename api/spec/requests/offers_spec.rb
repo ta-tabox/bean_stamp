@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Offers', type: :request, skip: true do
+RSpec.describe 'Offers', type: :request do
   let(:base_title) { ' | BeanStamp' }
   # ロースターに所属しないユーザー
   let(:user) { create(:user) }
