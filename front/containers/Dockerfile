@@ -1,8 +1,14 @@
-FROM --platform=linux/x86_64 node:16-alpine3.16
+FROM node:16-alpine3.16
 
-ENV HOME="/app_front"\
+ARG WORKDIR
+ARG CONTAINER_PORT
+ARG API_URL
+
+ENV HOME="/${WORKDIR}"\
   LANG=C.UTF-8 \
-  TZ=Asia/Tokyo
+  TZ=Asia/Tokyo \
+  # axiosで叩くAPIのURLを指定
+  API_URL=${API_URL}
 
 WORKDIR ${HOME}
 COPY package*.json ./
@@ -14,7 +20,7 @@ RUN apk update && \
 
 COPY . ${HOME}
 
-EXPOSE 3000
+EXPOSE ${CONTAINER_PORT}
 
 #コンテナが勝手に終了してしまわないようにする設定
 ENV CI=true

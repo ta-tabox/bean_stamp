@@ -1,6 +1,8 @@
 FROM ruby:3.0.4
+ARG WORKDIR
+ARG CONTAINER_PORT
 
-ENV HOME="/app_back" \
+ENV HOME=/${WORKDIR} \
     LANG=C.UTF-8 \
     TZ=Asia/Tokyo \
     RAILS_ENV=development
@@ -32,7 +34,7 @@ RUN bundle exec rails webpacker:compile
 COPY containers/app/entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
-EXPOSE 3000
+EXPOSE ${CONTAINER_PORT}
 
 # Rails サーバ起動
 CMD ["rails", "server", "-b", "0.0.0.0"]

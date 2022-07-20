@@ -8,14 +8,14 @@ Bundler.require(*Rails.groups)
 
 module BeanStamp
   class Application < Rails::Application
-    # APIモード
-    config.api_only = true
+    # APIモード専用の場合指定→viewとapiを共存させるためtrueにしない
+    # config.api_only = true
 
     # APIモードでRailsAdminを使用するためにミドルウェアを設定
-    config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Flash
-    config.middleware.use Rack::MethodOverride
-    config.middleware.use ActionDispatch::Session::CookieStore, { key: '_bean_stamp_session' }
+    # config.middleware.use ActionDispatch::Cookies
+    # config.middleware.use ActionDispatch::Flash
+    # config.middleware.use Rack::MethodOverride
+    # config.middleware.use ActionDispatch::Session::CookieStore, { key: '_bean_stamp_session' }
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1

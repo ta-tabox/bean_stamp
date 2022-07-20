@@ -12,23 +12,26 @@ services:
     volumes:
       - db-data:/var/lib/mysql
 
-  back: &back_base
+  api: &api_base
     build:
-      context: backend
+      context: api
       dockerfile: ./containers/app/Dockerfile.dev
+      args:
+        WORKDIR: $WORKDIR
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
-      - ./backend/:/app_back # ルートディレクトリをbindマウント
+      - ./api/:/$WORKDIR # ルートディレクトリをbindマウント
       - bundle:/usr/local/bundle
-      - uploads:/app_back/public/uploads # carrierwaveによる画像保存先をボリュームとしてマウント
+      - uploads:/$WORKDIR/public/uploads # carrierwaveによる画像保存先をボリュームとしてマウント
     ports:
-      - "3010:3000" # apiとしてホスト側は3010番ポートを開ける
+      - "$API_PORT:$CONTAINER_PORT"
     depends_on:
       - db
       - selenium_chrome
     stdin_open: true # -itオプションと同等の効果
     tty: true
     environment:
+      API_DOMAIN: "localhost:$FRONT_PORT" # corsで許可するorigin
       SELENIUM_DRIVER_URL: http://selenium_chrome:4444/wd/hub
       WEBPACKER_DEV_SERVER_HOST: webpacker
 
@@ -42,10 +45,10 @@ services:
       CONNECTION_TIMEOUT: 600000
 
   webpacker:
-    <<: *back_base
+    <<: *api_base
     command: bash -c "bundle exec bin/webpack-dev-server"
     depends_on:
-      - back
+      - api
     ports:
       - "3035:3035"
     tty: false
@@ -57,15 +60,19 @@ services:
 
   front:
     build:
-      context: frontend
+      context: front
       dockerfile: ./containers/Dockerfile
+      args:
+        WORKDIR: $WORKDIR
+        CONTAINER_PORT: $CONTAINER_PORT
+        API_URL: "http://localhost:$API_PORT"
     volumes:
-      - ./frontend:/app_front
+      - ./front:/$WORKDIR
     command: sh -c "yarn run dev"
     depends_on:
-      - back
+      - api
     ports:
-      - "3000:3000"
+      - "$FRONT_PORT:$CONTAINER_PORT"
     tty: true #コンテナが勝手に終了しないための設定
     stdin_open: true #標準入出力とエラー出力をコンテナに結びつける設定
     environment:

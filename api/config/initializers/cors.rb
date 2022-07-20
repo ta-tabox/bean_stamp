@@ -1,7 +1,7 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    # developmentとproductionで許可するオリジン
-    origins 'http://localhost:3000', 'https://web.bean-stamp.com'
+    # developmentとproductionで環境変数を変える
+    origins ENV['API_DOMAIN'] || ''
 
     resource '*',
              headers: :any,

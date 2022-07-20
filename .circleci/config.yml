@@ -8,10 +8,10 @@ orbs:
   aws-ecs: circleci/aws-ecs@2.3.0
 
 jobs:
-  backend_build:
+  api_build:
     docker:
       - image: cimg/ruby:3.0.4-node # ruby3.0.4, nodeを含むイメージ
-    working_directory: ~/my_app/backend
+    working_directory: ~/my_app/api
     steps:
       - checkout:
           path: "~/my_app"
@@ -19,10 +19,10 @@ jobs:
       - node/install-packages: # Node Orb を使ってパッケージをインストール
           pkg-manager: yarn
 
-  backend_checking:
+  api_checking:
     docker:
       - image: cimg/ruby:3.0.4-node
-    working_directory: ~/my_app/backend
+    working_directory: ~/my_app/api
     steps:
       - checkout:
           path: "~/my_app"
@@ -31,7 +31,7 @@ jobs:
           format: progress
           label: Inspecting with Rubocop
 
-  backend_test:
+  api_test:
     # テストを高速化するために「並列ジョブコンテナ」を実行
     parallelism: 3
     docker:
@@ -47,7 +47,7 @@ jobs:
         name: db
       - image: selenium/standalone-chrome-debug:latest # capybaraによるテストで使用する
         name: chrome
-    working_directory: ~/my_app/backend
+    working_directory: ~/my_app/api
     # Ruby/Rails 固有の環境変数をプライマリコンテナに適用
     environment:
       BUNDLE_JOBS: "3"
@@ -96,20 +96,20 @@ jobs:
 workflows:
   build_test_and_deploy:
     jobs:
-      - backend_build
-      - backend_checking
-      - backend_test:
+      - api_build
+      - api_checking
+      - api_test:
           requires:
-            - backend_build
-      # backendコンテナイメージをECRへbuild-> push
+            - api_build
+      # apiコンテナイメージをECRへbuild-> push
       - aws-ecr/build-and-push-image:
           requires:
-            - backend_test
+            - api_test
           filters:
             branches:
               only: main
           create-repo: true # ECRにリポジトリがなかったら作るか？
-          dockerfile: .backend/containers/app/Dockerfile
+          dockerfile: .api/containers/app/Dockerfile
           repo: "${MY_APP_PREFIX}-ror" # ECRリポジトリ名
           tag: "latest,${CIRCLE_SHA1}" # latestタグ＋ハッシュ
           extra-build-args: "--build-arg RAILS_MASTER_KEY=${RAILS_MASTER_KEY} --build-arg RAILS_ENV=${RAILS_ENV}" # コンテナビルド時に使用する環境変数を渡す
