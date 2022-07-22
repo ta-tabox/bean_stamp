@@ -73,6 +73,7 @@ services:
       - api
     ports:
       - "$FRONT_PORT:$CONTAINER_PORT"
+      - "4173:4173" # vite preview用
     tty: true #コンテナが勝手に終了しないための設定
     stdin_open: true #標準入出力とエラー出力をコンテナに結びつける設定
     environment:
