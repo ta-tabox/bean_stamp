@@ -9,6 +9,7 @@ module.exports = {
     "airbnb/hooks",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:import/typescript",
     "prettier",
   ],
   parser: "@typescript-eslint/parser",
@@ -21,13 +22,15 @@ module.exports = {
     tsconfigRootDir: __dirname,
     project: ["./tsconfig.json"],
   },
-  plugins: ["react", "@typescript-eslint"],
+  plugins: ["react", "@typescript-eslint","import"],
   ignorePatterns: [".eslintrc.cjs"],
   // そのままでは厳しいのでルールを緩くする
   rules: {
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": "off",
     "import/prefer-default-export": "off",
+    "import/no-unresolved": "off", // taconfigのpath aliasとぶつかる。うまく解決できなかったのでoff
+    'import/no-extraneous-dependencies': 'off',
     "import/extensions": [
       "error",
       {
@@ -53,9 +56,8 @@ module.exports = {
   },
   settings: {
     "import/resolver": {
-      node: {
-        paths: ["src"],
-        extensions: [".js", ".jsx", ".ts", ".tsx"],
+      typescript: {
+        "project": "./tsconfig.json",
       },
     },
   },
