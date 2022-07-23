@@ -78,6 +78,10 @@ module.exports = {
       },
     ],
     '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
+    "react/function-component-definition": [ // アロー関数を許可する
+      2,
+      { "namedComponents": "arrow-function" }
+    ]
   },
   settings: {
     "import/resolver": {
