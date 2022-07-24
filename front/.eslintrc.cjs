@@ -4,51 +4,51 @@ module.exports = {
     es2021: true,
   },
   extends: [
-    "plugin:react/recommended",
-    "airbnb",
-    "airbnb/hooks",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "plugin:import/typescript",
-    "prettier",
+    'plugin:react/recommended',
+    'airbnb',
+    'airbnb/hooks',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'plugin:import/typescript',
+    'prettier',
   ],
-  parser: "@typescript-eslint/parser",
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: "latest",
-    sourceType: "module",
+    ecmaVersion: 'latest',
+    sourceType: 'module',
     tsconfigRootDir: __dirname,
-    project: ["./tsconfig.json"],
+    project: ['./tsconfig.json'],
   },
-  plugins: ["react", "@typescript-eslint","import"],
-  ignorePatterns: [".eslintrc.cjs"],
+  plugins: ['react', '@typescript-eslint', 'import'],
+  ignorePatterns: ['.eslintrc.cjs'],
   // そのままでは厳しいのでルールを緩くする
   rules: {
-    "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": "off",
-    "import/prefer-default-export": "off",
-    "import/no-unresolved": "off", // taconfigのpath aliasとぶつかる。うまく解決できなかったのでoff
+    'no-use-before-define': 'off',
+    '@typescript-eslint/no-use-before-define': 'off',
+    'import/prefer-default-export': 'off',
+    'import/no-unresolved': 'off', // tsconfigのpath aliasとぶつかる。うまく解決できなかったのでoff
     'import/no-extraneous-dependencies': 'off',
-    "import/extensions": [
-      "error",
+    'import/extensions': [
+      'error',
       {
-        js: "never",
-        jsx: "never",
-        ts: "never",
-        tsx: "never",
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
       },
     ],
-    "react/jsx-filename-extension": [
-      "error",
+    'react/jsx-filename-extension': [
+      'error',
       {
-        extensions: [".jsx", ".tsx"],
+        extensions: ['.jsx', '.tsx'],
       },
     ],
-    "react/react-in-jsx-scope": "off",
-    "no-void": [
-      "error",
+    'react/react-in-jsx-scope': 'off',
+    'no-void': [
+      'error',
       {
         allowAsStatement: true,
       },
@@ -78,17 +78,18 @@ module.exports = {
       },
     ],
     '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
-    "react/function-component-definition": [ // アロー関数を許可する
+    'react/function-component-definition': [
+      // アロー関数を許可する
       2,
-      { "namedComponents": "arrow-function" }
-    ]
+      { namedComponents: 'arrow-function' },
+    ],
   },
   settings: {
-    "import/resolver": {
+    'import/resolver': {
       typescript: {
-        "alwaysTryTypes": true,
-        "project": "./tsconfig.json",
+        alwaysTryTypes: true,
+        project: './tsconfig.json',
       },
     },
   },
-};
+}
