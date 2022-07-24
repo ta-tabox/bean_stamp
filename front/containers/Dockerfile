@@ -8,7 +8,7 @@ ENV HOME="/${WORKDIR}"\
   LANG=C.UTF-8 \
   TZ=Asia/Tokyo \
   # axiosで叩くAPIのURLを指定
-  API_URL=${API_URL}
+  VITE_API_URL=${API_URL}
 
 WORKDIR ${HOME}
 COPY package*.json ./
