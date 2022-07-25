@@ -1,24 +1,29 @@
-# README
+# Bean Stamp
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## 概要
 
-Things you may want to cover:
+### URL
 
-* Ruby version
+## サービスのスクリーンショット画像 or GIFアニメ（デモ）
 
-* System dependencies
+## 目次
 
-* Configuration
+## 背景
 
-* Database creation
+## 使用言語、環境、テクノロジー
 
-* Database initialization
+### フロントエンド
 
-* How to run the test suite
+### バックエンド
 
-* Services (job queues, cache servers, search engines, etc.)
+### インフラ・開発環境
 
-* Deployment instructions
+## ER図
 
-* ...
+## インフラ構成図
+
+## 機能一覧
+
+## こだわりポイント
+
+## 今後の計画
