@@ -1,6 +1,6 @@
 # [Bean Stamp](https://www.bean-stamp.com/)
 
-<img width="600" alt="トップ画面" src="https://user-images.githubusercontent.com/67009309/181262975-2470210f-7201-4b8a-b6c9-729979289217.png">
+!["トップ画面"](https://user-images.githubusercontent.com/67009309/181262975-2470210f-7201-4b8a-b6c9-729979289217.png)
 
 ## 概要
 
@@ -13,13 +13,13 @@ Bean Stampはコーヒー豆とコーヒー愛好家を繋ぐマッチングサ�
 ### URL: <https://www.bean-stamp.com/>
 
 ユーザー：ホーム画面
-<img width="600" alt="アプリケーション画面" src="https://user-images.githubusercontent.com/67009309/181262998-aff193ea-7a68-4977-9477-9a2eb6885f93.png">
+!["アプリケーション画面"](https://user-images.githubusercontent.com/67009309/181262998-aff193ea-7a68-4977-9477-9a2eb6885f93.png)
 
 ロースター：コーヒー豆登録画面
-<img width="600" alt="コーヒー豆登録画面" src="https://user-images.githubusercontent.com/67009309/181263013-cee71cc5-f25b-4f72-b847-0245f55fce52.png">
+!["コーヒー豆登録画面"](https://user-images.githubusercontent.com/67009309/181263013-cee71cc5-f25b-4f72-b847-0245f55fce52.png)
 
 ユーザー：コーヒー豆受け取り完了→評価 デモ
-<img width="600" alt="評価機能デモ" src="https://user-images.githubusercontent.com/67009309/181269105-9cc94f8f-e568-4f4f-b742-c3be171bc7aa.gif">
+!["評価機能デモ"](https://user-images.githubusercontent.com/67009309/181269105-9cc94f8f-e568-4f4f-b742-c3be171bc7aa.gif)
 
 ## 背景
 
@@ -57,7 +57,7 @@ Bean Stampはコーヒー豆とコーヒー愛好家を繋ぐマッチングサ�
 
 ### インフラ
 
-* AWS [ ECS(Fargate), ECR, VPC, RDS, ALB, S3, ACM, Route53, Lambda, Cloud Front, Cloud Watch ]
+* AWS [ ECS(Fargate), ECR, VPC, RDS, ALB, S3, ACM, Route53, Cloud Front, Cloud Watch ]
 * Docker
 * Nginx (Webサーバー)
 * Puma (アプリケーションサーバー)
