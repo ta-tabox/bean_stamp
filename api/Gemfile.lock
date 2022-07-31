@@ -72,6 +72,36 @@ GEM
       mime-types (>= 2.99)
       unf
     ast (2.4.2)
+    aws-eventstream (1.2.0)
+    aws-partitions (1.613.0)
+    aws-record (2.7.0)
+      aws-sdk-dynamodb (~> 1.18)
+    aws-sdk-core (3.131.5)
+      aws-eventstream (~> 1, >= 1.0.2)
+      aws-partitions (~> 1, >= 1.525.0)
+      aws-sigv4 (~> 1.1)
+      jmespath (~> 1, >= 1.6.1)
+    aws-sdk-dynamodb (1.75.0)
+      aws-sdk-core (~> 3, >= 3.127.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-rails (3.6.2)
+      aws-record (~> 2)
+      aws-sdk-ses (~> 1)
+      aws-sdk-sqs (~> 1)
+      aws-sessionstore-dynamodb (~> 2)
+      concurrent-ruby (~> 1)
+      railties (>= 5.2.0)
+    aws-sdk-ses (1.47.0)
+      aws-sdk-core (~> 3, >= 3.127.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-sqs (1.51.1)
+      aws-sdk-core (~> 3, >= 3.127.0)
+      aws-sigv4 (~> 1.1)
+    aws-sessionstore-dynamodb (2.0.1)
+      aws-sdk-dynamodb (~> 1)
+      rack (~> 2)
+    aws-sigv4 (1.5.1)
+      aws-eventstream (~> 1, >= 1.0.2)
     backport (1.2.0)
     bcrypt (3.1.16)
     bcrypt_pbkdf (1.1.0)
@@ -159,6 +189,7 @@ GEM
     jaro_winkler (1.5.4)
     jbuilder (2.11.2)
       activesupport (>= 5.0.0)
+    jmespath (1.6.1)
     jp_prefecture (1.0.0)
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
@@ -416,6 +447,7 @@ PLATFORMS
 
 DEPENDENCIES
   asset_sync
+  aws-sdk-rails
   bcrypt_pbkdf
   bootsnap (>= 1.4.4)
   bullet

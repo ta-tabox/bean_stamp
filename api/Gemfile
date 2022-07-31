@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.4'
 gem 'asset_sync'
+gem 'aws-sdk-rails'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'cancancan'
 gem 'carrierwave', '~> 2.2'

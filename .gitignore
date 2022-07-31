@@ -14,3 +14,11 @@ node_modules/
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# SPA化前のディレクトリ構造で必要なファイル
+# TODO SPA化が終了したタイミングでファイル自体を削除する
+.bundle
+config
+log
+public
+tmp

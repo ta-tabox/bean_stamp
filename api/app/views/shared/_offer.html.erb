@@ -8,7 +8,7 @@
         </div>
         <div class="flex flex-col md:flex-row justify-between items-center my-2">
           <div class="w-full md:w-auto flex flex-col md:flex-row justify-between items-start md:items-center order-2 md:order-1">
-            <div class="<%=offer.status%> -mt-6 md:mt-0 md:mr-4"><%= offer.status_i18n %></div>
+            <div class="<%=offer.status%> badge -mt-6 md:mt-0 md:mr-4"><%= offer.status_i18n %></div>
             <div class="mt-4 md:mt-0">
               <%= render partial: 'beans/taste_tag', locals: { bean: offer.bean } %>
             </div>
