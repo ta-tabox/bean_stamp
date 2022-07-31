@@ -6,7 +6,7 @@
         <%= render partial: 'beans/bean_thumbnail', locals: { bean: offer.bean } %>
       </div>
       <div class="flex justify-between">
-        <div class="font-medium mb-4 <%=offer.status%>"><%= offer.status_i18n %></div>
+        <div class="font-medium mb-4 badge <%=offer.status%>"><%= offer.status_i18n %></div>
         <h2 class="roaster-name"><%= link_to offer.roaster.name, offer.roaster %></h2>
       </div>
       <div class="md:flex items-baseline">
