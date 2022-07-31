@@ -25,7 +25,7 @@ Devise.setup do |config|
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
   # deviseで使用するデフォルトメールアドレス
-  config.mailer_sender = 'bean_stamp@example.com'
+  config.mailer_sender = 'noreply@bean-stamp.com'
 
   # Configure the class responsible to send e-mails.
   # mailerをオーバーライドさせたいときに有効化する
