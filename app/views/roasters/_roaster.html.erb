@@ -1,14 +1,14 @@
 <%# ロースター一覧のアイテム %>
 <%= link_to roaster do %>
-  <li id="roaster-<%= roaster.id %>" class="flex flex-col items-center justify-between p-4 duration-300 border-b border-gray-100 sm:border-0 sm:flex-row sm:py-4 sm:px-8 hover:bg-gray-100">
+  <li id="roaster-<%= roaster.id %>" class="flex flex-col items-center justify-between p-4 duration-300 border-b border-gray-100 sm:border-0 sm:flex-row sm:py-4 px-4 sm:px-8 hover:bg-gray-100">
     <div class="w-full flex items-center text-center flex-col sm:flex-row sm:text-left">
-      <div class="mb-2.5 sm:mb-0 sm:mr-4">
+      <div class="mb-2.5 sm:mb-0 sm:mr-4 flex-none">
         <%= show_thumbnail(roaster) %>
       </div>
-      <div class="flex flex-col mb-4 sm:mb-0 sm:mr-4">
-        <p class="font-medium"><%=roaster.name%></p>
-        <p><%= roaster.full_address %></p>
-        <p><%= roaster.describe %></p>
+      <div class="w-full flex flex-col mb-4 sm:mb-0 sm:mr-4 overflow-hidden">
+        <p class="font-medium truncate"><%=roaster.name%></p>
+        <p class="truncate"><%= roaster.full_address %></p>
+        <p class="truncate text-gray-500"><%= roaster.describe %></p>
       </div>
     </div>
   </li>
