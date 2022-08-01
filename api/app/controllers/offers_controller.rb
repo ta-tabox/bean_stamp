@@ -52,9 +52,13 @@ class OffersController < ApplicationController
   end
 
   def destroy
-    @offer.destroy
-    flash[:notice] = "コーヒー豆「#{@offer.bean.name}」のオファーを1件削除しました"
-    redirect_to offers_path
+    if @offer.wants.any?
+      redirect_to request.referer, alert: "コーヒー豆「#{@offer.bean.name}」のオファーはウォンツされています"
+    else
+      @offer.destroy
+      flash[:notice] = "コーヒー豆「#{@offer.bean.name}」のオファーを1件削除しました"
+      redirect_to offers_path
+    end
   end
 
   def search

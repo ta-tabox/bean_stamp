@@ -51,9 +51,13 @@ class BeansController < ApplicationController
   end
 
   def destroy
-    @bean.destroy
-    flash[:notice] = "コーヒー豆「#{@bean.name}」を削除しました"
-    redirect_to beans_path
+    if @bean.offers.any?
+      redirect_to request.referer, alert: "コーヒー豆「#{@bean.name}」はオファー中です"
+    else
+      @bean.destroy
+      flash[:notice] = "コーヒー豆「#{@bean.name}」を削除しました"
+      redirect_to beans_path
+    end
   end
 
   private
