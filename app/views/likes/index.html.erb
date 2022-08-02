@@ -1,10 +1,10 @@
 <% provide(:title, "お気に入り") %>
 <header class="header">
-  <div class="h-full w-11/12 mx-auto flex justify-between items-end">
+  <div class="h-full w-11/12 mx-auto flex flex-col sm:flex-row justify-between sm:items-end">
     <h1 class="page-title">お気に入り</h1>
-    <div class="text-left">
+    <div class="text-left ml-auto sm:ml-0">
       <%= form_with(url: search_likes_path, method: :get, local: true)do |f| %>
-        <div class="flex">
+        <div class="hidden sm:flex">
           <svg class="w-4 h-4"><use xlink:href="#search"></use></svg>
           <%= f.label :search, "お気に入りを検索", class: "label pl-1" %>
         </div>
