@@ -10,7 +10,7 @@ class RoastersController < ApplicationController
   before_action :ensure_normal_roaster, only: %i[update destroy]
 
   def home
-    offers = @roaster.offers
+    offers = @roaster.offers.recent
     offers&.map(&:update_status)
     @pagy, @offers = pagy(offers.includes(:roaster, bean: :bean_images))
   end
