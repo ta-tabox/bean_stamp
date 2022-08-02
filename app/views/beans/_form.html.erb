@@ -67,7 +67,7 @@
         </div>
         <%# 紹介文 %>
         <div class="input-container">
-          <%= f.text_area :describe, placeholder: "#{Bean.human_attribute_name(:describe)} (300文字まで)", class: "input-field" %>
+          <%= f.text_area :describe, placeholder: "#{Bean.human_attribute_name(:describe)} (300文字まで)", class: "input-field", rows: 10 %>
           <div class="input-icon-field"><i class="fa-solid fa-pen-to-square fa-lg"></i></div>
         </div>
       </section>
