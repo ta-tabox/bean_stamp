@@ -43,7 +43,7 @@
       </div>
       <%# 店舗紹介フィールド %>
       <div class=input-container>
-        <%= f.text_area :describe, placeholder: "#{Roaster.human_attribute_name(:describe)} (300文字まで)", class: "input-field" %>
+        <%= f.text_area :describe, placeholder: "#{Roaster.human_attribute_name(:describe)} (300文字まで)", class: "input-field", rows: 10 %>
         <div class="input-icon-field">
           <svg><use xlink:href="#pencil"></use></svg>
         </div>
