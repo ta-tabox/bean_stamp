@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_02_093109) do
+ActiveRecord::Schema.define(version: 2022_08_13_074410) do
 
   create_table "bean_images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "image"
@@ -63,6 +63,12 @@ ActiveRecord::Schema.define(version: 2022_04_02_093109) do
     t.index ["offer_id"], name: "index_likes_on_offer_id"
     t.index ["user_id", "offer_id"], name: "index_likes_on_user_id_and_offer_id", unique: true
     t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
+  create_table "mst_countries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "mst_roast_levels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
