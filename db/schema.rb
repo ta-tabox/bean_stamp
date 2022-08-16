@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 2022_08_13_074410) do
 
   create_table "mst_countries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
+    t.string "area"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
