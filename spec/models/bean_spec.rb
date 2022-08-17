@@ -4,6 +4,7 @@ RSpec.describe Bean, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:roaster) }
     it { is_expected.to belong_to(:roast_level).class_name('MstRoastLevel') }
+    # it { is_expected.to belong_to(:country).class_name('MstCountry') }
     it { is_expected.to have_many(:bean_images).dependent(:destroy) }
     it { is_expected.to have_many(:bean_taste_tags).dependent(:destroy) }
     it { is_expected.to have_many(:taste_tags).through(:bean_taste_tags).source(:mst_taste_tag) }
@@ -13,7 +14,7 @@ RSpec.describe Bean, type: :model do
   describe 'validations' do
     it { is_expected.to validate_presence_of :roaster_id }
     it { is_expected.to validate_presence_of :name }
-    it { is_expected.to validate_presence_of :country }
+    it { is_expected.to validate_presence_of :country } # TODO: 消す
     it { is_expected.to validate_length_of(:describe).is_at_most(300) }
     it { is_expected.to validate_inclusion_of(:acidity).in_range(1..5) }
     it { is_expected.to validate_inclusion_of(:flavor).in_range(1..5) }

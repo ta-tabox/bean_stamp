@@ -7,6 +7,7 @@ class Bean < ApplicationRecord
   belongs_to :roaster
   has_many :bean_images, dependent: :destroy
   belongs_to :roast_level, class_name: 'MstRoastLevel'
+  # belongs_to :country, class_name: 'MstCountry'
 
   # bean_tagsのアソシエーション
   has_many :bean_taste_tags, dependent: :destroy

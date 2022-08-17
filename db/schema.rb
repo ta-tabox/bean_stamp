@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_13_074410) do
+ActiveRecord::Schema.define(version: 2022_08_16_135846) do
 
   create_table "bean_images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "image"
@@ -49,7 +49,9 @@ ActiveRecord::Schema.define(version: 2022_08_13_074410) do
     t.integer "bitterness"
     t.integer "sweetness"
     t.bigint "roast_level_id", default: 0
+    t.bigint "country_id", default: 0
     t.index ["country"], name: "index_beans_on_country"
+    t.index ["country_id"], name: "index_beans_on_country_id"
     t.index ["roast_level_id"], name: "index_beans_on_roast_level_id"
     t.index ["roaster_id", "created_at"], name: "index_beans_on_roaster_id_and_created_at"
     t.index ["roaster_id"], name: "index_beans_on_roaster_id"
@@ -160,6 +162,7 @@ ActiveRecord::Schema.define(version: 2022_08_13_074410) do
   add_foreign_key "bean_images", "beans"
   add_foreign_key "bean_taste_tags", "beans"
   add_foreign_key "bean_taste_tags", "mst_taste_tags"
+  add_foreign_key "beans", "mst_countries", column: "country_id"
   add_foreign_key "beans", "mst_roast_levels", column: "roast_level_id"
   add_foreign_key "beans", "roasters"
   add_foreign_key "likes", "offers"
