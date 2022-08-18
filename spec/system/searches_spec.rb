@@ -107,7 +107,8 @@ RSpec.describe 'Searches', type: :system do
     let!(:offer) { create(:offer, bean: bean) }
     # 東京, ブラジル, 浅煎り, taste_tag Chamomileを含む
     let!(:target_bean) do
-      create(:bean, :with_image, :with_3_taste_tags, name: 'target_bean', country: 'ブラジル', roast_level: MstRoastLevel.find(1), roaster: target_roaster)
+      create(:bean, :with_image, :with_3_taste_tags, name: 'target_bean', country: MstCountry.find(1), roast_level: MstRoastLevel.find(1),
+                                                     roaster: target_roaster)
     end
     let!(:target_offer) { create(:offer, bean: target_bean) }
     # 広島, エチオピア, 中煎り, taste_tag Chamomileを含まない
@@ -160,7 +161,7 @@ RSpec.describe 'Searches', type: :system do
     describe "searche for bean's country" do
       context 'when matching word' do
         it 'shows a target_offer' do
-          fill_in 'offer_search_bean_country_cont', with: 'ブラジル'
+          find('#offer_search_bean_country_id_eq').select 'ブラジル'
           click_button '検索'
           expect(page).to have_content target_bean.name
           expect(page).to_not have_content another_bean.name
@@ -168,7 +169,7 @@ RSpec.describe 'Searches', type: :system do
       end
       context 'when not matching word' do
         it 'does not show roastetrs' do
-          fill_in 'offer_search_bean_country_cont', with: 'ケニア'
+          find('#offer_search_bean_country_id_eq').select 'ケニア'
           click_button '検索'
           expect(page).to have_content 'オファーが見つかりませんでした'
           expect(page).to_not have_content target_bean.name
@@ -198,7 +199,7 @@ RSpec.describe 'Searches', type: :system do
       end
     end
 
-    # ��ーヒー豆のフレーバーによる検索
+    # コーヒー豆のフレーバーによる検索
     describe "searche for beans's taste_tags" do
       context 'when matching word' do
         it 'shows a target_offer' do

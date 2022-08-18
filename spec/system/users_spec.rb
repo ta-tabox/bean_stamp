@@ -269,7 +269,7 @@ RSpec.describe 'Users', type: :system do
       it 'shows offer infomation in tags' do
         # Overviewタグの表示
         find('.offer-overview-tag').click
-        expect(page).to have_content offer.bean.country
+        expect(page).to have_content offer.bean.country.name
         # Tasteタグの表示
         find('.offer-taste-tag').click
         expect(page).to have_css "#bean-#{offer.bean.id}-taste-chart"

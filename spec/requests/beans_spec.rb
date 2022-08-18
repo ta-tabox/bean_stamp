@@ -83,8 +83,8 @@ RSpec.describe 'Beans', type: :request do
       end
 
       context 'with no country' do
-        let(:bean_params) { attributes_for(:bean, country: nil) }
-        let(:error_message) { '生産国を入力してください' }
+        let(:bean_params) { attributes_for(:bean, country_id: 0) }
+        let(:error_message) { '生産国を選択してください' }
 
         it_behaves_like 'does not create a Bean and redirects to beans_path'
         it_behaves_like 'shows a error message'
@@ -231,9 +231,10 @@ RSpec.describe 'Beans', type: :request do
         it_behaves_like 'shows a error message'
       end
 
+      # TODO
       context 'with no country' do
-        let(:bean_params) { attributes_for(:bean, country: nil) }
-        let(:error_message) { '生産国を入力してください' }
+        let(:bean_params) { attributes_for(:bean, country_id: 0) }
+        let(:error_message) { '生産国を選択してください' }
         let(:attribute) { :country }
 
         it_behaves_like 'does not updated the bean and renders beans/edit'

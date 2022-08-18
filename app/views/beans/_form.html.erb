@@ -24,8 +24,9 @@
         </div>
         <%# 生産国 %>
         <div class="input-container">
-          <%= f.text_field :country, placeholder: Bean.human_attribute_name(:country), class: "input-field" %>
+          <%= f.collection_select :country_id, MstCountry.all, :id, :name, { prompt: true }, class: "input-field" %>
           <div class="input-icon-field"><i class="fa-solid fa-earth-asia fa-lg"></i></div>
+          <i class="fa-solid fa-angle-down select-box-arrow"></i>
         </div>
         <%# 焙煎度 %>
         <div class="input-container">
