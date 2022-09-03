@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_16_135846) do
+ActiveRecord::Schema.define(version: 2022_09_03_033813) do
 
   create_table "bean_images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "image"
@@ -35,7 +35,6 @@ ActiveRecord::Schema.define(version: 2022_08_16_135846) do
     t.bigint "roaster_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "country", default: "", null: false
     t.string "subregion", default: "", null: false
     t.string "farm", default: "", null: false
     t.string "variety", default: "", null: false
@@ -50,7 +49,6 @@ ActiveRecord::Schema.define(version: 2022_08_16_135846) do
     t.integer "sweetness"
     t.bigint "roast_level_id", default: 0
     t.bigint "country_id", default: 0
-    t.index ["country"], name: "index_beans_on_country"
     t.index ["country_id"], name: "index_beans_on_country_id"
     t.index ["roast_level_id"], name: "index_beans_on_roast_level_id"
     t.index ["roaster_id", "created_at"], name: "index_beans_on_roaster_id_and_created_at"
