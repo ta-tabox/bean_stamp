@@ -7,6 +7,7 @@ class Bean < ApplicationRecord
   belongs_to :roaster
   has_many :bean_images, dependent: :destroy
   belongs_to :roast_level, class_name: 'MstRoastLevel'
+  belongs_to :country, class_name: 'MstCountry'
 
   # bean_tagsのアソシエーション
   has_many :bean_taste_tags, dependent: :destroy
@@ -17,7 +18,7 @@ class Bean < ApplicationRecord
   scope :recent, -> { order(created_at: :desc) }
   validates :roaster_id, presence: true
   validates :name, presence: true
-  validates :country, presence: true
+  validates :country_id, presence: true
   validates :describe, length: { maximum: 300 }
   with_options inclusion: { in: (1..5) } do
     validates :acidity
@@ -27,6 +28,7 @@ class Bean < ApplicationRecord
     validates :sweetness
   end
   validate :bean_images_shuld_save_at_least_one
+  validate :bean_country_should_be_select_anyone
   validate :upload_images_cannot_be_greater_than_max_upload_images_count
   validate :taste_tags_cannot_be_greater_than_max_taste_tags_count
   validate :taste_tags_cannot_be_less_than_min_taste_tags_count
@@ -62,6 +64,13 @@ class Bean < ApplicationRecord
     return if upload_images || bean_images.any?
 
     errors.add(:bean_images, 'は最低1枚登録してください')
+  end
+
+  # 生産国を選択することを要求する
+  def bean_country_should_be_select_anyone
+    return unless country_id&.zero?
+
+    errors.add(:country, 'を選択してください')
   end
 
   # taste_tagsがMAX_TASTE_TAGS_COUNT以下であるか検証する

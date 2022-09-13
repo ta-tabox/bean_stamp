@@ -9,8 +9,9 @@
   </div>
   <%# 生産国検索 %>
   <div class="input-container">
-    <%= f.search_field :bean_country_cont, placeholder: Bean.human_attribute_name(:country), class: 'input-field' %>
+    <%= f.collection_select :bean_country_id_eq, MstCountry.where.not('id=0'), :id, :name, { include_blank: "生産国" }, class: 'input-field' %>
     <div class="input-icon-field"><i class="fa-solid fa-earth-asia fa-lg"></i></div>
+    <i class="fa-solid fa-angle-down select-box-arrow"></i>
   </div>
   <%# 焙煎度検索 %>
   <div class="input-container">

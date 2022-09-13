@@ -1,7 +1,8 @@
 FactoryBot.define do
   factory :bean do
     name { 'テストビーン' }
-    country { 'エチオピア' }
+    # country { MstCountry.find(5) }
+    country_id { '5' }
     subregion { 'イルガチェフェ' }
     farm { 'テストファーム' }
     variety { 'アビシニカ' }
@@ -15,7 +16,8 @@ FactoryBot.define do
     bitterness { '3' }
     sweetness { '3' }
     roaster
-    roast_level { MstRoastLevel.find(3) }
+    # roast_level { MstRoastLevel.find(3) }
+    roast_level_id { '3' }
 
     trait :with_image do
       after(:build) do |bean|
