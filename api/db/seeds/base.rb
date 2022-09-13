@@ -1,4 +1,7 @@
 # ゲストユーザーの作成
+guest = User.find_by(guest: true)
+return if guest
+
 User.create!(
   name: 'ゲストユーザー',
   email: 'guest@example.com',

@@ -22,3 +22,7 @@ config
 log
 public
 tmp
+
+# histories
+.irb_history
+.mysql_history

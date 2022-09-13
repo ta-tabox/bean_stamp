@@ -69,7 +69,7 @@ RSpec.describe 'Offers', type: :system do
         # beanの情報が表示されているかの確認
         expect(page).to have_selector("img[src*='sample.jpg']")
         expect(page).to have_content bean.name
-        expect(page).to have_content bean.country
+        expect(page).to have_content bean.country.name
       end
     end
 

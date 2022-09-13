@@ -5,7 +5,7 @@ class BeansController < ApplicationController
   before_action :set_bean, only: %i[show edit update destroy]
 
   def index
-    @pagy, @beans = pagy(current_roaster.beans.includes(%i[bean_images roast_level]).recent)
+    @pagy, @beans = pagy(current_roaster.beans.includes(%i[bean_images country roast_level]).recent)
   end
 
   def show; end
@@ -68,7 +68,7 @@ class BeansController < ApplicationController
       .require(:bean)
       .permit(
         :name,
-        :country,
+        :country_id,
         :subregion,
         :farm,
         :variety,

@@ -8,7 +8,7 @@ id = 1
     s.name = "#{guest_roaster.name}のテストビーン#{n + 1}"
     s.roaster_id = guest_roaster.id
     s.created_at = Faker::Time.between(from: DateTime.now - 15, to: DateTime.now - 10)
-    s.country = Faker::Coffee.country
+    s.country_id = Faker::Number.within(range: 16..44) # id:15のデータを飛ばしており、id:15を選択されるとエラーが発生する
     s.subregion = Faker::Movies::Hobbit.location
     s.farm = Faker::BossaNova.song
     s.variety = Faker::Coffee.variety
@@ -37,7 +37,7 @@ roasters.count.times do |roaster_num| #rubocop:disable all
       s.name = "#{roasters[roaster_num].name}のテストビーン#{i + 1}"
       s.roaster_id = roasters[roaster_num].id
       s.created_at = Faker::Time.between(from: DateTime.now - 15, to: DateTime.now - 10)
-      s.country = Faker::Coffee.country
+      s.country_id = Faker::Number.within(range: 1..44)
       s.subregion = Faker::Movies::Hobbit.location
       s.farm = Faker::BossaNova.song
       s.variety = Faker::Coffee.variety
