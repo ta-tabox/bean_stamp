@@ -98,10 +98,9 @@ workflows:
       - aws-ecr/build-and-push-image: # ECRへイメージをbuild -> push
           requires:
             - test
-          # TODO beansテーブルからcountryの分離が完了したらコメントアウトを外す
-          # filters:
-          #   branches:
-          #     only: main
+          filters:
+            branches:
+              only: main
           create-repo: true # ECRにリポジトリがなかったら作るか？
           dockerfile: ./containers/app/Dockerfile
           repo: "${MY_APP_PREFIX}-ror" # ECRリポジトリ名
