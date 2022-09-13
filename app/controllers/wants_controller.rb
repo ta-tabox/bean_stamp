@@ -10,7 +10,7 @@ class WantsController < ApplicationController
   def index
     wants = current_user.wants.includes(:offer)
     wants&.map { |want| want.offer.update_status }
-    @pagy, @wants = pagy(wants.includes(offer: [:roaster, { bean: :roast_level }]).recent.active)
+    @pagy, @wants = pagy(wants.includes(offer: [:roaster, { bean: %i[roast_level country] }]).recent.active)
   end
 
   def show
@@ -47,9 +47,9 @@ class WantsController < ApplicationController
   def search
     status = params[:search]
     wants = if status.blank?
-              current_user.wants.includes(offer: [:roaster, { bean: :roast_level }]).active.recent
+              current_user.wants.includes(offer: [:roaster, { bean: %i[roast_level country] }]).active.recent
             else
-              current_user.wants.includes(offer: [:roaster, { bean: :roast_level }]).search_status(status)
+              current_user.wants.includes(offer: [:roaster, { bean: %i[roast_level country] }]).search_status(status)
             end
     @pagy, @wants = pagy(wants)
     render 'index'

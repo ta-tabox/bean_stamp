@@ -5,7 +5,7 @@ class LikesController < ApplicationController
   def index
     likes = current_user.likes.includes(:offer)
     likes&.map { |want| want.offer.update_status }
-    @pagy, @likes = pagy(likes.includes(offer: [:roaster, { bean: :roast_level }]).recent)
+    @pagy, @likes = pagy(likes.includes(offer: [:roaster, { bean: %i[roast_level country] }]).recent)
   end
 
   def create
@@ -29,9 +29,9 @@ class LikesController < ApplicationController
   def search
     status = params[:search]
     likes = if status.blank?
-              current_user.likes.includes(offer: [:roaster, { bean: :roast_level }]).recent
+              current_user.likes.includes(offer: [:roaster, { bean: %i[roast_level country] }]).recent
             else
-              current_user.likes.includes(offer: [:roaster, { bean: :roast_level }]).search_status(status)
+              current_user.likes.includes(offer: [:roaster, { bean: %i[roast_level country] }]).search_status(status)
             end
     @pagy, @likes = pagy(likes)
     render 'index'

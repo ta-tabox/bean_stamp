@@ -6,15 +6,15 @@
         <div class="pb-1">
           <div class="flex items-center relative">
             <i class="fa-solid fa-earth-asia fa-xs mr-1 text-gray-400 absolute top-2 left-1"></i>
-            <p class="pl-8 text-gray-400 font-light text-xs"><%= offer.bean.country %></p>
+            <p class="pl-8 text-gray-400 font-light text-xs"><%= offer.bean.country&.name %></p>
           </div>
           <div class="flex items-center relative">
             <i class="fa-solid fa-industry fa-xs mr-1 text-gray-400 absolute top-2 left-1"></i>
-            <p class="pl-8 text-gray-400 font-light text-xs"><%= offer.bean.process %></p>
+            <p class="pl-8 text-gray-400 font-light text-xs"><%= offer.bean&.process %></p>
           </div>
           <div class="flex items-center relative">
             <i class="fa-solid fa-fire-flame-curved fa-xs mr-1 text-gray-400 absolute top-2 left-1"></i>
-            <p class="pl-8 text-gray-400 font-light text-xs"><%= offer.bean.roast_level.name %></p>
+            <p class="pl-8 text-gray-400 font-light text-xs"><%= offer.bean.roast_level&.name %></p>
           </div>
         </div>
         <div class="flex flex-wrap justify-start">

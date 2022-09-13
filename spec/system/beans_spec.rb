@@ -32,7 +32,8 @@ RSpec.describe 'Beans', type: :system do
         within('nav ul') { click_link 'Beans' }
         click_link '新規作成'
         fill_in 'タイトル', with: 'テストビーンズ'
-        fill_in '生産国', with: 'エチオピア'
+        # fill_in '生産国', with: 'エチオピア'
+        find('#bean_country_id').select 'エチオピア'
         find('#bean_roast_level_id').select '中煎り'
         fill_in '地域', with: 'イルガチェフェ'
         fill_in '農園', with: 'テストファーム'
@@ -73,7 +74,7 @@ RSpec.describe 'Beans', type: :system do
         subject
         expect(page).to have_selector("img[src*='sample.jpg']")
         expect(page).to have_content bean.name
-        expect(page).to have_content bean.country
+        expect(page).to have_content bean.country.name
         expect(page).to have_content bean.roast_level.name
         expect(page).to have_content bean.subregion
         expect(page).to have_content bean.farm
@@ -98,7 +99,8 @@ RSpec.describe 'Beans', type: :system do
         find("article#bean-#{bean.id}").click_link '詳細'
         click_link '編集'
         fill_in 'タイトル', with: 'アップデートビーンズ'
-        fill_in '生産国', with: 'ブラジル'
+        # fill_in '生産国', with: 'ブラジル'
+        find('#bean_country_id').select 'ブラジル'
         find('#bean_roast_level_id').select '浅煎り'
         fill_in '地域', with: 'ブラジル'
         fill_in '農園', with: 'アップデートファーム'
