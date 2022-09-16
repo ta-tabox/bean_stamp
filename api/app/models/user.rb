@@ -1,8 +1,9 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :trackable and :omniauthable
+  include DeviseTokenAuth::Concerns::User # SPA用にtokenを使用した認証を提供
   include JpPrefecture
 
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :trackable and :omniauthable
   devise :database_authenticatable,
          :registerable,
          :recoverable,
