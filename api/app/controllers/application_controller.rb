@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include DeviseTokenAuth::Concerns::SetUserByToken
+  include DeviseTokenAuth::Concerns::SetUserByToken # tokenによる認証をONにする
   # CSRF対策メソッド
   protect_from_forgery
 
