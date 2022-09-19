@@ -57,6 +57,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     get '/health_check', to: 'health_check#index'
+    get '/test', to: 'test#index'
     namespace :v1 do
       mount_devise_token_auth_for 'User', at: 'auth', controllers: {
         registrations: 'api/v1/auth/registrations', # registrationsのパスを'devise_token_auth/registrations' -> 'api/v1/auth/registrations'に上書き
