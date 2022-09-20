@@ -1,8 +1,8 @@
 import type { FC } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import { About } from '@/components/pages/static_pages/About'
-import { Home } from '@/components/pages/static_pages/Home'
+import { About } from '@/components/pages/common/About'
+import { Home } from '@/components/pages/common/Home'
 
 export const Router: FC = () => (
   <Routes>
