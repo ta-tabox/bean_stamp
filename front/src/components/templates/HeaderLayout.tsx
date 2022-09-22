@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 
 import { Header } from '@/components/organisms/layouts/Header'
 
-export const CommonLayout: FC = memo(() => (
+export const HeaderLayout: FC = memo(() => (
   <>
     <Header />
     <div className="pt-14">
