@@ -47,6 +47,8 @@ module.exports = {
       },
     ],
     'react/react-in-jsx-scope': 'off',
+    'react/prop-types': 'off',
+    'react-hooks/exhaustive-deps': 'off', // useCallbackなどの依存関係についての注意を示す
     'no-void': [
       'error',
       {

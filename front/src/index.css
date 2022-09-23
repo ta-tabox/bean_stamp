@@ -94,9 +94,9 @@
   @apply text-gray-500 hover:text-gray-800 transition duration-200 cursor-pointer;
 }
 
-.static-nav-item {
+/* .static-nav-item {
   @apply w-20 h-full px-2 flex justify-center items-center text-gray-900 hover:text-white hover:bg-gray-800;
-}
+} */
 
 /* header */
 .header {
