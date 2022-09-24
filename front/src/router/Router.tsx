@@ -9,6 +9,7 @@ import { SignIn } from '@/components/pages/common/SignIn'
 import { SignUp } from '@/components/pages/common/SignUp'
 import { UserEdit } from '@/components/pages/users/UserEdit'
 import { UserHome } from '@/components/pages/users/UserHome'
+import { UserManagement } from '@/components/pages/users/UserManagement'
 import { CommonLayout } from '@/components/templates/CommonLayout'
 import { MainLayout } from '@/components/templates/MainLayout'
 
@@ -28,6 +29,7 @@ export const Router: FC = () => (
       <Route index element={<UserHome />} />
       <Route path="home" element={<UserHome />} />
       <Route path="edit" element={<UserEdit />} />
+      <Route path="management" element={<UserManagement />} />
     </Route>
   </Routes>
 )
