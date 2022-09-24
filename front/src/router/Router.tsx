@@ -14,9 +14,9 @@ import { MainLayout } from '@/components/templates/MainLayout'
 
 export const Router: FC = () => (
   <Routes>
-    <Route path="/" element={<Home />} />
     {/** /以下のパスに共通のレイアウトを適用 */}
     <Route path="/" element={<CommonLayout />}>
+      <Route path="/" element={<Home />} />
       <Route path="about" element={<About />} />
       <Route path="help" element={<Help />} />
       <Route path="signup" element={<SignUp />} />
