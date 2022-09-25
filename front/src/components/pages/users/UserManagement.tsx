@@ -1,27 +1,19 @@
 import type { FC } from 'react'
-import { useCallback, useState, useEffect, memo } from 'react'
+import { useCallback, useEffect, memo } from 'react'
 
 import { SpinnerLoading } from '@/components/atoms/loading/SpinnerLoading'
 import { UserDetailModal } from '@/components/organisms/user/UserDetailModal'
 import { UserItem } from '@/components/organisms/user/UserItem'
 import { useAllUsers } from '@/hooks/useAllUsers'
+import { useModal } from '@/hooks/useModal'
 import { useSelectUser } from '@/hooks/useSelectUser'
 
 export const UserManagement: FC = memo(() => {
   const { getUsers, users, loading } = useAllUsers()
   const { selectedUser, onSelectUser } = useSelectUser()
+  const { isOpen, onOpen, onClose } = useModal()
 
   useEffect(() => getUsers(), [])
-
-  const [isOpen, setIsOpen] = useState<boolean>(false)
-
-  const onOpen = useCallback(() => {
-    setIsOpen(true)
-  }, [])
-
-  const onClose = useCallback(() => {
-    setIsOpen(false)
-  }, [])
 
   const onClickUser = useCallback(
     (id: number) => {
