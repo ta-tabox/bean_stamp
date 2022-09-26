@@ -1,8 +1,7 @@
 import type { FC } from 'react'
 import { memo } from 'react'
 
-import Modal from 'react-modal'
-
+import { Modal } from '@/components/organisms/layouts/Modal'
 import type { User } from '@/types/api/user'
 
 type Props = {
@@ -11,18 +10,10 @@ type Props = {
   onClose: () => void
 }
 
-Modal.setAppElement('#root')
-
 export const UserDetailModal: FC<Props> = memo((props) => {
   const { isOpen, onClose, user } = props
   return (
-    <Modal
-      contentLabel="Example Modal"
-      isOpen={isOpen}
-      className="absolute top-1/2 left-1/2 right-auto bottom-auto -translate-x-1/2 -translate-y-1/2 border-2 border-indigo-400 bg-white text-gray-800 overflow-auto rounded-md outline-none p-6"
-      overlayClassName="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-30"
-      onRequestClose={onClose}
-    >
+    <Modal contentLabel={`${user?.name || 'ユーザー'}の詳細`} isOpen={isOpen} onClose={onClose}>
       <button type="button" onClick={onClose}>
         close
       </button>

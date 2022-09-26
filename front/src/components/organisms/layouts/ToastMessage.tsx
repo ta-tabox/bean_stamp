@@ -1,9 +1,10 @@
 import type { FC } from 'react'
+import { memo } from 'react'
 
 import { ToastContainer, Slide } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-export const ToastMessage: FC = () => (
+export const ToastMessage: FC = memo(() => (
   <ToastContainer
     position="bottom-right"
     autoClose={3000}
@@ -18,4 +19,4 @@ export const ToastMessage: FC = () => (
     closeButton={false}
     limit={3}
   />
-)
+))
