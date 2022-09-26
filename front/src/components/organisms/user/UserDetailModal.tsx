@@ -14,9 +14,6 @@ export const UserDetailModal: FC<Props> = memo((props) => {
   const { isOpen, onClose, user } = props
   return (
     <Modal contentLabel={`${user?.name || 'ユーザー'}の詳細`} isOpen={isOpen} onClose={onClose}>
-      <button type="button" onClick={onClose}>
-        close
-      </button>
       <div className="form-container">
         <div className="form-main">
           <form>
