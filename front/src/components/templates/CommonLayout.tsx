@@ -2,7 +2,7 @@ import type { FC } from 'react'
 import { memo } from 'react'
 import { Outlet } from 'react-router-dom'
 
-import { Header } from '@/components/organisms/layouts/Header'
+import { Header } from '@/components/organisms/layout/Header'
 
 export const CommonLayout: FC = memo(() => (
   <>

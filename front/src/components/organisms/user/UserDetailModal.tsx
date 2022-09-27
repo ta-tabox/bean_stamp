@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import { memo } from 'react'
 
-import { Modal } from '@/components/organisms/layouts/Modal'
+import { Modal } from '@/components/organisms/layout/Modal'
 import type { User } from '@/types/api/user'
 
 type Props = {

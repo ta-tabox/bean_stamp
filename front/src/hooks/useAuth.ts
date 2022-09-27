@@ -2,16 +2,18 @@ import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import axios from 'axios'
+
 import 'react-toastify/dist/ReactToastify.css'
 
+import { useLoginUser } from '@/hooks/useLoginUser'
 import { useMessage } from '@/hooks/useMessage'
 import type { User } from '@/types/api/user'
 
 export const useAuth = () => {
   const navigate = useNavigate()
   const { showMessage } = useMessage()
-
   const [loading, setLoading] = useState(false)
+  const { setLoginUser } = useLoginUser()
 
   const login = useCallback((id: string) => {
     setLoading(true)
@@ -19,6 +21,7 @@ export const useAuth = () => {
       .get<User>(`https://jsonplaceholder.typicode.com/users/${id}`)
       .then((res) => {
         if (res.data) {
+          setLoginUser(res.data)
           showMessage({ message: 'ログインしました', type: 'success' })
           navigate('/user/home')
         } else {
@@ -32,5 +35,5 @@ export const useAuth = () => {
         setLoading(false)
       })
   }, [])
-  return { login, loading }
+  return { login, loading, setLoginUser }
 }
