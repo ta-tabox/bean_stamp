@@ -1,6 +1,6 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 
-import { loginUserState } from '@/atoms/loginUserState'
+import { loginUserState } from '@/store/loginUserState'
 import type { User } from '@/types/api/user'
 
 import type { SetterOrUpdater } from 'recoil'
