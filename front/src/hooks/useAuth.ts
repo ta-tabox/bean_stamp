@@ -36,5 +36,15 @@ export const useAuth = () => {
         setLoading(false)
       })
   }, [])
-  return { login, loading, setLoginUser }
+
+  const logout = useCallback(() => {
+    setLoading(true)
+    // axiosの処理をする
+    // OKの処理
+    setLoginUser(null)
+    showMessage({ message: 'ログアウトしました', type: 'success' })
+    navigate('/')
+    setLoading(false)
+  }, [])
+  return { login, logout, loading, setLoginUser }
 }
