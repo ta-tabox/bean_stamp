@@ -5,6 +5,7 @@ import { SpinnerLoading } from '@/components/atoms/loading/SpinnerLoading'
 import { UserDetailModal } from '@/components/organisms/user/UserDetailModal'
 import { UserItem } from '@/components/organisms/user/UserItem'
 import { useAllUsers } from '@/hooks/useAllUsers'
+import { useLoginUser } from '@/hooks/useLoginUser'
 import { useModal } from '@/hooks/useModal'
 import { useSelectUser } from '@/hooks/useSelectUser'
 
@@ -12,6 +13,7 @@ export const UserManagement: FC = memo(() => {
   const { getUsers, users, loading } = useAllUsers()
   const { selectedUser, onSelectUser } = useSelectUser()
   const { isOpen, onOpen, onClose } = useModal()
+  const { loginUser } = useLoginUser()
 
   useEffect(() => getUsers(), [])
 
@@ -45,7 +47,7 @@ export const UserManagement: FC = memo(() => {
           <SpinnerLoading />
         </div>
       )}
-      <UserDetailModal isOpen={isOpen} onClose={onClose} user={selectedUser} />
+      <UserDetailModal isOpen={isOpen} onClose={onClose} user={selectedUser} isAdmin={loginUser?.isAdmin} />
     </section>
   )
 })
