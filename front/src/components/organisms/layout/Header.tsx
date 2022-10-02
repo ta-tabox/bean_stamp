@@ -8,9 +8,9 @@ import { useLoginUser } from '@/hooks/useLoginUser'
 
 export const Header: FC = memo(() => {
   const { loginUser } = useLoginUser()
-  const { logout } = useAuth()
+  const { signOut } = useAuth()
 
-  const onClickSingout = () => logout()
+  const onClickSingout = () => signOut()
 
   return (
     <section className="h-14 border-t border-b z-50 text-black border-gray-200 bg-gray-100 opacity-80 inset-x-0">

@@ -1,13 +1,18 @@
 import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import axios from 'axios'
-
 import 'react-toastify/dist/ReactToastify.css'
+import { useCookies } from 'react-cookie'
 
 import { useLoginUser } from '@/hooks/useLoginUser'
 import { useMessage } from '@/hooks/useMessage'
-import type { User } from '@/types/api/user'
+import client from '@/lib/api/client'
+import type { SignInParams, User } from '@/types/api/user'
+
+// apiからのレスポンスは{ data { data : User } }という階層になっている
+type signInResponseType = {
+  data: User
+}
 
 export const useAuth = () => {
   const navigate = useNavigate()
@@ -15,36 +20,53 @@ export const useAuth = () => {
   const [loading, setLoading] = useState(false)
   const { setLoginUser } = useLoginUser()
 
-  const login = useCallback((id: string) => {
+  const [cookies, setCookie, removeCookie] = useCookies(['uid', 'client', 'access-token'])
+
+  const signIn = useCallback((params: SignInParams) => {
     setLoading(true)
-    axios
-      .get<User>(`https://jsonplaceholder.typicode.com/users/${id}`)
+    client
+      .post<signInResponseType>('auth/sign_in', params)
       .then((res) => {
-        if (res.data) {
-          const isAdmin = res.data.id === 10 // idが10の時にisAdminをtrueに設定する
-          setLoginUser({ ...res.data, isAdmin }) // res.dataを展開してisAdminフラグを追加する
-          showMessage({ message: 'ログインしました', type: 'success' })
-          navigate('/user/home')
-        } else {
-          showMessage({ message: 'ユーザーが見つかりません', type: 'error' })
-        }
+        // 認証情報をcookieにセット
+        setCookie('uid', res.headers.uid, { path: '/' })
+        setCookie('client', res.headers.client, { path: '/' })
+        setCookie('access-token', res.headers['access-token'], { path: '/' })
+        setLoginUser(res.data.data) // グローバルステートにUserの値をセット
+        showMessage({ message: 'ログインしました', type: 'success' })
+        navigate('/user/home')
       })
       .catch(() => {
-        showMessage({ message: 'ログインできませんでした', type: 'error' })
+        showMessage({ message: 'メールアドレスもしくはパスワードが正しくありません', type: 'error' })
       })
       .finally(() => {
         setLoading(false)
       })
   }, [])
 
-  const logout = useCallback(() => {
-    setLoading(true)
-    // axiosの処理をする
-    // OKの処理
-    setLoginUser(null)
-    showMessage({ message: 'ログアウトしました', type: 'success' })
-    navigate('/')
-    setLoading(false)
+  const signOut = useCallback(() => {
+    client
+      .get('auth/sign_out', {
+        headers: {
+          uid: cookies.uid as string,
+          client: cookies.client as string,
+          'access-token': cookies['access-token'] as string,
+        },
+      })
+      .then(() => {
+        // 認証情報をのcookieを削除
+        removeCookie('uid')
+        removeCookie('client')
+        removeCookie('access-token')
+        setLoginUser(null) // LoginUserStateを削除
+        showMessage({ message: 'ログアウトしました', type: 'success' })
+        navigate('/')
+      })
+      .catch(() => {
+        showMessage({ message: 'ログアウトに失敗しました', type: 'error' })
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }, [])
-  return { login, logout, loading, setLoginUser }
+  return { signIn, signOut, loading, setLoginUser }
 }

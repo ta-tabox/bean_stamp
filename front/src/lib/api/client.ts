@@ -13,6 +13,9 @@ const options = {
 const client = applyCaseMiddleware(
   axios.create({
     baseURL: import.meta.env.VITE_API_URL, // 環境変数でURLを読み込む
+    headers: {
+      'Content-Type': 'application/json',
+    },
   }),
   options
 )
