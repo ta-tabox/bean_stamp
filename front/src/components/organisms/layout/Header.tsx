@@ -48,9 +48,14 @@ export const Header: FC = memo(() => {
                 </button>
               </li>
             ) : (
-              <li>
-                <StaticNavLink to="/signin">SIGNIN</StaticNavLink>
-              </li>
+              <>
+                <li>
+                  <StaticNavLink to="/signin">SIGNIN</StaticNavLink>
+                </li>
+                <li>
+                  <StaticNavLink to="/signup">SIGNUP</StaticNavLink>
+                </li>
+              </>
             )}
           </ul>
         </nav>

@@ -2,7 +2,7 @@
 export type SignUpParams = {
   name: string
   email: string
-  prefecture_code: string
+  prefectureCode: string
   password: string
   passwordConfirmation: string
 }

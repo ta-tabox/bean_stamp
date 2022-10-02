@@ -30,9 +30,11 @@ export const SignIn: FC = memo(() => {
         <div className="form-main">
           <h1 className="form-title">サインイン</h1>
           <form>
+            {/* メールアドレス */}
             <div className="input-container">
               <input type="email" className="input-field" placeholder="email" value={email} onChange={onChangeEmail} />
             </div>
+            {/* パスワード */}
             <div className="input-container">
               <input
                 type="password"
