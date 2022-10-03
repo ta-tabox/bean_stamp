@@ -4,10 +4,10 @@ import { memo } from 'react'
 import { TopButton } from '@/components/atoms/button/TopButton'
 import { StaticNavLink } from '@/components/atoms/link/StaticNavLink'
 import { useAuth } from '@/hooks/useAuth'
-import { useLoginUser } from '@/hooks/useLoginUser'
+import { useCurrentUser } from '@/hooks/useCurrentUser'
 
 export const Header: FC = memo(() => {
-  const { loginUser } = useLoginUser()
+  const { isSignedIn } = useCurrentUser()
   const { signOut } = useAuth()
 
   const onClickSingout = () => signOut()
@@ -20,13 +20,13 @@ export const Header: FC = memo(() => {
         <nav className="pr-2 md:pr-12 h-full">
           <ul className="flex h-full">
             <li>
-              {loginUser ? (
+              {isSignedIn ? (
                 <StaticNavLink to="/user/home">HOME</StaticNavLink>
               ) : (
                 <StaticNavLink to="/">HOME</StaticNavLink>
               )}
             </li>
-            {loginUser && (
+            {isSignedIn && (
               <li>
                 <StaticNavLink to="/user/management">UM</StaticNavLink>
               </li>
@@ -37,7 +37,7 @@ export const Header: FC = memo(() => {
             <li>
               <StaticNavLink to="/help">HELP</StaticNavLink>
             </li>
-            {loginUser ? (
+            {isSignedIn ? (
               <li>
                 <button
                   type="button"
