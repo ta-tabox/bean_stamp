@@ -8,6 +8,7 @@ import { useAllUsers } from '@/hooks/useAllUsers'
 import { useCurrentUser } from '@/hooks/useCurrentUser'
 import { useModal } from '@/hooks/useModal'
 import { useSelectUser } from '@/hooks/useSelectUser'
+import { translatePrefectureCodeToName } from '@/lib/mstData/prefecture'
 
 export const UserManagement: FC = memo(() => {
   const { getUsers, users, loading } = useAllUsers()
@@ -34,7 +35,7 @@ export const UserManagement: FC = memo(() => {
               <UserItem
                 id={user.id}
                 userName={user.name}
-                address={user.address.city}
+                area={translatePrefectureCodeToName(user.prefectureCode)}
                 imageUrl="https://source.unsplash.com/random"
                 onClick={onClickUser}
               />
@@ -47,7 +48,7 @@ export const UserManagement: FC = memo(() => {
           <SpinnerLoading />
         </div>
       )}
-      <UserDetailModal isOpen={isOpen} onClose={onClose} user={selectedUser} isAdmin={currentUser?.isAdmin} />
+      <UserDetailModal isOpen={isOpen} onClose={onClose} user={selectedUser} isAdmin={currentUser?.admin} />
     </section>
   )
 })

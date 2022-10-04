@@ -3,6 +3,7 @@ import { useEffect, useState, memo } from 'react'
 
 import { PrimaryButton } from '@/components/atoms/button/PrimaryButton'
 import { Modal } from '@/components/organisms/layout/Modal'
+import { translatePrefectureCodeToName } from '@/lib/mstData/prefecture'
 import type { User } from '@/types/api/user'
 
 type Props = {
@@ -16,18 +17,21 @@ export const UserDetailModal: FC<Props> = memo((props) => {
   const { isOpen, onClose, user, isAdmin = false } = props
 
   const [name, setName] = useState('')
-  const [addressStreet, setAdressStreet] = useState('')
+  const [area, setArea] = useState('')
   const [describe, setDescribe] = useState('')
 
   // 初回レンダリング時とuserの値が変更になった時にモーダルに表示する初期値を設定
   useEffect(() => {
-    setName(user?.name ?? '')
-    setAdressStreet(user?.address.street ?? '')
-    setDescribe(user?.company.name ?? '')
+    if (user) {
+      const prefectureName = translatePrefectureCodeToName(user.prefectureCode)
+      setName(user.name ?? '')
+      setArea(prefectureName ?? '')
+      setDescribe(user.describe ?? '')
+    }
   }, [user])
 
   const onChangeName = (e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)
-  const onChangeAdressStreet = (e: ChangeEvent<HTMLInputElement>) => setAdressStreet(e.target.value)
+  const onChangeArea = (e: ChangeEvent<HTMLInputElement>) => setArea(e.target.value)
   const onChangeDescribe = (e: ChangeEvent<HTMLInputElement>) => setDescribe(e.target.value)
 
   const onClickUpdate = () => alert()
@@ -51,15 +55,15 @@ export const UserDetailModal: FC<Props> = memo((props) => {
               />
             </div>
             <div className="input-container">
-              <label htmlFor="user_address">住所</label>
+              <label htmlFor="user_area">エリア</label>
               <input
                 type="text"
                 name="user[address]"
-                value={addressStreet}
-                id="user_address"
+                value={area}
+                id="user_area"
                 className="input-field"
                 readOnly={!isAdmin}
-                onChange={onChangeAdressStreet}
+                onChange={onChangeArea}
               />
             </div>
             <div className="input-container">

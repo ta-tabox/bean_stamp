@@ -5,12 +5,12 @@ type Props = {
   id: number
   imageUrl: string
   userName: string
-  address: string
+  area: string
   onClick: (id: number) => void
 }
 
 export const UserItem: FC<Props> = memo((props) => {
-  const { id, imageUrl, userName, address, onClick } = props
+  const { id, imageUrl, userName, area, onClick } = props
   return (
     <button type="button" className="block w-full" onClick={() => onClick(id)}>
       <div
@@ -27,7 +27,7 @@ export const UserItem: FC<Props> = memo((props) => {
           </div>
           <div className="w-full flex flex-col mb-4 sm:mb-0 sm:mr-4 overflow-hidden">
             <p className="font-medium truncate">{userName}</p>
-            <p className="truncate">{address}</p>
+            <p className="truncate">{area}</p>
             <p className="truncate text-gray-500">詳細</p>
           </div>
         </div>

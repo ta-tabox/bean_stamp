@@ -60,3 +60,12 @@ export const PrefectureArray: Prefecture[] = [
   { id: 46, label: '鹿児島県', value: 'kagoshima' },
   { id: 47, label: '沖縄県', value: 'okinawa' },
 ]
+
+// コード→県名変換関数
+export const translatePrefectureCodeToName = (prefectureCode: string) => {
+  const selectedPrefecture = PrefectureArray.find(({ id }) => id === parseInt(prefectureCode, 10))
+  if (selectedPrefecture) {
+    return selectedPrefecture.label
+  }
+  return ''
+}
