@@ -29,6 +29,7 @@ export const SignIn: FC = memo(() => {
       <div className="form-container">
         <div className="form-main">
           <h1 className="form-title">サインイン</h1>
+          {/* TODO formのコンポーネント分割 レンダリングの最適化 */}
           <form>
             {/* メールアドレス */}
             <div className="input-container">

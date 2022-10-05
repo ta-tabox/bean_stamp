@@ -13,6 +13,7 @@ export const ProtectedRoute = (props: Props) => {
   const { redirectPath = '/signin', children } = props
   const { isSignedIn } = useCurrentUser()
   const { showMessage } = useMessage()
+
   if (!isSignedIn) {
     showMessage({ message: 'ユーザー登録もしくはログインをしてください', type: 'error' })
     return <Navigate to={redirectPath} replace />
