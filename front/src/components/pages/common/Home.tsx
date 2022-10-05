@@ -1,19 +1,21 @@
 import type { FC } from 'react'
 import { memo } from 'react'
+import { Navigate } from 'react-router-dom'
 
-import { execTest } from '@/lib/api/test'
+import { useCurrentUser } from '@/hooks/useCurrentUser'
 
 export const Home: FC = memo(() => {
-  const onClickTest = () => {
-    execTest() // eslint-disable-line @typescript-eslint/no-floating-promises
+  const { isSignedIn } = useCurrentUser()
+
+  // ルートパスアクセス時にログイン済みならリダイレクト
+  if (isSignedIn) {
+    return <Navigate to="/user/home" replace />
   }
 
   return (
     <>
       <h1 className="text-3xl font-bold underline text-red-600">Hello world!</h1>
-      <button type="button" onClick={onClickTest}>
-        テスト
-      </button>
+      <p>トップページです。</p>
     </>
   )
 })

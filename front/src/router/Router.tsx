@@ -13,6 +13,7 @@ import { UserManagement } from '@/components/pages/users/UserManagement'
 import { CommonLayout } from '@/components/templates/CommonLayout'
 import { MainLayout } from '@/components/templates/MainLayout'
 import { ProtectedRoute } from '@/router/ProtectedRoute'
+import { RequireSignedOutRoute } from '@/router/requireSignedOutRoute'
 
 export const Router: FC = () => (
   <Routes>
@@ -21,8 +22,11 @@ export const Router: FC = () => (
       <Route path="/" element={<Home />} />
       <Route path="about" element={<About />} />
       <Route path="help" element={<Help />} />
-      <Route path="signup" element={<SignUp />} />
-      <Route path="signin" element={<SignIn />} />
+      {/* 未ログインを要求 */}
+      <Route element={<RequireSignedOutRoute />}>
+        <Route path="signup" element={<SignUp />} />
+        <Route path="signin" element={<SignIn />} />
+      </Route>
       <Route path="*" element={<Page404 />} />
     </Route>
     {/** /user/以下のパスに共通のレイアウトを適用 */}
