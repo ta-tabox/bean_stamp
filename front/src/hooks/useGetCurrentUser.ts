@@ -12,7 +12,6 @@ type authResponseType = {
 
 export const useGetCurrentUser = () => {
   const { setCurrentUser, setIsSignedIn } = useCurrentUser()
-  const { showMessage } = useMessage()
   const [cookies, , removeCookie] = useCookies(['access-token', 'client', 'uid'])
 
   const getCurrentUser = () => {
@@ -38,7 +37,6 @@ export const useGetCurrentUser = () => {
             removeCookie('access-token')
             setIsSignedIn(false)
             setCurrentUser(null) // LoginUserStateを削除
-            showMessage({ message: 'ユーザー登録もしくはログインをしてください', type: 'error' })
           }
         })
         .catch(() => {
@@ -47,7 +45,6 @@ export const useGetCurrentUser = () => {
           removeCookie('access-token')
           setIsSignedIn(false)
           setCurrentUser(null) // LoginUserStateを削除
-          showMessage({ message: 'ユーザー登録もしくはログインをしてください', type: 'error' })
         })
     }
   }

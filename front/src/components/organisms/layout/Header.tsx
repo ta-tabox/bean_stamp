@@ -1,5 +1,6 @@
 import type { FC } from 'react'
 import { memo } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { TopButton } from '@/components/atoms/button/TopButton'
 import { StaticNavLink } from '@/components/atoms/link/StaticNavLink'
@@ -9,8 +10,12 @@ import { useCurrentUser } from '@/hooks/useCurrentUser'
 export const Header: FC = memo(() => {
   const { isSignedIn } = useCurrentUser()
   const { signOut } = useAuth()
+  const navigate = useNavigate()
 
-  const onClickSingout = () => signOut()
+  const onClickSingout = () => {
+    navigate('/')
+    signOut()
+  }
 
   return (
     <section className="h-14 border-t border-b z-50 text-black border-gray-200 bg-gray-100 opacity-80 inset-x-0">

@@ -13,7 +13,7 @@ import { UserManagement } from '@/components/pages/users/UserManagement'
 import { CommonLayout } from '@/components/templates/CommonLayout'
 import { MainLayout } from '@/components/templates/MainLayout'
 import { ProtectedRoute } from '@/router/ProtectedRoute'
-import { RequireSignedOutRoute } from '@/router/requireSignedOutRoute'
+import { RequireSignedOutRoute } from '@/router/RequireSignedOutRoute'
 
 export const Router: FC = () => (
   <Routes>

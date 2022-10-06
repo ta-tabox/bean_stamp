@@ -61,6 +61,7 @@ export const useAuth = () => {
 
   const signIn = useCallback((params: SignInParams) => {
     setLoading(true)
+
     client
       .post<authResponseType>('auth/sign_in', params)
       .then((res) => {
