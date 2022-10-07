@@ -46,6 +46,13 @@ module.exports = {
         extensions: ['.jsx', '.tsx'],
       },
     ],
+    'react/jsx-props-no-spreading': [
+      'error',
+      {
+        html: 'ignore', // html, componentにおいて{ ...register }構文を許可する
+        custom: 'ignore',
+      },
+    ],
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
     'react/require-default-props': 'off',

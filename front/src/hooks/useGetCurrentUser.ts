@@ -1,7 +1,6 @@
 import { useCookies } from 'react-cookie'
 
 import { useCurrentUser } from '@/hooks/useCurrentUser'
-import { useMessage } from '@/hooks/useMessage'
 import client from '@/lib/api/client'
 import type { User } from '@/types/api/user'
 
