@@ -12,8 +12,7 @@
         </div>
         <%# パスワードフィールド %>
         <div class="input-container">
-          <%= f.password_field :password,
-      autocomplete: "current-password", placeholder: User.human_attribute_name(:password), class: "input-field" %>
+          <%= f.password_field :password, autocomplete: "current-password", placeholder: User.human_attribute_name(:password), class: "input-field" %>
           <div class="input-icon-field"><svg><use xlink:href="#unlock"></use></svg></div>
         </div>
         <%# ログインの記録 %>
@@ -37,8 +36,6 @@
           <%= button_to 'ゲストログイン', users_guest_sign_in_path, method: :post, class: "btn btn-secondary btn-pop" %>
         </div>
       </div>
-    </div>
-    <div class="form-footer">
     </div>
   </div>
 </div>

@@ -116,24 +116,29 @@
 }
 
 /* form design  */
+// CHANGED コンポーネント変換済み
+.form-title {
+  @apply mb-6 text-center text-sm text-gray-600 font-light;
+}
+// CHANGED コンポーネント変換済み
+.form-button-field {
+  @apply flex items-center justify-center;
+}
+// CHANGED コンポーネント変換済み
+.form-main {
+  @apply bg-gray-100 py-10 px-4 rounded-lg;
+}
+
+// CHANGED コンポーネント変換済み
 .form-container {
   @apply p-8 max-w-xl mx-auto container;
 }
 
-.form-main {
-  @apply bg-gray-100 py-10 px-4 rounded-lg;
-}
-.form-title {
-  @apply mb-6 text-center text-sm text-gray-600 font-light;
-}
 .form-container h2 {
   @apply text-gray-500 text-center text-sm;
 }
 
-.form-button-field {
-  @apply flex items-center justify-center;
-}
-
+// CHANGED コンポーネント変換済み
 .form-footer {
   @apply flex flex-col items-center justify-center py-4 text-center text-sm text-gray-600;
 }
@@ -159,26 +164,29 @@
 }
 
 /* input-field */
+
+// CHANGED コンポーネント変換済み
 .input-container {
   @apply relative mt-3;
 }
-
+// CHANGED コンポーネント変換済み
 .input-field {
   @apply appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none;
+}
+// CHANGED コンポーネント変換済み
+.input-icon-field {
+  @apply absolute left-0 inset-y-0 flex items-center;
 }
 
 .date-input-field {
   @apply appearance-none border pl-1 sm:pl-4 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none;
 }
 
-.input-icon-field {
-  @apply absolute left-0 inset-y-0 flex items-center;
-}
-
+// NOTE classにベタ打ちする grayいらない
 .input-icon-field svg {
   @apply h-7 w-7 ml-3 text-gray-400 p-1;
 }
-
+// NOTE classにベタ打ちする grayいらない
 .input-icon-field i {
   @apply ml-3 text-gray-400 p-1;
 }

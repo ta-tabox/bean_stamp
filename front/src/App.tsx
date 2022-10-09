@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { ToastMessage } from '@/components/organisms/layout/ToastMessage'
 import { useGetCurrentUser } from '@/hooks/useGetCurrentUser'
 import { Router } from '@/router/Router'
+import { IconsSvg } from '@/components/atoms/icon/IconsSvg'
 
 const App: FC = () => {
   const { getCurrentUser } = useGetCurrentUser()
@@ -16,6 +17,7 @@ const App: FC = () => {
 
   return (
     <BrowserRouter>
+      <IconsSvg />
       <ToastMessage />
       <Router />
     </BrowserRouter>

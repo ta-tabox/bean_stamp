@@ -6,6 +6,13 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { PrimaryButton } from '@/components/atoms/button/PrimaryButton'
 import { useAuth } from '@/hooks/useAuth'
 import type { SignInParams } from '@/types/api/user'
+import { EmailInput } from '@/components/molecules/user/EmailInput'
+import { PasswordInput } from '@/components/molecules/user/PasswordInput'
+import { FormTitle } from '@/components/atoms/form/FormTitle'
+import { FormMain } from '@/components/atoms/form/FormMain'
+import { FormContainer } from '@/components/atoms/form/FormCountainer'
+import { FormFooter } from '@/components/atoms/form/FormFooter'
+import { Link } from 'react-router-dom'
 
 export const SignIn: FC = memo(() => {
   const { signIn, loading } = useAuth()
@@ -22,55 +29,39 @@ export const SignIn: FC = memo(() => {
     // #TODO ページタイトルを動的に変更する
     // <% provide(:title, "サインイン") %>
     <div className="mt-16 flex items-center">
-      <div className="form-container">
-        <div className="form-main">
-          <h1 className="form-title">サインイン</h1>
-          {/* TODO formのコンポーネント分割 レンダリングの最適化 */}
+      <FormContainer>
+        <FormMain>
+          <FormTitle>サインイン</FormTitle>
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* メールアドレス */}
-            <div className="input-container">
-              <input
-                id="email"
-                type="email"
-                className="input-field"
-                placeholder="email"
-                {...register('email', {
-                  required: '入力が必須の項目です',
-                  pattern: {
-                    value: /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/,
-                    message: 'メールアドレスの形式が正しくありません。',
-                  },
-                })}
-              />
-              {errors.email?.types?.required && <p role="alert">{errors.email?.types?.required}</p>}
-              {errors.email?.types?.pattern && <p role="alert">{errors.email?.types?.pattern}</p>}
-            </div>
+            <EmailInput label="email" register={register} error={errors.email} />
             {/* パスワード */}
-            <div className="input-container">
-              <input
-                id="password"
-                className="input-field"
-                placeholder="password"
-                type="password"
-                {...register('password', {
-                  required: '必須項目です',
-                  minLength: { value: 6, message: '6文字以上入力してください' },
-                  pattern: { value: /^[a-zA-Z0-9!-/:-@¥[-`{-~]+$/, message: '半角英数記号を入力してください' },
-                })}
-              />
-              {errors.password && <p role="alert">{errors.password?.message}</p>}
-            </div>
-            <div className="form-button-field mt-4">
+            <PasswordInput label="password" register={register} error={errors.password} />
+
+            {/* TODO ログインの記録 deviseのrememberable機能 */}
+
+            <div className="flex items-center justify-center mt-4">
               <PrimaryButton loading={loading} disabled={!dirtyFields.email || !dirtyFields.password}>
                 ログイン
               </PrimaryButton>
             </div>
           </form>
-        </div>
-        <div className="form-footer">
-          <h1>フォームフッター</h1>
-        </div>
-      </div>
+        </FormMain>
+        {/* TODO パスワード再設定、サインアップへの導線、ゲストログイン */}
+        <FormFooter>
+          <h4 className="pb-2">パスワードを忘れましたか？ パスワード再設定</h4>
+          <h4>アカウントをお持ちではありませんか？</h4>
+          <Link to="/signUp" className="ml-2 link">
+            サインアップ
+          </Link>
+          <h4 className="pt-4 text-center text-sm text-gray-800 font-light">閲覧用</h4>
+          <div>
+            <div className="flex justify-center">
+              <h4>ゲストログイン</h4>
+            </div>
+          </div>
+        </FormFooter>
+      </FormContainer>
     </div>
   )
 })
