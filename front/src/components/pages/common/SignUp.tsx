@@ -9,12 +9,25 @@ import type { SignUpParams } from '@/types/api/user'
 import { FormContainer } from '@/components/atoms/form/FormContainer'
 import { FormMain } from '@/components/atoms/form/FormMain'
 import { FormTitle } from '@/components/atoms/form/FormTitle'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { EmailInput } from '@/components/molecules/user/EmailInput'
 import { PasswordInput } from '@/components/molecules/user/PasswordInput'
 import { UserNameInput } from '@/components/molecules/user/UserNameInput'
 import { FormInputWrap } from '@/components/atoms/form/FormInputWrap'
 import { FormIconWrap } from '@/components/atoms/form/FormIconWrap'
+import Select from 'react-select'
+import { AlertMessage } from '@/components/atoms/form/AlertMessage'
+
+// Selectメニューのprefectureオプションの型
+type PrefectureOption = {
+  label: string
+  value: number
+}
+
+// react-hook-formで取り扱うデータの型
+type SignUpSubmitData = SignUpParams & {
+  prefectureOption: PrefectureOption
+}
 
 export const SignUp: FC = memo(() => {
   const { signUp, loading } = useAuth()
@@ -23,14 +36,31 @@ export const SignUp: FC = memo(() => {
     register,
     handleSubmit,
     formState: { dirtyFields, errors },
-  } = useForm<SignUpParams>({ criteriaMode: 'all' })
+    control,
+  } = useForm<SignUpSubmitData>({ criteriaMode: 'all' })
 
-  const onSubmit: SubmitHandler<SignUpParams> = (params) => signUp(params)
+  // PrefectureArrayからreact-selectで取り扱うoptionの形に変換
+  const convertToOption = (prefecture: Prefecture): PrefectureOption => {
+    return {
+      label: prefecture.label,
+      value: prefecture.id,
+    }
+  }
+
+  const onSubmit: SubmitHandler<SignUpSubmitData> = (data) => {
+    const params: SignUpParams = {
+      name: data.name,
+      email: data.email,
+      prefectureCode: data.prefectureOption.value.toString(),
+      password: data.password,
+      passwordConfirmation: data.passwordConfirmation,
+    }
+    signUp(params)
+  }
 
   return (
     // #TODO ページタイトルを動的に変更する
     // <% provide(:title, "サインアップ") %>
-    // TODO react-hook-formを導入してスッキリさせる, バリデーションを追加する
     <div className="mt-16 flex items-center">
       <FormContainer>
         <FormMain>
@@ -44,21 +74,31 @@ export const SignUp: FC = memo(() => {
 
             {/* エリアセレクト */}
             <FormInputWrap>
-              <select id="area" className="input-field" {...register('prefectureCode')}>
-                <option value="" selected hidden disabled>
-                  エリアを選択してください
-                </option>
-                {PrefectureArray.map((prefecture: Prefecture) => (
-                  <option value={prefecture.id}>{prefecture.label}</option>
-                ))}
-              </select>
+              {/* react-selectをreact-hook-form管理下で使用 */}
+              <Controller
+                name="prefectureOption"
+                control={control}
+                rules={{ required: `入力が必須の項目です'` }}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    options={PrefectureArray.map(convertToOption)}
+                    isClearable={true}
+                    styles={{ control: () => ({}), valueContainer: (provided) => ({ ...provided, padding: 0 }) }} // デフォルトのスタイルをクリア
+                    className="rs-container" // react-selectコンポーネントのクラス名
+                    classNamePrefix="rs" // react-selectコンポーネント化のクラスに"rs__"プリフィックスをつける
+                    noOptionsMessage={() => 'エリアが見つかりませんでした'}
+                    placeholder="エリアを選択"
+                  />
+                )}
+              />
               <FormIconWrap>
                 <svg className="h-7 w-7 p-1 ml-3">
                   <use xlinkHref="#location-marker"></use>
                 </svg>
               </FormIconWrap>
-              <i className="fa-solid fa-angle-down pointer-events-none absolute inset-y-0 right-2 flex items-center px-2 text-gray-600"></i>
             </FormInputWrap>
+            {errors.prefectureOption?.message && <AlertMessage>{errors.prefectureOption?.message}</AlertMessage>}
 
             {/* パスワード */}
             <PasswordInput
@@ -76,12 +116,12 @@ export const SignUp: FC = memo(() => {
               error={errors.passwordConfirmation}
             />
 
-            <div className="form-button-field mt-4">
+            <div className="flex items-center justify-center mt-4">
               <PrimaryButton
                 disabled={
                   !dirtyFields.name ||
                   !dirtyFields.email ||
-                  !dirtyFields.prefectureCode ||
+                  !dirtyFields.prefectureOption ||
                   !dirtyFields.password ||
                   !dirtyFields.passwordConfirmation
                 }

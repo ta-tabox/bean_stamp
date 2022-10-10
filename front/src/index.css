@@ -61,14 +61,6 @@
   @apply py-1 px-3 border rounded disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed inline-block text-center text-sm font-medium;
 }
 
-.btn-primary {
-  @apply bg-indigo-500 border-indigo-600 text-white hover:bg-indigo-600 active:bg-indigo-700;
-}
-
-.btn-secondary {
-  @apply bg-white border-gray-200 text-gray-600 hover:bg-gray-100 active:bg-gray-200;
-}
-
 .btn-pop {
   @apply shadow-md hover:shadow-lg transition transform hover:-translate-y-0.5;
 }
@@ -94,10 +86,6 @@
   @apply text-gray-500 hover:text-gray-800 transition duration-200 cursor-pointer;
 }
 
-/* .static-nav-item {
-  @apply w-20 h-full px-2 flex justify-center items-center text-gray-900 hover:text-white hover:bg-gray-800;
-} */
-
 /* header */
 .header {
   @apply lg:sticky top-0 z-50 h-20 pb-2 px-2 mb-4 bg-gray-50 border-b border-gray-200;
@@ -112,57 +100,14 @@
   @apply w-32 h-32 rounded-md;
 }
 
-/* form design  */
-.form-container {
-  @apply p-8 max-w-xl mx-auto container;
-}
-
-.form-main {
-  @apply bg-gray-100 py-10 px-4 rounded-lg;
-}
-.form-title {
-  @apply mb-6 text-center text-sm text-gray-600 font-light;
-}
-.form-container h2 {
-  @apply text-gray-500 text-center text-sm;
-}
-
-.form-button-field {
-  @apply flex items-center justify-center;
-}
-
-.form-footer {
-  @apply flex flex-col items-center justify-center py-4 text-center text-sm text-gray-600;
-}
-
-/* sign_in, sign_up form */
-.sign-form-container {
-  @apply p-8 max-w-xl mx-auto;
-}
-
-.sign-form-header {
-  @apply bg-gray-100 pt-4 bg-opacity-60;
-}
-
-.sign-form-main {
-  @apply bg-gray-100 py-8 px-4 bg-opacity-60;
-}
-.sign-form-title {
-  @apply pb-2 text-center text-lg text-gray-800 font-light;
-}
-
-.sign-form-footer {
-  @apply flex flex-col items-center justify-center pb-4 text-center bg-gray-100 text-sm text-gray-800 bg-opacity-60;
-}
-
 /* input-field */
 .input-container {
   @apply relative mt-3;
 }
 
-.input-field {
+/* .input-field {
   @apply appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none;
-}
+} */
 
 .date-input-field {
   @apply appearance-none border pl-1 sm:pl-4 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none;
@@ -407,4 +352,9 @@
 }
 .drawer-nav-item {
   @apply block w-full h-full pl-8 py-4 text-lg text-white hover:text-gray-800 hover:bg-gray-400;
+}
+
+/* seact-relect */
+.rs__control {
+  @apply appearance-none border pl-12 py-1 bg-white border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full text-gray-600 leading-tight focus:outline-none relative box-border flex-wrap flex;
 }
