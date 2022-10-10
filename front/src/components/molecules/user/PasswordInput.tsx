@@ -3,23 +3,24 @@ import { Input } from '@/components/atoms/form/Input'
 import { FormIconWrap } from '@/components/atoms/form/FormIconWrap'
 import { FormInputWrap } from '@/components/atoms/form/FormInputWrap'
 import type { FC } from 'react'
-import { FieldError, UseFormRegister, ValidationRule } from 'react-hook-form'
+import { FieldError, UseFormRegister } from 'react-hook-form'
 
 type InputProps = {
   label: string
+  placeholder: string
   register: UseFormRegister<any>
   error?: FieldError
 }
 
 export const PasswordInput: FC<InputProps> = (props) => {
-  const { label, register, error } = props
+  const { label, placeholder, register, error } = props
   return (
     <>
       <FormInputWrap>
         <Input
           label={label}
           type="password"
-          placeholder="パスワード"
+          placeholder={placeholder}
           register={register}
           required={{
             value: true,

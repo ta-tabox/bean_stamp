@@ -10,7 +10,7 @@ import { EmailInput } from '@/components/molecules/user/EmailInput'
 import { PasswordInput } from '@/components/molecules/user/PasswordInput'
 import { FormTitle } from '@/components/atoms/form/FormTitle'
 import { FormMain } from '@/components/atoms/form/FormMain'
-import { FormContainer } from '@/components/atoms/form/FormCountainer'
+import { FormContainer } from '@/components/atoms/form/FormContainer'
 import { FormFooter } from '@/components/atoms/form/FormFooter'
 import { Link } from 'react-router-dom'
 
@@ -36,7 +36,7 @@ export const SignIn: FC = memo(() => {
             {/* メールアドレス */}
             <EmailInput label="email" register={register} error={errors.email} />
             {/* パスワード */}
-            <PasswordInput label="password" register={register} error={errors.password} />
+            <PasswordInput label="password" placeholder="パスワード" register={register} error={errors.password} />
 
             {/* TODO ログインの記録 deviseのrememberable機能 */}
 

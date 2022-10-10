@@ -11,33 +11,28 @@ type InputProps = {
   error?: FieldError
 }
 
-export const EmailInput: FC<InputProps> = (props) => {
+export const UserNameInput: FC<InputProps> = (props) => {
   const { label, register, error } = props
   return (
     <>
       <FormInputWrap>
         <Input
           label={label}
-          type="email"
-          placeholder="メールアドレス"
+          type="text"
+          placeholder="名前"
           register={register}
           required={{
             value: true,
             message: '入力が必須の項目です',
           }}
-          pattern={{
-            value: /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/,
-            message: 'メールアドレスの形式が正しくありません。',
-          }}
         />
         <FormIconWrap>
           <svg className="h-7 w-7 p-1 ml-3">
-            <use xlinkHref="#mail"></use>
+            <use xlinkHref="#academic-cap"></use>
           </svg>
         </FormIconWrap>
       </FormInputWrap>
       {error?.types?.required && <AlertMessage>{error?.types?.required}</AlertMessage>}
-      {error?.types?.pattern && <AlertMessage>{error?.types?.pattern}</AlertMessage>}
     </>
   )
 }
