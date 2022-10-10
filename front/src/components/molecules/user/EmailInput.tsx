@@ -1,8 +1,8 @@
+import type { FC } from 'react'
 import { AlertMessage } from '@/components/atoms/form/AlertMessage'
 import { Input } from '@/components/atoms/form/Input'
 import { FormIconWrap } from '@/components/atoms/form/FormIconWrap'
 import { FormInputWrap } from '@/components/atoms/form/FormInputWrap'
-import type { FC } from 'react'
 import { FieldError, UseFormRegister } from 'react-hook-form'
 
 type InputProps = {
@@ -36,8 +36,8 @@ export const EmailInput: FC<InputProps> = (props) => {
           </svg>
         </FormIconWrap>
       </FormInputWrap>
-      {error?.types?.required && <AlertMessage>{error?.types?.required}</AlertMessage>}
-      {error?.types?.pattern && <AlertMessage>{error?.types?.pattern}</AlertMessage>}
+      {error?.types?.required && <AlertMessage>{error.types.required}</AlertMessage>}
+      {error?.types?.pattern && <AlertMessage>{error.types.pattern}</AlertMessage>}
     </>
   )
 }

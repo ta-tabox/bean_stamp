@@ -3,26 +3,15 @@ import { memo } from 'react'
 
 import { PrimaryButton } from '@/components/atoms/button/PrimaryButton'
 import { useAuth } from '@/hooks/useAuth'
-import type { Prefecture } from '@/lib/mstData/prefecture'
-import { PrefectureArray } from '@/lib/mstData/prefecture'
 import type { SignUpParams } from '@/types/api/user'
 import { FormContainer } from '@/components/atoms/form/FormContainer'
 import { FormMain } from '@/components/atoms/form/FormMain'
 import { FormTitle } from '@/components/atoms/form/FormTitle'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { FieldError, SubmitHandler, useForm } from 'react-hook-form'
 import { EmailInput } from '@/components/molecules/user/EmailInput'
 import { PasswordInput } from '@/components/molecules/user/PasswordInput'
 import { UserNameInput } from '@/components/molecules/user/UserNameInput'
-import { FormInputWrap } from '@/components/atoms/form/FormInputWrap'
-import { FormIconWrap } from '@/components/atoms/form/FormIconWrap'
-import Select from 'react-select'
-import { AlertMessage } from '@/components/atoms/form/AlertMessage'
-
-// Selectメニューのprefectureオプションの型
-type PrefectureOption = {
-  label: string
-  value: number
-}
+import { PrefectureOption, PrefectureSelect } from '@/components/molecules/user/PrefectureSelect'
 
 // react-hook-formで取り扱うデータの型
 type SignUpSubmitData = SignUpParams & {
@@ -38,14 +27,6 @@ export const SignUp: FC = memo(() => {
     formState: { dirtyFields, errors },
     control,
   } = useForm<SignUpSubmitData>({ criteriaMode: 'all' })
-
-  // PrefectureArrayからreact-selectで取り扱うoptionの形に変換
-  const convertToOption = (prefecture: Prefecture): PrefectureOption => {
-    return {
-      label: prefecture.label,
-      value: prefecture.id,
-    }
-  }
 
   const onSubmit: SubmitHandler<SignUpSubmitData> = (data) => {
     const params: SignUpParams = {
@@ -73,32 +54,11 @@ export const SignUp: FC = memo(() => {
             <EmailInput label="email" register={register} error={errors.email} />
 
             {/* エリアセレクト */}
-            <FormInputWrap>
-              {/* react-selectをreact-hook-form管理下で使用 */}
-              <Controller
-                name="prefectureOption"
-                control={control}
-                rules={{ required: `入力が必須の項目です'` }}
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    options={PrefectureArray.map(convertToOption)}
-                    isClearable={true}
-                    styles={{ control: () => ({}), valueContainer: (provided) => ({ ...provided, padding: 0 }) }} // デフォルトのスタイルをクリア
-                    className="rs-container" // react-selectコンポーネントのクラス名
-                    classNamePrefix="rs" // react-selectコンポーネント化のクラスに"rs__"プリフィックスをつける
-                    noOptionsMessage={() => 'エリアが見つかりませんでした'}
-                    placeholder="エリアを選択"
-                  />
-                )}
-              />
-              <FormIconWrap>
-                <svg className="h-7 w-7 p-1 ml-3">
-                  <use xlinkHref="#location-marker"></use>
-                </svg>
-              </FormIconWrap>
-            </FormInputWrap>
-            {errors.prefectureOption?.message && <AlertMessage>{errors.prefectureOption?.message}</AlertMessage>}
+            <PrefectureSelect
+              label="prefectureOption"
+              control={control}
+              error={errors.prefectureOption as FieldError}
+            />
 
             {/* パスワード */}
             <PasswordInput

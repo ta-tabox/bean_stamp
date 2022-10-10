@@ -35,9 +35,9 @@ export const PasswordInput: FC<InputProps> = (props) => {
           </svg>
         </FormIconWrap>
       </FormInputWrap>
-      {error?.types?.required && <AlertMessage>{error?.types?.required}</AlertMessage>}
-      {error?.types?.minLength && <AlertMessage>{error?.types?.minLength}</AlertMessage>}
-      {error?.types?.pattern && <AlertMessage>{error?.types?.pattern}</AlertMessage>}
+      {error?.types?.required && <AlertMessage>{error.types.required}</AlertMessage>}
+      {error?.types?.minLength && <AlertMessage>{error.types.minLength}</AlertMessage>}
+      {error?.types?.pattern && <AlertMessage>{error.types.pattern}</AlertMessage>}
     </>
   )
 }

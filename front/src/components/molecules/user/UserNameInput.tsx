@@ -32,7 +32,7 @@ export const UserNameInput: FC<InputProps> = (props) => {
           </svg>
         </FormIconWrap>
       </FormInputWrap>
-      {error?.types?.required && <AlertMessage>{error?.types?.required}</AlertMessage>}
+      {error?.types?.required && <AlertMessage>{error.types.required}</AlertMessage>}
     </>
   )
 }
