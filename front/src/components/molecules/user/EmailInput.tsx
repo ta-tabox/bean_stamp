@@ -1,13 +1,15 @@
 import type { FC } from 'react'
+
 import { AlertMessage } from '@/components/atoms/form/AlertMessage'
-import { Input } from '@/components/atoms/form/Input'
 import { FormIconWrap } from '@/components/atoms/form/FormIconWrap'
 import { FormInputWrap } from '@/components/atoms/form/FormInputWrap'
-import { FieldError, UseFormRegister } from 'react-hook-form'
+import { Input } from '@/components/atoms/form/Input'
+
+import type { FieldError, UseFormRegister } from 'react-hook-form'
 
 type InputProps = {
   label: string
-  register: UseFormRegister<any>
+  register: UseFormRegister<any> // eslint-disable-line @typescript-eslint/no-explicit-any
   error?: FieldError
 }
 
@@ -32,7 +34,7 @@ export const EmailInput: FC<InputProps> = (props) => {
         />
         <FormIconWrap>
           <svg className="h-7 w-7 p-1 ml-3">
-            <use xlinkHref="#mail"></use>
+            <use xlinkHref="#mail" />
           </svg>
         </FormIconWrap>
       </FormInputWrap>

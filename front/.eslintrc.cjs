@@ -46,13 +46,7 @@ module.exports = {
         extensions: ['.jsx', '.tsx'],
       },
     ],
-    'react/jsx-props-no-spreading': [
-      'error',
-      {
-        html: 'ignore', // html, componentにおいて{ ...register }構文を許可する
-        custom: 'ignore',
-      },
-    ],
+    'react/jsx-props-no-spreading': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
     'react/require-default-props': 'off',
@@ -88,6 +82,12 @@ module.exports = {
       },
     ],
     '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
+    '@typescript-eslint/no-misused-promises': [
+      'error',
+      {
+        checksVoidReturn: false,
+      },
+    ],
     'react/function-component-definition': [
       // アロー関数を許可する
       2,

@@ -1,15 +1,19 @@
+import type { FC } from 'react'
+
+import { Controller } from 'react-hook-form'
+import Select from 'react-select'
+
 import { AlertMessage } from '@/components/atoms/form/AlertMessage'
 import { FormIconWrap } from '@/components/atoms/form/FormIconWrap'
 import { FormInputWrap } from '@/components/atoms/form/FormInputWrap'
+import type { Prefecture } from '@/lib/mstData/prefecture'
+import { PrefectureArray } from '@/lib/mstData/prefecture'
 
-import type { FC } from 'react'
-import { Control, Controller, FieldError } from 'react-hook-form'
-import Select from 'react-select'
-import { Prefecture, PrefectureArray } from '@/lib/mstData/prefecture'
+import type { Control, FieldError } from 'react-hook-form'
 
 type InputProps = {
   label: string
-  control: Control<any>
+  control: Control<any> // eslint-disable-line @typescript-eslint/no-explicit-any
   error?: FieldError
 }
 
@@ -23,12 +27,10 @@ export const PrefectureSelect: FC<InputProps> = (props) => {
   const { label, control, error } = props
 
   // PrefectureArrayからreact-selectで取り扱うoptionの形に変換
-  const convertToOption = (prefecture: Prefecture): PrefectureOption => {
-    return {
-      label: prefecture.label,
-      value: prefecture.id,
-    }
-  }
+  const convertToOption = (prefecture: Prefecture): PrefectureOption => ({
+    label: prefecture.label,
+    value: prefecture.id,
+  })
 
   return (
     <>
@@ -42,7 +44,7 @@ export const PrefectureSelect: FC<InputProps> = (props) => {
             <Select
               {...field}
               options={PrefectureArray.map(convertToOption)}
-              isClearable={true}
+              isClearable
               styles={{ control: () => ({}), valueContainer: (provided) => ({ ...provided, padding: 0 }) }} // デフォルトのスタイルをクリア
               className="rs-container" // react-selectコンポーネントのクラス名
               classNamePrefix="rs" // react-selectコンポーネント化のクラスに"rs__"プリフィックスをつける
@@ -53,7 +55,7 @@ export const PrefectureSelect: FC<InputProps> = (props) => {
         />
         <FormIconWrap>
           <svg className="h-7 w-7 p-1 ml-3">
-            <use xlinkHref="#location-marker"></use>
+            <use xlinkHref="#location-marker" />
           </svg>
         </FormIconWrap>
       </FormInputWrap>

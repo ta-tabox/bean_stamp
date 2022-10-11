@@ -1,9 +1,9 @@
-import { FC, memo } from 'react'
+import type { FC} from 'react';
+import { memo } from 'react'
 
 // NOTE SVGはコンポーネント化した方がいい？
 export const IconsSvg: FC = memo(() => (
-  <>
-    <svg xmlns="http://www.w3.org/2000/svg" className="hidden">
+  <svg xmlns="http://www.w3.org/2000/svg" className="hidden">
       {/* switch-horizontal */}
       <symbol id="switch-horizontal" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
@@ -101,11 +101,11 @@ export const IconsSvg: FC = memo(() => (
         strokeLinejoin="round"
         className="feather feather-coffee"
       >
-        <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
-        <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
-        <line x1="6" y1="1" x2="6" y2="4"></line>
-        <line x1="10" y1="1" x2="10" y2="4"></line>
-        <line x1="14" y1="1" x2="14" y2="4"></line>
+        <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
+        <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
+        <line x1="6" y1="1" x2="6" y2="4" />
+        <line x1="10" y1="1" x2="10" y2="4" />
+        <line x1="14" y1="1" x2="14" y2="4" />
       </symbol>
       {/* coffee-bean */}
       <symbol id="coffee-bean" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -252,5 +252,4 @@ export const IconsSvg: FC = memo(() => (
         <path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z" />
       </symbol>
     </svg>
-  </>
 ))
