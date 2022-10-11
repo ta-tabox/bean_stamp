@@ -7,21 +7,30 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint --ext .ts,.tsx ./src",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
     "fix": "yarn format && yarn lint:fix",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
-    "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx}'"
+    "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx}'",
+    "watch": "tsc -w"
   },
   "dependencies": {
     "axios": "^0.27.2",
     "axios-case-converter": "^0.9.0",
     "react": "^18.2.0",
+    "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
-    "react-router-dom": "6"
+    "react-hook-form": "^7.36.1",
+    "react-modal": "^3.15.1",
+    "react-router-dom": "6",
+    "react-select": "^5.4.0",
+    "react-toastify": "^9.0.8",
+    "recoil": "^0.7.5",
+    "recoil-persist": "^4.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
+    "@types/react-modal": "^3.13.1",
     "@types/react-router-dom": "^5.3.3",
     "@typescript-eslint/eslint-plugin": "^5.30.6",
     "@typescript-eslint/parser": "^5.30.6",

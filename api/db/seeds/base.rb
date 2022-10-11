@@ -5,6 +5,7 @@ return if guest
 User.create!(
   name: 'ゲストユーザー',
   email: 'guest@example.com',
+  uid: 'guest@example.com',
   prefecture_code: '13',
   password: 'password',
   password_confirmation: 'password',

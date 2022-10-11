@@ -60,13 +60,17 @@
   @apply py-1 px-3 border rounded disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed inline-block text-center text-sm font-medium;
 }
 
+/*
 .btn-primary {
   @apply bg-indigo-500 border-indigo-600 text-white hover:bg-indigo-600 active:bg-indigo-700;
 }
+*/
 
+/*
 .btn-secondary {
   @apply bg-white border-gray-200 text-gray-600 hover:bg-gray-100 active:bg-gray-200;
 }
+*/
 
 .btn-pop {
   @apply shadow-md hover:shadow-lg transition transform hover:-translate-y-0.5;
@@ -112,22 +116,24 @@
 }
 
 /* form design  */
-.form-container {
-  @apply p-8 max-w-xl mx-auto container;
+.form-title {
+  @apply mb-6 text-center text-sm text-gray-600 font-light;
+}
+
+.form-button-field {
+  @apply flex items-center justify-center;
 }
 
 .form-main {
   @apply bg-gray-100 py-10 px-4 rounded-lg;
 }
-.form-title {
-  @apply mb-6 text-center text-sm text-gray-600 font-light;
-}
-.form-container h2 {
-  @apply text-gray-500 text-center text-sm;
+
+.form-container {
+  @apply p-8 max-w-xl mx-auto container;
 }
 
-.form-button-field {
-  @apply flex items-center justify-center;
+.form-container h2 {
+  @apply text-gray-500 text-center text-sm;
 }
 
 .form-footer {
@@ -163,12 +169,12 @@
   @apply appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none;
 }
 
-.date-input-field {
-  @apply appearance-none border pl-1 sm:pl-4 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none;
-}
-
 .input-icon-field {
   @apply absolute left-0 inset-y-0 flex items-center;
+}
+
+.date-input-field {
+  @apply appearance-none border pl-1 sm:pl-4 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none;
 }
 
 .input-icon-field svg {

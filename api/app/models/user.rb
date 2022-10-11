@@ -1,14 +1,15 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :trackable and :omniauthable
-  include JpPrefecture
-
   devise :database_authenticatable,
          :registerable,
          :recoverable,
          :rememberable,
          :validatable,
          :timeoutable
+  #  :confirmable, :lockable, :trackable and :omniauthable
+
+  include DeviseTokenAuth::Concerns::User # SPA用にtokenを使用した認証を提供, deviseの設定の後に記述すること
+  include JpPrefecture
+
   belongs_to :roaster, optional: true
   has_many :roaster_relationships, foreign_key: 'follower_id', dependent: :destroy, inverse_of: :follower
   has_many :following_roasters, through: :roaster_relationships, source: :roaster

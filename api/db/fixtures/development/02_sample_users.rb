@@ -1,8 +1,10 @@
 20.times do |n|
   User.seed_once do |s|
+    email = Faker::Internet.email
     s.id = n + 2
     s.name = Faker::Name.name
-    s.email = Faker::Internet.email
+    s.email = email
+    s.uid = email
     s.prefecture_code = Faker::Number.within(range: 1..47)
     s.password = 'password'
     s.password_confirmation = 'password'

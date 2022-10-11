@@ -1,7 +1,1 @@
-build/
-public/
-**/node_modules/
-*.config.js
 *.config.cjs
-.*lintrc.js
-/*.*

@@ -46,7 +46,11 @@ module.exports = {
         extensions: ['.jsx', '.tsx'],
       },
     ],
+    'react/jsx-props-no-spreading': 'off',
     'react/react-in-jsx-scope': 'off',
+    'react/prop-types': 'off',
+    'react/require-default-props': 'off',
+    'react-hooks/exhaustive-deps': 'off', // useCallbackなどの依存関係についての注意を示す
     'no-void': [
       'error',
       {
@@ -78,10 +82,24 @@ module.exports = {
       },
     ],
     '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
+    '@typescript-eslint/no-misused-promises': [
+      'error',
+      {
+        checksVoidReturn: false,
+      },
+    ],
     'react/function-component-definition': [
       // アロー関数を許可する
       2,
       { namedComponents: 'arrow-function' },
+    ],
+    'jsx-a11y/label-has-associated-control': [
+      'error',
+      {
+        required: {
+          some: ['nesting', 'id'],
+        },
+      },
     ],
   },
   settings: {

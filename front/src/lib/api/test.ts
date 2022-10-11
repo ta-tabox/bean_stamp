@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import client from '@/lib/api/client'
 
 type checkType = {
@@ -8,7 +9,7 @@ type checkType = {
 // 動作確認用
 export const execTest = () =>
   client
-    .get<checkType>('/api/health_check')
+    .get<checkType>('/api/test')
     .then((res) => {
       console.log(res.data)
     })
