@@ -24,10 +24,16 @@ export const useAuth = () => {
 
   const [cookies, setCookie, removeCookie] = useCookies(['uid', 'client', 'access-token'])
 
-  const setAuthCookies = (res: AxiosResponse) => {
-    setCookie('uid', res.headers.uid, { path: '/' })
-    setCookie('client', res.headers.client, { path: '/' })
-    setCookie('access-token', res.headers['access-token'], { path: '/' })
+  const setExpireDate = (rememberMe?: boolean) => {
+    const expireDate = 14 // rememberMe期間を14日に設定
+    return rememberMe ? new Date(Date.now() + expireDate * 86400e3) : undefined
+  }
+
+  const setAuthCookies = (res: AxiosResponse, rememberMe?: boolean) => {
+    const expireDate = setExpireDate(rememberMe)
+    setCookie('uid', res.headers.uid, { path: '/', expires: expireDate })
+    setCookie('client', res.headers.client, { path: '/', expires: expireDate })
+    setCookie('access-token', res.headers['access-token'], { path: '/', expires: expireDate })
   }
 
   const removeAuthCookies = () => {
@@ -59,14 +65,12 @@ export const useAuth = () => {
       })
   }, [])
 
-  const signIn = useCallback((params: SignInParams) => {
+  const signIn = useCallback((params: SignInParams, rememberMe?: boolean) => {
     setLoading(true)
-
     client
       .post<authResponseType>('auth/sign_in', params)
       .then((res) => {
-        // 認証情報をcookieにセット
-        setAuthCookies(res)
+        setAuthCookies(res, rememberMe)
         setIsSignedIn(true)
         setCurrentUser(res.data.data) // グローバルステートにUserの値をセット
         showMessage({ message: 'ログインしました', type: 'success' })

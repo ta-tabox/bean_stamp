@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 
 import { useForm } from 'react-hook-form'
 
-
 import { PrimaryButton } from '@/components/atoms/button/PrimaryButton'
 import { FormContainer } from '@/components/atoms/form/FormContainer'
 import { FormFooter } from '@/components/atoms/form/FormFooter'
@@ -15,8 +14,13 @@ import { PasswordInput } from '@/components/molecules/user/PasswordInput'
 import { useAuth } from '@/hooks/useAuth'
 import type { SignInParams } from '@/types/api/user'
 
-import type { SubmitHandler} from 'react-hook-form';
+import type { SubmitHandler } from 'react-hook-form'
 
+// react-hook-formで取り扱うデータの型
+export type SignInSubmitData = {
+  params: SignInParams
+  rememberMe?: boolean
+}
 
 export const SignIn: FC = memo(() => {
   const { signIn, loading } = useAuth()
@@ -25,9 +29,12 @@ export const SignIn: FC = memo(() => {
     register,
     handleSubmit,
     formState: { dirtyFields, errors },
-  } = useForm<SignInParams>({ criteriaMode: 'all' })
+  } = useForm<SignInSubmitData>({ criteriaMode: 'all' })
 
-  const onSubmit: SubmitHandler<SignInParams> = (params) => signIn(params)
+  const onSubmit: SubmitHandler<SignInSubmitData> = (data) => {
+    const { params, rememberMe } = data
+    signIn(params, rememberMe)
+  }
 
   return (
     // #TODO ページタイトルを動的に変更する
@@ -38,14 +45,25 @@ export const SignIn: FC = memo(() => {
           <FormTitle>サインイン</FormTitle>
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* メールアドレス */}
-            <EmailInput label="email" register={register} error={errors.email} />
+            <EmailInput label="params.email" register={register} error={errors.params?.email} />
             {/* パスワード */}
-            <PasswordInput label="password" placeholder="パスワード" register={register} error={errors.password} />
+            <PasswordInput
+              label="params.password"
+              placeholder="パスワード"
+              register={register}
+              error={errors.params?.password}
+            />
 
-            {/* TODO ログインの記録 deviseのrememberable機能 */}
+            {/* remember me */}
+            <div className="mt-2 ml-2 flex items-center align-middle">
+              <input id="rememberMe" type="checkbox" className="cursor-pointer" {...register('rememberMe')} />
+              <label htmlFor="rememberMe" className="cursor-pointer text-gray-600 pl-3">
+                ログインを記録する
+              </label>
+            </div>
 
             <div className="flex items-center justify-center mt-4">
-              <PrimaryButton loading={loading} disabled={!dirtyFields.email || !dirtyFields.password}>
+              <PrimaryButton loading={loading} disabled={!dirtyFields.params?.email || !dirtyFields.params.password}>
                 ログイン
               </PrimaryButton>
             </div>
