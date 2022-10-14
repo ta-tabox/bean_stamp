@@ -7,6 +7,7 @@ import { Home } from '@/components/pages/common/Home'
 import { Page404 } from '@/components/pages/common/Page404'
 import { SignIn } from '@/components/pages/common/SignIn'
 import { SignUp } from '@/components/pages/common/SignUp'
+import { UserCancel } from '@/components/pages/users/UserCancel'
 import { UserEdit } from '@/components/pages/users/UserEdit'
 import { UserHome } from '@/components/pages/users/UserHome'
 import { UserManagement } from '@/components/pages/users/UserManagement'
@@ -36,6 +37,7 @@ export const Router: FC = () => (
         <Route path="home" element={<UserHome />} />
         <Route path="edit" element={<UserEdit />} />
         <Route path="management" element={<UserManagement />} />
+        <Route path="cancel" element={<UserCancel />} />
       </Route>
     </Route>
   </Routes>

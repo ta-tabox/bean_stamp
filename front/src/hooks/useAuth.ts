@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import 'react-toastify/dist/ReactToastify.css'
 import { useCookies } from 'react-cookie'
 
 import { useCurrentUser } from '@/hooks/useCurrentUser'
@@ -85,6 +84,7 @@ export const useAuth = () => {
   }, [])
 
   const signOut = useCallback(() => {
+    setLoading(true)
     client
       .get('auth/sign_out', {
         headers: {
@@ -109,5 +109,32 @@ export const useAuth = () => {
       })
   }, [])
 
-  return { signUp, signIn, signOut, loading, setAuthCookies, removeAuthCookies }
+  // アカウントの削除
+  const deleteUser = useCallback(() => {
+    setLoading(true)
+    client
+      .delete('auth', {
+        headers: {
+          uid: cookies.uid as string,
+          client: cookies.client as string,
+          'access-token': cookies['access-token'] as string,
+        },
+      })
+      .then(() => {
+        // 認証情報をのcookieを削除
+        removeAuthCookies()
+        setIsSignedIn(false)
+        setCurrentUser(null)
+        showMessage({ message: 'アカウントを削除しました', type: 'success' })
+        navigate('/')
+      })
+      .catch(() => {
+        showMessage({ message: 'アカウントの削除に失敗しました', type: 'error' })
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [])
+
+  return { signUp, signIn, signOut, deleteUser, loading, setAuthCookies, removeAuthCookies }
 }
