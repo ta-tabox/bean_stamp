@@ -231,7 +231,6 @@ RSpec.describe 'Beans', type: :request do
         it_behaves_like 'shows a error message'
       end
 
-      # TODO
       context 'with no country' do
         let(:bean_params) { attributes_for(:bean, country_id: 0) }
         let(:error_message) { '生産国を選択してください' }

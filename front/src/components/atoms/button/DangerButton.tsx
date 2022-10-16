@@ -7,17 +7,17 @@ type Props = {
   children: ReactNode
   disabled?: boolean
   loading?: boolean
-  onClick: () => void
+  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
-export const SecondaryButton: FC<Props> = memo((props) => {
+export const DangerButton: FC<Props> = memo((props) => {
   const { children, disabled = false, loading = false, onClick } = props
   return (
     <>
       {!loading && (
         <button
           type="submit"
-          className="btn btn-pop bg-white border-gray-200 text-gray-600 hover:bg-gray-100 active:bg-gray-200"
+          className="btn btn-pop bg-red-500 border-red-600 text-white hover:bg-red-600 active:bg-red-700"
           disabled={disabled || loading}
           onClick={onClick}
         >

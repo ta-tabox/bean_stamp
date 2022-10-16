@@ -5,8 +5,10 @@ import { About } from '@/components/pages/common/About'
 import { Help } from '@/components/pages/common/Help'
 import { Home } from '@/components/pages/common/Home'
 import { Page404 } from '@/components/pages/common/Page404'
+import { PasswordReset } from '@/components/pages/common/PasswordReset'
 import { SignIn } from '@/components/pages/common/SignIn'
 import { SignUp } from '@/components/pages/common/SignUp'
+import { UserCancel } from '@/components/pages/users/UserCancel'
 import { UserEdit } from '@/components/pages/users/UserEdit'
 import { UserHome } from '@/components/pages/users/UserHome'
 import { UserManagement } from '@/components/pages/users/UserManagement'
@@ -26,6 +28,7 @@ export const Router: FC = () => (
       <Route element={<RequireSignedOutRoute />}>
         <Route path="signup" element={<SignUp />} />
         <Route path="signin" element={<SignIn />} />
+        <Route path="password_reset" element={<PasswordReset />} />
       </Route>
       <Route path="*" element={<Page404 />} />
     </Route>
@@ -36,6 +39,7 @@ export const Router: FC = () => (
         <Route path="home" element={<UserHome />} />
         <Route path="edit" element={<UserEdit />} />
         <Route path="management" element={<UserManagement />} />
+        <Route path="cancel" element={<UserCancel />} />
       </Route>
     </Route>
   </Routes>

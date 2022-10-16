@@ -32,9 +32,14 @@ export const Header: FC = memo(() => {
               )}
             </li>
             {isSignedIn && (
-              <li>
-                <StaticNavLink to="/user/management">UM</StaticNavLink>
-              </li>
+              <>
+                <li>
+                  <StaticNavLink to="/user/management">UM</StaticNavLink>
+                </li>
+                <li>
+                  <StaticNavLink to="/user/cancel">CANCEL</StaticNavLink>
+                </li>
+              </>
             )}
             <li>
               <StaticNavLink to="/about">ABOUT</StaticNavLink>

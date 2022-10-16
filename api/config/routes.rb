@@ -60,11 +60,15 @@ Rails.application.routes.draw do
     get '/test', to: 'test#index'
     namespace :v1 do
       mount_devise_token_auth_for 'User', at: 'auth', controllers: {
-        registrations: 'api/v1/auth/registrations', # registrationsのパスを'devise_token_auth/registrations' -> 'api/v1/auth/registrations'に上書き
+        # registrationsのパスを'devise_token_auth/registrations' -> 'api/v1/auth/registrations'に上書き
+        registrations: 'api/v1/auth/registrations',
+        # registrationsのパスを'devise_token_auth/sessions' -> 'api/v1/auth/sessions'に上書き
+        sessions: 'api/v1/auth/sessions',
       }
 
-      namespace :auth do
-        resources :sessions, only: %i[index]
+      # deciseのcontrollerにルーティングを追加
+      devise_scope :user do
+        get 'auth/sessions/', to: 'auth/sessions#index'
       end
     end
   end
