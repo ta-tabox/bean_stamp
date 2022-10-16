@@ -66,6 +66,7 @@ services:
         WORKDIR: $WORKDIR
         CONTAINER_PORT: $CONTAINER_PORT
         API_URL: "http://localhost:$API_PORT/api/v1"
+        FRONT_URL: "http://localhost:$FRONT_PORT/"
     volumes:
       - ./front:/$WORKDIR
     command: sh -c "yarn run dev"

@@ -71,11 +71,20 @@ export const SignIn: FC = memo(() => {
         </FormMain>
         {/* TODO パスワード再設定、サインアップへの導線、ゲストログイン */}
         <FormFooter>
-          <h4 className="pb-2">パスワードを忘れましたか？ パスワード再設定</h4>
-          <h4>アカウントをお持ちではありませんか？</h4>
-          <Link to="/signUp" className="ml-2 link">
-            サインアップ
-          </Link>
+          <h4 className="pb-2">
+            パスワードを忘れましたか？
+            <Link to="/password_reset" className="ml-2 link">
+              パスワード再設定
+            </Link>
+          </h4>
+
+          <h4>
+            アカウントをお持ちではありませんか？
+            <Link to="/signup" className="ml-2 link">
+              サインアップ
+            </Link>
+          </h4>
+
           <h4 className="pt-4 text-center text-sm text-gray-800 font-light">閲覧用</h4>
           <div>
             <div className="flex justify-center">

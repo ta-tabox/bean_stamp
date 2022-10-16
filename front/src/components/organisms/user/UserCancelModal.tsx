@@ -1,6 +1,5 @@
 import type { FC } from 'react'
 import { memo } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
 
 import { DangerButton } from '@/components/atoms/button/DangerButton'
 import { SecondaryButton } from '@/components/atoms/button/SecondaryButton'
