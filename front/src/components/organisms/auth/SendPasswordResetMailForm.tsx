@@ -8,6 +8,7 @@ import { FormContainer } from '@/components/atoms/form/FormContainer'
 import { FormMain } from '@/components/atoms/form/FormMain'
 import { FormTitle } from '@/components/atoms/form/FormTitle'
 import { EmailInput } from '@/components/molecules/user/EmailInput'
+import { FRONT_URL } from '@/config'
 import { useMessage } from '@/hooks/useMessage'
 import client from '@/lib/api/client'
 
@@ -30,7 +31,7 @@ export const SendPasswordResetMailForm: FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false)
 
   const onSendResetMail: SubmitHandler<SendResetMailType> = (data) => {
-    const redirectUrl = `${import.meta.env.VITE_FRONT_URL}/password_reset`
+    const redirectUrl = `${FRONT_URL}/password_reset`
     const params = {
       email: data.email,
       redirect_url: redirectUrl,
