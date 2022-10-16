@@ -11,10 +11,11 @@ type InputProps = {
   label: string
   register: UseFormRegister<any> // eslint-disable-line @typescript-eslint/no-explicit-any
   error?: FieldError
+  disabled?: boolean
 }
 
 export const EmailInput: FC<InputProps> = (props) => {
-  const { label, register, error } = props
+  const { label, register, error, disabled } = props
   return (
     <>
       <FormInputWrap>
@@ -22,6 +23,7 @@ export const EmailInput: FC<InputProps> = (props) => {
           label={label}
           type="email"
           placeholder="メールアドレス"
+          disabled={disabled}
           register={register}
           required={{
             value: true,

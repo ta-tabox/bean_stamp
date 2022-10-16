@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
 import { useForm } from 'react-hook-form'
 
@@ -27,10 +27,10 @@ export const SendPasswordResetMailForm: FC = () => {
   } = useForm<SendResetMailType>({ criteriaMode: 'all' })
 
   const { showMessage } = useMessage()
-  const navigate = useNavigate()
+  const [isSended, setIsSended] = useState(false)
 
   const onSendResetMail: SubmitHandler<SendResetMailType> = (data) => {
-    const redirectUrl = `${import.meta.env.VITE_FRONT_URL}password_reset`
+    const redirectUrl = `${import.meta.env.VITE_FRONT_URL}/password_reset`
     const params = {
       email: data.email,
       redirect_url: redirectUrl,
@@ -38,11 +38,11 @@ export const SendPasswordResetMailForm: FC = () => {
     client
       .post('auth/password', params)
       .then(() => {
-        navigate('/signin')
-        showMessage({ message: 'パスワードの再設定について数分以内にメールでご連絡いたします', type: 'success' })
+        setIsSended(true)
+        showMessage({ message: 'パスワードの再設定を受け付けました', type: 'success' })
       })
-      .catch((err: AxiosError<{ errors: { fullMessages: Array<string> } }>) => {
-        const errorMessages = err.response?.data.errors.fullMessages
+      .catch((err: AxiosError<{ errors: Array<string> }>) => {
+        const errorMessages = err.response?.data.errors
         errorMessages?.map((errorMessage) => showMessage({ message: `${errorMessage}`, type: 'error' }))
       })
   }
@@ -50,16 +50,27 @@ export const SendPasswordResetMailForm: FC = () => {
     <FormContainer>
       <FormMain>
         <FormTitle>パスワード再設定</FormTitle>
-        <p className="text-center text-xs text-gray-800">
-          パスワードを再設定するには
-          <br />
-          登録したメールアドレスを入力してください
-        </p>
+        <div className="text-center text-xs text-gray-800">
+          {isSended ? (
+            <p>
+              パスワードの再設定について数分以内にメールでご連絡いたします
+              <br />
+              メールからパスワードの再設定を行ってください
+            </p>
+          ) : (
+            <p>
+              パスワードを再設定するには
+              <br />
+              登録したメールアドレスを入力してください
+            </p>
+          )}
+        </div>
+
         <form onSubmit={handleSubmit(onSendResetMail)}>
           {/* メールアドレス */}
-          <EmailInput label="email" register={register} error={errors.email} />
+          <EmailInput label="email" register={register} error={errors.email} disabled={isSended} />
           <div className="flex items-center justify-center mt-4">
-            <PrimaryButton loading={undefined} disabled={!isDirty}>
+            <PrimaryButton loading={undefined} disabled={!isDirty || isSended}>
               メールを送信
             </PrimaryButton>
           </div>
