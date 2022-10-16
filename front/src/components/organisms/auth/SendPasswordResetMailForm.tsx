@@ -27,7 +27,7 @@ export const SendPasswordResetMailForm: FC = () => {
   } = useForm<SendResetMailType>({ criteriaMode: 'all' })
 
   const { showMessage } = useMessage()
-  const [isSended, setIsSended] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
   const onSendResetMail: SubmitHandler<SendResetMailType> = (data) => {
     const redirectUrl = `${import.meta.env.VITE_FRONT_URL}/password_reset`
@@ -38,7 +38,7 @@ export const SendPasswordResetMailForm: FC = () => {
     client
       .post('auth/password', params)
       .then(() => {
-        setIsSended(true)
+        setIsSubmitted(true)
         showMessage({ message: 'パスワードの再設定を受け付けました', type: 'success' })
       })
       .catch((err: AxiosError<{ errors: Array<string> }>) => {
@@ -51,7 +51,7 @@ export const SendPasswordResetMailForm: FC = () => {
       <FormMain>
         <FormTitle>パスワード再設定</FormTitle>
         <div className="text-center text-xs text-gray-800">
-          {isSended ? (
+          {isSubmitted ? (
             <p>
               パスワードの再設定について数分以内にメールでご連絡いたします
               <br />
@@ -68,9 +68,9 @@ export const SendPasswordResetMailForm: FC = () => {
 
         <form onSubmit={handleSubmit(onSendResetMail)}>
           {/* メールアドレス */}
-          <EmailInput label="email" register={register} error={errors.email} disabled={isSended} />
+          <EmailInput label="email" register={register} error={errors.email} disabled={isSubmitted} />
           <div className="flex items-center justify-center mt-4">
-            <PrimaryButton loading={undefined} disabled={!isDirty || isSended}>
+            <PrimaryButton loading={undefined} disabled={!isDirty || isSubmitted}>
               メールを送信
             </PrimaryButton>
           </div>
