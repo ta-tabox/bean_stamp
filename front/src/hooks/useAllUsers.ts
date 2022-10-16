@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react'
 import axios from 'axios'
 
 import { useMessage } from '@/hooks/useMessage'
-import type { User } from '@/types/api/user'
+import type { User } from '@/types'
 
 export const useAllUsers = () => {
   const { showMessage } = useMessage()

@@ -9,7 +9,7 @@ import { FormMain } from '@/components/atoms/form/FormMain'
 import { FormTitle } from '@/components/atoms/form/FormTitle'
 import { PasswordInput } from '@/components/molecules/user/PasswordInput'
 import { useMessage } from '@/hooks/useMessage'
-import client from '@/lib/api/client'
+import client from '@/lib/client'
 
 import type { AxiosError } from 'axios'
 import type { SubmitHandler } from 'react-hook-form'

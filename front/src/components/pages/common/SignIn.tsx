@@ -12,7 +12,7 @@ import { FormTitle } from '@/components/atoms/form/FormTitle'
 import { EmailInput } from '@/components/molecules/user/EmailInput'
 import { PasswordInput } from '@/components/molecules/user/PasswordInput'
 import { useAuth } from '@/hooks/useAuth'
-import type { SignInParams } from '@/types/api/user'
+import type { SignInParams } from '@/types'
 
 import type { SubmitHandler } from 'react-hook-form'
 

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import client from '@/lib/api/client'
+import client from '@/lib/client'
 
 type checkType = {
   status: 'string'

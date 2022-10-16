@@ -19,7 +19,7 @@ import { useGetCurrentUser } from '@/hooks/useGetCurrentUser'
 import { ProtectedRoute } from '@/router/ProtectedRoute'
 import { RequireSignedOutRoute } from '@/router/RequireSignedOutRoute'
 
-export const Router: FC = () => {
+export const AppRouter: FC = () => {
   // TODO 適切な場所に移動する
   const { getCurrentUser } = useGetCurrentUser()
 

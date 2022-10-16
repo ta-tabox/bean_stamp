@@ -1,8 +1,8 @@
 import { useCookies } from 'react-cookie'
 
 import { useCurrentUser } from '@/hooks/useCurrentUser'
-import client from '@/lib/api/client'
-import type { User } from '@/types/api/user'
+import client from '@/lib/client'
+import type { User } from '@/types'
 
 type authResponseType = {
   isLogin: boolean

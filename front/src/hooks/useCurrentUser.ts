@@ -2,7 +2,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil'
 
 import { currentUserState } from '@/store/currentUserState'
 import { isSignedInState } from '@/store/isSignedInState'
-import type { User } from '@/types/api/user'
+import type { User } from '@/types'
 
 import type { SetterOrUpdater } from 'recoil'
 

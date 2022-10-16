@@ -8,7 +8,7 @@ import { useAllUsers } from '@/hooks/useAllUsers'
 import { useCurrentUser } from '@/hooks/useCurrentUser'
 import { useModal } from '@/hooks/useModal'
 import { useSelectUser } from '@/hooks/useSelectUser'
-import { translatePrefectureCodeToName } from '@/lib/mstData/prefecture'
+import { translatePrefectureCodeToName } from '@/utils/prefecture'
 
 export const UserManagement: FC = memo(() => {
   const { getUsers, users, loading } = useAllUsers()

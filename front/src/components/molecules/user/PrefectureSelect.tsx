@@ -6,8 +6,8 @@ import Select from 'react-select'
 import { AlertMessage } from '@/components/atoms/form/AlertMessage'
 import { FormIconWrap } from '@/components/atoms/form/FormIconWrap'
 import { FormInputWrap } from '@/components/atoms/form/FormInputWrap'
-import type { Prefecture } from '@/lib/mstData/prefecture'
-import { PrefectureArray } from '@/lib/mstData/prefecture'
+import type { Prefecture } from '@/utils/prefecture'
+import { PrefectureArray } from '@/utils/prefecture'
 
 import type { Control, FieldError } from 'react-hook-form'
 

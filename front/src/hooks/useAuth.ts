@@ -5,8 +5,8 @@ import { useCookies } from 'react-cookie'
 
 import { useCurrentUser } from '@/hooks/useCurrentUser'
 import { useMessage } from '@/hooks/useMessage'
-import client from '@/lib/api/client'
-import type { SignInParams, SignUpParams, User } from '@/types/api/user'
+import client from '@/lib/client'
+import type { SignInParams, SignUpParams, User } from '@/types'
 
 import type { AxiosError, AxiosResponse } from 'axios'
 

@@ -10,7 +10,7 @@ import { FormTitle } from '@/components/atoms/form/FormTitle'
 import { EmailInput } from '@/components/molecules/user/EmailInput'
 import { FRONT_URL } from '@/config'
 import { useMessage } from '@/hooks/useMessage'
-import client from '@/lib/api/client'
+import client from '@/lib/client'
 
 import type { AxiosError } from 'axios'
 import type { SubmitHandler } from 'react-hook-form'

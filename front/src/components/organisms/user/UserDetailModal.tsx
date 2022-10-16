@@ -3,8 +3,8 @@ import { useEffect, useState, memo } from 'react'
 
 import { PrimaryButton } from '@/components/atoms/button/PrimaryButton'
 import { Modal } from '@/components/organisms/layout/Modal'
-import { translatePrefectureCodeToName } from '@/lib/mstData/prefecture'
-import type { User } from '@/types/api/user'
+import { translatePrefectureCodeToName } from '@/utils/prefecture'
+import type { User } from '@/types'
 
 type Props = {
   user: User | null

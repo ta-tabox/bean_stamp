@@ -1,13 +1,11 @@
 import type { FC } from 'react'
-import { useEffect } from 'react'
 
-import { useGetCurrentUser } from '@/hooks/useGetCurrentUser'
 import { AppProvider } from '@/providers/app'
-import { Router } from '@/router/Router'
+import { AppRouter } from '@/router'
 
 const App: FC = () => (
   <AppProvider>
-    <Router />
+    <AppRouter />
   </AppProvider>
 )
 

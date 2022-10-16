@@ -2,7 +2,7 @@ import type { FC } from 'react'
 import { memo } from 'react'
 
 import { useCurrentUser } from '@/hooks/useCurrentUser'
-import { PrefectureArray } from '@/lib/mstData/prefecture'
+import { PrefectureArray } from '@/utils/prefecture'
 
 export const UserHome: FC = memo(() => {
   const { currentUser } = useCurrentUser()

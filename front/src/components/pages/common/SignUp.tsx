@@ -13,7 +13,7 @@ import type { PrefectureOption } from '@/components/molecules/user/PrefectureSel
 import { PrefectureSelect } from '@/components/molecules/user/PrefectureSelect'
 import { UserNameInput } from '@/components/molecules/user/UserNameInput'
 import { useAuth } from '@/hooks/useAuth'
-import type { SignUpParams } from '@/types/api/user'
+import type { SignUpParams } from '@/types'
 
 import type { FieldError, SubmitHandler } from 'react-hook-form'
 
