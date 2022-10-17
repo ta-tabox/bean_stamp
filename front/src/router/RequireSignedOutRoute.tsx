@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 
-import { useCurrentUser } from '@/hooks/useCurrentUser'
+import { useCurrentUser } from '@/features/auth/hooks/useCurrentUser'
 
 type Props = {
   redirectPath?: string

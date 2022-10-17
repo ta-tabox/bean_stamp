@@ -2,20 +2,10 @@ import type { FC } from 'react'
 import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import { About } from '@/components/pages/common/About'
-import { Help } from '@/components/pages/common/Help'
-import { Home } from '@/components/pages/common/Home'
-import { Page404 } from '@/components/pages/common/Page404'
-import { PasswordReset } from '@/components/pages/common/PasswordReset'
-import { SignIn } from '@/components/pages/common/SignIn'
-import { SignUp } from '@/components/pages/common/SignUp'
-import { UserCancel } from '@/components/pages/users/UserCancel'
-import { UserEdit } from '@/components/pages/users/UserEdit'
-import { UserHome } from '@/components/pages/users/UserHome'
-import { UserManagement } from '@/components/pages/users/UserManagement'
-import { CommonLayout } from '@/components/templates/CommonLayout'
-import { MainLayout } from '@/components/templates/MainLayout'
-import { useGetCurrentUser } from '@/hooks/useGetCurrentUser'
+import { CommonLayout } from '@/components/Layout'
+import { About, Help, Home, Page404 } from '@/components/Pages'
+import { AuthRoutes, useGetCurrentUser } from '@/features/auth'
+import { UsersRoutes } from '@/features/users'
 import { ProtectedRoute } from '@/router/ProtectedRoute'
 import { RequireSignedOutRoute } from '@/router/RequireSignedOutRoute'
 
@@ -31,27 +21,21 @@ export const AppRouter: FC = () => {
   return (
     <Routes>
       {/** /以下のパスに共通のレイアウトを適用 */}
-      <Route path="/" element={<CommonLayout />}>
-        <Route path="/" element={<Home />} />
+      <Route path="/" element={<Home />} />
+      <Route element={<CommonLayout />}>
         <Route path="about" element={<About />} />
         <Route path="help" element={<Help />} />
-        {/* 未ログインを要求 */}
-        <Route element={<RequireSignedOutRoute />}>
-          <Route path="signup" element={<SignUp />} />
-          <Route path="signin" element={<SignIn />} />
-          <Route path="password_reset" element={<PasswordReset />} />
-        </Route>
-        <Route path="*" element={<Page404 />} />
       </Route>
-      {/** /user/以下のパスに共通のレイアウトを適用 */}
+      {/* 未ログインを要求 */}
+      <Route element={<RequireSignedOutRoute />}>
+        <Route path="auth/*" element={<AuthRoutes />} />
+      </Route>
+      {/* ログイン済みを要求 */}
       <Route element={<ProtectedRoute />}>
-        <Route path="user" element={<MainLayout />}>
-          <Route index element={<UserHome />} />
-          <Route path="home" element={<UserHome />} />
-          <Route path="edit" element={<UserEdit />} />
-          <Route path="management" element={<UserManagement />} />
-          <Route path="cancel" element={<UserCancel />} />
-        </Route>
+        <Route path="user/*" element={<UsersRoutes />} />
+      </Route>
+      <Route element={<CommonLayout />}>
+        <Route path="*" element={<Page404 />} />
       </Route>
     </Routes>
   )

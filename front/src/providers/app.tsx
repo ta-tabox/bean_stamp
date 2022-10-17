@@ -4,8 +4,8 @@ import { BrowserRouter } from 'react-router-dom'
 import { CookiesProvider } from 'react-cookie'
 import { RecoilRoot } from 'recoil'
 
-import { IconsSvg } from '@/components/atoms/icon/IconsSvg'
-import { ToastMessage } from '@/components/organisms/layout/ToastMessage'
+import { Toast } from '@/components/Elements/Toast'
+import { IconsSvg } from '@/components/Icon'
 
 type AppProviderProps = {
   children: ReactNode
@@ -15,7 +15,7 @@ export const AppProvider: FC<AppProviderProps> = ({ children }) => (
   <CookiesProvider>
     <RecoilRoot>
       <IconsSvg />
-      <ToastMessage />
+      <Toast />
       <BrowserRouter>{children}</BrowserRouter>
     </RecoilRoot>
   </CookiesProvider>
