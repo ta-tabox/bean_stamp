@@ -7,7 +7,7 @@ import type { SignInParams, SignUpParams } from '@/features/auth'
 import { useCurrentUser } from '@/features/auth/hooks/useCurrentUser'
 import type { User } from '@/features/users'
 import { useMessage } from '@/hooks/useMessage'
-import client from '@/lib/client'
+import axios from '@/lib/axios'
 
 import type { AxiosError, AxiosResponse } from 'axios'
 
@@ -44,7 +44,7 @@ export const useAuth = () => {
 
   const signUp = useCallback((params: SignUpParams) => {
     setLoading(true)
-    client
+    axios
       .post('auth/', params)
       .then((res: AxiosResponse<authResponseType>) => {
         // 認証情報をcookieにセット
@@ -67,7 +67,7 @@ export const useAuth = () => {
 
   const signIn = useCallback((params: SignInParams, rememberMe?: boolean) => {
     setLoading(true)
-    client
+    axios
       .post<authResponseType>('auth/sign_in', params)
       .then((res) => {
         setAuthCookies(res, rememberMe)
@@ -86,7 +86,7 @@ export const useAuth = () => {
 
   const signOut = useCallback(() => {
     setLoading(true)
-    client
+    axios
       .get('auth/sign_out', {
         headers: {
           uid: cookies.uid as string,
@@ -113,7 +113,7 @@ export const useAuth = () => {
   // アカウントの削除
   const deleteUser = useCallback(() => {
     setLoading(true)
-    client
+    axios
       .delete('auth', {
         headers: {
           uid: cookies.uid as string,

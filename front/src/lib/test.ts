@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import client from '@/lib/client'
+import axios from '@/lib/axios'
 
 type checkType = {
   status: 'string'
@@ -8,7 +8,7 @@ type checkType = {
 
 // 動作確認用
 export const execTest = () =>
-  client
+  axios
     .get<checkType>('/api/test')
     .then((res) => {
       console.log(res.data)

@@ -2,7 +2,7 @@ import { useCookies } from 'react-cookie'
 
 import { useCurrentUser } from '@/features/auth/hooks/useCurrentUser'
 import type { User } from '@/features/users'
-import client from '@/lib/client'
+import axios from '@/lib/axios'
 
 type authResponseType = {
   isLogin: boolean
@@ -18,7 +18,7 @@ export const useGetCurrentUser = () => {
       setIsSignedIn(false)
       setCurrentUser(null) // LoginUserStateを削除
     } else {
-      client
+      axios
         .get<authResponseType>('/auth/sessions', {
           headers: {
             uid: cookies.uid as string,

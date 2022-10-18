@@ -8,7 +8,7 @@ import { FormContainer, FormMain, FormTitle } from '@/components/Form'
 import { FRONT_URL } from '@/config'
 import { EmailInput } from '@/features/users'
 import { useMessage } from '@/hooks/useMessage'
-import client from '@/lib/client'
+import axios from '@/lib/axios'
 
 import type { AxiosError } from 'axios'
 import type { SubmitHandler } from 'react-hook-form'
@@ -34,7 +34,7 @@ export const SendPasswordResetMailForm: FC = () => {
       email: data.email,
       redirect_url: redirectUrl,
     }
-    client
+    axios
       .post('auth/password', params)
       .then(() => {
         setIsSubmitted(true)

@@ -7,7 +7,7 @@ import { PrimaryButton } from '@/components/Elements/Button'
 import { FormContainer, FormMain, FormTitle } from '@/components/Form'
 import { PasswordInput } from '@/features/users'
 import { useMessage } from '@/hooks/useMessage'
-import client from '@/lib/client'
+import axios from '@/lib/axios'
 
 import type { AxiosError } from 'axios'
 import type { SubmitHandler } from 'react-hook-form'
@@ -20,13 +20,13 @@ type PasswordResetType = {
 
 type Props = {
   uid: string
-  uClient: string
+  client: string
   accessToken: string
   resetPasswordToken: string
 }
 
 export const PasswordResetForm: FC<Props> = (props) => {
-  const { uid, uClient, accessToken, resetPasswordToken } = props
+  const { uid, client, accessToken, resetPasswordToken } = props
   const navigate = useNavigate()
 
   const {
@@ -38,11 +38,11 @@ export const PasswordResetForm: FC<Props> = (props) => {
   const { showMessage } = useMessage()
 
   const onSubmitResetPassword: SubmitHandler<PasswordResetType> = (data) => {
-    client
+    axios
       .put('auth/password', data, {
         headers: {
           uid,
-          client: uClient,
+          client,
           'access-token': accessToken,
           reset_password_token: resetPasswordToken,
         },
