@@ -28,3 +28,6 @@ dist-ssr
 
 # npm
 .npm
+
+# eslintの設定確認ファイル
+.eslint-setting.json

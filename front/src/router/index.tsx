@@ -4,8 +4,9 @@ import { Route, Routes } from 'react-router-dom'
 
 import { CommonLayout } from '@/components/Layout'
 import { About, Help, Home, Page404 } from '@/components/Pages'
-import { AuthRoutes, useGetCurrentUser } from '@/features/auth'
-import { UsersRoutes } from '@/features/users'
+import { useGetCurrentUser } from '@/features/auth'
+import { AuthRoutes } from '@/features/auth/routes'
+import { UsersRoutes } from '@/features/users/routes'
 import { ProtectedRoute } from '@/router/ProtectedRoute'
 import { RequireSignedOutRoute } from '@/router/RequireSignedOutRoute'
 
