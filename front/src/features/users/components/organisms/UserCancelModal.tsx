@@ -4,7 +4,7 @@ import { memo } from 'react'
 import { DangerButton, SecondaryButton } from '@/components/Elements/Button'
 import { Modal } from '@/components/Elements/Modal'
 import { FormContainer, FormMain, FormTitle } from '@/components/Form'
-import { useAuth, useCurrentUser } from '@/features/auth'
+import { useAuth } from '@/features/auth'
 
 type Props = {
   isOpen: boolean
@@ -14,7 +14,7 @@ type Props = {
 export const UserCancelModal: FC<Props> = memo((props) => {
   const { isOpen, onClose } = props
   const { deleteUser } = useAuth()
-  const { currentUser } = useCurrentUser()
+  const { user } = useAuth()
 
   const onClickCancel = () => {
     deleteUser()
@@ -27,7 +27,7 @@ export const UserCancelModal: FC<Props> = memo((props) => {
           <FormTitle>アカウントの削除</FormTitle>
           <div className="mx-12">
             <p className="text-center text-xs text-gray-400">
-              {`アカウント${currentUser?.name || ''}`}を削除します。
+              {`アカウント${user?.name || ''}`}を削除します。
               <br />
               この操作は取り消すことができません。
             </p>

@@ -2,10 +2,10 @@ import type { FC } from 'react'
 import { memo } from 'react'
 import { Navigate } from 'react-router-dom'
 
-import { useCurrentUser } from '@/features/auth/hooks/useCurrentUser'
+import { useAuth } from '@/features/auth'
 
 export const Home: FC = memo(() => {
-  const { isSignedIn } = useCurrentUser()
+  const { isSignedIn } = useAuth()
 
   // ルートパスアクセス時にログイン済みならリダイレクト
   if (isSignedIn) {

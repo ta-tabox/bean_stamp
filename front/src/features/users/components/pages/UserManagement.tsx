@@ -2,7 +2,7 @@ import type { FC } from 'react'
 import { useCallback, useEffect, memo } from 'react'
 
 import { Spinner } from '@/components/Elements/Spinner'
-import { useCurrentUser } from '@/features/auth'
+import { useAuth } from '@/features/auth'
 import { UserDetailModal } from '@/features/users/components/organisms/UserDetailModal'
 import { UserItem } from '@/features/users/components/organisms/UserItem'
 import { useAllUsers } from '@/features/users/hooks/useAllUsers'
@@ -14,7 +14,7 @@ export const UserManagement: FC = memo(() => {
   const { getUsers, users, loading } = useAllUsers()
   const { selectedUser, onSelectUser } = useSelectUser()
   const { isOpen, onOpen, onClose } = useModal()
-  const { currentUser } = useCurrentUser()
+  const { user: currentUser } = useAuth()
 
   useEffect(() => getUsers(), [])
 

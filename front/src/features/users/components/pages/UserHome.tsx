@@ -1,17 +1,17 @@
 import type { FC } from 'react'
 import { memo } from 'react'
 
-import { useCurrentUser } from '@/features/auth/hooks/useCurrentUser'
+import { useAuth } from '@/features/auth'
 import { PrefectureArray } from '@/utils/prefecture'
 
 export const UserHome: FC = memo(() => {
-  const { currentUser } = useCurrentUser()
+  const { user } = useAuth()
 
-  const areaObj = currentUser && PrefectureArray.find(({ id }) => id === parseInt(currentUser.prefectureCode, 10))
+  const areaObj = user && PrefectureArray.find(({ id }) => id === parseInt(user.prefectureCode, 10))
   const area = areaObj?.label
   return (
     <>
-      <h1>{currentUser && `${currentUser.name}`}のホームページです</h1>
+      <h1>{user && `${user.name}`}のホームページです</h1>
       {area && <p>{`${area}` || null}がエリアです</p>}
     </>
   )

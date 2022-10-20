@@ -2,26 +2,27 @@ import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useCookies } from 'react-cookie'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 
-import type { SignInParams, SignUpParams } from '@/features/auth'
-import { useCurrentUser } from '@/features/auth/hooks/useCurrentUser'
+import type { AuthHeaders, SignInParams, SignUpParams } from '@/features/auth'
+import { deleteUserReq } from '@/features/auth/api/deleteUser'
+import { getUser } from '@/features/auth/api/getUser'
+import { signInWithEmailAndPassword } from '@/features/auth/api/signIn'
+import { signOutReq } from '@/features/auth/api/signOut'
+import { signUpWithSignUpParams } from '@/features/auth/api/signUp'
+import { isSignedInState } from '@/features/auth/stores/isSignedInState'
+import { userState } from '@/features/auth/stores/userState'
 import type { User } from '@/features/users'
 import { useMessage } from '@/hooks/useMessage'
-import axios from '@/lib/axios'
+import type { ErrorResponse } from '@/types'
 
 import type { AxiosError, AxiosResponse } from 'axios'
-
-// apiからのレスポンスは{ data { data : User } }という階層になっている
-type authResponseType = {
-  data: User
-}
+import type { SetterOrUpdater } from 'recoil'
 
 export const useAuth = () => {
   const navigate = useNavigate()
   const { showMessage } = useMessage()
   const [loading, setLoading] = useState(false)
-  const { setCurrentUser, setIsSignedIn } = useCurrentUser()
-
   const [cookies, setCookie, removeCookie] = useCookies(['uid', 'client', 'access-token'])
 
   const setExpireDate = (rememberMe?: boolean) => {
@@ -42,21 +43,37 @@ export const useAuth = () => {
     removeCookie('access-token')
   }
 
+  const setAuthHeaders = (): AuthHeaders => ({
+    uid: cookies.uid as string,
+    client: cookies.client as string,
+    accessToken: cookies['access-token'] as string,
+  })
+
+  // Recoilでグローバルステートを定義
+  // Getterを定義
+  const user = useRecoilValue(userState)
+  // Setter, Updaterを定義
+  const setUser: SetterOrUpdater<User | null> = useSetRecoilState(userState)
+
+  // SignInの状態を保持
+  const isSignedIn = useRecoilValue(isSignedInState)
+  const setIsSignedIn = useSetRecoilState(isSignedInState)
+
+  // サインアップ
   const signUp = useCallback((params: SignUpParams) => {
     setLoading(true)
-    axios
-      .post('auth/', params)
-      .then((res: AxiosResponse<authResponseType>) => {
+    signUpWithSignUpParams(params)
+      .then((res) => {
         // 認証情報をcookieにセット
         setAuthCookies(res)
         setIsSignedIn(true)
-        setCurrentUser(res.data.data)
+        setUser(res.data.data)
         showMessage({ message: 'ユーザー登録が完了しました', type: 'success' })
         navigate('/user/home')
       })
       // TODO エラーメッセージをトーストではなくメッセージとして表示するhooksを作成する
       // エラーメッセージはstateとして保持した方がいい気がする
-      .catch((err: AxiosError<{ errors: { fullMessages: Array<string> } }>) => {
+      .catch((err: AxiosError<ErrorResponse>) => {
         const errorMessages = err.response?.data.errors.fullMessages
         errorMessages?.map((errorMessage) => showMessage({ message: `${errorMessage}`, type: 'error' }))
       })
@@ -65,14 +82,14 @@ export const useAuth = () => {
       })
   }, [])
 
+  // サインイン
   const signIn = useCallback((params: SignInParams, rememberMe?: boolean) => {
     setLoading(true)
-    axios
-      .post<authResponseType>('auth/sign_in', params)
+    signInWithEmailAndPassword(params)
       .then((res) => {
         setAuthCookies(res, rememberMe)
         setIsSignedIn(true)
-        setCurrentUser(res.data.data) // グローバルステートにUserの値をセット
+        setUser(res.data.data) // グローバルステートにUserの値をセット
         showMessage({ message: 'ログインしました', type: 'success' })
         navigate('/user/home')
       })
@@ -84,21 +101,17 @@ export const useAuth = () => {
       })
   }, [])
 
+  // サインアウト
   const signOut = useCallback(() => {
     setLoading(true)
-    axios
-      .get('auth/sign_out', {
-        headers: {
-          uid: cookies.uid as string,
-          client: cookies.client as string,
-          'access-token': cookies['access-token'] as string,
-        },
-      })
+    const headers = setAuthHeaders()
+
+    signOutReq(headers)
       .then(() => {
         // 認証情報をのcookieを削除
         removeAuthCookies()
         setIsSignedIn(false)
-        setCurrentUser(null) // LoginUserStateを削除
+        setUser(null) // LoginUserStateを削除
         showMessage({ message: 'ログアウトしました', type: 'success' })
         navigate('/')
       })
@@ -113,19 +126,14 @@ export const useAuth = () => {
   // アカウントの削除
   const deleteUser = useCallback(() => {
     setLoading(true)
-    axios
-      .delete('auth', {
-        headers: {
-          uid: cookies.uid as string,
-          client: cookies.client as string,
-          'access-token': cookies['access-token'] as string,
-        },
-      })
+    const headers = setAuthHeaders()
+
+    deleteUserReq(headers)
       .then(() => {
         // 認証情報をのcookieを削除
         removeAuthCookies()
         setIsSignedIn(false)
-        setCurrentUser(null)
+        setUser(null)
         showMessage({ message: 'アカウントを削除しました', type: 'success' })
         navigate('/')
       })
@@ -137,5 +145,30 @@ export const useAuth = () => {
       })
   }, [])
 
-  return { signUp, signIn, signOut, deleteUser, loading, setAuthCookies, removeAuthCookies }
+  const loadUser = useCallback(() => {
+    setLoading(true)
+    const headers = setAuthHeaders()
+
+    getUser(headers)
+      .then((res) => {
+        if (res.data.isLogin) {
+          setIsSignedIn(true)
+          setUser(res.data.data)
+        } else {
+          removeAuthCookies()
+          setIsSignedIn(false)
+          setUser(null) // LoginUserStateを削除
+        }
+      })
+      .catch(() => {
+        removeAuthCookies()
+        setIsSignedIn(false)
+        setUser(null) // LoginUserStateを削除
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [])
+
+  return { signUp, signIn, signOut, deleteUser, loadUser, loading, user, isSignedIn, setAuthHeaders }
 }

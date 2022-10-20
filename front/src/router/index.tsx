@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 
 import { CommonLayout } from '@/components/Layout'
 import { About, Help, Home, Page404 } from '@/components/Pages'
-import { useGetCurrentUser } from '@/features/auth'
+import { useAuth } from '@/features/auth'
 import { AuthRoutes } from '@/features/auth/routes'
 import { UsersRoutes } from '@/features/users/routes'
 import { ProtectedRoute } from '@/router/ProtectedRoute'
@@ -12,11 +12,11 @@ import { RequireSignedOutRoute } from '@/router/RequireSignedOutRoute'
 
 export const AppRouter: FC = () => {
   // TODO 適切な場所に移動する
-  const { getCurrentUser } = useGetCurrentUser()
+  const { loadUser } = useAuth()
 
   // ログイン中にリロードした際にStateにログイン情報を格納する
   useEffect(() => {
-    getCurrentUser()
+    loadUser()
   }, [])
 
   return (

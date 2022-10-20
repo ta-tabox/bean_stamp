@@ -2,11 +2,11 @@ import type { FC } from 'react'
 import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { useCurrentUser } from '@/features/auth'
+import { useAuth } from '@/features/auth'
 
 export const TopButton: FC = memo(() => {
   const navigate = useNavigate()
-  const { isSignedIn } = useCurrentUser()
+  const { isSignedIn } = useAuth()
   const onClickHome = () => {
     if (isSignedIn) {
       navigate('/user/home')

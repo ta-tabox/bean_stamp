@@ -11,17 +11,17 @@ export const PasswordReset: FC = memo(() => {
   // クエリパラメーターからtokenを取得
   const resetPasswordToken = searchParams.get('token')
   const uid = searchParams.get('uid')
-  const uClient = searchParams.get('client')
+  const client = searchParams.get('client')
   const accessToken = searchParams.get('access-token')
 
   return (
     // #TODO ページタイトルを動的に変更する
     // <% provide(:title, "パスワード再設定") %>
     <div className="mt-16 flex items-center">
-      {resetPasswordToken && uid && uClient && accessToken ? (
+      {resetPasswordToken && uid && client && accessToken ? (
         <PasswordResetForm
           uid={uid}
-          uClient={uClient}
+          client={client}
           accessToken={accessToken}
           resetPasswordToken={resetPasswordToken}
         />

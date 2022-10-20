@@ -5,10 +5,9 @@ import { useNavigate } from 'react-router-dom'
 import { TopButton } from '@/components/Elements/Button'
 import { StaticNavLink } from '@/components/Elements/Link'
 import { useAuth } from '@/features/auth/hooks/useAuth'
-import { useCurrentUser } from '@/features/auth/hooks/useCurrentUser'
 
 export const Header: FC = memo(() => {
-  const { isSignedIn } = useCurrentUser()
+  const { isSignedIn } = useAuth()
   const { signOut } = useAuth()
   const navigate = useNavigate()
 
