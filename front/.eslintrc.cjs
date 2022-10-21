@@ -22,14 +22,14 @@ module.exports = {
     tsconfigRootDir: __dirname,
     project: ['./tsconfig.json'],
   },
-  plugins: ['react', '@typescript-eslint', 'import'],
+  plugins: ['react', '@typescript-eslint', 'import', 'unused-imports'],
   ignorePatterns: ['.eslintrc.cjs'],
   // そのままでは厳しいのでルールを緩くする
   rules: {
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
     'import/prefer-default-export': 'off',
-    'import/no-unresolved': 'off', // tsconfigのpath aliasとぶつかる。うまく解決できなかったのでoff
+    // 'import/no-unresolved': 'off', // tsconfigのpath aliasとぶつかる。うまく解決できなかったのでoff
     'import/no-extraneous-dependencies': 'off',
     'import/extensions': [
       'error',
@@ -40,26 +40,9 @@ module.exports = {
         tsx: 'never',
       },
     ],
-    'react/jsx-filename-extension': [
-      'error',
-      {
-        extensions: ['.jsx', '.tsx'],
-      },
-    ],
-    'react/jsx-props-no-spreading': 'off',
-    'react/react-in-jsx-scope': 'off',
-    'react/prop-types': 'off',
-    'react/require-default-props': 'off',
-    'react-hooks/exhaustive-deps': 'off', // useCallbackなどの依存関係についての注意を示す
-    'no-void': [
-      'error',
-      {
-        allowAsStatement: true,
-      },
-    ],
     // import順序のルール
     'import/order': [
-      'error',
+      'warn',
       {
         groups: ['builtin', 'external', 'parent', 'sibling', 'index', 'object', 'type'],
         pathGroups: [
@@ -77,10 +60,30 @@ module.exports = {
         pathGroupsExcludedImportTypes: ['builtin'],
         alphabetize: {
           order: 'asc',
+          caseInsensitive: true,
         },
         'newlines-between': 'always',
       },
     ],
+    'unused-imports/no-unused-imports': 'error', // 不使用インポート, pluginと一緒に使用すると自動で削除
+    'react/jsx-filename-extension': [
+      'error',
+      {
+        extensions: ['.jsx', '.tsx'],
+      },
+    ],
+    'react/jsx-props-no-spreading': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'react/prop-types': 'off',
+    'react/require-default-props': 'off',
+    'react-hooks/exhaustive-deps': 'off', // useCallbackなどの依存関係についての注意を示す
+    'no-void': [
+      'error',
+      {
+        allowAsStatement: true,
+      },
+    ],
+
     '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
     '@typescript-eslint/no-misused-promises': [
       'error',

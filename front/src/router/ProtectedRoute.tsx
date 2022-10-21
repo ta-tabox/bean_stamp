@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 
-import { useCurrentUser } from '@/hooks/useCurrentUser'
+import { useAuth } from '@/features/auth'
 
 type Props = {
   redirectPath?: string
@@ -9,8 +9,8 @@ type Props = {
 }
 
 export const ProtectedRoute = (props: Props) => {
-  const { redirectPath = '/signin', children } = props
-  const { isSignedIn } = useCurrentUser()
+  const { redirectPath = '/auth/signin', children } = props
+  const { isSignedIn } = useAuth()
   if (!isSignedIn) {
     return <Navigate to={redirectPath} replace />
   }
