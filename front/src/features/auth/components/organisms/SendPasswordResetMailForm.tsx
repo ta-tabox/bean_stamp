@@ -6,14 +6,14 @@ import { useForm } from 'react-hook-form'
 import { PrimaryButton } from '@/components/Elements/Button'
 import { FormContainer, FormMain, FormTitle } from '@/components/Form'
 import { FRONT_URL } from '@/config'
+import { sendResetMail } from '@/features/auth/api/sendResetMail'
 import { EmailInput } from '@/features/users'
 import { useMessage } from '@/hooks/useMessage'
-import axios from '@/lib/axios'
 
 import type { AxiosError } from 'axios'
 import type { SubmitHandler } from 'react-hook-form'
 
-// パスワード再設定関連の型
+// パスワード再設定フォームの型
 type SendResetMailType = {
   email: string
 }
@@ -29,13 +29,12 @@ export const SendPasswordResetMailForm: FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false)
 
   const onSendResetMail: SubmitHandler<SendResetMailType> = (data) => {
-    const redirectUrl = `${FRONT_URL}/password_reset`
+    const redirectUrl = `${FRONT_URL}/auth/password_reset`
     const params = {
       email: data.email,
       redirect_url: redirectUrl,
     }
-    axios
-      .post('auth/password', params)
+    sendResetMail(params)
       .then(() => {
         setIsSubmitted(true)
         showMessage({ message: 'パスワードの再設定を受け付けました', type: 'success' })

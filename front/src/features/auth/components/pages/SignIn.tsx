@@ -69,7 +69,7 @@ export const SignIn: FC = memo(() => {
         <FormFooter>
           <h4 className="pb-2">
             パスワードを忘れましたか？
-            <Link to="/password_reset" className="ml-2 link">
+            <Link to="/auth/password_reset" className="ml-2 link">
               パスワード再設定
             </Link>
           </h4>

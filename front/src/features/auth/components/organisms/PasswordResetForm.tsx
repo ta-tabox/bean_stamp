@@ -5,25 +5,16 @@ import { useForm } from 'react-hook-form'
 
 import { PrimaryButton } from '@/components/Elements/Button'
 import { FormContainer, FormMain, FormTitle } from '@/components/Form'
+import { resetPassword } from '@/features/auth/api/resetPassword'
+import type { PasswordResetHeaders, PasswordResetParams } from '@/features/auth/types'
 import { PasswordInput } from '@/features/users'
 import { useMessage } from '@/hooks/useMessage'
-import axios from '@/lib/axios'
+import type { ErrorResponse } from '@/types'
 
 import type { AxiosError } from 'axios'
 import type { SubmitHandler } from 'react-hook-form'
 
-// パスワード再設定関連の型
-type PasswordResetType = {
-  password: string
-  passwordConfirmation: string
-}
-
-type Props = {
-  uid: string
-  client: string
-  accessToken: string
-  resetPasswordToken: string
-}
+type Props = PasswordResetHeaders
 
 export const PasswordResetForm: FC<Props> = (props) => {
   const { uid, client, accessToken, resetPasswordToken } = props
@@ -33,25 +24,24 @@ export const PasswordResetForm: FC<Props> = (props) => {
     register,
     handleSubmit,
     formState: { isDirty, errors },
-  } = useForm<PasswordResetType>({ criteriaMode: 'all' })
+  } = useForm<PasswordResetParams>({ criteriaMode: 'all' })
 
   const { showMessage } = useMessage()
 
-  const onSubmitResetPassword: SubmitHandler<PasswordResetType> = (data) => {
-    axios
-      .put('auth/password', data, {
-        headers: {
-          uid,
-          client,
-          'access-token': accessToken,
-          reset_password_token: resetPasswordToken,
-        },
-      })
+  const onSubmitResetPassword: SubmitHandler<PasswordResetParams> = (data) => {
+    const headers = {
+      uid,
+      client,
+      resetPasswordToken,
+      accessToken,
+    }
+
+    resetPassword(headers, data)
       .then(() => {
         navigate('/auth/signin')
         showMessage({ message: 'パスワードの変更が完了しました', type: 'success' })
       })
-      .catch((err: AxiosError<{ errors: { fullMessages: Array<string> } }>) => {
+      .catch((err: AxiosError<ErrorResponse>) => {
         const errorMessages = err.response?.data.errors.fullMessages
         errorMessages?.map((errorMessage) => showMessage({ message: `${errorMessage}`, type: 'error' }))
       })

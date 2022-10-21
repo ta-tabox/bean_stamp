@@ -26,3 +26,22 @@ export type AuthHeaders = {
 export type UserResponse = {
   data: User
 }
+
+// パスワード再生設定
+export type SendResetMailParams = {
+  email: string
+  redirect_url: string
+}
+
+// パスワード再設定フォームの型
+export type PasswordResetParams = {
+  password: string
+  passwordConfirmation: string
+}
+
+export type PasswordResetHeaders = {
+  uid: string
+  client: string
+  accessToken: string
+  resetPasswordToken: string
+}
