@@ -2,6 +2,7 @@ import type { FC } from 'react'
 import { useCallback, useEffect, memo } from 'react'
 
 import { Spinner } from '@/components/Elements/Spinner'
+import { Head } from '@/components/Head'
 import { useAuth } from '@/features/auth'
 import { UserDetailModal } from '@/features/users/components/organisms/UserDetailModal'
 import { UserItem } from '@/features/users/components/organisms/UserItem'
@@ -25,30 +26,32 @@ export const UserManagement: FC = memo(() => {
     [users, onSelectUser, onOpen]
   )
 
-  // タイトル フォロー
   return (
-    <section className="card mt-4 mb-20 py-4 text-gray-600">
-      {!loading && (
-        <ol>
-          {users.map((user) => (
-            <li key={user.id}>
-              <UserItem
-                id={user.id}
-                userName={user.name}
-                area={translatePrefectureCodeToName(user.prefectureCode)}
-                imageUrl="https://source.unsplash.com/random"
-                onClick={onClickUser}
-              />
-            </li>
-          ))}
-        </ol>
-      )}
-      {loading && (
-        <div className="flex justify-center">
-          <Spinner />
-        </div>
-      )}
-      <UserDetailModal isOpen={isOpen} onClose={onClose} user={selectedUser} isAdmin={currentUser?.admin} />
-    </section>
+    <>
+      <Head title="ユーザーマネジメント" />
+      <section className="card mt-4 mb-20 py-4 text-gray-600">
+        {!loading && (
+          <ol>
+            {users.map((user) => (
+              <li key={user.id}>
+                <UserItem
+                  id={user.id}
+                  userName={user.name}
+                  area={translatePrefectureCodeToName(user.prefectureCode)}
+                  imageUrl="https://source.unsplash.com/random"
+                  onClick={onClickUser}
+                />
+              </li>
+            ))}
+          </ol>
+        )}
+        {loading && (
+          <div className="flex justify-center">
+            <Spinner />
+          </div>
+        )}
+        <UserDetailModal isOpen={isOpen} onClose={onClose} user={selectedUser} isAdmin={currentUser?.admin} />
+      </section>
+    </>
   )
 })
