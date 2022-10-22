@@ -8,6 +8,7 @@ import { FormContainer, FormMain, FormTitle } from '@/components/Form'
 import { resetPassword } from '@/features/auth/api/resetPassword'
 import type { PasswordResetHeaders, PasswordResetParams } from '@/features/auth/types'
 import { PasswordInput } from '@/features/users'
+import { PasswordConfirmationInput } from '@/features/users/components/molecules/PasswordConfirmationInput'
 import { useMessage } from '@/hooks/useMessage'
 import type { ErrorResponse } from '@/types'
 
@@ -54,17 +55,12 @@ export const PasswordResetForm: FC<Props> = (props) => {
         <p className="text-center text-xs text-gray-800">新しいパスワードを入力してください</p>
         <form onSubmit={handleSubmit(onSubmitResetPassword)}>
           {/* パスワード */}
-          <PasswordInput
-            label="password"
-            placeholder="パスワード *6文字以上"
-            register={register}
-            error={errors.password}
-          />
+          <PasswordInput label="password" register={register} error={errors.password} />
 
           {/* パスワード確認 */}
-          <PasswordInput
+          <PasswordConfirmationInput
             label="passwordConfirmation"
-            placeholder="パスワード(確認)"
+            targetValue="password"
             register={register}
             error={errors.passwordConfirmation}
           />

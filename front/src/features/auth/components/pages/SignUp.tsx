@@ -10,6 +10,7 @@ import { useAuth } from '@/features/auth'
 import type { SignUpParams } from '@/features/auth/types'
 import type { PrefectureOption } from '@/features/users'
 import { EmailInput, PasswordInput, PrefectureSelect, UserNameInput } from '@/features/users'
+import { PasswordConfirmationInput } from '@/features/users/components/molecules/PasswordConfirmationInput'
 
 import type { FieldError, SubmitHandler } from 'react-hook-form'
 
@@ -61,17 +62,12 @@ export const SignUp: FC = memo(() => {
               />
 
               {/* パスワード */}
-              <PasswordInput
-                label="password"
-                placeholder="パスワード *6文字以上"
-                register={register}
-                error={errors.password}
-              />
+              <PasswordInput label="password" register={register} error={errors.password} />
 
               {/* パスワード確認 */}
-              <PasswordInput
+              <PasswordConfirmationInput
                 label="passwordConfirmation"
-                placeholder="パスワード(確認)"
+                targetValue="password"
                 register={register}
                 error={errors.passwordConfirmation}
               />

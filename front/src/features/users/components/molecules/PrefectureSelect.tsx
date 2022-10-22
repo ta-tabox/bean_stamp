@@ -6,6 +6,7 @@ import Select from 'react-select'
 import { AlertMessage, FormIconWrap, FormInputWrap } from '@/components/Form'
 import type { Prefecture } from '@/utils/prefecture'
 import { PrefectureArray } from '@/utils/prefecture'
+import { validation } from '@/utils/validation'
 
 import type { Control, FieldError } from 'react-hook-form'
 
@@ -37,7 +38,7 @@ export const PrefectureSelect: FC<InputProps> = (props) => {
         <Controller
           name={label}
           control={control}
-          rules={{ required: `入力が必須の項目です'` }}
+          rules={{ required: validation.required }}
           render={({ field }) => (
             <Select
               {...field}

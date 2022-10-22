@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 
-import type { UseFormRegister, ValidationRule } from 'react-hook-form'
+import type { UseFormRegister, Validate, ValidationRule } from 'react-hook-form'
 
 type InputProps = {
   label: string
@@ -11,17 +11,18 @@ type InputProps = {
   required?: string | ValidationRule<boolean>
   pattern?: ValidationRule<RegExp>
   minLength?: ValidationRule<number>
+  validate?: Validate<any> // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export const Input: FC<InputProps> = (props) => {
-  const { label, disabled, type, placeholder, register, required, pattern, minLength } = props
+  const { label, disabled, type, placeholder, register, required, pattern, minLength, validate } = props
   return (
     <input
       type={type}
       disabled={disabled}
       placeholder={placeholder}
       className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none"
-      {...register(label, { required, pattern, minLength })}
+      {...register(label, { required, pattern, minLength, validate })}
     />
   )
 }
