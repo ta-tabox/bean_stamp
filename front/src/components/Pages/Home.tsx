@@ -2,6 +2,7 @@ import type { FC } from 'react'
 import { memo } from 'react'
 import { Navigate } from 'react-router-dom'
 
+import { Head } from '@/components/Head'
 import { useAuth } from '@/features/auth'
 
 export const Home: FC = memo(() => {
@@ -14,8 +15,8 @@ export const Home: FC = memo(() => {
 
   return (
     <>
-      <h1 className="text-3xl font-bold underline text-red-600">Hello world!</h1>
-      <p>トップページです。</p>
+      <Head />
+      <h1>TOPページ</h1>
     </>
   )
 })

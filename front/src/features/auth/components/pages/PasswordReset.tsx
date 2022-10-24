@@ -2,6 +2,7 @@ import type { FC } from 'react'
 import { memo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
+import { Head } from '@/components/Head'
 import { PasswordResetForm } from '@/features/auth/components/organisms/PasswordResetForm'
 import { SendPasswordResetMailForm } from '@/features/auth/components/organisms/SendPasswordResetMailForm'
 
@@ -15,19 +16,20 @@ export const PasswordReset: FC = memo(() => {
   const accessToken = searchParams.get('access-token')
 
   return (
-    // #TODO ページタイトルを動的に変更する
-    // <% provide(:title, "パスワード再設定") %>
-    <div className="mt-16 flex items-center">
-      {resetPasswordToken && uid && client && accessToken ? (
-        <PasswordResetForm
-          uid={uid}
-          client={client}
-          accessToken={accessToken}
-          resetPasswordToken={resetPasswordToken}
-        />
-      ) : (
-        <SendPasswordResetMailForm />
-      )}
-    </div>
+    <>
+      <Head title="パスワード再設定" />
+      <div className="mt-16 flex items-center">
+        {resetPasswordToken && uid && client && accessToken ? (
+          <PasswordResetForm
+            uid={uid}
+            client={client}
+            accessToken={accessToken}
+            resetPasswordToken={resetPasswordToken}
+          />
+        ) : (
+          <SendPasswordResetMailForm />
+        )}
+      </div>
+    </>
   )
 })

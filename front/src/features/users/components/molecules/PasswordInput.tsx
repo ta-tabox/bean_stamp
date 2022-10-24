@@ -1,32 +1,29 @@
 import type { FC } from 'react'
 
 import { AlertMessage, FormIconWrap, FormInputWrap, Input } from '@/components/Form'
+import { validation } from '@/utils/validation'
 
 import type { FieldError, UseFormRegister } from 'react-hook-form'
 
 type InputProps = {
   label: string
-  placeholder: string
   register: UseFormRegister<any> // eslint-disable-line @typescript-eslint/no-explicit-any
   error?: FieldError
 }
 
 export const PasswordInput: FC<InputProps> = (props) => {
-  const { label, placeholder, register, error } = props
+  const { label, register, error } = props
   return (
     <>
       <FormInputWrap>
         <Input
           label={label}
           type="password"
-          placeholder={placeholder}
+          placeholder="パスワード *6文字以上"
           register={register}
-          required={{
-            value: true,
-            message: '入力が必須の項目です',
-          }}
-          pattern={{ value: /^[a-zA-Z0-9!-/:-@¥[-`{-~]+$/, message: '半角英数記号を入力してください' }}
-          minLength={{ value: 6, message: '6文字以上入力してください' }}
+          required={validation.required}
+          pattern={validation.pattern.password}
+          minLength={validation.minLength(6)}
         />
         <FormIconWrap>
           <svg className="h-7 w-7 p-1 ml-3">
