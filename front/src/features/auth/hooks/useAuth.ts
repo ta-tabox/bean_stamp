@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 
 import { useCookies } from 'react-cookie'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
@@ -14,24 +14,28 @@ import { isSignedInState } from '@/features/auth/stores/isSignedInState'
 import { userState } from '@/features/auth/stores/userState'
 import type { User } from '@/features/users'
 import { useMessage } from '@/hooks/useMessage'
+import { useNotification } from '@/hooks/useNotification'
+import type { Notification } from '@/stores/notifications'
 import type { ErrorResponse } from '@/types'
 
 import type { AxiosError, AxiosResponse } from 'axios'
 import type { SetterOrUpdater } from 'recoil'
 
 export const useAuth = () => {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const { showMessage } = useMessage()
   const [loading, setLoading] = useState(false)
   const [cookies, setCookie, removeCookie] = useCookies(['uid', 'client', 'access-token'])
 
-  const setExpireDate = (rememberMe?: boolean) => {
+  const { setNotifications } = useNotification()
+
+  const setExpireDate = (isRememberMe?: boolean) => {
     const expireDate = 14 // rememberMe期間を14日に設定
-    return rememberMe ? new Date(Date.now() + expireDate * 86400e3) : undefined
+    return isRememberMe ? new Date(Date.now() + expireDate * 86400e3) : undefined
   }
 
-  const setAuthCookies = (res: AxiosResponse, rememberMe?: boolean) => {
-    const expireDate = setExpireDate(rememberMe)
+  const setAuthCookies = (res: AxiosResponse, isRememberMe?: boolean) => {
+    const expireDate = setExpireDate(isRememberMe)
     setCookie('uid', res.headers.uid, { path: '/', expires: expireDate })
     setCookie('client', res.headers.client, { path: '/', expires: expireDate })
     setCookie('access-token', res.headers['access-token'], { path: '/', expires: expireDate })
@@ -69,7 +73,7 @@ export const useAuth = () => {
         setIsSignedIn(true)
         setUser(res.data.data)
         showMessage({ message: 'ユーザー登録が完了しました', type: 'success' })
-        navigate('/user/home')
+        // navigate('/user/home')
       })
       // TODO エラーメッセージをトーストではなくメッセージとして表示するhooksを作成する
       // エラーメッセージはstateとして保持した方がいい気がする
@@ -83,23 +87,30 @@ export const useAuth = () => {
   }, [])
 
   // サインイン
-  const signIn = useCallback((params: SignInParams, rememberMe?: boolean) => {
+  const signIn = async (params: SignInParams, rememberMe?: boolean) => {
     setLoading(true)
-    signInWithEmailAndPassword(params)
+    await signInWithEmailAndPassword(params)
       .then((res) => {
         setAuthCookies(res, rememberMe)
         setIsSignedIn(true)
         setUser(res.data.data) // グローバルステートにUserの値をセット
-        showMessage({ message: 'ログインしました', type: 'success' })
-        navigate('/user/home')
+        return Promise.resolve(user)
       })
-      .catch(() => {
-        showMessage({ message: 'メールアドレスもしくはパスワードが正しくありません', type: 'error' })
+      .catch((err: AxiosError<{ errors: Array<string> }>) => {
+        const errorMessages: Notification[] | null = err.response
+          ? err.response.data.errors.map((error, index) => ({
+              id: index,
+              type: 'error',
+              message: `${error}`,
+            }))
+          : null
+        setNotifications(errorMessages)
+        return Promise.reject(err)
       })
       .finally(() => {
         setLoading(false)
       })
-  }, [])
+  }
 
   // サインアウト
   const signOut = useCallback(() => {
@@ -113,7 +124,7 @@ export const useAuth = () => {
         setIsSignedIn(false)
         setUser(null) // LoginUserStateを削除
         showMessage({ message: 'ログアウトしました', type: 'success' })
-        navigate('/')
+        // navigate('/')
       })
       .catch(() => {
         showMessage({ message: 'ログアウトに失敗しました', type: 'error' })
@@ -135,7 +146,7 @@ export const useAuth = () => {
         setIsSignedIn(false)
         setUser(null)
         showMessage({ message: 'アカウントを削除しました', type: 'success' })
-        navigate('/')
+        // navigate('/')
       })
       .catch(() => {
         showMessage({ message: 'アカウントの削除に失敗しました', type: 'error' })
