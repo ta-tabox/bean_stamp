@@ -4,11 +4,13 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { PrimaryButton } from '@/components/Elements/Button'
+import { NotificationMessage } from '@/components/Elements/Notification'
 import { FormContainer, FormMain, FormTitle } from '@/components/Form'
 import { FRONT_URL } from '@/config'
 import { sendResetMail } from '@/features/auth/api/sendResetMail'
 import { EmailInput } from '@/features/users'
 import { useMessage } from '@/hooks/useMessage'
+import { useNotification } from '@/hooks/useNotification'
 
 import type { AxiosError } from 'axios'
 import type { SubmitHandler } from 'react-hook-form'
@@ -19,14 +21,17 @@ type SendResetMailType = {
 }
 
 export const SendPasswordResetMailForm: FC = () => {
+  const { showMessage } = useMessage()
+  const { notifications, setNotifications, setNotificationMessagesWithType } = useNotification()
+
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isError, setIsError] = useState(false)
+
   const {
     register,
     handleSubmit,
     formState: { isDirty, errors },
   } = useForm<SendResetMailType>({ criteriaMode: 'all' })
-
-  const { showMessage } = useMessage()
-  const [isSubmitted, setIsSubmitted] = useState(false)
 
   const onSendResetMail: SubmitHandler<SendResetMailType> = (data) => {
     const redirectUrl = `${FRONT_URL}/auth/password_reset`
@@ -37,17 +42,21 @@ export const SendPasswordResetMailForm: FC = () => {
     sendResetMail(params)
       .then(() => {
         setIsSubmitted(true)
+        setIsError(false)
         showMessage({ message: 'パスワードの再設定を受け付けました', type: 'success' })
       })
       .catch((err: AxiosError<{ errors: Array<string> }>) => {
         const errorMessages = err.response?.data.errors
-        errorMessages?.map((errorMessage) => showMessage({ message: `${errorMessage}`, type: 'error' }))
+        const notificationMessages = errorMessages ? setNotificationMessagesWithType(errorMessages, 'error') : null
+        setNotifications(notificationMessages)
+        setIsError(true)
       })
   }
   return (
     <FormContainer>
       <FormMain>
         <FormTitle>パスワード再設定</FormTitle>
+        {isError ? <NotificationMessage notifications={notifications} type="error" /> : null}
         <div className="text-center text-xs text-gray-800">
           {isSubmitted ? (
             <p>

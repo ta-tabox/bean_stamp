@@ -1,5 +1,5 @@
-import { useCallback, useState } from 'react'
-// import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { useCookies } from 'react-cookie'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
@@ -21,7 +21,7 @@ import type { AxiosError, AxiosResponse } from 'axios'
 import type { SetterOrUpdater } from 'recoil'
 
 export const useAuth = () => {
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   const { showMessage } = useMessage()
   const [loading, setLoading] = useState(false)
   const [cookies, setCookie, removeCookie] = useCookies(['uid', 'client', 'access-token'])
@@ -71,6 +71,7 @@ export const useAuth = () => {
         setAuthCookies(res)
         setIsSignedIn(true)
         setUser(res.data.data)
+        return Promise.resolve(user)
       })
       .catch((err: AxiosError<ErrorResponse>) => {
         const errorMessages = err.response?.data.errors.fullMessages
@@ -105,7 +106,7 @@ export const useAuth = () => {
   }
 
   // サインアウト
-  const signOut = useCallback(() => {
+  const signOut = () => {
     setLoading(true)
     const headers = setAuthHeaders()
 
@@ -116,7 +117,7 @@ export const useAuth = () => {
         setIsSignedIn(false)
         setUser(null) // LoginUserStateを削除
         showMessage({ message: 'ログアウトしました', type: 'success' })
-        // navigate('/')
+        navigate('/auth/signin')
       })
       .catch(() => {
         showMessage({ message: 'ログアウトに失敗しました', type: 'error' })
@@ -124,31 +125,28 @@ export const useAuth = () => {
       .finally(() => {
         setLoading(false)
       })
-  }, [])
+  }
 
   // アカウントの削除
-  const deleteUser = useCallback(() => {
+  const deleteUser = async () => {
     setLoading(true)
     const headers = setAuthHeaders()
 
-    deleteUserReq(headers)
+    await deleteUserReq(headers)
       .then(() => {
         // 認証情報をのcookieを削除
         removeAuthCookies()
         setIsSignedIn(false)
         setUser(null)
-        showMessage({ message: 'アカウントを削除しました', type: 'success' })
-        // navigate('/')
+        return Promise.resolve(null)
       })
-      .catch(() => {
-        showMessage({ message: 'アカウントの削除に失敗しました', type: 'error' })
-      })
+      .catch((err) => Promise.reject(err))
       .finally(() => {
         setLoading(false)
       })
-  }, [])
+  }
 
-  const loadUser = useCallback(() => {
+  const loadUser = () => {
     setLoading(true)
     const headers = setAuthHeaders()
 
@@ -171,7 +169,7 @@ export const useAuth = () => {
       .finally(() => {
         setLoading(false)
       })
-  }, [])
+  }
 
   return { signUp, signIn, signOut, deleteUser, loadUser, loading, user, isSignedIn, setAuthHeaders }
 }

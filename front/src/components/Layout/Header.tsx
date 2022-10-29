@@ -1,6 +1,5 @@
 import type { FC } from 'react'
 import { memo } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { TopButton } from '@/components/Elements/Button'
 import { StaticNavLink } from '@/components/Elements/Link'
@@ -9,10 +8,8 @@ import { useAuth } from '@/features/auth/hooks/useAuth'
 export const Header: FC = memo(() => {
   const { isSignedIn } = useAuth()
   const { signOut } = useAuth()
-  const navigate = useNavigate()
 
-  const onClickSingout = () => {
-    navigate('/')
+  const handleClickSingout = () => {
     signOut()
   }
 
@@ -51,7 +48,7 @@ export const Header: FC = memo(() => {
                 <button
                   type="button"
                   className="w-20 h-full px-2 flex justify-center items-center text-gray-900 hover:text-white hover:bg-gray-800 e-font"
-                  onClick={onClickSingout}
+                  onClick={handleClickSingout}
                 >
                   SIGNOUT
                 </button>
