@@ -26,11 +26,10 @@ export type SignInSubmitData = {
 export const SignIn: FC = memo(() => {
   const { signIn, loading } = useAuth()
   const { notifications } = useNotification()
-
-  const [isError, setIsError] = useState(false)
-
   const { showMessage } = useMessage()
   const navigate = useNavigate()
+
+  const [isError, setIsError] = useState(false)
 
   const {
     register,
@@ -45,8 +44,8 @@ export const SignIn: FC = memo(() => {
       setIsError(false)
       showMessage({ message: 'ログインしました', type: 'success' })
       navigate('/user/home')
-    } catch (err) {
-      if (err instanceof AxiosError) {
+    } catch (error) {
+      if (error instanceof AxiosError) {
         setIsError(true)
       }
     }

@@ -6,7 +6,9 @@ export type Notification = {
   message: string
 }
 
-export const notificationsState = atom<Notification[] | null>({
+export type NotificationType = Notification[] | null
+
+export const notificationsState = atom<NotificationType>({
   key: 'notificationsState',
   default: null,
 })

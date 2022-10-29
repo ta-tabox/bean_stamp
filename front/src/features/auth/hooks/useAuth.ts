@@ -15,7 +15,6 @@ import { userState } from '@/features/auth/stores/userState'
 import type { User } from '@/features/users'
 import { useMessage } from '@/hooks/useMessage'
 import { useNotification } from '@/hooks/useNotification'
-import type { Notification } from '@/stores/notifications'
 import type { ErrorResponse } from '@/types'
 
 import type { AxiosError, AxiosResponse } from 'axios'
@@ -27,7 +26,7 @@ export const useAuth = () => {
   const [loading, setLoading] = useState(false)
   const [cookies, setCookie, removeCookie] = useCookies(['uid', 'client', 'access-token'])
 
-  const { setNotifications } = useNotification()
+  const { setNotifications, setNotificationMessagesWithType } = useNotification()
 
   const setExpireDate = (isRememberMe?: boolean) => {
     const expireDate = 14 // rememberMe期間を14日に設定
@@ -64,27 +63,25 @@ export const useAuth = () => {
   const setIsSignedIn = useSetRecoilState(isSignedInState)
 
   // サインアップ
-  const signUp = useCallback((params: SignUpParams) => {
+  const signUp = async (params: SignUpParams) => {
     setLoading(true)
-    signUpWithSignUpParams(params)
+    await signUpWithSignUpParams(params)
       .then((res) => {
         // 認証情報をcookieにセット
         setAuthCookies(res)
         setIsSignedIn(true)
         setUser(res.data.data)
-        showMessage({ message: 'ユーザー登録が完了しました', type: 'success' })
-        // navigate('/user/home')
       })
-      // TODO エラーメッセージをトーストではなくメッセージとして表示するhooksを作成する
-      // エラーメッセージはstateとして保持した方がいい気がする
       .catch((err: AxiosError<ErrorResponse>) => {
         const errorMessages = err.response?.data.errors.fullMessages
-        errorMessages?.map((errorMessage) => showMessage({ message: `${errorMessage}`, type: 'error' }))
+        const notificationMessages = errorMessages ? setNotificationMessagesWithType(errorMessages, 'error') : null
+        setNotifications(notificationMessages)
+        return Promise.reject(err)
       })
       .finally(() => {
         setLoading(false)
       })
-  }, [])
+  }
 
   // サインイン
   const signIn = async (params: SignInParams, rememberMe?: boolean) => {
@@ -97,14 +94,9 @@ export const useAuth = () => {
         return Promise.resolve(user)
       })
       .catch((err: AxiosError<{ errors: Array<string> }>) => {
-        const errorMessages: Notification[] | null = err.response
-          ? err.response.data.errors.map((error, index) => ({
-              id: index,
-              type: 'error',
-              message: `${error}`,
-            }))
-          : null
-        setNotifications(errorMessages)
+        const errorMessages = err.response?.data.errors
+        const notificationMessages = errorMessages ? setNotificationMessagesWithType(errorMessages, 'error') : null
+        setNotifications(notificationMessages)
         return Promise.reject(err)
       })
       .finally(() => {
