@@ -2,10 +2,11 @@ import type { FC } from 'react'
 import { memo } from 'react'
 import { Navigate, Link, useNavigate } from 'react-router-dom'
 
-import { PrimaryButton, SecondaryButton } from '@/components/Elements/Button'
+import { PrimaryButton } from '@/components/Elements/Button'
 import { Head } from '@/components/Head'
 import { Header } from '@/components/Layout'
 import { useAuth } from '@/features/auth'
+import { GuestSignInButton } from '@/features/auth/components/atoms/GuestSignInButton'
 
 export const Home: FC = memo(() => {
   const { isSignedIn } = useAuth()
@@ -17,10 +18,6 @@ export const Home: FC = memo(() => {
   }
 
   const handleClickLogin = () => {
-    navigate('/auth/signin')
-  }
-
-  const handleClickGuestLogin = () => {
     navigate('/auth/signin')
   }
 
@@ -49,8 +46,7 @@ export const Home: FC = memo(() => {
               </Link>
               <div className="py-4 sm:y-8 flex flex-col md:flex-row md:space-x-4 space-y-2 md:space-y-0">
                 <PrimaryButton onClick={handleClickLogin}>ログイン</PrimaryButton>
-                <SecondaryButton onClick={handleClickGuestLogin}>ゲストログイン</SecondaryButton>
-                {/* <%= link_to 'ゲストログイン', users_guest_sign_in_path, method: :post, className: "btn btn-secondary btn-pop" %> */}
+                <GuestSignInButton />
               </div>
             </div>
           </section>

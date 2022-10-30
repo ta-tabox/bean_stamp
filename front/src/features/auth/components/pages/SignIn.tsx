@@ -17,6 +17,7 @@ import { useMessage } from '@/hooks/useMessage'
 import { useNotification } from '@/hooks/useNotification'
 
 import type { SubmitHandler } from 'react-hook-form'
+import { GuestSignInButton } from '@/features/auth/components/atoms/GuestSignInButton'
 
 // react-hook-formで取り扱うデータの型
 export type SignInSubmitData = {
@@ -81,7 +82,6 @@ export const SignIn: FC = memo(() => {
               </div>
             </form>
           </FormMain>
-          {/* TODO ゲストログイン */}
           <FormFooter>
             <h4 className="pb-2">
               パスワードを忘れましたか？
@@ -100,7 +100,7 @@ export const SignIn: FC = memo(() => {
             <h4 className="pt-4 text-center text-sm text-gray-800 font-light">閲覧用</h4>
             <div>
               <div className="flex justify-center">
-                <h4>ゲストログイン</h4>
+                <GuestSignInButton />
               </div>
             </div>
           </FormFooter>
