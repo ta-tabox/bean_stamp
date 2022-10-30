@@ -1,11 +1,12 @@
 import type { FC } from 'react'
 import { useState, memo } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { AxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
 
 import { PrimaryButton } from '@/components/Elements/Button'
+import { Link } from '@/components/Elements/Link'
 import { NotificationMessage } from '@/components/Elements/Notification'
 import { FormContainer, FormFooter, FormMain, FormTitle } from '@/components/Form'
 import { Head } from '@/components/Head'
@@ -16,6 +17,7 @@ import { useMessage } from '@/hooks/useMessage'
 import { useNotification } from '@/hooks/useNotification'
 
 import type { SubmitHandler } from 'react-hook-form'
+import { GuestSignInButton } from '@/features/auth/components/atoms/GuestSignInButton'
 
 // react-hook-formで取り扱うデータの型
 export type SignInSubmitData = {
@@ -80,26 +82,25 @@ export const SignIn: FC = memo(() => {
               </div>
             </form>
           </FormMain>
-          {/* TODO ゲストログイン */}
           <FormFooter>
             <h4 className="pb-2">
               パスワードを忘れましたか？
-              <Link to="/auth/password_reset" className="ml-2 link">
-                パスワード再設定
-              </Link>
+              <span className="ml-2">
+                <Link to="/auth/password_reset">パスワード再設定</Link>
+              </span>
             </h4>
 
             <h4>
               アカウントをお持ちではありませんか？
-              <Link to="/auth/signup" className="ml-2 link">
-                サインアップ
-              </Link>
+              <span className="ml-2">
+                <Link to="/auth/signup">サインアップ</Link>
+              </span>
             </h4>
 
             <h4 className="pt-4 text-center text-sm text-gray-800 font-light">閲覧用</h4>
             <div>
               <div className="flex justify-center">
-                <h4>ゲストログイン</h4>
+                <GuestSignInButton />
               </div>
             </div>
           </FormFooter>
