@@ -7,8 +7,6 @@ import { Header } from '@/components/Layout/Header'
 export const CommonLayout: FC = memo(() => (
   <>
     <Header />
-    <div className="pt-14">
-      <Outlet /> {/* Outletがページ毎に置き換わる */}
-    </div>
+    <Outlet /> {/* Outletがページ毎に置き換わる */}
   </>
 ))

@@ -35,9 +35,7 @@ export const AppRouter: FC = () => {
       <Route element={<ProtectedRoute />}>
         <Route path="user/*" element={<UsersRoutes />} />
       </Route>
-      <Route element={<CommonLayout />}>
-        <Route path="*" element={<Page404 />} />
-      </Route>
+      <Route path="*" element={<Page404 />} />
     </Routes>
   )
 }

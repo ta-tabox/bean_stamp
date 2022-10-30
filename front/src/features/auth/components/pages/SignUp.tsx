@@ -6,8 +6,9 @@ import { AxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
 
 import { PrimaryButton } from '@/components/Elements/Button'
+import { Link } from '@/components/Elements/Link'
 import { NotificationMessage } from '@/components/Elements/Notification'
-import { FormContainer, FormMain, FormTitle } from '@/components/Form'
+import { FormContainer, FormFooter, FormMain, FormTitle } from '@/components/Form'
 import { Head } from '@/components/Head'
 import { useAuth } from '@/features/auth'
 import type { SignUpParams } from '@/features/auth/types'
@@ -109,9 +110,21 @@ export const SignUp: FC = memo(() => {
               </div>
             </form>
           </FormMain>
-          <div className="form-footer">
-            <h1>フォームフッター</h1>
-          </div>
+
+          {/* TODO ゲストログイン */}
+          <FormFooter>
+            <h4 className="pb-2">
+              アカウントをお持ちですか？
+              <Link to="/auth/signin">ログイン</Link>
+            </h4>
+
+            <h4 className="pt-4 text-center text-sm text-gray-800 font-light">閲覧用</h4>
+            <div>
+              <div className="flex justify-center">
+                <h4>ゲストログイン</h4>
+              </div>
+            </div>
+          </FormFooter>
         </FormContainer>
       </div>
     </>
