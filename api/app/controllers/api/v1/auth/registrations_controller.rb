@@ -7,6 +7,7 @@ class Api::V1::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsCon
 
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: %i[update]
+  before_action :ensure_normal_user, only: %i[update destroy]
 
   private
 
@@ -31,5 +32,12 @@ class Api::V1::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsCon
   #ユーザー更新時に使用
   def account_update_params
       params.permit(:name,:email, :password, :password_confirmation,:prefecture_code, :describe, :image)
+  end
+
+  # ゲストユーザーの編集と削除を弾く
+  def ensure_normal_user
+    if @resource.guest?
+      render status: :bad_request
+    end
   end
 end

@@ -1,12 +1,12 @@
 import type { FC } from 'react'
 import { memo } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { DangerButton, SecondaryButton } from '@/components/Elements/Button'
 import { Modal } from '@/components/Elements/Modal'
 import { FormContainer, FormMain, FormTitle } from '@/components/Form'
 import { useAuth } from '@/features/auth'
 import { useMessage } from '@/hooks/useMessage'
-import { useNavigate } from 'react-router-dom'
 
 type Props = {
   isOpen: boolean
@@ -21,6 +21,11 @@ export const UserCancelModal: FC<Props> = memo((props) => {
   const navigate = useNavigate()
 
   const handleSubmit = async () => {
+    if (user?.guest) {
+      showMessage({ message: 'ゲストユーザーの削除はできません', type: 'error' })
+      return
+    }
+
     try {
       await deleteUser()
       showMessage({ message: 'アカウントを削除しました', type: 'success' })
