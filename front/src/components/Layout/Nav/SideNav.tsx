@@ -16,6 +16,7 @@ export const SideNav: FC = memo(() => (
     </div>
     {/* ナビアイコン */}
     <div className="ml-14">
+      {/* TODO isRoasterフラグで切り替える */}
       <UserSideNav />
       {/* <RoasterSideNav /> */}
     </div>
