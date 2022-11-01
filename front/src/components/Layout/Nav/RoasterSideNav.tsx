@@ -2,8 +2,8 @@ import type { FC } from 'react'
 import { memo } from 'react'
 import { Link } from 'react-router-dom'
 
-import { SideNavLink } from '@/components/Elements/Link/SideNavLink'
 import { useAuth } from '@/features/auth'
+import { SideNavLink } from '@/components/Elements/Link'
 
 export const RoasterSideNav: FC = memo(() => {
   const { signOut } = useAuth()

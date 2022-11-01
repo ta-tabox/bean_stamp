@@ -1,8 +1,8 @@
 import type { FC } from 'react'
 import { memo } from 'react'
 
-import { Copyright } from '@/components/Elements/Copyright/Copyright'
-import { SearchLink } from '@/components/Elements/Link/SearchLink'
+import { Copyright } from '@/components/Elements/Copyright'
+import { SearchLink } from '@/components/Elements/Link'
 
 export const UserAsideContent: FC = memo(() => (
   <div id="user-aside" className="min-h-screen h-auto w-full flex flex-col items-center">

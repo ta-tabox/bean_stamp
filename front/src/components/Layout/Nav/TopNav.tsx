@@ -1,8 +1,7 @@
 import type { FC } from 'react'
 import { memo } from 'react'
 
-import { TopButton } from '@/components/Elements/Button'
-import { RoasterToggleButton } from '@/components/Elements/Button/RoasterToggleButton'
+import { RoasterToggleButton, TopButton } from '@/components/Elements/Button'
 
 export const TopNav: FC = memo(() => (
   <section className="h-14 fixed top-0 inset-x-0 z-40 border-b border-gray-200 bg-gray-100">

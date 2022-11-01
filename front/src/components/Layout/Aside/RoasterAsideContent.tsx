@@ -1,8 +1,8 @@
 import type { FC } from 'react'
 import { memo } from 'react'
 
-import { Copyright } from '@/components/Elements/Copyright/Copyright'
-import { SearchLink } from '@/components/Elements/Link/SearchLink'
+import { Copyright } from '@/components/Elements/Copyright'
+import { SearchLink } from '@/components/Elements/Link'
 
 export const RoasterAsideContent: FC = memo(() => (
   <div id="roaster-aside" className="min-h-screen flex flex-col items-center">

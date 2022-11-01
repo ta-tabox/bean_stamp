@@ -81,10 +81,10 @@
 /* .side-nav-text {
   @apply font-notoserif italic text-gray-500 transition opacity-0 group-hover:opacity-100;
 } */
-
+/*
 .mobile-nav-item {
   @apply text-gray-500 hover:text-gray-800 transition duration-200 cursor-pointer;
-}
+} */
 
 /* header */
 .header {

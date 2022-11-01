@@ -2,7 +2,7 @@ import type { FC } from 'react'
 import { memo } from 'react'
 import { Link } from 'react-router-dom'
 
-import { SideNavLink } from '@/components/Elements/Link/SideNavLink'
+import { SideNavLink } from '@/components/Elements/Link'
 import { useAuth } from '@/features/auth'
 
 // ユーザー用
@@ -17,6 +17,7 @@ export const UserSideNav: FC = memo(() => {
     <ul className="flex flex-col">
       {/* ユーザーホームリンク */}
       <li className="mb-2">
+        {/* TODO Linkまでコンポーネント化する パスはpropsで渡す */}
         <Link to="/user/home">
           <SideNavLink title="Home">
             <svg className="h-8 w-8">

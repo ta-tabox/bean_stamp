@@ -1,6 +1,7 @@
 import type { FC } from 'react'
 import { memo } from 'react'
 
+import { BottomNavItem } from '@/components/Layout/Nav/BottomNavItem'
 import { UserBottomNav } from '@/components/Layout/Nav/UserBottomNav'
 
 export const BottomNav: FC = memo(() => (
@@ -10,13 +11,15 @@ export const BottomNav: FC = memo(() => (
       {/* TODO ロースターで切り替える */}
       {/* <RoasterBottomNav /> */}
       {/* ハンバーガーメニュー */}
-      <div id="hamburger-btn" className="mobile-nav-item">
-        <svg id="drawer-open-btn" className="w-8 h-8">
-          <use xlinkHref="#menu" />
-        </svg>
-        <svg id="drawer-close-btn" className="w-8 h-8 hidden">
-          <use xlinkHref="#x" />
-        </svg>
+      <div id="hamburger-btn">
+        <BottomNavItem>
+          <svg id="drawer-open-btn" className="w-8 h-8">
+            <use xlinkHref="#menu" />
+          </svg>
+          <svg id="drawer-close-btn" className="w-8 h-8 hidden">
+            <use xlinkHref="#x" />
+          </svg>
+        </BottomNavItem>
       </div>
       {/* TODO ドロワーメニューの作成 */}
       {/* <div className="drawer-menu relative">
