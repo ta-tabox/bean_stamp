@@ -14,7 +14,7 @@ export const Header: FC = memo(() => {
   }
 
   return (
-    <section className="h-14 border-t border-b z-50 text-black border-gray-200 bg-gray-100 opacity-80 inset-x-0">
+    <header className="h-14 border-t border-b z-50 text-black border-gray-200 bg-gray-100 opacity-80 inset-x-0">
       <div className="h-full flex items-center justify-between">
         <TopButton />
         {/* 切り替えアイコン */}
@@ -57,6 +57,6 @@ export const Header: FC = memo(() => {
           </ul>
         </nav>
       </div>
-    </section>
+    </header>
   )
 })

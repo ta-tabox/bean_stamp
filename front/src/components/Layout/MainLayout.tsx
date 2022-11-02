@@ -11,30 +11,28 @@ export const MainLayout: FC = memo(() => (
   <div className="max-w-screen-2xl lg:mx-auto">
     <div className="flex flex-col lg:flex-row">
       {/* ナビコンテンツ */}
-      <nav className="">
-        {/* モバイルトップナビ */}
-        <div className="lg:hidden">
-          <TopNav />
-        </div>
-        {/* モバイルボトムナビ */}
-        <div className="lg:hidden">
-          <BottomNav />
-        </div>
-        {/* デスクトップサイドナビ */}
-        <div className="h-full w-28 hidden lg:block">
-          <SideNav />
-        </div>
-      </nav>
+      {/* モバイルトップナビ */}
+      <div className="lg:hidden">
+        <TopNav />
+      </div>
+      {/* モバイルボトムナビ */}
+      <div className="lg:hidden">
+        <BottomNav />
+      </div>
+      {/* デスクトップサイドナビ */}
+      <div className="lg:block hidden">
+        <SideNav />
+      </div>
       {/* メインコンテンツ */}
-      <main className="lg:w-9/12">
-        <div className="container mx-auto my-14 lg:my-0">
+      <div className="lg:w-9/12">
+        <main className="container mx-auto my-14 lg:my-0">
           <Outlet /> {/* Outletがページ毎に置き換わる */}
-        </div>
-      </main>
+        </main>
+      </div>
       {/* サイドコンテンツ */}
-      <aside className="w-3/12 hidden lg:block">
+      <div className="w-3/12 hidden lg:block">
         <AsideContent />
-      </aside>
+      </div>
     </div>
   </div>
 ))

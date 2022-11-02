@@ -5,7 +5,7 @@ import { BottomNavItem } from '@/components/Layout/Nav/BottomNavItem'
 import { UserBottomNav } from '@/components/Layout/Nav/UserBottomNav'
 
 export const BottomNav: FC = memo(() => (
-  <section className="h-14 fixed bottom-0 inset-x-0 z-50 border-t border-bray-200 bg-gray-100">
+  <nav className="h-14 fixed bottom-0 inset-x-0 z-50 border-t border-bray-200 bg-gray-100">
     <div className="h-full px-8 flex items-center justify-between">
       <UserBottomNav />
       {/* TODO ロースターで切り替える */}
@@ -37,5 +37,5 @@ export const BottomNav: FC = memo(() => (
       </div>
       </div> */}
     </div>
-  </section>
+  </nav>
 ))
