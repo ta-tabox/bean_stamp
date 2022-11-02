@@ -1,6 +1,5 @@
 import type { FC } from 'react'
 import { memo } from 'react'
-import { Link } from 'react-router-dom'
 
 import { SideNavLink } from '@/components/Elements/Link'
 import { useAuth } from '@/features/auth'
@@ -18,84 +17,66 @@ export const UserSideNav: FC = memo(() => {
       {/* ユーザーホームリンク */}
       <li className="mb-2">
         {/* TODO Linkまでコンポーネント化する パスはpropsで渡す */}
-        <Link to="/user/home">
-          <SideNavLink title="Home">
-            <svg className="h-8 w-8">
-              <use xlinkHref="#home" />
-            </svg>
-          </SideNavLink>
-        </Link>
+
+        <SideNavLink title="Home" to="/user/home">
+          <svg className="h-8 w-8">
+            <use xlinkHref="#home" />
+          </svg>
+        </SideNavLink>
       </li>
-      {/* マイページリンク */}
+      {/* TODO マイページリンク */}
       <li className="mb-2">
-        {/* TODO マイページリンク */}
-        <Link to="/user">
-          <SideNavLink title="User">
-            <svg className="h-8 w-8">
-              <use xlinkHref="#user" />
-            </svg>
-          </SideNavLink>
-        </Link>
+        <SideNavLink title="User" to="/user">
+          <svg className="h-8 w-8">
+            <use xlinkHref="#user" />
+          </svg>
+        </SideNavLink>
       </li>
-      {/* フォローリンク */}
+      {/* TODO フォローリンク */}
       <li className="mb-2">
-        {/* TODO フォローリンク */}
-        <Link to="/user">
-          <SideNavLink title="Follow">
-            <svg className="h-8 w-8">
-              <use xlinkHref="#star" />
-            </svg>
-          </SideNavLink>
-        </Link>
+        <SideNavLink title="Follow" to="/following">
+          <svg className="h-8 w-8">
+            <use xlinkHref="#star" />
+          </svg>
+        </SideNavLink>
       </li>
-      {/* ウォンツリンク */}
+      {/* TODO ウォンツリンク */}
       <li className="mb-2">
-        {/* TODO ウォンツリンク */}
-        <Link to="/user">
-          <SideNavLink title="Wants">
-            <svg className="h-8 w-8">
-              <use xlinkHref="#shopping-bag" />
-            </svg>
-          </SideNavLink>
-        </Link>
+        <SideNavLink title="Wants" to="/wants">
+          <svg className="h-8 w-8">
+            <use xlinkHref="#shopping-bag" />
+          </svg>
+        </SideNavLink>
       </li>
-      {/* お気に入りリンク */}
+      {/* TODO お気に入りリンク */}
       <li className="mb-2">
-        {/* TODO お気に入りリンク */}
-        <Link to="/user">
-          <SideNavLink title="Likes">
-            <svg className="h-8 w-8">
-              <use xlinkHref="#heart" />
-            </svg>
-          </SideNavLink>
-        </Link>
+        <SideNavLink title="Likes" to="/likes">
+          <svg className="h-8 w-8">
+            <use xlinkHref="#heart" />
+          </svg>
+        </SideNavLink>
       </li>
-      {/* 検索リンク */}
+      {/* TODO 検索リンク */}
       <li className="mb-2">
-        {/* TODO 検索リンク */}
-        <Link to="/user">
-          <SideNavLink title="Search">
-            <svg className="h-8 w-8">
-              <use xlinkHref="#search" />
-            </svg>
-          </SideNavLink>
-        </Link>
+        <SideNavLink title="Search" to="/search">
+          <svg className="h-8 w-8">
+            <use xlinkHref="#search" />
+          </svg>
+        </SideNavLink>
       </li>
       {/* 共通 */}
       {/* ヘルプリンク */}
       <li className="mb-2">
-        <Link to="/help">
-          <SideNavLink title="Help">
-            <svg className="h-8 w-8">
-              <use xlinkHref="#question-mark-circle" />
-            </svg>
-          </SideNavLink>
-        </Link>
+        <SideNavLink title="Help" to="/help">
+          <svg className="h-8 w-8">
+            <use xlinkHref="#question-mark-circle" />
+          </svg>
+        </SideNavLink>
       </li>
       {/* ログアウトリンク */}
       <li className="mb-2">
         <button type="button" onClick={handleClickSingout}>
-          <SideNavLink title="SignOut">
+          <SideNavLink title="SignOut" to="#">
             <svg className="h-8 w-8">
               <use xlinkHref="#logout" />
             </svg>
