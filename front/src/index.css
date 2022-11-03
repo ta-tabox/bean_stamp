@@ -343,16 +343,16 @@
 }
 
 /* hamburgerメニュー */
-.drawer-menu {
+/* .drawer-menu {
   @apply w-screen bg-gray-600 bg-opacity-90 fixed top-0 bottom-14 left-full;
   transition: left 0.5s;
-}
-.drawer-open .drawer-menu {
+} */
+/* .drawer-open .drawer-menu {
   @apply left-0;
-}
-.drawer-nav-item {
-  @apply block w-full h-full pl-8 py-4 text-lg text-white hover:text-gray-800 hover:bg-gray-400;
-}
+} */
+/* .drawer-nav-item {
+  @apply block w-full h-full pl-8 py-4 text-lg text-red-400 hover:text-gray-800 hover:bg-gray-400;
+} */
 
 /* seact-relect */
 .rs__control {
