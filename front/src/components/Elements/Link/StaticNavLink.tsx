@@ -11,10 +11,10 @@ export const StaticNavLink: FC<Props> = memo((props) => {
   const { to, children } = props
   return (
     <Link
-      to={`${to}`}
-      className="w-20 h-full px-2 flex justify-center items-center text-gray-900 hover:text-white hover:bg-gray-800 e-font"
+      to={to}
+      className="md:w-20 h-full px-2 flex justify-center items-center text-gray-900 hover:text-white hover:bg-gray-800 e-font"
     >
-      {`${children}`}
+      {children}
     </Link>
   )
 })

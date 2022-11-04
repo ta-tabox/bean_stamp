@@ -15,8 +15,8 @@ export const TopButton: FC = memo(() => {
     }
   }
   return (
-    <button type="button" onClick={onClickHome} className="h-full pl-2 md:pl-12 logo-font md:text-xl">
-      <h1 className="h-full px-2 flex justify-center items-center text-gray-900">Bean Stamp</h1>
+    <button type="button" onClick={onClickHome}>
+      <h1 className="logo-font md:text-xl h-full px-2 text-gray-900">Bean Stamp</h1>
     </button>
   )
 })

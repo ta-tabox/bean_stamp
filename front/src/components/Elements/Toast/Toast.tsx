@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 export const Toast: FC = memo(() => (
   <ToastContainer
-    position="bottom-right"
+    position="top-right"
     autoClose={3000}
     hideProgressBar
     newestOnTop={false}

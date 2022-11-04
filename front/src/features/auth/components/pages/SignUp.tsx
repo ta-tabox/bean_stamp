@@ -11,6 +11,7 @@ import { NotificationMessage } from '@/components/Elements/Notification'
 import { FormContainer, FormFooter, FormMain, FormTitle } from '@/components/Form'
 import { Head } from '@/components/Head'
 import { useAuth } from '@/features/auth'
+import { GuestSignInButton } from '@/features/auth/components/atoms/GuestSignInButton'
 import type { SignUpParams } from '@/features/auth/types'
 import type { PrefectureOption } from '@/features/users'
 import { EmailInput, PasswordInput, PrefectureSelect, UserNameInput } from '@/features/users'
@@ -19,7 +20,6 @@ import { useMessage } from '@/hooks/useMessage'
 import { useNotification } from '@/hooks/useNotification'
 
 import type { FieldError, SubmitHandler } from 'react-hook-form'
-import { GuestSignInButton } from '@/features/auth/components/atoms/GuestSignInButton'
 
 // react-hook-formで取り扱うデータの型
 type SignUpSubmitData = SignUpParams & {
