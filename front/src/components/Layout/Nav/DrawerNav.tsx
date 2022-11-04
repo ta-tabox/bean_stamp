@@ -29,7 +29,7 @@ export const DrawerNav: FC<Props> = (props) => {
   }
 
   return (
-    <Drawer open={isOpen} onClose={toggleDrawer} direction="right" size={150}>
+    <Drawer open={isOpen} onClose={toggleDrawer} direction="right" size={170}>
       <div className="absolute bottom-0 inset-x-0">
         <ul className="flex flex-col w-full text-left ml-auto">
           {/* TODO リンクの作成 */}
