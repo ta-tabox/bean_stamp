@@ -16,6 +16,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "axios-case-converter": "^0.9.0",
+    "hamburger-react": "^2.5.0",
     "react": "^18.2.0",
     "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",

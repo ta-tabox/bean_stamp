@@ -5,8 +5,8 @@ import { useRecoilValue } from 'recoil'
 
 import 'react-modern-drawer/dist/index.css'
 
+import { Hamburger } from '@/components/Elements/Hamburger'
 import { DrawerNavLink } from '@/components/Elements/Link'
-import { BottomNavItem } from '@/components/Layout/Nav/BottomNavItem'
 import { useAuth } from '@/features/auth'
 import { isRoasterState } from '@/stores/isRoaster'
 
@@ -61,13 +61,7 @@ export const DrawerNav: FC<Props> = (props) => {
           </li>
         </ul>
         <div className="h-14 pr-8 flex items-center justify-end">
-          <button type="button" onClick={toggleDrawer}>
-            <BottomNavItem>
-              <svg id="drawer-open-btn" className="w-8 h-8">
-                <use xlinkHref="#menu" />
-              </svg>
-            </BottomNavItem>
-          </button>
+          <Hamburger toggled={isOpen} toggle={toggleDrawer} />
         </div>
       </div>
     </Drawer>
