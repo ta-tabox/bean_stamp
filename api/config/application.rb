@@ -39,6 +39,7 @@ module BeanStamp
       g.test_framework :rspec, fixtures: true, view_specs: false, helper_specs: false, routing_specs: false
       g.assets false
       g.helper false
+      g.template_engine nil # view関係の生成をskip
     end
 
     # 認証トークンをremoteフォームに埋め込む

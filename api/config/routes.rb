@@ -55,6 +55,7 @@ Rails.application.routes.draw do
     end
   end
 
+  # APIとしてのルーティング
   namespace :api do
     get '/health_check', to: 'health_check#index'
     get '/test', to: 'test#index'
@@ -69,6 +70,12 @@ Rails.application.routes.draw do
       # deciseのcontrollerにルーティングを追加
       devise_scope :user do
         get 'auth/sessions/', to: 'auth/sessions#index'
+      end
+
+      resources :users, only: [:show] do
+        member do
+          get 'following', to: 'users#following' # api/v1/users/#{id}/following
+        end
       end
     end
   end
