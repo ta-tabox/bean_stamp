@@ -9,7 +9,7 @@ export const TopButton: FC = memo(() => {
   const { isSignedIn } = useAuth()
   const onClickHome = () => {
     if (isSignedIn) {
-      navigate('/user/home')
+      navigate('/users/home')
     } else {
       navigate('/')
     }

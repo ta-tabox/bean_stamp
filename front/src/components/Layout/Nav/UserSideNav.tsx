@@ -18,7 +18,7 @@ export const UserSideNav: FC = memo(() => {
       <li className="mb-2">
         {/* TODO Linkまでコンポーネント化する パスはpropsで渡す */}
 
-        <SideNavLink title="Home" to="/user/home">
+        <SideNavLink title="Home" to="/users/home">
           <svg className="h-8 w-8">
             <use xlinkHref="#home" />
           </svg>

@@ -54,7 +54,7 @@ export const SignUp: FC = memo(() => {
       await signUp(params)
       setIsError(false)
       showMessage({ message: 'ユーザー登録が完了しました', type: 'success' })
-      navigate('/user/home')
+      navigate('/users/home')
     } catch (error) {
       if (error instanceof AxiosError) {
         setIsError(true)

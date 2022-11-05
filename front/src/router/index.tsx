@@ -33,7 +33,7 @@ export const AppRouter: FC = () => {
       </Route>
       {/* ログイン済みを要求 */}
       <Route element={<ProtectedRoute />}>
-        <Route path="user/*" element={<UsersRoutes />} />
+        <Route path="users/*" element={<UsersRoutes />} />
       </Route>
       <Route path="*" element={<Page404 />} />
     </Routes>

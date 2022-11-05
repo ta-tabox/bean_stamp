@@ -19,7 +19,7 @@ export const Header: FC = memo(() => {
           <ul className="flex h-full items-center md:items-stretch">
             <li className="border-r border-gray-300 md:border-none">
               {isSignedIn ? (
-                <StaticNavLink to="/user/home">HOME</StaticNavLink>
+                <StaticNavLink to="/users/home">HOME</StaticNavLink>
               ) : (
                 <StaticNavLink to="/">HOME</StaticNavLink>
               )}

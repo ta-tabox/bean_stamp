@@ -8,7 +8,7 @@ export const UserBottomNav: FC = memo(() => (
   <>
     {/* ユーザー用 */}
     {/* User Homeリンク */}
-    <Link to="/user/home">
+    <Link to="/users/home">
       <BottomNavItem>
         <svg className="w-8 h-8">
           <use xlinkHref="#home-solid" />
