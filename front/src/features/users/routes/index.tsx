@@ -2,6 +2,7 @@ import type { FC } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { MainLayout } from '@/components/Layout/MainLayout'
+import { User } from '@/features/users/components/pages/User'
 import { UserCancel } from '@/features/users/components/pages/UserCancel'
 import { UserEdit } from '@/features/users/components/pages/UserEdit'
 import { UserHome } from '@/features/users/components/pages/UserHome'
@@ -15,6 +16,7 @@ export const UsersRoutes: FC = () => (
       <Route path="edit" element={<UserEdit />} />
       <Route path="management" element={<UserManagement />} />
       <Route path="cancel" element={<UserCancel />} />
+      <Route path=":id" element={<User />} />
       <Route path="*" element={<Navigate to="." />} />
     </Route>
   </Routes>

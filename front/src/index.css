@@ -173,9 +173,9 @@
 }
 
 /* card */
-.card {
+/* .card {
   @apply container sm:w-11/12 mx-auto py-2 sm:py-4 bg-white md:rounded-lg border border-gray-100 md:shadow-md;
-}
+} */
 
 .grid-container {
   @apply lg:grid content-between;

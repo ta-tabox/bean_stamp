@@ -6,27 +6,29 @@ import { useAuth } from '@/features/auth'
 
 // ユーザー用
 export const UserSideNav: FC = memo(() => {
-  const { signOut } = useAuth()
+  const { signOut, user } = useAuth()
 
   const handleClickSignOut = () => {
     signOut()
+  }
+
+  if (typeof user === null) {
+    return null
   }
 
   return (
     <ul className="flex flex-col">
       {/* ユーザーホームリンク */}
       <li className="mb-2">
-        {/* TODO Linkまでコンポーネント化する パスはpropsで渡す */}
-
         <SideNavLink title="Home" to="/users/home">
           <svg className="h-8 w-8">
             <use xlinkHref="#home" />
           </svg>
         </SideNavLink>
       </li>
-      {/* TODO マイページリンク */}
+      {/* マイページリンク */}
       <li className="mb-2">
-        <SideNavLink title="User" to="/user">
+        <SideNavLink title="User" to={user ? `/users/${user.id}` : '#'}>
           <svg className="h-8 w-8">
             <use xlinkHref="#user" />
           </svg>
@@ -34,7 +36,7 @@ export const UserSideNav: FC = memo(() => {
       </li>
       {/* TODO フォローリンク */}
       <li className="mb-2">
-        <SideNavLink title="Follow" to="/following">
+        <SideNavLink title="Follow" to={user ? `/users/${user.id}/following` : '#'}>
           <svg className="h-8 w-8">
             <use xlinkHref="#star" />
           </svg>

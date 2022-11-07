@@ -6,7 +6,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil'
 
 import type { AuthHeaders, SignInParams, SignUpParams } from '@/features/auth'
 import { deleteUserReq } from '@/features/auth/api/deleteUser'
-import { getUser } from '@/features/auth/api/getUser'
+import { getSignInUser } from '@/features/auth/api/getSignInUser'
 import { signInWithEmailAndPassword } from '@/features/auth/api/signIn'
 import { signOutReq } from '@/features/auth/api/signOut'
 import { signUpWithSignUpParams } from '@/features/auth/api/signUp'
@@ -150,7 +150,7 @@ export const useAuth = () => {
     setLoading(true)
     const headers = setAuthHeaders()
 
-    getUser(headers)
+    getSignInUser(headers)
       .then((res) => {
         if (res.data.isLogin) {
           setIsSignedIn(true)

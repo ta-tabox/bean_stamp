@@ -5,7 +5,7 @@ type CurrentUserResponse = UserResponse & {
   isLogin: boolean
 }
 
-export const getUser = (headers: AuthHeaders) => {
+export const getSignInUser = (headers: AuthHeaders) => {
   const { uid, client, accessToken } = headers
 
   return axios.get<CurrentUserResponse>('/auth/sessions', {

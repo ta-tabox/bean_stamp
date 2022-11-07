@@ -9,6 +9,7 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   def initialize(*)
     super
+    # TODO: asset_hostをSPAに対応する develop時にAPI_DOMAINを指すように変更する
     return unless Rails.env.production?
 
     self.asset_host = Rails.application.credentials.dig(:aws, :s3_host)
