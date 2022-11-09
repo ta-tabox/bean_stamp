@@ -31,7 +31,8 @@ services:
     stdin_open: true # -itオプションと同等の効果
     tty: true
     environment:
-      API_DOMAIN: "localhost:$FRONT_PORT" # corsで許可するorigin
+      FRONT_DOMAIN: "localhost:$FRONT_PORT" # corsで許可するorigin
+      API_HOST: "http://localhost:$API_PORT" # FRONTから画像のURLを参照する
       SELENIUM_DRIVER_URL: http://selenium_chrome:4444/wd/hub
       WEBPACKER_DEV_SERVER_HOST: webpacker
 

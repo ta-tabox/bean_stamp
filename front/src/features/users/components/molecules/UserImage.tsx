@@ -10,8 +10,7 @@ type Props = {
 export const UserImage: FC<Props> = (props) => {
   const { user } = props
 
-  // TODO APIURLの設定を変更する
-  const imageUrl = user.image.url ? `http://localhost:3000/${user.image.url}` : defaultUserImage
+  const imageUrl = user.image.url ? `${user.image.url}` : defaultUserImage
 
   return (
     <img
