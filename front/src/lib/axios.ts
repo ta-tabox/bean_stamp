@@ -1,7 +1,7 @@
 import Axios from 'axios'
 import applyCaseMiddleware from 'axios-case-converter'
 
-import { API_URL } from '@/config'
+import { API_HOST } from '@/config'
 
 // applyCaseMiddleware:
 // axiosで受け取ったレスポンスの値をスネークケース→キャメルケースに変換
@@ -14,7 +14,7 @@ const options = {
 
 const axios = applyCaseMiddleware(
   Axios.create({
-    baseURL: API_URL,
+    baseURL: `${API_HOST}/api/v1`,
     headers: {
       'Content-Type': 'application/json',
     },

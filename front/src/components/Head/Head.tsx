@@ -2,7 +2,7 @@ import type { FC } from 'react'
 
 import { Helmet } from 'react-helmet-async'
 
-import { APP_NAME, FRONT_URL } from '@/config'
+import { APP_NAME, FRONT_HOST } from '@/config'
 
 type HeadProps = {
   title?: string
@@ -16,7 +16,7 @@ export const Head: FC<HeadProps> = (props) => {
   return (
     <Helmet title={title ? `${title} | ${APP_NAME}` : undefined} defaultTitle={`${APP_NAME}`}>
       <meta name="description" content={description ?? 'Bean Stampはコーヒー愛好家とロースターを繋ぐサービスです。'} />
-      <link rel="canonical" href={`${FRONT_URL}/${path ?? ''}`} />
+      <link rel="canonical" href={`${FRONT_HOST}/${path ?? ''}`} />
 
       <link rel="icon" type="image/svg+xml" href="#" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />

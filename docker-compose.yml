@@ -65,9 +65,8 @@ services:
       args:
         WORKDIR: $WORKDIR
         CONTAINER_PORT: $CONTAINER_PORT
-        # WARNING api/v1はFRONT側のコードで指定する http://の部分はいるのか？ API_DOMAIN, FRONT_DOMAINではダメ？
-        API_URL: "http://localhost:$API_PORT/api/v1"
-        FRONT_URL: "http://localhost:$FRONT_PORT"
+        API_HOST: "http://localhost:$API_PORT/"
+        FRONT_HOST: "http://localhost:$FRONT_PORT"
     volumes:
       - ./front:/$WORKDIR
     command: sh -c "yarn run dev"
