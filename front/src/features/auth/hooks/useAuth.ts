@@ -52,6 +52,8 @@ export const useAuth = () => {
     accessToken: cookies['access-token'] as string,
   })
 
+  const authHeaders = setAuthHeaders()
+
   // Recoilでグローバルステートを定義
   // Getterを定義
   const user = useRecoilValue(userState)
@@ -171,5 +173,5 @@ export const useAuth = () => {
       })
   }
 
-  return { signUp, signIn, signOut, deleteUser, loadUser, loading, user, isSignedIn, setAuthHeaders }
+  return { signUp, signIn, signOut, deleteUser, loadUser, loading, user, isSignedIn, setAuthHeaders, authHeaders }
 }

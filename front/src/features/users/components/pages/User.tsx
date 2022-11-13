@@ -20,7 +20,8 @@ export const User: FC = () => {
   useEffect(() => {
     const headers = setAuthHeaders()
 
-    if (urlParams.id) {
+    // urlParams.idが数値かどうか評価
+    if (urlParams.id && !Number.isNaN(parseInt(urlParams.id, 10))) {
       setLoading(true)
       getUser(headers, urlParams.id)
         .then((response) => {
