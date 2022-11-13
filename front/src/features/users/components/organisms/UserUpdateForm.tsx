@@ -1,11 +1,12 @@
-import type { Dispatch, FC, SetStateAction } from 'react'
-import { useState } from 'react'
+import type { ChangeEvent, Dispatch, FC, SetStateAction } from 'react'
+import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { AxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
 
 import { PrimaryButton } from '@/components/Elements/Button'
+import { ImagePreview } from '@/components/Form'
 import { useAuth } from '@/features/auth'
 import { updateUser } from '@/features/users/api/updateUser'
 import { EmailInput } from '@/features/users/components/molecules/EmailInput'
@@ -39,6 +40,7 @@ export const UserUpdateForm: FC<Props> = (props) => {
   const userPrefectureCodeIndex = parseInt(user.prefectureCode, 10) - 1 // id -> 配列のindex合わせるため-1を行う
 
   const [loading, setLoading] = useState(false)
+  const [previewImage, setPreviewImage] = useState<Array<string>>()
 
   const {
     register,
@@ -56,7 +58,7 @@ export const UserUpdateForm: FC<Props> = (props) => {
   })
 
   // TODO メールアドレスを変更すると認証情報が変わるため、再ログインが必要になる
-  const onSubmit: SubmitHandler<UserUpdateDate> = async (data) => {
+  const onSubmit: SubmitHandler<UserUpdateDate> = useCallback(async (data) => {
     const createFormData = () => {
       const formData = new FormData()
       // 画像が選択されていない場合は更新しない
@@ -95,16 +97,21 @@ export const UserUpdateForm: FC<Props> = (props) => {
     loadUser()
     showMessage({ message: 'ユーザー情報を変更しました', type: 'success' })
     navigate('/users/home')
+  }, [])
+
+  const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setPreviewImage([URL.createObjectURL(e.target.files[0])])
+    }
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {/* プレビューフィールド */}
-      <div id="preview" />
-      {/* <%= f.hidden_field :image_cache %> */}
+      {previewImage && <ImagePreview images={previewImage} />}
 
       {/* ファイル */}
-      <UserImageInput label="image" register={register} error={errors.image} />
+      <UserImageInput label="image" register={register} error={errors.image} onChange={handleChangeImage} />
 
       {/* 名前 */}
       <UserNameInput label="name" register={register} error={errors.name} />

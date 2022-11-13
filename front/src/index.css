@@ -130,7 +130,7 @@
 }
 
 /* image preview */
-.image-container {
+/* .image-container {
   @apply flex flex-wrap;
 }
 .image-item {
@@ -139,7 +139,7 @@
 
 #preview-title {
   @apply text-gray-500 text-center text-sm;
-}
+} */
 
 /* select-box */
 /* .select-box {
