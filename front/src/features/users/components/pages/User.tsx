@@ -13,17 +13,15 @@ export const User: FC = () => {
   const [user, setUser] = useState<UserType>()
   const [loading, setLoading] = useState(false)
   const urlParams = useParams<{ id: string }>()
-  const { setAuthHeaders } = useAuth()
+  const { authHeaders } = useAuth()
   const { showMessage } = useMessage()
   const navigate = useNavigate()
 
   useEffect(() => {
-    const headers = setAuthHeaders()
-
     // urlParams.idが数値かどうか評価
     if (urlParams.id && !Number.isNaN(parseInt(urlParams.id, 10))) {
       setLoading(true)
-      getUser(headers, urlParams.id)
+      getUser(authHeaders, urlParams.id)
         .then((response) => {
           setUser(response.data)
         })

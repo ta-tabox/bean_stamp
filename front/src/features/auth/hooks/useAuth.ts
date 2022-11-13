@@ -110,9 +110,8 @@ export const useAuth = () => {
   // サインアウト
   const signOut = () => {
     setLoading(true)
-    const headers = setAuthHeaders()
 
-    signOutReq(headers)
+    signOutReq(authHeaders)
       .then(() => {
         // 認証情報をのcookieを削除
         removeAuthCookies()
@@ -132,9 +131,8 @@ export const useAuth = () => {
   // アカウントの削除
   const deleteUser = async () => {
     setLoading(true)
-    const headers = setAuthHeaders()
 
-    await deleteUserReq(headers)
+    await deleteUserReq(authHeaders)
       .then(() => {
         // 認証情報をのcookieを削除
         removeAuthCookies()
@@ -150,9 +148,8 @@ export const useAuth = () => {
 
   const loadUser = () => {
     setLoading(true)
-    const headers = setAuthHeaders()
 
-    getSignInUser(headers)
+    getSignInUser(authHeaders)
       .then((res) => {
         if (res.data.isLogin) {
           setIsSignedIn(true)
@@ -173,5 +170,5 @@ export const useAuth = () => {
       })
   }
 
-  return { signUp, signIn, signOut, deleteUser, loadUser, loading, user, isSignedIn, setAuthHeaders, authHeaders }
+  return { signUp, signIn, signOut, deleteUser, loadUser, loading, user, isSignedIn, authHeaders }
 }
