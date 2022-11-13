@@ -11,6 +11,7 @@ import { updateUser } from '@/features/users/api/updateUser'
 import { EmailInput } from '@/features/users/components/molecules/EmailInput'
 import { PrefectureSelect } from '@/features/users/components/molecules/PrefectureSelect'
 import { UserDescribeInput } from '@/features/users/components/molecules/UserDescribeInput'
+import { UserImageInput } from '@/features/users/components/molecules/UserImageInput'
 import { UserNameInput } from '@/features/users/components/molecules/UserNameInput'
 import type { User, UserUpdateParams } from '@/features/users/types'
 import { useMessage } from '@/hooks/useMessage'
@@ -54,14 +55,24 @@ export const UserUpdateForm: FC<Props> = (props) => {
     },
   })
 
+  // TODO メールアドレスを変更すると認証情報が変わるため、再ログインが必要になる
   const onSubmit: SubmitHandler<UserUpdateDate> = async (data) => {
-    const params: UserUpdateParams = {
-      name: data.name,
-      email: data.email,
-      prefectureCode: data.prefectureOption.value.toString(),
-      describe: data.describe,
-      image: data.image,
+    const createFormData = () => {
+      const formData = new FormData()
+      // 画像が選択されていない場合は更新しない
+      if (data.image[0]) {
+        formData.append('image', data.image[0])
+      }
+      formData.append('name', data.name)
+      formData.append('email', data.email)
+      formData.append('prefecture_code', data.prefectureOption.value.toString())
+      if (data.describe) {
+        formData.append('describe', data.describe)
+      }
+      return formData
     }
+
+    const formData = createFormData()
 
     if (user.guest) {
       showMessage({ message: 'ゲストユーザーの編集はできません', type: 'error' })
@@ -70,7 +81,7 @@ export const UserUpdateForm: FC<Props> = (props) => {
 
     try {
       setLoading(true)
-      await updateUser({ headers: authHeaders, params })
+      await updateUser({ headers: authHeaders, formData })
       setIsError(false)
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -82,12 +93,19 @@ export const UserUpdateForm: FC<Props> = (props) => {
     }
 
     loadUser()
-    showMessage({ message: 'ユーザー登録が完了しました', type: 'success' })
+    showMessage({ message: 'ユーザー情報を変更しました', type: 'success' })
     navigate('/users/home')
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      {/* プレビューフィールド */}
+      <div id="preview" />
+      {/* <%= f.hidden_field :image_cache %> */}
+
+      {/* ファイル */}
+      <UserImageInput label="image" register={register} error={errors.image} />
+
       {/* 名前 */}
       <UserNameInput label="name" register={register} error={errors.name} />
 

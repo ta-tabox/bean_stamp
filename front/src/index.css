@@ -116,14 +116,14 @@
 .input-icon-field {
   @apply absolute left-0 inset-y-0 flex items-center;
 }
-
+/*
 .input-icon-field svg {
   @apply h-7 w-7 ml-3 text-gray-400 p-1;
 }
 
 .input-icon-field i {
   @apply ml-3 text-gray-400 p-1;
-}
+} */
 
 .label {
   @apply text-gray-500 text-sm font-medium;

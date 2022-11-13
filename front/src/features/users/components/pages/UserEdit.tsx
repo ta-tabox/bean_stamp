@@ -37,17 +37,6 @@ export const UserEdit: FC = () => {
 
               <UserUpdateForm user={user} setIsError={setIsError} />
 
-              {/* プレビューフィールド */}
-              <div id="preview" />
-              {/* 画像フィールド */}
-              <div className="input-container bg-white">
-                {/* <%= f.file_field :image, accept:"image/*", class: "input-field", id: 'input-image' %> */}
-                <div className="input-icon-field">
-                  <i className="fa-solid fa-image fa-lg" />
-                </div>
-                {/* <%= f.hidden_field :image_cache %> */}
-              </div>
-
               <FormFooter>
                 <Link to="/users/cancel">退会する</Link>
                 {/* TODO パスワード変更ページの作成 */}
