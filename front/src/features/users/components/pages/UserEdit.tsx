@@ -38,9 +38,8 @@ export const UserEdit: FC = () => {
               <UserUpdateForm user={user} setIsError={setIsError} />
 
               <FormFooter>
-                <Link to="/users/cancel">退会する</Link>
-                {/* TODO パスワード変更ページの作成 */}
                 <Link to="/users/password">パスワード変更</Link>
+                <Link to="/users/cancel">退会する</Link>
               </FormFooter>
             </FormMain>
           </FormContainer>

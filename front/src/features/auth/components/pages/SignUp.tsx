@@ -36,6 +36,7 @@ export const SignUp: FC = memo(() => {
 
   const {
     register,
+    watch,
     handleSubmit,
     formState: { dirtyFields, errors },
     control,
@@ -90,7 +91,7 @@ export const SignUp: FC = memo(() => {
               {/* パスワード確認 */}
               <PasswordConfirmationInput
                 label="passwordConfirmation"
-                targetValue="password"
+                targetValue={watch('password')}
                 register={register}
                 error={errors.passwordConfirmation}
               />
