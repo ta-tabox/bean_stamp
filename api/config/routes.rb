@@ -74,7 +74,7 @@ Rails.application.routes.draw do
 
       resources :users, only: [:show] do
         member do
-          get 'following', to: 'users#following' # api/v1/users/#{id}/following
+          get 'roasters_followed_by_user', to: 'users#roasters_followed_by_user' # api/v1/users/#{id}/roasters_followed_by_user
         end
       end
     end

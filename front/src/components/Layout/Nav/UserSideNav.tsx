@@ -3,10 +3,16 @@ import { memo } from 'react'
 
 import { SideNavLink } from '@/components/Elements/Link'
 import { useAuth } from '@/features/auth'
+import type { User } from '@/features/users'
+
+type Props = {
+  user: User
+}
 
 // ユーザー用
-export const UserSideNav: FC = memo(() => {
-  const { signOut, user } = useAuth()
+export const UserSideNav: FC<Props> = memo((props) => {
+  const { user } = props
+  const { signOut } = useAuth()
 
   const handleClickSignOut = () => {
     signOut()
@@ -28,7 +34,7 @@ export const UserSideNav: FC = memo(() => {
       </li>
       {/* マイページリンク */}
       <li className="mb-2">
-        <SideNavLink title="User" to={user ? `/users/${user.id}` : '#'}>
+        <SideNavLink title="User" to={`/users/${user.id}`}>
           <svg className="h-8 w-8">
             <use xlinkHref="#user" />
           </svg>
@@ -36,7 +42,7 @@ export const UserSideNav: FC = memo(() => {
       </li>
       {/* TODO フォローリンク */}
       <li className="mb-2">
-        <SideNavLink title="Follow" to={user ? `/users/${user.id}/following` : '#'}>
+        <SideNavLink title="Follow" to={`/users/${user.id}/following`}>
           <svg className="h-8 w-8">
             <use xlinkHref="#star" />
           </svg>

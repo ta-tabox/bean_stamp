@@ -7,10 +7,12 @@ import { Hamburger } from '@/components/Elements/Hamburger'
 import { DrawerNav } from '@/components/Layout/Nav/DrawerNav'
 import { RoasterBottomNav } from '@/components/Layout/Nav/RoasterBottomNav'
 import { UserBottomNav } from '@/components/Layout/Nav/UserBottomNav'
+import { useAuth } from '@/features/auth'
 import { isRoasterState } from '@/stores/isRoaster'
 
 export const BottomNav: FC = () => {
   const isRoaster = useRecoilValue(isRoasterState)
+  const { user } = useAuth()
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -20,11 +22,15 @@ export const BottomNav: FC = () => {
 
   return (
     <nav className="h-14 fixed bottom-0 inset-x-0 z-50 border-t border-bray-200 bg-gray-100">
-      <div className="h-full px-8 flex items-center justify-between">
-        {isRoaster ? <RoasterBottomNav /> : <UserBottomNav />}
-        <Hamburger toggled={isOpen} toggle={toggleDrawer} />
-      </div>
-      <DrawerNav isOpen={isOpen} setIsOpen={setIsOpen} />
+      {user && (
+        <>
+          <div className="h-full px-8 flex items-center justify-between">
+            {isRoaster ? <RoasterBottomNav /> : <UserBottomNav />}
+            <Hamburger toggled={isOpen} toggle={toggleDrawer} />
+          </div>
+          <DrawerNav user={user} isOpen={isOpen} setIsOpen={setIsOpen} />
+        </>
+      )}
     </nav>
   )
 }
