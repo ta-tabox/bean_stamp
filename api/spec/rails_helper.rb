@@ -75,6 +75,9 @@ RSpec.configure do |config|
     fixture_path = Rails.root.join('spec/initial_data')
     SeedFu.seed(fixture_path)
   end
+
+  # devise-token-auth用の認証モジュールを読み込む
+  config.include AuthorizationSpecHelper, type: :request
 end
 
 # Shoulda Matchersの設定
