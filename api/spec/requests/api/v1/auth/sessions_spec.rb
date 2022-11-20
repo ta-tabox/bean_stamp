@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Api::V1::Auth::Sessions', type: :request, focus: true do
+RSpec.describe 'Api::V1::Auth::Sessions', type: :request do
   let(:user) { create(:user) }
 
   describe 'GET /index' do
