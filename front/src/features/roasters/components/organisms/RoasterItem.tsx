@@ -1,8 +1,10 @@
 import type { FC } from 'react'
 
+import defaultRoasterImage from '@/features/roasters/assets/defaultRoaster.png'
+
 type Props = {
   id: number
-  imageUrl: string
+  imageUrl: string | null
   roasterName: string
   area: string
   address: string
@@ -23,7 +25,7 @@ export const RoasterItem: FC<Props> = (props) => {
           <div className="mb-2.5 sm:mb-0 sm:mr-4 flex-none">
             <img
               className="object-cover w-20 h-20 border-2 border-indigo-500 rounded-full"
-              src={imageUrl}
+              src={imageUrl ?? defaultRoasterImage}
               alt={`${roasterName}の画像`}
             />
           </div>

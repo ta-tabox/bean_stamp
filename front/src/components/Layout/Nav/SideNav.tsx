@@ -12,6 +12,9 @@ import { isRoasterState } from '@/stores/isRoaster'
 export const SideNav: FC = memo(() => {
   const { user } = useAuth()
   const isRoaster = useRecoilValue(isRoasterState)
+
+  // TODO roasterの定義とfitchメソッドの作成 toggle buttonにpropsにとして渡す
+
   return (
     <nav className="h-full w-28">
       {user && (
@@ -30,7 +33,7 @@ export const SideNav: FC = memo(() => {
           </div>
           {/* Roaster 切り替え */}
           <div className="mb-8">
-            <SideNavRoasterToggleButton />
+            <SideNavRoasterToggleButton user={user} />
           </div>
         </div>
       )}

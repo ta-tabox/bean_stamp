@@ -9,7 +9,6 @@ import { Spinner } from '@/components/Elements/Spinner'
 import { Head } from '@/components/Head'
 import { useAuth } from '@/features/auth'
 import type { Roaster } from '@/features/roasters'
-import defaultRoasterImage from '@/features/roasters/assets/defaultRoaster.png'
 import { RoasterItem } from '@/features/roasters/components/organisms/RoasterItem'
 import { getRoastersFollowedByUser } from '@/features/users/api/getRoastersFollowedByUser'
 import { getUser } from '@/features/users/api/getUser'
@@ -85,7 +84,7 @@ export const UserFollowing: FC = memo(() => {
                     area={translatePrefectureCodeToName(roaster.prefectureCode)}
                     address={roaster.address}
                     describe={roaster.describe ?? ''}
-                    imageUrl={roaster.image.url ? `${roaster.image.url}` : defaultRoasterImage}
+                    imageUrl={roaster.image.url}
                     onClick={handleClickRoaster}
                   />
                 </li>
