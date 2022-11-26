@@ -2,6 +2,8 @@ import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 
+import { ContentHeader } from '@/components/Elements/Header'
+import { ContentHeaderTitle } from '@/components/Elements/Header/ContentHeaderTitle'
 import { Spinner } from '@/components/Elements/Spinner'
 import { useAuth } from '@/features/auth'
 import { getUser } from '@/features/users/api/getUser'
@@ -39,11 +41,12 @@ export const User: FC = () => {
 
   return (
     <>
-      <header className="header">
-        <div className="h-full w-11/12 mx-auto flex justify-start items-end">
-          <h1 className="page-title">ユーザー詳細</h1>
+      <ContentHeader>
+        <div className="h-full flex justify-start items-end">
+          <ContentHeaderTitle title="ユーザー詳細" />
         </div>
-      </header>
+      </ContentHeader>
+
       <section>
         {loading && (
           <div className="flex justify-center">

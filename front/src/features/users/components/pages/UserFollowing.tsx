@@ -3,6 +3,8 @@ import { useState, useEffect, memo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { Card } from '@/components/Elements/Card'
+import { ContentHeader } from '@/components/Elements/Header'
+import { ContentHeaderTitle } from '@/components/Elements/Header/ContentHeaderTitle'
 import { Spinner } from '@/components/Elements/Spinner'
 import { Head } from '@/components/Head'
 import { useAuth } from '@/features/auth'
@@ -10,6 +12,9 @@ import type { Roaster } from '@/features/roasters'
 import defaultRoasterImage from '@/features/roasters/assets/defaultRoaster.png'
 import { RoasterItem } from '@/features/roasters/components/organisms/RoasterItem'
 import { getRoastersFollowedByUser } from '@/features/users/api/getRoastersFollowedByUser'
+import { getUser } from '@/features/users/api/getUser'
+import { UserCard } from '@/features/users/components/organisms/UserCard'
+import type { User } from '@/features/users/types'
 import { useMessage } from '@/hooks/useMessage'
 import { translatePrefectureCodeToName } from '@/utils/prefecture'
 
@@ -19,26 +24,38 @@ export const UserFollowing: FC = memo(() => {
   const { authHeaders } = useAuth()
   const { showMessage } = useMessage()
 
+  const [user, setUser] = useState<User>()
   const [roasters, setRoasters] = useState<Array<Roaster>>([])
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    if (urlParams.id && !Number.isNaN(parseInt(urlParams.id, 10))) {
-      setLoading(true)
-      getRoastersFollowedByUser({ headers: authHeaders, id: urlParams.id })
-        .then((response) => {
+    const fetchData = async () => {
+      // urlParams.idが数値かどうか評価
+      if (urlParams.id && !Number.isNaN(parseInt(urlParams.id, 10))) {
+        // urlからユーザー情報を取得
+        await getUser(authHeaders, urlParams.id).then((response) => {
+          setUser(response.data)
+        })
+
+        // urlからユーザーがフォローしているロースターを取得
+        await getRoastersFollowedByUser({ headers: authHeaders, id: urlParams.id }).then((response) => {
           setRoasters(response.data)
         })
-        .catch(() => {
-          navigate('/')
-          showMessage({ message: 'ユーザーが存在しません', type: 'error' })
-        })
-        .finally(() => {
-          setLoading(false)
-        })
+      }
     }
+
+    setLoading(true)
+    fetchData()
+      .catch(() => {
+        navigate('/')
+        showMessage({ message: 'ユーザーが存在しません', type: 'error' })
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }, [])
 
+  // TODO ロースタークリックした時のアクション, ロースターページへ遷移
   const handleClickRoaster = (id: number) => {
     alert(`RoasterId: ${id}`)
   }
@@ -46,7 +63,16 @@ export const UserFollowing: FC = memo(() => {
   return (
     <>
       <Head title="フォロー" />
-      {/* TODO ユーザー情報を載せる User.tsxを参考に */}
+      <ContentHeader>
+        <div className="h-full flex justify-start items-end">
+          <ContentHeaderTitle title="フォロー" />
+        </div>
+      </ContentHeader>
+
+      {/* ユーザー情報 */}
+      <section>{!loading && user && <UserCard user={user} />}</section>
+
+      {/* フォローしているロースター一覧 */}
       <section className="mt-4 mb-20 py-4 text-gray-600">
         <Card>
           {!loading && (

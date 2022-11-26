@@ -16,6 +16,7 @@ export const SideNavRoasterToggleButton: FC = memo(() => {
     <div>
       {/* TODO スタイル整える 感覚的に変更するのがわかるようにする */}
       <button type="submit" onClick={handleClick}>
+        {/* TODO リンク先を変更 ユーザー、ロースターイメージを使用する */}
         <img
           src={isRoaster ? 'https://source.unsplash.com/random' : 'https://source.unsplash.com/random'}
           alt=""
