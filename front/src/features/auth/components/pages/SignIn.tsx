@@ -45,7 +45,7 @@ export const SignIn: FC = memo(() => {
       await signIn(params, isRememberMe)
       setIsError(false)
       showMessage({ message: 'ログインしました', type: 'success' })
-      navigate('/user/home')
+      navigate('/users/home')
     } catch (error) {
       if (error instanceof AxiosError) {
         setIsError(true)

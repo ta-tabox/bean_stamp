@@ -9,7 +9,7 @@ type Props = {
 }
 
 export const RequireSignedOutRoute = (props: Props) => {
-  const { redirectPath = '/user/home', children } = props
+  const { redirectPath = '/users/home', children } = props
   const { isSignedIn } = useAuth()
 
   if (isSignedIn) {

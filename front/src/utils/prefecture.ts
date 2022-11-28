@@ -8,6 +8,12 @@ export interface Prefecture {
   value: string
 }
 
+// Selectメニューのprefectureオプションの型
+export type PrefectureOption = {
+  label: string
+  value: number
+}
+
 /**
  * 都道府県一覧
  */
@@ -69,3 +75,11 @@ export const translatePrefectureCodeToName = (prefectureCode: string) => {
   }
   return ''
 }
+
+// PrefectureArrayからreact-selectで取り扱うoptionの形に変換
+const convertToOption = (prefecture: Prefecture): PrefectureOption => ({
+  label: prefecture.label,
+  value: prefecture.id,
+})
+
+export const prefectureOptions = PrefectureArray.map(convertToOption)

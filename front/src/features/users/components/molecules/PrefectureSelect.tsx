@@ -4,8 +4,7 @@ import { Controller } from 'react-hook-form'
 import Select from 'react-select'
 
 import { AlertMessage, FormIconWrap, FormInputWrap } from '@/components/Form'
-import type { Prefecture } from '@/utils/prefecture'
-import { PrefectureArray } from '@/utils/prefecture'
+import { prefectureOptions } from '@/utils/prefecture'
 import { validation } from '@/utils/validation'
 
 import type { Control, FieldError } from 'react-hook-form'
@@ -16,20 +15,8 @@ type InputProps = {
   error?: FieldError
 }
 
-// Selectメニューのprefectureオプションの型
-export type PrefectureOption = {
-  label: string
-  value: number
-}
-
 export const PrefectureSelect: FC<InputProps> = (props) => {
   const { label, control, error } = props
-
-  // PrefectureArrayからreact-selectで取り扱うoptionの形に変換
-  const convertToOption = (prefecture: Prefecture): PrefectureOption => ({
-    label: prefecture.label,
-    value: prefecture.id,
-  })
 
   return (
     <>
@@ -42,13 +29,14 @@ export const PrefectureSelect: FC<InputProps> = (props) => {
           render={({ field }) => (
             <Select
               {...field}
-              options={PrefectureArray.map(convertToOption)}
+              options={prefectureOptions}
               isClearable
               styles={{ control: () => ({}), valueContainer: (provided) => ({ ...provided, padding: 0 }) }} // デフォルトのスタイルをクリア
               className="rs-container" // react-selectコンポーネントのクラス名
               classNamePrefix="rs" // react-selectコンポーネント化のクラスに"rs__"プリフィックスをつける
               noOptionsMessage={() => 'エリアが見つかりませんでした'}
               placeholder="エリアを選択"
+              // defaultValue={prefectureOptions[1]}
             />
           )}
         />

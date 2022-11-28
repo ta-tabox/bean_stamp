@@ -1,13 +1,22 @@
 import type { FC } from 'react'
 import { Link } from 'react-router-dom'
 
-export const SearchLink: FC = () => (
-  <Link to="/search">
-    <div className="py-2 px-4 bg-white text-gray-600 rounded-full border border-gray-200 hover:bg-gray-50 active:bg-gray-200 flex items-center">
-      <svg className="w-6 h-6">
-        <use xlinkHref="#search" />
-      </svg>
-      <p className="pl-4 text-xs md:text-sm">オファーを検索</p>
-    </div>
-  </Link>
-)
+type Props = {
+  target: 'roaster' | 'offer'
+}
+
+export const SearchLink: FC<Props> = (props) => {
+  const { target } = props
+  const title = target === 'roaster' ? 'ロースター' : 'オファー'
+  const link = target === 'roaster' ? '/search/roasters' : '/search/offers'
+  return (
+    <Link to={link}>
+      <div className="py-2 px-4 bg-white text-gray-600 text-center rounded-full border border-gray-200 hover:bg-gray-50 active:bg-gray-200 flex items-center">
+        <svg className="w-6 h-6">
+          <use xlinkHref="#search" />
+        </svg>
+        <p className="ml-2 pl-2 text-xs md:text-sm border-l border-gray-100">{`${title}を検索`}</p>
+      </div>
+    </Link>
+  )
+}

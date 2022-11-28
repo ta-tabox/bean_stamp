@@ -13,11 +13,11 @@ import { Head } from '@/components/Head'
 import { useAuth } from '@/features/auth'
 import { GuestSignInButton } from '@/features/auth/components/atoms/GuestSignInButton'
 import type { SignUpParams } from '@/features/auth/types'
-import type { PrefectureOption } from '@/features/users'
 import { EmailInput, PasswordInput, PrefectureSelect, UserNameInput } from '@/features/users'
 import { PasswordConfirmationInput } from '@/features/users/components/molecules/PasswordConfirmationInput'
 import { useMessage } from '@/hooks/useMessage'
 import { useNotification } from '@/hooks/useNotification'
+import type { PrefectureOption } from '@/utils/prefecture'
 
 import type { FieldError, SubmitHandler } from 'react-hook-form'
 
@@ -36,6 +36,7 @@ export const SignUp: FC = memo(() => {
 
   const {
     register,
+    watch,
     handleSubmit,
     formState: { dirtyFields, errors },
     control,
@@ -54,7 +55,7 @@ export const SignUp: FC = memo(() => {
       await signUp(params)
       setIsError(false)
       showMessage({ message: 'ユーザー登録が完了しました', type: 'success' })
-      navigate('/user/home')
+      navigate('/users/home')
     } catch (error) {
       if (error instanceof AxiosError) {
         setIsError(true)
@@ -90,7 +91,7 @@ export const SignUp: FC = memo(() => {
               {/* パスワード確認 */}
               <PasswordConfirmationInput
                 label="passwordConfirmation"
-                targetValue="password"
+                targetValue={watch('password')}
                 register={register}
                 error={errors.passwordConfirmation}
               />

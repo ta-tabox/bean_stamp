@@ -14,7 +14,7 @@ export const Home: FC = memo(() => {
 
   // ルートパスアクセス時にログイン済みならリダイレクト
   if (isSignedIn) {
-    return <Navigate to="/user/home" replace />
+    return <Navigate to="/users/home" replace />
   }
 
   const handleClickLogin = () => {

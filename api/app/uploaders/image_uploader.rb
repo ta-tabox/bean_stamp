@@ -9,9 +9,12 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   def initialize(*)
     super
-    return unless Rails.env.production?
 
-    self.asset_host = Rails.application.credentials.dig(:aws, :s3_host)
+    self.asset_host = if Rails.env.production?
+                        Rails.application.credentials.dig(:aws, :s3_host)
+                      else
+                        (ENV['API_HOST']).to_s # http://localhost:API_PORT を指定
+                      end
   end
 
   # 保存ディレクトリ
@@ -23,15 +26,6 @@ class ImageUploader < CarrierWave::Uploader::Base
       'uploads/content_image/'
     end
   end
-
-  # Provide a default URL as a default if there hasn't been a file uploaded:
-  # デフォルト画像の設定/app/assets/images/fallback/default.pngとして配置する
-  # def default_url(*_args)
-  #   # For Rails 3.1+ asset pipeline compatibility:
-  #   ActionController::Base.helpers.asset_path(
-  #     "fallback/#{[version_name, 'default.png'].compact.join('_')}",
-  #   )
-  # end
 
   # リサイズ
   process resize_to_fit: [800, 800]

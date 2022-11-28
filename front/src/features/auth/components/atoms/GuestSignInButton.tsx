@@ -20,7 +20,7 @@ export const GuestSignInButton: FC = () => {
     try {
       await signIn(params)
       showMessage({ message: 'ゲストユーザーでログインしました', type: 'success' })
-      navigate('/user/home')
+      navigate('/users/home')
     } catch (error) {
       if (error instanceof AxiosError) {
         showMessage({ message: 'ゲストログインに失敗しました', type: 'error' })

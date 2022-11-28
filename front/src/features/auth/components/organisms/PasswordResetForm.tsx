@@ -27,9 +27,11 @@ export const PasswordResetForm: FC<Props> = (props) => {
   const { notifications, setNotifications, setNotificationMessagesWithType } = useNotification()
 
   const [isError, setIsError] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const {
     register,
+    watch,
     handleSubmit,
     formState: { isDirty, errors },
   } = useForm<PasswordResetParams>({ criteriaMode: 'all' })
@@ -42,6 +44,7 @@ export const PasswordResetForm: FC<Props> = (props) => {
       accessToken,
     }
 
+    setLoading(true)
     resetPassword(headers, data)
       .then(() => {
         setIsError(false)
@@ -53,6 +56,9 @@ export const PasswordResetForm: FC<Props> = (props) => {
         const notificationMessages = errorMessages ? setNotificationMessagesWithType(errorMessages, 'error') : null
         setNotifications(notificationMessages)
         setIsError(true)
+      })
+      .finally(() => {
+        setLoading(false)
       })
   }
 
@@ -70,12 +76,12 @@ export const PasswordResetForm: FC<Props> = (props) => {
           {/* パスワード確認 */}
           <PasswordConfirmationInput
             label="passwordConfirmation"
-            targetValue="password"
+            targetValue={watch('password')}
             register={register}
             error={errors.passwordConfirmation}
           />
           <div className="flex items-center justify-center mt-4">
-            <PrimaryButton loading={undefined} disabled={!isDirty}>
+            <PrimaryButton loading={loading} disabled={!isDirty}>
               変更
             </PrimaryButton>
           </div>

@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import { PrimaryButton } from '@/components/Elements/Button'
 import { NotificationMessage } from '@/components/Elements/Notification'
 import { FormContainer, FormMain, FormTitle } from '@/components/Form'
-import { FRONT_URL } from '@/config'
+import { FRONT_HOST } from '@/config'
 import { sendResetMail } from '@/features/auth/api/sendResetMail'
 import { EmailInput } from '@/features/users'
 import { useMessage } from '@/hooks/useMessage'
@@ -34,7 +34,7 @@ export const SendPasswordResetMailForm: FC = () => {
   } = useForm<SendResetMailType>({ criteriaMode: 'all' })
 
   const onSendResetMail: SubmitHandler<SendResetMailType> = (data) => {
-    const redirectUrl = `${FRONT_URL}/auth/password_reset`
+    const redirectUrl = `${FRONT_HOST}/auth/password_reset`
     const params = {
       email: data.email,
       redirect_url: redirectUrl,

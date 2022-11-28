@@ -11,7 +11,6 @@ import { ProtectedRoute } from '@/router/ProtectedRoute'
 import { RequireSignedOutRoute } from '@/router/RequireSignedOutRoute'
 
 export const AppRouter: FC = () => {
-  // TODO 適切な場所に移動する
   const { loadUser } = useAuth()
 
   // ログイン中にリロードした際にStateにログイン情報を格納する
@@ -33,7 +32,7 @@ export const AppRouter: FC = () => {
       </Route>
       {/* ログイン済みを要求 */}
       <Route element={<ProtectedRoute />}>
-        <Route path="user/*" element={<UsersRoutes />} />
+        <Route path="users/*" element={<UsersRoutes />} />
       </Route>
       <Route path="*" element={<Page404 />} />
     </Routes>

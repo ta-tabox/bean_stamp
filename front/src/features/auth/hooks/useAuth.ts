@@ -6,7 +6,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil'
 
 import type { AuthHeaders, SignInParams, SignUpParams } from '@/features/auth'
 import { deleteUserReq } from '@/features/auth/api/deleteUser'
-import { getUser } from '@/features/auth/api/getUser'
+import { getSignInUser } from '@/features/auth/api/getSignInUser'
 import { signInWithEmailAndPassword } from '@/features/auth/api/signIn'
 import { signOutReq } from '@/features/auth/api/signOut'
 import { signUpWithSignUpParams } from '@/features/auth/api/signUp'
@@ -51,6 +51,8 @@ export const useAuth = () => {
     client: cookies.client as string,
     accessToken: cookies['access-token'] as string,
   })
+
+  const authHeaders = setAuthHeaders()
 
   // Recoilでグローバルステートを定義
   // Getterを定義
@@ -108,9 +110,8 @@ export const useAuth = () => {
   // サインアウト
   const signOut = () => {
     setLoading(true)
-    const headers = setAuthHeaders()
 
-    signOutReq(headers)
+    signOutReq(authHeaders)
       .then(() => {
         // 認証情報をのcookieを削除
         removeAuthCookies()
@@ -130,9 +131,8 @@ export const useAuth = () => {
   // アカウントの削除
   const deleteUser = async () => {
     setLoading(true)
-    const headers = setAuthHeaders()
 
-    await deleteUserReq(headers)
+    await deleteUserReq(authHeaders)
       .then(() => {
         // 認証情報をのcookieを削除
         removeAuthCookies()
@@ -148,9 +148,8 @@ export const useAuth = () => {
 
   const loadUser = () => {
     setLoading(true)
-    const headers = setAuthHeaders()
 
-    getUser(headers)
+    getSignInUser(authHeaders)
       .then((res) => {
         if (res.data.isLogin) {
           setIsSignedIn(true)
@@ -171,5 +170,5 @@ export const useAuth = () => {
       })
   }
 
-  return { signUp, signIn, signOut, deleteUser, loadUser, loading, user, isSignedIn, setAuthHeaders }
+  return { signUp, signIn, signOut, deleteUser, loadUser, loading, user, isSignedIn, authHeaders }
 }

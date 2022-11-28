@@ -17,3 +17,7 @@ export type User = {
   admin: boolean
   allowPasswordChange: boolean
 }
+
+export type UserUpdateParams = Pick<User, 'email' | 'name' | 'prefectureCode' | 'describe'> & {
+  image: string
+}

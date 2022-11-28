@@ -8,15 +8,17 @@ import 'react-modern-drawer/dist/index.css'
 import { Hamburger } from '@/components/Elements/Hamburger'
 import { DrawerNavLink } from '@/components/Elements/Link'
 import { useAuth } from '@/features/auth'
+import type { User } from '@/features/users'
 import { isRoasterState } from '@/stores/isRoaster'
 
 type Props = {
+  user: User
   isOpen: boolean
   setIsOpen: Dispatch<React.SetStateAction<boolean>>
 }
 
 export const DrawerNav: FC<Props> = (props) => {
-  const { isOpen, setIsOpen } = props
+  const { user, isOpen, setIsOpen } = props
   const isRoaster = useRecoilValue(isRoasterState)
 
   const { signOut } = useAuth()
@@ -44,10 +46,10 @@ export const DrawerNav: FC<Props> = (props) => {
             <>
               {/* ユーザー用 */}
               <li className="">
-                <DrawerNavLink to="/home" title="マイページ" />
+                <DrawerNavLink to={`/users/${user.id}`} title="マイページ" />
               </li>
               <li>
-                <DrawerNavLink to="/follow" title="フォロー" />
+                <DrawerNavLink to={`/users/${user.id}/following`} title="フォロー" />
               </li>
             </>
           )}
