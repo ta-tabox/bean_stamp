@@ -37,7 +37,7 @@ export const User: FC = () => {
     } else {
       navigate('/')
     }
-  }, [])
+  }, [urlParams.id])
 
   return (
     <>

@@ -1,19 +1,19 @@
 import type { FC } from 'react'
 
 import defaultRoasterImage from '@/features/roasters/assets/defaultRoaster.png'
+import type { Roaster } from '@/features/roasters/types'
+import { translatePrefectureCodeToName } from '@/utils/prefecture'
 
 type Props = {
-  id: number
-  imageUrl: string | null
-  roasterName: string
-  area: string
-  address: string
-  describe: string
+  roaster: Roaster
   onClick: (id: number) => void
 }
 
 export const RoasterItem: FC<Props> = (props) => {
-  const { id, imageUrl, roasterName, area, address, describe, onClick } = props
+  const { roaster, onClick } = props
+  const { id, name, prefectureCode, address, describe, image } = roaster
+  const area = translatePrefectureCodeToName(prefectureCode)
+  const imageUrl = image.url
 
   return (
     <button type="button" className="block w-full" onClick={() => onClick(id)}>
@@ -26,11 +26,11 @@ export const RoasterItem: FC<Props> = (props) => {
             <img
               className="object-cover w-20 h-20 border-2 border-indigo-500 rounded-full"
               src={imageUrl ?? defaultRoasterImage}
-              alt={`${roasterName}の画像`}
+              alt={`${name}の画像`}
             />
           </div>
           <div className="w-full flex flex-col mb-4 sm:mb-0 sm:mr-4 overflow-hidden">
-            <p className="font-medium truncate">{roasterName}</p>
+            <p className="font-medium truncate">{name}</p>
             <p className="truncate">{area + address}</p>
             <p className="truncate text-gray-500">{describe}</p>
           </div>

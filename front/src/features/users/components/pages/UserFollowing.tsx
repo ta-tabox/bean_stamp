@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Card } from '@/components/Elements/Card'
 import { ContentHeader } from '@/components/Elements/Header'
 import { ContentHeaderTitle } from '@/components/Elements/Header/ContentHeaderTitle'
+import { SearchLink } from '@/components/Elements/Link'
 import { Spinner } from '@/components/Elements/Spinner'
 import { Head } from '@/components/Head'
 import { useAuth } from '@/features/auth'
@@ -15,7 +16,6 @@ import { getUser } from '@/features/users/api/getUser'
 import { UserCard } from '@/features/users/components/organisms/UserCard'
 import type { User } from '@/features/users/types'
 import { useMessage } from '@/hooks/useMessage'
-import { translatePrefectureCodeToName } from '@/utils/prefecture'
 
 export const UserFollowing: FC = memo(() => {
   const urlParams = useParams<{ id: string }>()
@@ -52,7 +52,7 @@ export const UserFollowing: FC = memo(() => {
       .finally(() => {
         setLoading(false)
       })
-  }, [])
+  }, [urlParams.id])
 
   // TODO ロースタークリックした時のアクション, ロースターページへ遷移
   const handleClickRoaster = (id: number) => {
@@ -68,36 +68,39 @@ export const UserFollowing: FC = memo(() => {
         </div>
       </ContentHeader>
 
-      {/* ユーザー情報 */}
-      <section>{!loading && user && <UserCard user={user} />}</section>
+      {/* ローディング */}
+      {loading ? (
+        <div className="flex justify-center">
+          <Spinner />
+        </div>
+      ) : (
+        <>
+          {/* ユーザー情報 */}
+          {user && <UserCard user={user} />}
 
-      {/* フォローしているロースター一覧 */}
-      <section className="mt-4 mb-20 py-4 text-gray-600">
-        <Card>
-          {!loading && (
-            <ol>
-              {roasters.map((roaster) => (
-                <li key={roaster.id}>
-                  <RoasterItem
-                    id={roaster.id}
-                    roasterName={roaster.name}
-                    area={translatePrefectureCodeToName(roaster.prefectureCode)}
-                    address={roaster.address}
-                    describe={roaster.describe ?? ''}
-                    imageUrl={roaster.image.url}
-                    onClick={handleClickRoaster}
-                  />
-                </li>
-              ))}
-            </ol>
-          )}
-          {loading && (
-            <div className="flex justify-center">
-              <Spinner />
-            </div>
-          )}
-        </Card>
-      </section>
+          {/* フォローしているロースター一覧 */}
+          <section className="mt-4 mb-20 py-4 text-gray-600">
+            {roasters.length ? (
+              <Card>
+                <ol>
+                  {roasters.map((roaster) => (
+                    <li key={roaster.id}>
+                      <RoasterItem roaster={roaster} onClick={handleClickRoaster} />
+                    </li>
+                  ))}
+                </ol>
+              </Card>
+            ) : (
+              <div className="text-center text-gray-400">
+                <p>フォローしているロースターがいません</p>
+                <div className="mt-4 w-1/2 sm:w-1/3 mx-auto">
+                  <SearchLink target="roaster" />
+                </div>
+              </div>
+            )}
+          </section>
+        </>
+      )}
     </>
   )
 })
