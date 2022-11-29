@@ -33,7 +33,12 @@ export const useAuth = () => {
     return isRememberMe ? new Date(Date.now() + expireDate * 86400e3) : undefined
   }
 
-  const setAuthCookies = (res: AxiosResponse, isRememberMe?: boolean) => {
+  type SetAuthCookiesOptions = {
+    res: AxiosResponse
+    isRememberMe?: boolean
+  }
+
+  const setAuthCookies = ({ res, isRememberMe }: SetAuthCookiesOptions) => {
     const expireDate = setExpireDate(isRememberMe)
     setCookie('uid', res.headers.uid, { path: '/', expires: expireDate })
     setCookie('client', res.headers.client, { path: '/', expires: expireDate })
@@ -52,6 +57,7 @@ export const useAuth = () => {
     accessToken: cookies['access-token'] as string,
   })
 
+  // devise-token-authで使用する認証トークン
   const authHeaders = setAuthHeaders()
 
   // Recoilでグローバルステートを定義
@@ -65,19 +71,24 @@ export const useAuth = () => {
   const setIsSignedIn = useSetRecoilState(isSignedInState)
 
   // サインアップ
-  const signUp = async (params: SignUpParams) => {
+  type SignUpOptions = {
+    params: SignUpParams
+  }
+  const signUp = async ({ params }: SignUpOptions) => {
     setLoading(true)
-    await signUpWithSignUpParams(params)
+    await signUpWithSignUpParams({ params })
       .then((res) => {
         // 認証情報をcookieにセット
-        setAuthCookies(res)
+        setAuthCookies({ res })
         setIsSignedIn(true)
         setUser(res.data.data)
         return Promise.resolve(user)
       })
       .catch((err: AxiosError<ErrorResponse>) => {
         const errorMessages = err.response?.data.errors.fullMessages
-        const notificationMessages = errorMessages ? setNotificationMessagesWithType(errorMessages, 'error') : null
+        const notificationMessages = errorMessages
+          ? setNotificationMessagesWithType({ messages: errorMessages, type: 'error' })
+          : null
         setNotifications(notificationMessages)
         return Promise.reject(err)
       })
@@ -87,18 +98,25 @@ export const useAuth = () => {
   }
 
   // サインイン
-  const signIn = async (params: SignInParams, rememberMe?: boolean) => {
+  type SignInOptions = {
+    params: SignInParams
+    isRememberMe?: boolean
+  }
+
+  const signIn = async ({ params, isRememberMe }: SignInOptions) => {
     setLoading(true)
-    await signInWithEmailAndPassword(params)
+    await signInWithEmailAndPassword({ params })
       .then((res) => {
-        setAuthCookies(res, rememberMe)
+        setAuthCookies({ res, isRememberMe })
         setIsSignedIn(true)
         setUser(res.data.data) // グローバルステートにUserの値をセット
         return Promise.resolve(user)
       })
       .catch((err: AxiosError<{ errors: Array<string> }>) => {
         const errorMessages = err.response?.data.errors
-        const notificationMessages = errorMessages ? setNotificationMessagesWithType(errorMessages, 'error') : null
+        const notificationMessages = errorMessages
+          ? setNotificationMessagesWithType({ messages: errorMessages, type: 'error' })
+          : null
         setNotifications(notificationMessages)
         return Promise.reject(err)
       })
@@ -111,7 +129,7 @@ export const useAuth = () => {
   const signOut = () => {
     setLoading(true)
 
-    signOutReq(authHeaders)
+    signOutReq({ headers: authHeaders })
       .then(() => {
         // 認証情報をのcookieを削除
         removeAuthCookies()
@@ -132,7 +150,7 @@ export const useAuth = () => {
   const deleteUser = async () => {
     setLoading(true)
 
-    await deleteUserReq(authHeaders)
+    await deleteUserReq({ headers: authHeaders })
       .then(() => {
         // 認証情報をのcookieを削除
         removeAuthCookies()
@@ -149,7 +167,7 @@ export const useAuth = () => {
   const loadUser = () => {
     setLoading(true)
 
-    getSignInUser(authHeaders)
+    getSignInUser({ headers: authHeaders })
       .then((res) => {
         if (res.data.isLogin) {
           setIsSignedIn(true)

@@ -32,7 +32,7 @@ export const UserFollowing: FC = memo(() => {
       // urlParams.idが数値かどうか評価
       if (urlParams.id && !Number.isNaN(parseInt(urlParams.id, 10))) {
         // urlからユーザー情報を取得
-        await getUser(authHeaders, urlParams.id).then((response) => {
+        await getUser({ headers: authHeaders, id: urlParams.id }).then((response) => {
           setUser(response.data)
         })
 

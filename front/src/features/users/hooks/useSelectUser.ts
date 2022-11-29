@@ -8,6 +8,7 @@ type Props = {
   onOpen: () => void
 }
 
+// WARNING 不使用、参考にするのが終了したら消す
 // ユーザーを検索して、そのユーザー情報をモーダルとして表示する
 export const useSelectUser = () => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null)

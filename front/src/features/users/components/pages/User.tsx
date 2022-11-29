@@ -23,7 +23,7 @@ export const User: FC = () => {
     // urlParams.idが数値かどうか評価
     if (urlParams.id && !Number.isNaN(parseInt(urlParams.id, 10))) {
       setLoading(true)
-      getUser(authHeaders, urlParams.id)
+      getUser({ headers: authHeaders, id: urlParams.id })
         .then((response) => {
           setUser(response.data)
         })

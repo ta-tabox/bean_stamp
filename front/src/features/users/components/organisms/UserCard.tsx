@@ -33,7 +33,7 @@ export const UserCard: FC<Props> = (props) => {
             </div>
 
             <div className="mt-4 text-gray-500 lg:max-w-md">
-              <div>@ {translatePrefectureCodeToName(user.prefectureCode)}</div>
+              <div>@ {translatePrefectureCodeToName({ prefectureCode: user.prefectureCode })}</div>
               <p className="mt-4">{user.describe}</p>
             </div>
           </div>

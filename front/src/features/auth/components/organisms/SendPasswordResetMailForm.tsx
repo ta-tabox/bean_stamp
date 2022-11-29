@@ -39,7 +39,7 @@ export const SendPasswordResetMailForm: FC = () => {
       email: data.email,
       redirect_url: redirectUrl,
     }
-    sendResetMail(params)
+    sendResetMail({ params })
       .then(() => {
         setIsSubmitted(true)
         setIsError(false)
@@ -47,7 +47,9 @@ export const SendPasswordResetMailForm: FC = () => {
       })
       .catch((err: AxiosError<{ errors: Array<string> }>) => {
         const errorMessages = err.response?.data.errors
-        const notificationMessages = errorMessages ? setNotificationMessagesWithType(errorMessages, 'error') : null
+        const notificationMessages = errorMessages
+          ? setNotificationMessagesWithType({ messages: errorMessages, type: 'error' })
+          : null
         setNotifications(notificationMessages)
         setIsError(true)
       })

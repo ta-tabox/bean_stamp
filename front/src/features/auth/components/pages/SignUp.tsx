@@ -52,7 +52,7 @@ export const SignUp: FC = memo(() => {
     }
 
     try {
-      await signUp(params)
+      await signUp({ params })
       setIsError(false)
       showMessage({ message: 'ユーザー登録が完了しました', type: 'success' })
       navigate('/users/home')

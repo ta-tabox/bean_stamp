@@ -45,7 +45,7 @@ export const PasswordResetForm: FC<Props> = (props) => {
     }
 
     setLoading(true)
-    resetPassword(headers, data)
+    resetPassword({ headers, params: data })
       .then(() => {
         setIsError(false)
         navigate('/auth/signin')
@@ -53,7 +53,9 @@ export const PasswordResetForm: FC<Props> = (props) => {
       })
       .catch((err: AxiosError<ErrorResponse>) => {
         const errorMessages = err.response?.data.errors.fullMessages
-        const notificationMessages = errorMessages ? setNotificationMessagesWithType(errorMessages, 'error') : null
+        const notificationMessages = errorMessages
+          ? setNotificationMessagesWithType({ messages: errorMessages, type: 'error' })
+          : null
         setNotifications(notificationMessages)
         setIsError(true)
       })
