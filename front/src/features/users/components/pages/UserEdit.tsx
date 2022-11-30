@@ -12,7 +12,7 @@ import { UserUpdateForm } from '@/features/users/components/organisms/UserUpdate
 import { useNotification } from '@/hooks/useNotification'
 
 export const UserEdit: FC = () => {
-  const { user } = useAuth()
+  const { signedInUser } = useAuth()
   const { notifications } = useNotification()
 
   const [isError, setIsError] = useState(false)
@@ -20,22 +20,22 @@ export const UserEdit: FC = () => {
   return (
     <>
       <Head title="ユーザー編集" />
-      {!user && (
+      {!signedInUser && (
         <div className="flex justify-center">
           <Spinner />
         </div>
       )}
-      {user && (
+      {signedInUser && (
         <div className="mt-20">
           <FormContainer>
             <div className="flex justify-end -mb-10">
-              <UserThumbnail user={user} />
+              <UserThumbnail user={signedInUser} />
             </div>
             <FormMain>
               <FormTitle>ユーザー情報編集</FormTitle>
               {isError ? <NotificationMessage notifications={notifications} type="error" /> : null}
 
-              <UserUpdateForm user={user} setIsError={setIsError} />
+              <UserUpdateForm user={signedInUser} setIsError={setIsError} />
 
               <FormFooter>
                 <Link to="/users/password">パスワード変更</Link>

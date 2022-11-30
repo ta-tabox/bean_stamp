@@ -14,7 +14,7 @@ type Props = {
 
 export const UserCard: FC<Props> = (props) => {
   const { user } = props
-  const { user: currentUser } = useAuth()
+  const { signedInUser } = useAuth()
 
   return (
     <Card>
@@ -25,7 +25,7 @@ export const UserCard: FC<Props> = (props) => {
               <ReactLink to={`/users/${user.id}`}>
                 <div className="text-2xl font-medium text-gray-800">{user.name}</div>
               </ReactLink>
-              {user.id === currentUser?.id ? (
+              {user.id === signedInUser?.id ? (
                 <div className="ml-4">
                   <Link to="/users/edit">編集</Link>
                 </div>

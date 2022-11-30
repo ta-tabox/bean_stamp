@@ -20,7 +20,7 @@ import { useNotification } from '@/hooks/useNotification'
 import type { SubmitHandler } from 'react-hook-form'
 
 export const UserPassword: FC = () => {
-  const { user, authHeaders } = useAuth()
+  const { signedInUser, authHeaders } = useAuth()
   const { showMessage } = useMessage()
   const { notifications } = useNotification()
   const navigate = useNavigate()
@@ -46,7 +46,7 @@ export const UserPassword: FC = () => {
 
     const formData = createFormData()
 
-    if (user?.guest) {
+    if (signedInUser?.guest) {
       showMessage({ message: 'ゲストユーザーの編集はできません', type: 'error' })
       return
     }

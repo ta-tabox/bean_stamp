@@ -11,7 +11,7 @@ import { signInWithEmailAndPassword } from '@/features/auth/api/signIn'
 import { signOutReq } from '@/features/auth/api/signOut'
 import { signUpWithSignUpParams } from '@/features/auth/api/signUp'
 import { isSignedInState } from '@/features/auth/stores/isSignedInState'
-import { userState } from '@/features/auth/stores/userState'
+import { signedInUserState } from '@/features/auth/stores/signedInUserState'
 import type { User } from '@/features/users'
 import { useMessage } from '@/hooks/useMessage'
 import { useNotification } from '@/hooks/useNotification'
@@ -61,10 +61,8 @@ export const useAuth = () => {
   const authHeaders = setAuthHeaders()
 
   // Recoilでグローバルステートを定義
-  // Getterを定義
-  const user = useRecoilValue(userState)
-  // Setter, Updaterを定義
-  const setUser: SetterOrUpdater<User | null> = useSetRecoilState(userState)
+  const signedInUser = useRecoilValue(signedInUserState) // Getterを定義
+  const setSignedInUser: SetterOrUpdater<User | null> = useSetRecoilState(signedInUserState) // Setter, Updaterを定義
 
   // SignInの状態を保持
   const isSignedIn = useRecoilValue(isSignedInState)
@@ -81,8 +79,8 @@ export const useAuth = () => {
         // 認証情報をcookieにセット
         setAuthCookies({ res })
         setIsSignedIn(true)
-        setUser(res.data.data)
-        return Promise.resolve(user)
+        setSignedInUser(res.data.data)
+        return Promise.resolve(signedInUser)
       })
       .catch((err: AxiosError<ErrorResponse>) => {
         const errorMessages = err.response?.data.errors.fullMessages
@@ -109,8 +107,8 @@ export const useAuth = () => {
       .then((res) => {
         setAuthCookies({ res, isRememberMe })
         setIsSignedIn(true)
-        setUser(res.data.data) // グローバルステートにUserの値をセット
-        return Promise.resolve(user)
+        setSignedInUser(res.data.data) // グローバルステートにUserの値をセット
+        return Promise.resolve(signedInUser)
       })
       .catch((err: AxiosError<{ errors: Array<string> }>) => {
         const errorMessages = err.response?.data.errors
@@ -134,7 +132,7 @@ export const useAuth = () => {
         // 認証情報をのcookieを削除
         removeAuthCookies()
         setIsSignedIn(false)
-        setUser(null) // LoginUserStateを削除
+        setSignedInUser(null) // LoginUserStateを削除
         showMessage({ message: 'ログアウトしました', type: 'success' })
         navigate('/auth/signin')
       })
@@ -155,7 +153,7 @@ export const useAuth = () => {
         // 認証情報をのcookieを削除
         removeAuthCookies()
         setIsSignedIn(false)
-        setUser(null)
+        setSignedInUser(null)
         return Promise.resolve(null)
       })
       .catch((err) => Promise.reject(err))
@@ -172,22 +170,22 @@ export const useAuth = () => {
       .then((res) => {
         if (res.data.isLogin) {
           setIsSignedIn(true)
-          setUser(res.data.data)
+          setSignedInUser(res.data.data)
         } else {
           removeAuthCookies()
           setIsSignedIn(false)
-          setUser(null) // LoginUserStateを削除
+          setSignedInUser(null) // LoginUserStateを削除
         }
       })
       .catch(() => {
         removeAuthCookies()
         setIsSignedIn(false)
-        setUser(null) // LoginUserStateを削除
+        setSignedInUser(null) // LoginUserStateを削除
       })
       .finally(() => {
         setLoading(false)
       })
   }
 
-  return { signUp, signIn, signOut, deleteUser, loadUser, loading, user, isSignedIn, authHeaders }
+  return { signUp, signIn, signOut, deleteUser, loadUser, loading, signedInUser, isSignedIn, authHeaders }
 }
