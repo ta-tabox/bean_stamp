@@ -164,6 +164,7 @@ export const useAuth = () => {
       })
   }
 
+  // ログインユーザーの読み込み
   const loadUser = () => {
     setLoading(true)
 

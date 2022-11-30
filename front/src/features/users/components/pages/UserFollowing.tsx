@@ -94,7 +94,7 @@ export const UserFollowing: FC = memo(() => {
               <div className="text-center text-gray-400">
                 <p>フォローしているロースターがいません</p>
                 <div className="mt-4 w-1/2 sm:w-1/3 mx-auto">
-                  <SearchLink target="roaster" />
+                  <SearchLink type="roaster" />
                 </div>
               </div>
             )}
