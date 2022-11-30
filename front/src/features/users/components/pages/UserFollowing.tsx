@@ -1,6 +1,6 @@
 import type { FC } from 'react'
-import { useState, useEffect, memo } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useEffect, memo } from 'react'
+import { useParams } from 'react-router-dom'
 
 import { Card } from '@/components/Elements/Card'
 import { ContentHeader } from '@/components/Elements/Header'
@@ -8,50 +8,28 @@ import { ContentHeaderTitle } from '@/components/Elements/Header/ContentHeaderTi
 import { SearchLink } from '@/components/Elements/Link'
 import { Spinner } from '@/components/Elements/Spinner'
 import { Head } from '@/components/Head'
-import { useAuth } from '@/features/auth'
-import type { Roaster } from '@/features/roasters'
 import { RoasterItem } from '@/features/roasters/components/organisms/RoasterItem'
-import { getRoastersFollowedByUser } from '@/features/users/api/getRoastersFollowedByUser'
-import { getUser } from '@/features/users/api/getUser'
 import { UserCard } from '@/features/users/components/organisms/UserCard'
-import type { User } from '@/features/users/types'
-import { useMessage } from '@/hooks/useMessage'
+import { useGetRoastersFollowedByUser } from '@/features/users/hooks/useGetRoastersFollowedByUser'
+import { useGetUser } from '@/features/users/hooks/useGetUser'
 
 export const UserFollowing: FC = memo(() => {
   const urlParams = useParams<{ id: string }>()
-  const navigate = useNavigate()
-  const { authHeaders } = useAuth()
-  const { showMessage } = useMessage()
-
-  const [user, setUser] = useState<User>()
-  const [roasters, setRoasters] = useState<Array<Roaster>>([])
-  const [loading, setLoading] = useState(false)
+  const { user, getUser, loading: userLoading } = useGetUser()
+  const { roasters, getRoastersFollowedByUser, loading: roastersLoading } = useGetRoastersFollowedByUser()
 
   useEffect(() => {
-    const fetchData = async () => {
-      // urlParams.idが数値かどうか評価
-      if (urlParams.id && !Number.isNaN(parseInt(urlParams.id, 10))) {
-        // urlからユーザー情報を取得
-        await getUser({ headers: authHeaders, id: urlParams.id }).then((response) => {
-          setUser(response.data)
-        })
-
-        // urlからユーザーがフォローしているロースターを取得
-        await getRoastersFollowedByUser({ headers: authHeaders, id: urlParams.id }).then((response) => {
-          setRoasters(response.data)
-        })
-      }
+    const fetchData = (id: string) => {
+      // urlからユーザー情報を取得
+      getUser(id)
+      // urlからユーザーがフォローしているロースターを取得
+      getRoastersFollowedByUser(id)
     }
 
-    setLoading(true)
-    fetchData()
-      .catch(() => {
-        navigate('/')
-        showMessage({ message: 'ユーザーが存在しません', type: 'error' })
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+    // urlParams.idが数値かどうか評価
+    if (urlParams.id && !Number.isNaN(parseInt(urlParams.id, 10))) {
+      fetchData(urlParams.id)
+    }
   }, [urlParams.id])
 
   // TODO ロースタークリックした時のアクション, ロースターページへ遷移
@@ -69,7 +47,7 @@ export const UserFollowing: FC = memo(() => {
       </ContentHeader>
 
       {/* ローディング */}
-      {loading ? (
+      {userLoading || roastersLoading ? (
         <div className="flex justify-center">
           <Spinner />
         </div>
