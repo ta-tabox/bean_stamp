@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+import { memo } from 'react'
 import { Link as ReactLink } from 'react-router-dom'
 
 import { Card, CardContainer } from '@/components/Elements/Card'
@@ -12,7 +13,7 @@ type Props = {
   user: User
 }
 
-export const UserCard: FC<Props> = (props) => {
+export const UserCard: FC<Props> = memo((props) => {
   const { user } = props
   const { signedInUser } = useAuth()
 
@@ -48,4 +49,4 @@ export const UserCard: FC<Props> = (props) => {
       </CardContainer>
     </Card>
   )
-}
+})

@@ -12,7 +12,7 @@ export const useGetRoastersFollowedByUser = () => {
   const { authHeaders } = useAuth()
 
   const [loading, setLoading] = useState(false)
-  const [roasters, setRoasters] = useState<Array<Roaster>>([])
+  const [roasters, setRoasters] = useState<Array<Roaster>>()
 
   const getRoastersFollowedByUser = useCallback((id: string) => {
     setLoading(true)

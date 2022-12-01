@@ -47,36 +47,41 @@ export const UserFollowing: FC = memo(() => {
       </ContentHeader>
 
       {/* ローディング */}
-      {userLoading || roastersLoading ? (
+
+      {(userLoading || roastersLoading) && (
         <div className="flex justify-center">
           <Spinner />
         </div>
-      ) : (
+      )}
+
+      {!userLoading && !roastersLoading && (
         <>
           {/* ユーザー情報 */}
           {user && <UserCard user={user} />}
 
           {/* フォローしているロースター一覧 */}
-          <section className="mt-4 mb-20 py-4 text-gray-600">
-            {roasters.length ? (
-              <Card>
-                <ol>
-                  {roasters.map((roaster) => (
-                    <li key={roaster.id}>
-                      <RoasterItem roaster={roaster} onClick={handleClickRoaster} />
-                    </li>
-                  ))}
-                </ol>
-              </Card>
-            ) : (
-              <div className="text-center text-gray-400">
-                <p>フォローしているロースターがいません</p>
-                <div className="mt-4 w-1/2 sm:w-1/3 mx-auto">
-                  <SearchLink type="roaster" />
+          {roasters && (
+            <section className="mt-4 mb-20 py-4 text-gray-600">
+              {roasters.length ? (
+                <Card>
+                  <ol>
+                    {roasters.map((roaster) => (
+                      <li key={roaster.id}>
+                        <RoasterItem roaster={roaster} onClick={handleClickRoaster} />
+                      </li>
+                    ))}
+                  </ol>
+                </Card>
+              ) : (
+                <div className="text-center text-gray-400">
+                  <p>フォローしているロースターがいません</p>
+                  <div className="mt-4 w-1/2 sm:w-1/3 mx-auto">
+                    <SearchLink type="roaster" />
+                  </div>
                 </div>
-              </div>
-            )}
-          </section>
+              )}
+            </section>
+          )}
         </>
       )}
     </>
