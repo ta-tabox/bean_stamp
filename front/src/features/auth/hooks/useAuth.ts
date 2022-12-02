@@ -14,11 +14,11 @@ import { isSignedInState } from '@/features/auth/stores/isSignedInState'
 import { signedInUserState } from '@/features/auth/stores/signedInUserState'
 import type { User } from '@/features/users'
 import { useMessage } from '@/hooks/useMessage'
-import { useNotification } from '@/hooks/useNotification'
 import type { ErrorResponse } from '@/types'
 
 import type { AxiosError, AxiosResponse } from 'axios'
 import type { SetterOrUpdater } from 'recoil'
+import { useErrorNotification } from '@/hooks/useErrorNotification'
 
 export const useAuth = () => {
   const navigate = useNavigate()
@@ -26,7 +26,7 @@ export const useAuth = () => {
   const [loading, setLoading] = useState(false)
   const [cookies, setCookie, removeCookie] = useCookies(['uid', 'client', 'access-token'])
 
-  const { setNotifications, setNotificationMessagesWithType } = useNotification()
+  const { setErrorNotifications } = useErrorNotification()
 
   const setExpireDate = (isRememberMe?: boolean) => {
     const expireDate = 14 // rememberMe期間を14日に設定
@@ -84,10 +84,9 @@ export const useAuth = () => {
       })
       .catch((err: AxiosError<ErrorResponse>) => {
         const errorMessages = err.response?.data.errors.fullMessages
-        const notificationMessages = errorMessages
-          ? setNotificationMessagesWithType({ messages: errorMessages, type: 'error' })
-          : null
-        setNotifications(notificationMessages)
+        if (errorMessages) {
+          setErrorNotifications(errorMessages)
+        }
         return Promise.reject(err)
       })
       .finally(() => {
@@ -112,10 +111,9 @@ export const useAuth = () => {
       })
       .catch((err: AxiosError<{ errors: Array<string> }>) => {
         const errorMessages = err.response?.data.errors
-        const notificationMessages = errorMessages
-          ? setNotificationMessagesWithType({ messages: errorMessages, type: 'error' })
-          : null
-        setNotifications(notificationMessages)
+        if (errorMessages) {
+          setErrorNotifications(errorMessages)
+        }
         return Promise.reject(err)
       })
       .finally(() => {

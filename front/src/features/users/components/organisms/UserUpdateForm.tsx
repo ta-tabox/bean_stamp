@@ -15,13 +15,14 @@ import { UserDescribeInput } from '@/features/users/components/molecules/UserDes
 import { UserImageInput } from '@/features/users/components/molecules/UserImageInput'
 import { UserNameInput } from '@/features/users/components/molecules/UserNameInput'
 import type { User, UserUpdateParams } from '@/features/users/types'
+
 import { useMessage } from '@/hooks/useMessage'
-import { useNotification } from '@/hooks/useNotification'
 import type { ErrorResponse } from '@/types'
 import type { PrefectureOption } from '@/utils/prefecture'
 import { prefectureOptions } from '@/utils/prefecture'
 
 import type { SubmitHandler, FieldError } from 'react-hook-form'
+import { useErrorNotification } from '@/hooks/useErrorNotification'
 
 type Props = {
   user: User
@@ -38,7 +39,7 @@ export const UserUpdateForm: FC<Props> = (props) => {
   const { authHeaders, loadUser } = useAuth()
   const navigate = useNavigate()
   const { showMessage } = useMessage()
-  const { setNotifications, setNotificationMessagesWithType } = useNotification()
+  const { setErrorNotifications } = useErrorNotification()
 
   const userPrefectureCodeIndex = parseInt(user.prefectureCode, 10) - 1 // id -> 配列のindex合わせるため-1を行う
 
@@ -90,15 +91,13 @@ export const UserUpdateForm: FC<Props> = (props) => {
       setIsError(false)
     } catch (error) {
       if (error instanceof AxiosError) {
-        // NOTE errorの型指定他に良い方法はないのか？
+        // NOTE errorの型指定 他に良い方法はないのか？
         const typedError = error as AxiosError<ErrorResponse>
         const errorMessages = typedError.response?.data.errors.fullMessages
-        // TODO setErrorMessageメソッドに切り出す
-        const notificationMessages = errorMessages
-          ? setNotificationMessagesWithType({ messages: errorMessages, type: 'error' })
-          : null
-        setNotifications(notificationMessages)
-        setIsError(true)
+        if (errorMessages) {
+          setErrorNotifications(errorMessages)
+          setIsError(true)
+        }
       }
       return
     } finally {
