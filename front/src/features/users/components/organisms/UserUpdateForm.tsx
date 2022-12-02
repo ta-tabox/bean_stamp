@@ -16,6 +16,8 @@ import { UserImageInput } from '@/features/users/components/molecules/UserImageI
 import { UserNameInput } from '@/features/users/components/molecules/UserNameInput'
 import type { User, UserUpdateParams } from '@/features/users/types'
 import { useMessage } from '@/hooks/useMessage'
+import { useNotification } from '@/hooks/useNotification'
+import type { ErrorResponse } from '@/types'
 import type { PrefectureOption } from '@/utils/prefecture'
 import { prefectureOptions } from '@/utils/prefecture'
 
@@ -36,6 +38,7 @@ export const UserUpdateForm: FC<Props> = (props) => {
   const { authHeaders, loadUser } = useAuth()
   const navigate = useNavigate()
   const { showMessage } = useMessage()
+  const { setNotifications, setNotificationMessagesWithType } = useNotification()
 
   const userPrefectureCodeIndex = parseInt(user.prefectureCode, 10) - 1 // id -> 配列のindex合わせるため-1を行う
 
@@ -87,6 +90,14 @@ export const UserUpdateForm: FC<Props> = (props) => {
       setIsError(false)
     } catch (error) {
       if (error instanceof AxiosError) {
+        // NOTE errorの型指定他に良い方法はないのか？
+        const typedError = error as AxiosError<ErrorResponse>
+        const errorMessages = typedError.response?.data.errors.fullMessages
+        // TODO setErrorMessageメソッドに切り出す
+        const notificationMessages = errorMessages
+          ? setNotificationMessagesWithType({ messages: errorMessages, type: 'error' })
+          : null
+        setNotifications(notificationMessages)
         setIsError(true)
       }
       return

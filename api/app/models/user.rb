@@ -20,12 +20,13 @@ class User < ApplicationRecord
   mount_uploader :image, ImageUploader
   jp_prefecture :prefecture_code
 
+  validates :name, presence: true
+  validates :email, uniqueness: true
   validates :describe,
             length: {
               maximum: 140,
               too_long: ':140文字まで投稿できます。',
             }
-  validates :name, presence: true
 
   # ユーザーが所属するロースターと一致しているか？
   def belonged_roaster?(roaster)

@@ -64,7 +64,6 @@ export const UserPassword: FC = () => {
       setLoading(false)
     }
 
-    // loadUser()
     showMessage({ message: 'ユーザー情報を変更しました', type: 'success' })
     navigate('/users/home')
   }, [])
