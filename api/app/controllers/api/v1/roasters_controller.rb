@@ -1,5 +1,7 @@
 class Api::V1::RoastersController < Api::ApplicationController
   before_action :authenticate_api_v1_user!
+  before_action :user_not_belonged_to_roaster_required, only: %i[create]
+  before_action :user_belonged_to_roaster_required, only: %i[update destroy]
   before_action :set_roaster, only: %i[show update destroy followers]
   before_action :correct_roaster, only: %i[update destroy]
 
@@ -9,10 +11,12 @@ class Api::V1::RoastersController < Api::ApplicationController
 
   def create
     roaster = current_api_v1_user.build_roaster(roaster_params)
-    return unless roaster.save
-
-    current_api_v1_user.save
-    render json: roaster
+    if roaster.save
+      current_api_v1_user.save
+      render json: { status: 'ok', data: roaster }
+    else
+      render json: { status: 'error', messages: roaster.errors.full_messages }
+    end
   end
 
   def update

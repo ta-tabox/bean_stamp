@@ -28,7 +28,7 @@ RSpec.describe 'Api::V1::Users', type: :request do
     end
   end
 
-  describe 'GET # roasters_followed_by_user' do
+  describe 'GET #roasters_followed_by_user' do
     let(:roaster) { create(:roaster) }
 
     subject { get roasters_followed_by_user_api_v1_user_path(user), headers: auth_tokens }
