@@ -11,10 +11,10 @@ import { signInWithEmailAndPassword } from '@/features/auth/api/signIn'
 import { signOutReq } from '@/features/auth/api/signOut'
 import { signUpWithSignUpParams } from '@/features/auth/api/signUp'
 import { isSignedInState } from '@/features/auth/stores/isSignedInState'
-import { userState } from '@/features/auth/stores/userState'
+import { signedInUserState } from '@/features/auth/stores/signedInUserState'
 import type { User } from '@/features/users'
+import { useErrorNotification } from '@/hooks/useErrorNotification'
 import { useMessage } from '@/hooks/useMessage'
-import { useNotification } from '@/hooks/useNotification'
 import type { ErrorResponse } from '@/types'
 
 import type { AxiosError, AxiosResponse } from 'axios'
@@ -26,14 +26,19 @@ export const useAuth = () => {
   const [loading, setLoading] = useState(false)
   const [cookies, setCookie, removeCookie] = useCookies(['uid', 'client', 'access-token'])
 
-  const { setNotifications, setNotificationMessagesWithType } = useNotification()
+  const { setErrorNotifications } = useErrorNotification()
 
   const setExpireDate = (isRememberMe?: boolean) => {
     const expireDate = 14 // rememberMe期間を14日に設定
     return isRememberMe ? new Date(Date.now() + expireDate * 86400e3) : undefined
   }
 
-  const setAuthCookies = (res: AxiosResponse, isRememberMe?: boolean) => {
+  type SetAuthCookiesOptions = {
+    res: AxiosResponse
+    isRememberMe?: boolean
+  }
+
+  const setAuthCookies = ({ res, isRememberMe }: SetAuthCookiesOptions) => {
     const expireDate = setExpireDate(isRememberMe)
     setCookie('uid', res.headers.uid, { path: '/', expires: expireDate })
     setCookie('client', res.headers.client, { path: '/', expires: expireDate })
@@ -52,33 +57,36 @@ export const useAuth = () => {
     accessToken: cookies['access-token'] as string,
   })
 
+  // devise-token-authで使用する認証トークン
   const authHeaders = setAuthHeaders()
 
   // Recoilでグローバルステートを定義
-  // Getterを定義
-  const user = useRecoilValue(userState)
-  // Setter, Updaterを定義
-  const setUser: SetterOrUpdater<User | null> = useSetRecoilState(userState)
+  const signedInUser = useRecoilValue(signedInUserState) // Getterを定義
+  const setSignedInUser: SetterOrUpdater<User | null> = useSetRecoilState(signedInUserState) // Setter, Updaterを定義
 
   // SignInの状態を保持
   const isSignedIn = useRecoilValue(isSignedInState)
   const setIsSignedIn = useSetRecoilState(isSignedInState)
 
   // サインアップ
-  const signUp = async (params: SignUpParams) => {
+  type SignUpOptions = {
+    params: SignUpParams
+  }
+  const signUp = async ({ params }: SignUpOptions) => {
     setLoading(true)
-    await signUpWithSignUpParams(params)
+    await signUpWithSignUpParams({ params })
       .then((res) => {
         // 認証情報をcookieにセット
-        setAuthCookies(res)
+        setAuthCookies({ res })
         setIsSignedIn(true)
-        setUser(res.data.data)
-        return Promise.resolve(user)
+        setSignedInUser(res.data.data)
+        return Promise.resolve(signedInUser)
       })
       .catch((err: AxiosError<ErrorResponse>) => {
         const errorMessages = err.response?.data.errors.fullMessages
-        const notificationMessages = errorMessages ? setNotificationMessagesWithType(errorMessages, 'error') : null
-        setNotifications(notificationMessages)
+        if (errorMessages) {
+          setErrorNotifications(errorMessages)
+        }
         return Promise.reject(err)
       })
       .finally(() => {
@@ -87,19 +95,25 @@ export const useAuth = () => {
   }
 
   // サインイン
-  const signIn = async (params: SignInParams, rememberMe?: boolean) => {
+  type SignInOptions = {
+    params: SignInParams
+    isRememberMe?: boolean
+  }
+
+  const signIn = async ({ params, isRememberMe }: SignInOptions) => {
     setLoading(true)
-    await signInWithEmailAndPassword(params)
+    await signInWithEmailAndPassword({ params })
       .then((res) => {
-        setAuthCookies(res, rememberMe)
+        setAuthCookies({ res, isRememberMe })
         setIsSignedIn(true)
-        setUser(res.data.data) // グローバルステートにUserの値をセット
-        return Promise.resolve(user)
+        setSignedInUser(res.data.data) // グローバルステートにUserの値をセット
+        return Promise.resolve(signedInUser)
       })
       .catch((err: AxiosError<{ errors: Array<string> }>) => {
         const errorMessages = err.response?.data.errors
-        const notificationMessages = errorMessages ? setNotificationMessagesWithType(errorMessages, 'error') : null
-        setNotifications(notificationMessages)
+        if (errorMessages) {
+          setErrorNotifications(errorMessages)
+        }
         return Promise.reject(err)
       })
       .finally(() => {
@@ -111,12 +125,12 @@ export const useAuth = () => {
   const signOut = () => {
     setLoading(true)
 
-    signOutReq(authHeaders)
+    signOutReq({ headers: authHeaders })
       .then(() => {
         // 認証情報をのcookieを削除
         removeAuthCookies()
         setIsSignedIn(false)
-        setUser(null) // LoginUserStateを削除
+        setSignedInUser(null) // LoginUserStateを削除
         showMessage({ message: 'ログアウトしました', type: 'success' })
         navigate('/auth/signin')
       })
@@ -132,12 +146,12 @@ export const useAuth = () => {
   const deleteUser = async () => {
     setLoading(true)
 
-    await deleteUserReq(authHeaders)
+    await deleteUserReq({ headers: authHeaders })
       .then(() => {
         // 認証情報をのcookieを削除
         removeAuthCookies()
         setIsSignedIn(false)
-        setUser(null)
+        setSignedInUser(null)
         return Promise.resolve(null)
       })
       .catch((err) => Promise.reject(err))
@@ -146,29 +160,30 @@ export const useAuth = () => {
       })
   }
 
+  // ログインユーザーの読み込み
   const loadUser = () => {
     setLoading(true)
 
-    getSignInUser(authHeaders)
+    getSignInUser({ headers: authHeaders })
       .then((res) => {
         if (res.data.isLogin) {
           setIsSignedIn(true)
-          setUser(res.data.data)
+          setSignedInUser(res.data.data)
         } else {
           removeAuthCookies()
           setIsSignedIn(false)
-          setUser(null) // LoginUserStateを削除
+          setSignedInUser(null) // LoginUserStateを削除
         }
       })
       .catch(() => {
         removeAuthCookies()
         setIsSignedIn(false)
-        setUser(null) // LoginUserStateを削除
+        setSignedInUser(null) // LoginUserStateを削除
       })
       .finally(() => {
         setLoading(false)
       })
   }
 
-  return { signUp, signIn, signOut, deleteUser, loadUser, loading, user, isSignedIn, authHeaders }
+  return { signUp, signIn, signOut, deleteUser, loadUser, loading, signedInUser, isSignedIn, authHeaders }
 }

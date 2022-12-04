@@ -12,7 +12,7 @@ import { isRoasterState } from '@/stores/isRoaster'
 
 export const BottomNav: FC = () => {
   const isRoaster = useRecoilValue(isRoasterState)
-  const { user } = useAuth()
+  const { signedInUser } = useAuth()
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -22,13 +22,13 @@ export const BottomNav: FC = () => {
 
   return (
     <nav className="h-14 fixed bottom-0 inset-x-0 z-50 border-t border-bray-200 bg-gray-100">
-      {user && (
+      {signedInUser && (
         <>
           <div className="h-full px-8 flex items-center justify-between">
             {isRoaster ? <RoasterBottomNav /> : <UserBottomNav />}
             <Hamburger toggled={isOpen} toggle={toggleDrawer} />
           </div>
-          <DrawerNav user={user} isOpen={isOpen} setIsOpen={setIsOpen} />
+          <DrawerNav user={signedInUser} isOpen={isOpen} setIsOpen={setIsOpen} />
         </>
       )}
     </nav>

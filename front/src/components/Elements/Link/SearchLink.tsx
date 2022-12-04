@@ -2,13 +2,27 @@ import type { FC } from 'react'
 import { Link } from 'react-router-dom'
 
 type Props = {
-  target: 'roaster' | 'offer'
+  type: 'roaster' | 'offer'
 }
 
 export const SearchLink: FC<Props> = (props) => {
-  const { target } = props
-  const title = target === 'roaster' ? 'ロースター' : 'オファー'
-  const link = target === 'roaster' ? '/search/roasters' : '/search/offers'
+  const { type } = props
+
+  let title = ''
+  let link = ''
+
+  switch (type) {
+    case 'roaster':
+      title = 'ロースター'
+      link = '/search/roasters'
+      break
+    case 'offer':
+      title = 'オファー'
+      link = '/search/offers'
+      break
+    default:
+  }
+
   return (
     <Link to={link}>
       <div className="py-2 px-4 bg-white text-gray-600 text-center rounded-full border border-gray-200 hover:bg-gray-50 active:bg-gray-200 flex items-center">

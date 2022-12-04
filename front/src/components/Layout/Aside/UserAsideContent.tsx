@@ -8,7 +8,7 @@ export const UserAsideContent: FC = memo(() => (
   <div id="user-aside" className="min-h-screen h-auto w-full flex flex-col items-center">
     <div className="w-full sticky top-0 bg-gray-50 z-50">
       <div className="w-44 mt-10 mx-auto">
-        <SearchLink target="offer" />
+        <SearchLink type="offer" />
       </div>
       <section className="h-28 w-full px-6 mt-8 bg-gray-50 flex flex-col justify-start space-y-1 text-center">
         <h1 className="text-md text-gray-600 e-font">Notification</h1>

@@ -68,7 +68,10 @@ export const PrefectureArray: Prefecture[] = [
 ]
 
 // コード→県名変換関数
-export const translatePrefectureCodeToName = (prefectureCode: string) => {
+type Options = {
+  prefectureCode: string
+}
+export const translatePrefectureCodeToName = ({ prefectureCode }: Options) => {
   const selectedPrefecture = PrefectureArray.find(({ id }) => id === parseInt(prefectureCode, 10))
   if (selectedPrefecture) {
     return selectedPrefecture.label

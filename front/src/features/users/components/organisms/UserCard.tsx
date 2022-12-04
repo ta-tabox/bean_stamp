@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+import { memo } from 'react'
 import { Link as ReactLink } from 'react-router-dom'
 
 import { Card, CardContainer } from '@/components/Elements/Card'
@@ -12,9 +13,9 @@ type Props = {
   user: User
 }
 
-export const UserCard: FC<Props> = (props) => {
+export const UserCard: FC<Props> = memo((props) => {
   const { user } = props
-  const { user: currentUser } = useAuth()
+  const { signedInUser } = useAuth()
 
   return (
     <Card>
@@ -25,7 +26,7 @@ export const UserCard: FC<Props> = (props) => {
               <ReactLink to={`/users/${user.id}`}>
                 <div className="text-2xl font-medium text-gray-800">{user.name}</div>
               </ReactLink>
-              {user.id === currentUser?.id ? (
+              {user.id === signedInUser?.id ? (
                 <div className="ml-4">
                   <Link to="/users/edit">編集</Link>
                 </div>
@@ -33,7 +34,7 @@ export const UserCard: FC<Props> = (props) => {
             </div>
 
             <div className="mt-4 text-gray-500 lg:max-w-md">
-              <div>@ {translatePrefectureCodeToName(user.prefectureCode)}</div>
+              <div>@ {translatePrefectureCodeToName({ prefectureCode: user.prefectureCode })}</div>
               <p className="mt-4">{user.describe}</p>
             </div>
           </div>
@@ -48,4 +49,4 @@ export const UserCard: FC<Props> = (props) => {
       </CardContainer>
     </Card>
   )
-}
+})

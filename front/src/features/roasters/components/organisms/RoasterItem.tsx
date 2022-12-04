@@ -12,7 +12,7 @@ type Props = {
 export const RoasterItem: FC<Props> = (props) => {
   const { roaster, onClick } = props
   const { id, name, prefectureCode, address, describe, image } = roaster
-  const area = translatePrefectureCodeToName(prefectureCode)
+  const area = translatePrefectureCodeToName({ prefectureCode })
   const imageUrl = image.url
 
   return (

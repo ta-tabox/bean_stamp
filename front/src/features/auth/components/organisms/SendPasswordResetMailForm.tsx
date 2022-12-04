@@ -9,8 +9,8 @@ import { FormContainer, FormMain, FormTitle } from '@/components/Form'
 import { FRONT_HOST } from '@/config'
 import { sendResetMail } from '@/features/auth/api/sendResetMail'
 import { EmailInput } from '@/features/users'
+import { useErrorNotification } from '@/hooks/useErrorNotification'
 import { useMessage } from '@/hooks/useMessage'
-import { useNotification } from '@/hooks/useNotification'
 
 import type { AxiosError } from 'axios'
 import type { SubmitHandler } from 'react-hook-form'
@@ -22,7 +22,7 @@ type SendResetMailType = {
 
 export const SendPasswordResetMailForm: FC = () => {
   const { showMessage } = useMessage()
-  const { notifications, setNotifications, setNotificationMessagesWithType } = useNotification()
+  const { errorNotifications, setErrorNotifications } = useErrorNotification()
 
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isError, setIsError] = useState(false)
@@ -39,7 +39,7 @@ export const SendPasswordResetMailForm: FC = () => {
       email: data.email,
       redirect_url: redirectUrl,
     }
-    sendResetMail(params)
+    sendResetMail({ params })
       .then(() => {
         setIsSubmitted(true)
         setIsError(false)
@@ -47,16 +47,17 @@ export const SendPasswordResetMailForm: FC = () => {
       })
       .catch((err: AxiosError<{ errors: Array<string> }>) => {
         const errorMessages = err.response?.data.errors
-        const notificationMessages = errorMessages ? setNotificationMessagesWithType(errorMessages, 'error') : null
-        setNotifications(notificationMessages)
-        setIsError(true)
+        if (errorMessages) {
+          setErrorNotifications(errorMessages)
+          setIsError(true)
+        }
       })
   }
   return (
     <FormContainer>
       <FormMain>
         <FormTitle>パスワード再設定</FormTitle>
-        {isError ? <NotificationMessage notifications={notifications} type="error" /> : null}
+        {isError ? <NotificationMessage notifications={errorNotifications} type="error" /> : null}
         <div className="text-center text-xs text-gray-800">
           {isSubmitted ? (
             <p>

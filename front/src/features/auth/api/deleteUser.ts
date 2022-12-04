@@ -1,7 +1,11 @@
 import type { AuthHeaders } from '@/features/auth/types'
 import axios from '@/lib/axios'
 
-export const deleteUserReq = (headers: AuthHeaders) => {
+type Options = {
+  headers: AuthHeaders
+}
+
+export const deleteUserReq = ({ headers }: Options) => {
   const { uid, client, accessToken } = headers
   return axios.delete('auth', {
     headers: {
