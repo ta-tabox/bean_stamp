@@ -77,6 +77,10 @@ Rails.application.routes.draw do
           get 'roasters_followed_by_user', to: 'users#roasters_followed_by_user' # api/v1/users/#{id}/roasters_followed_by_user
         end
       end
+
+      resources :roasters, only: %i[show create update destroy] do
+        member { get 'followers' }
+      end
     end
   end
 end
