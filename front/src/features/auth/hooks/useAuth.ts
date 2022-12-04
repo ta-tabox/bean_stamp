@@ -13,12 +13,12 @@ import { signUpWithSignUpParams } from '@/features/auth/api/signUp'
 import { isSignedInState } from '@/features/auth/stores/isSignedInState'
 import { signedInUserState } from '@/features/auth/stores/signedInUserState'
 import type { User } from '@/features/users'
+import { useErrorNotification } from '@/hooks/useErrorNotification'
 import { useMessage } from '@/hooks/useMessage'
 import type { ErrorResponse } from '@/types'
 
 import type { AxiosError, AxiosResponse } from 'axios'
 import type { SetterOrUpdater } from 'recoil'
-import { useErrorNotification } from '@/hooks/useErrorNotification'
 
 export const useAuth = () => {
   const navigate = useNavigate()
