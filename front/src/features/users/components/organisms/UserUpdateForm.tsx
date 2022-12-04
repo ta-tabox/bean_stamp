@@ -15,7 +15,9 @@ import { UserDescribeInput } from '@/features/users/components/molecules/UserDes
 import { UserImageInput } from '@/features/users/components/molecules/UserImageInput'
 import { UserNameInput } from '@/features/users/components/molecules/UserNameInput'
 import type { User, UserUpdateParams } from '@/features/users/types'
+import { useErrorNotification } from '@/hooks/useErrorNotification'
 import { useMessage } from '@/hooks/useMessage'
+import type { ErrorResponse } from '@/types'
 import type { PrefectureOption } from '@/utils/prefecture'
 import { prefectureOptions } from '@/utils/prefecture'
 
@@ -33,9 +35,10 @@ type UserUpdateDate = UserUpdateParams & {
 
 export const UserUpdateForm: FC<Props> = (props) => {
   const { user, setIsError } = props
-  const { authHeaders, loadUser } = useAuth()
+  const { signOut, authHeaders, loadUser } = useAuth()
   const navigate = useNavigate()
   const { showMessage } = useMessage()
+  const { setErrorNotifications } = useErrorNotification()
 
   const userPrefectureCodeIndex = parseInt(user.prefectureCode, 10) - 1 // id -> 配列のindex合わせるため-1を行う
 
@@ -57,8 +60,8 @@ export const UserUpdateForm: FC<Props> = (props) => {
     },
   })
 
-  // TODO メールアドレスを変更すると認証情報が変わるため、再ログインが必要になる
   const onSubmit: SubmitHandler<UserUpdateDate> = useCallback(async (data) => {
+    // PUTリクエスト用のフォームを作成する
     const createFormData = () => {
       const formData = new FormData()
       // 画像が選択されていない場合は更新しない
@@ -76,6 +79,7 @@ export const UserUpdateForm: FC<Props> = (props) => {
 
     const formData = createFormData()
 
+    // ゲストユーザーを制限する
     if (user.guest) {
       showMessage({ message: 'ゲストユーザーの編集はできません', type: 'error' })
       return
@@ -87,18 +91,34 @@ export const UserUpdateForm: FC<Props> = (props) => {
       setIsError(false)
     } catch (error) {
       if (error instanceof AxiosError) {
-        setIsError(true)
+        // NOTE errorの型指定 他に良い方法はないのか？
+        const typedError = error as AxiosError<ErrorResponse>
+        const errorMessages = typedError.response?.data.errors.fullMessages
+        if (errorMessages) {
+          setErrorNotifications(errorMessages)
+          setIsError(true)
+        }
       }
       return
     } finally {
       setLoading(false)
     }
 
-    loadUser()
-    showMessage({ message: 'ユーザー情報を変更しました', type: 'success' })
-    navigate('/users/home')
+    // NOTE メールアドレス変更時にAPIとの認証ができなくなり、再ログインが求められる。
+    if (user.email !== data.email) {
+      showMessage({
+        message: `ユーザー情報を変更しました。再度ログインをしてください。`,
+        type: 'success',
+      })
+      loadUser()
+    } else {
+      showMessage({ message: 'ユーザー情報を変更しました', type: 'success' })
+      loadUser()
+      navigate('/users/home')
+    }
   }, [])
 
+  // プレビュー機能
   const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setPreviewImage([URL.createObjectURL(e.target.files[0])])

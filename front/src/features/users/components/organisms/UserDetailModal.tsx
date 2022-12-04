@@ -23,7 +23,7 @@ export const UserDetailModal: FC<Props> = memo((props) => {
   // 初回レンダリング時とuserの値が変更になった時にモーダルに表示する初期値を設定
   useEffect(() => {
     if (user) {
-      const prefectureName = translatePrefectureCodeToName(user.prefectureCode)
+      const prefectureName = translatePrefectureCodeToName({ prefectureCode: user.prefectureCode })
       setName(user.name ?? '')
       setArea(prefectureName ?? '')
       setDescribe(user.describe ?? '')

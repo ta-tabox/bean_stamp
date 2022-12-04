@@ -10,6 +10,7 @@ import { Link } from '@/components/Elements/Link'
 import { NotificationMessage } from '@/components/Elements/Notification'
 import { FormContainer, FormFooter, FormMain, FormTitle } from '@/components/Form'
 import { Head } from '@/components/Head'
+import { GuestSignInButton } from '@/features/auth/components/atoms/GuestSignInButton'
 import { useAuth } from '@/features/auth/hooks/useAuth'
 import type { SignInParams } from '@/features/auth/types'
 import { EmailInput, PasswordInput } from '@/features/users'
@@ -17,7 +18,6 @@ import { useMessage } from '@/hooks/useMessage'
 import { useNotification } from '@/hooks/useNotification'
 
 import type { SubmitHandler } from 'react-hook-form'
-import { GuestSignInButton } from '@/features/auth/components/atoms/GuestSignInButton'
 
 // react-hook-formで取り扱うデータの型
 export type SignInSubmitData = {
@@ -42,7 +42,7 @@ export const SignIn: FC = memo(() => {
   const onSubmit: SubmitHandler<SignInSubmitData> = async (data) => {
     const { params, isRememberMe } = data
     try {
-      await signIn(params, isRememberMe)
+      await signIn({ params, isRememberMe })
       setIsError(false)
       showMessage({ message: 'ログインしました', type: 'success' })
       navigate('/users/home')

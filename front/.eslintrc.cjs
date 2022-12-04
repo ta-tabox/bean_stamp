@@ -83,7 +83,6 @@ module.exports = {
         allowAsStatement: true,
       },
     ],
-
     '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
     '@typescript-eslint/no-misused-promises': [
       'error',

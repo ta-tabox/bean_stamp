@@ -18,7 +18,7 @@ export const GuestSignInButton: FC = () => {
       password: 'password',
     }
     try {
-      await signIn(params)
+      await signIn({ params })
       showMessage({ message: 'ゲストユーザーでログインしました', type: 'success' })
       navigate('/users/home')
     } catch (error) {

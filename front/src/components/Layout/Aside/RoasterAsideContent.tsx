@@ -7,7 +7,7 @@ import { SearchLink } from '@/components/Elements/Link'
 export const RoasterAsideContent: FC = memo(() => (
   <div id="roaster-aside" className="min-h-screen flex flex-col items-center">
     <div className="w-44 mt-10">
-      <SearchLink target="offer" />
+      <SearchLink type="offer" />
     </div>
     <section className="px-6 mt-8 flex flex-col justify-center space-y-1 text-center">
       <h1 className="text-md text-gray-600 e-font">Notification</h1>

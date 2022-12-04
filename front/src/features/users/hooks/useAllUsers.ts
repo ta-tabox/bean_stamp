@@ -5,6 +5,7 @@ import axios from 'axios'
 import type { User } from '@/features/users'
 import { useMessage } from '@/hooks/useMessage'
 
+// WARNING 不使用、参考にするのが終了したら消す
 export const useAllUsers = () => {
   const { showMessage } = useMessage()
   const [loading, setLoading] = useState(false)

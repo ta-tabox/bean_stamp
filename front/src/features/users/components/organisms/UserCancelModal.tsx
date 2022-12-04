@@ -16,12 +16,12 @@ type Props = {
 export const UserCancelModal: FC<Props> = memo((props) => {
   const { isOpen, onClose } = props
   const { deleteUser } = useAuth()
-  const { user } = useAuth()
+  const { signedInUser } = useAuth()
   const { showMessage } = useMessage()
   const navigate = useNavigate()
 
   const handleSubmit = async () => {
-    if (user?.guest) {
+    if (signedInUser?.guest) {
       showMessage({ message: 'ゲストユーザーの削除はできません', type: 'error' })
       return
     }
@@ -42,7 +42,7 @@ export const UserCancelModal: FC<Props> = memo((props) => {
           <FormTitle>アカウントの削除</FormTitle>
           <div className="mx-12">
             <p className="text-center text-xs text-gray-400">
-              {`アカウント${user?.name || ''}`}を削除します。
+              {`アカウント${signedInUser?.name || ''}`}を削除します。
               <br />
               この操作は取り消すことができません。
             </p>

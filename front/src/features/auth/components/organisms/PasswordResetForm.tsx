@@ -11,8 +11,8 @@ import { resetPassword } from '@/features/auth/api/resetPassword'
 import type { PasswordResetHeaders, PasswordResetParams } from '@/features/auth/types'
 import { PasswordInput } from '@/features/users'
 import { PasswordConfirmationInput } from '@/features/users/components/molecules/PasswordConfirmationInput'
+import { useErrorNotification } from '@/hooks/useErrorNotification'
 import { useMessage } from '@/hooks/useMessage'
-import { useNotification } from '@/hooks/useNotification'
 import type { ErrorResponse } from '@/types'
 
 import type { AxiosError } from 'axios'
@@ -24,7 +24,7 @@ export const PasswordResetForm: FC<Props> = (props) => {
   const { uid, client, accessToken, resetPasswordToken } = props
   const navigate = useNavigate()
   const { showMessage } = useMessage()
-  const { notifications, setNotifications, setNotificationMessagesWithType } = useNotification()
+  const { errorNotifications, setErrorNotifications } = useErrorNotification()
 
   const [isError, setIsError] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -45,7 +45,7 @@ export const PasswordResetForm: FC<Props> = (props) => {
     }
 
     setLoading(true)
-    resetPassword(headers, data)
+    resetPassword({ headers, params: data })
       .then(() => {
         setIsError(false)
         navigate('/auth/signin')
@@ -53,9 +53,10 @@ export const PasswordResetForm: FC<Props> = (props) => {
       })
       .catch((err: AxiosError<ErrorResponse>) => {
         const errorMessages = err.response?.data.errors.fullMessages
-        const notificationMessages = errorMessages ? setNotificationMessagesWithType(errorMessages, 'error') : null
-        setNotifications(notificationMessages)
-        setIsError(true)
+        if (errorMessages) {
+          setErrorNotifications(errorMessages)
+          setIsError(true)
+        }
       })
       .finally(() => {
         setLoading(false)
@@ -66,7 +67,7 @@ export const PasswordResetForm: FC<Props> = (props) => {
     <FormContainer>
       <FormMain>
         <FormTitle>パスワード再設定</FormTitle>
-        {isError ? <NotificationMessage notifications={notifications} type="error" /> : null}
+        {isError ? <NotificationMessage notifications={errorNotifications} type="error" /> : null}
 
         <p className="text-center text-xs text-gray-800">新しいパスワードを入力してください</p>
         <form onSubmit={handleSubmit(onSubmitResetPassword)}>
