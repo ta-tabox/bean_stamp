@@ -28,6 +28,7 @@ RSpec.describe 'Api::V1::Users', type: :request do
     end
   end
 
+  # TODO: レスポンスのJSONの構造を変更する {data: xxx}
   describe 'GET #roasters_followed_by_user' do
     let(:roaster) { create(:roaster) }
 

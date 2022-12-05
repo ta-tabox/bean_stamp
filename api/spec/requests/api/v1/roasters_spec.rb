@@ -14,8 +14,8 @@ RSpec.describe 'Api::V1::Roasters', type: :request do
         subject
         json = JSON.parse(response.body)
         expect(response).to have_http_status(:success)
-        expect(json['name']).to eq roaster.name
-        expect(json['describe']).to eq roaster.describe
+        expect(json.dig('data', 'name')).to eq roaster.name
+        expect(json.dig('data', 'describe')).to eq roaster.describe
       end
     end
 
@@ -142,82 +142,117 @@ RSpec.describe 'Api::V1::Roasters', type: :request do
     end
   end
 
-  # TODO: update, destroy, followersのテスト
   describe 'PUT #update' do
-    subject { get api_v1_roaster_path(roaster), headers: auth_tokens }
-
-    shared_examples 'return the roaster' do
-      it 'returns the roaster by json' do
-        subject
-        json = JSON.parse(response.body)
-        expect(response).to have_http_status(:success)
-        expect(json['name']).to eq roaster.name
-        expect(json['describe']).to eq roaster.describe
-      end
-    end
+    subject { proc { put api_v1_roaster_path(roaster), params: { roaster: roaster_params }, headers: auth_tokens } }
 
     context 'when a user does not belong to the roaster' do
       let(:auth_tokens) { sign_in_with_token(user_not_belonging_to_the_roaster) }
+      let(:roaster_params) { attributes_for(:roaster, :update) }
 
-      it_behaves_like 'return the roaster'
+      it { is_expected.not_to change(Roaster, :count) }
+      it 'returns error and message by json' do
+        subject.call
+        json = JSON.parse(response.body)
+        expect(response).to have_http_status(:success)
+        expect(json['status']).to eq 'error'
+        expect(json['message']).to eq 'ロースターを登録をしてください'
+      end
     end
 
     context 'when a user belong to the roaster' do
       let(:auth_tokens) { sign_in_with_token(user_belonging_to_the_roaster) }
 
-      it_behaves_like 'return the roaster'
+      context 'with valid parameters' do
+        let(:roaster_params) { attributes_for(:roaster, :update) }
+
+        it { is_expected.to change { Roaster.find(roaster.id).name }.from('テストロースター').to('アップデートロースター') }
+        it 'returns the roaster by json' do
+          subject.call
+          update_roaster = Roaster.find(roaster.id)
+          json = JSON.parse(response.body)
+          expect(response).to have_http_status(:success)
+          expect(json.dig('data', 'name')).to eq update_roaster.name
+        end
+      end
+
+      context 'with invalid parameters' do
+        context 'no name' do
+          let(:roaster_params) { attributes_for(:roaster, name: nil) }
+          let(:error_message) { '店舗名を入力してください' }
+
+          it { is_expected.not_to change(Roaster, :count) }
+          it 'returns error and message by json' do
+            subject.call
+            json = JSON.parse(response.body)
+            expect(response).to have_http_status(:success)
+            expect(json['status']).to eq 'error'
+            expect(json['messages'].first).to eq error_message
+          end
+        end
+      end
     end
   end
 
   describe 'DELETE #destroy' do
-    subject { get api_v1_roaster_path(roaster), headers: auth_tokens }
-
-    shared_examples 'return the roaster' do
-      it 'returns the roaster by json' do
-        subject
-        json = JSON.parse(response.body)
-        expect(response).to have_http_status(:success)
-        expect(json['name']).to eq roaster.name
-        expect(json['describe']).to eq roaster.describe
-      end
-    end
+    subject { proc { delete api_v1_roaster_path(roaster), headers: auth_tokens } }
 
     context 'when a user does not belong to the roaster' do
       let(:auth_tokens) { sign_in_with_token(user_not_belonging_to_the_roaster) }
 
-      it_behaves_like 'return the roaster'
+      it { is_expected.not_to change(Roaster, :count) }
+      it 'returns error and message by json' do
+        subject.call
+        json = JSON.parse(response.body)
+        expect(response).to have_http_status(:success)
+        expect(json['status']).to eq 'error'
+        expect(json['message']).to eq 'ロースターを登録をしてください'
+      end
     end
 
     context 'when a user belong to the roaster' do
       let(:auth_tokens) { sign_in_with_token(user_belonging_to_the_roaster) }
 
-      it_behaves_like 'return the roaster'
+      it { is_expected.to change(Roaster, :count).by(-1) }
+      it 'returns success and message by json' do
+        subject.call
+        json = JSON.parse(response.body)
+        expect(response).to have_http_status(:success)
+        expect(json['status']).to eq 'success'
+        expect(json).to include('message')
+      end
     end
   end
 
-  describe 'GET #followers' do
-    subject { get api_v1_roaster_path(roaster), headers: auth_tokens }
+  describe 'GET #following' do
+    let(:user) { create(:user) }
+    let(:auth_tokens) { sign_in_with_token(user_not_belonging_to_the_roaster) }
 
-    shared_examples 'return the roaster' do
-      it 'returns the roaster by json' do
+    subject { get followers_api_v1_roaster_path(roaster), headers: auth_tokens }
+
+    context 'when the roaster have no followers' do
+      it 'returns an empty array by json' do
         subject
         json = JSON.parse(response.body)
         expect(response).to have_http_status(:success)
-        expect(json['name']).to eq roaster.name
-        expect(json['describe']).to eq roaster.describe
+        expect(json['status']).to eq 'success'
+        expect(json['data'].length).to eq 0
       end
     end
 
-    context 'when a user does not belong to the roaster' do
-      let(:auth_tokens) { sign_in_with_token(user_not_belonging_to_the_roaster) }
+    context 'when the roaster have a follower' do
+      # userにroasterをフォローさせる = roasterのfollowersにuserを加える
+      before do
+        user.following_roasters << roaster
+      end
 
-      it_behaves_like 'return the roaster'
-    end
-
-    context 'when a user belong to the roaster' do
-      let(:auth_tokens) { sign_in_with_token(user_belonging_to_the_roaster) }
-
-      it_behaves_like 'return the roaster'
+      it 'returns users who is following to the roaster by json' do
+        subject
+        json = JSON.parse(response.body)
+        expect(response).to have_http_status(:success)
+        expect(json['status']).to eq 'success'
+        expect(json['data'].length).to eq 1
+        expect(json['data'][0]['name']).to eq user.name
+      end
     end
   end
 end
