@@ -6,38 +6,38 @@ class Api::V1::RoastersController < Api::ApplicationController
   before_action :correct_roaster, only: %i[update destroy]
 
   def show
-    render json: { status: 'success', data: @roaster }
+    render formats: :json
   end
 
   def create
-    roaster = current_api_v1_user.build_roaster(roaster_params)
-    if roaster.save
+    @roaster = current_api_v1_user.build_roaster(roaster_params)
+    if @roaster.save
       current_api_v1_user.save
-      render json: { status: 'success', data: roaster }
+      render formats: :json
     else
-      render json: { status: 'error', messages: roaster.errors.full_messages }
+      render json: { messages: @roaster.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def update
     if @roaster.update(roaster_params)
-      render json: { status: 'success', data: @roaster }
+      render formats: :json
     else
-      render json: { status: 'error', messages: @roaster.errors.full_messages }
+      render json: { messages: @roaster.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def destroy
     if @roaster.destroy
-      render json: { status: 'success', message: 'ロースターを削除しました' }
+      render json: { message: 'ロースターを削除しました' }, status: :ok
     else
-      render json: { status: 'error', message: 'ロースターの削除に失敗しました' }
+      render json: { message: 'ロースターの削除に失敗しました' }, status: :method_not_allowed
     end
   end
 
   def followers
-    users = @roaster.followers
-    render json: { status: 'success', data: users }
+    @users = @roaster.followers
+    render formats: :json
   end
 
   private

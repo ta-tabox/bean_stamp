@@ -14,8 +14,8 @@ RSpec.describe 'Api::V1::Roasters', type: :request do
         subject
         json = JSON.parse(response.body)
         expect(response).to have_http_status(:success)
-        expect(json.dig('data', 'name')).to eq roaster.name
-        expect(json.dig('data', 'describe')).to eq roaster.describe
+        expect(json['name']).to eq roaster.name
+        expect(json['describe']).to eq roaster.describe
       end
     end
 
@@ -41,8 +41,7 @@ RSpec.describe 'Api::V1::Roasters', type: :request do
       it 'returns error and message by json' do
         subject.call
         json = JSON.parse(response.body)
-        expect(response).to have_http_status(:success)
-        expect(json['status']).to eq 'error'
+        expect(response).to have_http_status(:unprocessable_entity)
         expect(json['messages'].first).to eq error_message
       end
     end
@@ -53,7 +52,7 @@ RSpec.describe 'Api::V1::Roasters', type: :request do
         subject.call
         json = JSON.parse(response.body)
         expect(response).to have_http_status(:success)
-        expect(json.dig('data', 'name')).to eq roaster.name # NOTE: 同じattributeを使用しているので結果的にイコールになるが、あまり適切ではない
+        expect(json['name']).to eq roaster.name # NOTE: 同じattributeを使用しているので結果的にイコールになるが、あまり適切ではない
       end
     end
 
@@ -65,8 +64,7 @@ RSpec.describe 'Api::V1::Roasters', type: :request do
       it 'returns error and message by json' do
         subject.call
         json = JSON.parse(response.body)
-        expect(response).to have_http_status(:success)
-        expect(json['status']).to eq 'error'
+        expect(response).to have_http_status(:method_not_allowed)
         expect(json['message']).to eq 'ロースターをすでに登録しています'
       end
     end
@@ -153,8 +151,7 @@ RSpec.describe 'Api::V1::Roasters', type: :request do
       it 'returns error and message by json' do
         subject.call
         json = JSON.parse(response.body)
-        expect(response).to have_http_status(:success)
-        expect(json['status']).to eq 'error'
+        expect(response).to have_http_status(:method_not_allowed)
         expect(json['message']).to eq 'ロースターを登録をしてください'
       end
     end
@@ -171,7 +168,7 @@ RSpec.describe 'Api::V1::Roasters', type: :request do
           update_roaster = Roaster.find(roaster.id)
           json = JSON.parse(response.body)
           expect(response).to have_http_status(:success)
-          expect(json.dig('data', 'name')).to eq update_roaster.name
+          expect(json['name']).to eq update_roaster.name
         end
       end
 
@@ -184,8 +181,7 @@ RSpec.describe 'Api::V1::Roasters', type: :request do
           it 'returns error and message by json' do
             subject.call
             json = JSON.parse(response.body)
-            expect(response).to have_http_status(:success)
-            expect(json['status']).to eq 'error'
+            expect(response).to have_http_status(:unprocessable_entity)
             expect(json['messages'].first).to eq error_message
           end
         end
@@ -203,8 +199,7 @@ RSpec.describe 'Api::V1::Roasters', type: :request do
       it 'returns error and message by json' do
         subject.call
         json = JSON.parse(response.body)
-        expect(response).to have_http_status(:success)
-        expect(json['status']).to eq 'error'
+        expect(response).to have_http_status(:method_not_allowed)
         expect(json['message']).to eq 'ロースターを登録をしてください'
       end
     end
@@ -217,7 +212,6 @@ RSpec.describe 'Api::V1::Roasters', type: :request do
         subject.call
         json = JSON.parse(response.body)
         expect(response).to have_http_status(:success)
-        expect(json['status']).to eq 'success'
         expect(json).to include('message')
       end
     end
@@ -234,8 +228,7 @@ RSpec.describe 'Api::V1::Roasters', type: :request do
         subject
         json = JSON.parse(response.body)
         expect(response).to have_http_status(:success)
-        expect(json['status']).to eq 'success'
-        expect(json['data'].length).to eq 0
+        expect(json.length).to eq 0
       end
     end
 
@@ -249,9 +242,8 @@ RSpec.describe 'Api::V1::Roasters', type: :request do
         subject
         json = JSON.parse(response.body)
         expect(response).to have_http_status(:success)
-        expect(json['status']).to eq 'success'
-        expect(json['data'].length).to eq 1
-        expect(json['data'][0]['name']).to eq user.name
+        expect(json.length).to eq 1
+        expect(json[0]['name']).to eq user.name
       end
     end
   end

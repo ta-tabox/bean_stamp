@@ -4,6 +4,6 @@ class Api::V1::Auth::SessionsController < DeviseTokenAuth::SessionsController
 
   def index
     @current_user = current_api_v1_user
-    render formats: [:json]
+    render formats: :json
   end
 end
