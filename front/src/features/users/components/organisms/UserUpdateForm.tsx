@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form'
 
 import { PrimaryButton } from '@/components/Elements/Button'
 import { ImagePreview } from '@/components/Form'
-import { useAuth } from '@/features/auth'
+import { useAuth, useSignedInUser } from '@/features/auth'
 import { updateUser } from '@/features/users/api/updateUser'
 import { EmailInput } from '@/features/users/components/molecules/EmailInput'
 import { PrefectureSelect } from '@/features/users/components/molecules/PrefectureSelect'
@@ -35,7 +35,8 @@ type UserUpdateDate = UserUpdateParams & {
 
 export const UserUpdateForm: FC<Props> = (props) => {
   const { user, setIsError } = props
-  const { signOut, authHeaders, loadUser } = useAuth()
+  const { authHeaders } = useAuth()
+  const { loadUser } = useSignedInUser()
   const navigate = useNavigate()
   const { showMessage } = useMessage()
   const { setErrorNotifications } = useErrorNotification()

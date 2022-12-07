@@ -3,10 +3,10 @@ import { memo } from 'react'
 
 import { TopButton } from '@/components/Elements/Button'
 import { StaticNavLink } from '@/components/Elements/Link'
-import { useAuth } from '@/features/auth/hooks/useAuth'
+import { useSignedInUser } from '@/features/auth'
 
 export const Header: FC = memo(() => {
-  const { isSignedIn } = useAuth()
+  const { isSignedIn } = useSignedInUser()
 
   return (
     <header className="h-14 border-t border-b z-50 text-black border-gray-200 bg-gray-100 opacity-80 inset-x-0">

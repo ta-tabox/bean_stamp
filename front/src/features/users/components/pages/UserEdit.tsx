@@ -6,13 +6,13 @@ import { NotificationMessage } from '@/components/Elements/Notification'
 import { Spinner } from '@/components/Elements/Spinner'
 import { FormContainer, FormFooter, FormMain, FormTitle } from '@/components/Form'
 import { Head } from '@/components/Head'
-import { useAuth } from '@/features/auth'
+import { useSignedInUser } from '@/features/auth'
 import { UserThumbnail } from '@/features/users/components/molecules/UserThumbnail'
 import { UserUpdateForm } from '@/features/users/components/organisms/UserUpdateForm'
 import { useNotification } from '@/hooks/useNotification'
 
 export const UserEdit: FC = () => {
-  const { signedInUser } = useAuth()
+  const { signedInUser } = useSignedInUser()
   const { notifications } = useNotification()
 
   const [isError, setIsError] = useState(false)

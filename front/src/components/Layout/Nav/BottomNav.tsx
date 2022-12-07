@@ -7,12 +7,13 @@ import { Hamburger } from '@/components/Elements/Hamburger'
 import { DrawerNav } from '@/components/Layout/Nav/DrawerNav'
 import { RoasterBottomNav } from '@/components/Layout/Nav/RoasterBottomNav'
 import { UserBottomNav } from '@/components/Layout/Nav/UserBottomNav'
-import { useAuth } from '@/features/auth'
+
 import { isRoasterState } from '@/stores/isRoaster'
+import { useSignedInUser } from '@/features/auth'
 
 export const BottomNav: FC = () => {
   const isRoaster = useRecoilValue(isRoasterState)
-  const { signedInUser } = useAuth()
+  const { signedInUser } = useSignedInUser()
 
   const [isOpen, setIsOpen] = useState(false)
 

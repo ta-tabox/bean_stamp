@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { DangerButton, SecondaryButton } from '@/components/Elements/Button'
 import { Modal } from '@/components/Elements/Modal'
 import { FormContainer, FormMain, FormTitle } from '@/components/Form'
-import { useAuth } from '@/features/auth'
+import { useAuth, useSignedInUser } from '@/features/auth'
 import { useMessage } from '@/hooks/useMessage'
 
 type Props = {
@@ -16,7 +16,7 @@ type Props = {
 export const UserCancelModal: FC<Props> = memo((props) => {
   const { isOpen, onClose } = props
   const { deleteUser } = useAuth()
-  const { signedInUser } = useAuth()
+  const { signedInUser } = useSignedInUser()
   const { showMessage } = useMessage()
   const navigate = useNavigate()
 
