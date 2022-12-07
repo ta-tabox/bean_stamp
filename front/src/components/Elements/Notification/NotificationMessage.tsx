@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import { memo } from 'react'
 
-import type { Notification } from '@/stores/notifications'
+import type { Notification } from '@/stores/notificationsState'
 
 type Props = {
   notifications: Notification[] | null

@@ -1,11 +1,9 @@
 import type { FC } from 'react'
 
-import { useRecoilState } from 'recoil'
-
+import { useCurrentRoaster } from '@/features/roasters'
 import defaultRoasterImage from '@/features/roasters/assets/defaultRoaster.png'
 import type { User } from '@/features/users'
 import defaultUserImage from '@/features/users/assets/default_user.png'
-import { isRoasterState } from '@/stores/isRoaster'
 
 type Props = {
   user: User
@@ -15,7 +13,8 @@ export const SideNavRoasterToggleButton: FC<Props> = (props) => {
   const { user } = props
   // isRoasterをpropsとして受け取り、memo化する
   // roasterをpropsとして受け取る
-  const [isRoaster, setIsRoaster] = useRecoilState(isRoasterState)
+
+  const { isRoaster, setIsRoaster } = useCurrentRoaster()
 
   const handleClick = () => {
     setIsRoaster(!isRoaster)

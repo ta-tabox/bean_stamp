@@ -1,12 +1,10 @@
 import type { FC } from 'react'
 import { memo } from 'react'
 
-import { useRecoilState } from 'recoil'
-
-import { isRoasterState } from '@/stores/isRoaster'
+import { useCurrentRoaster } from '@/features/roasters'
 
 export const TopNavRoasterToggleButton: FC = memo(() => {
-  const [isRoaster, setIsRoaster] = useRecoilState(isRoasterState)
+  const { isRoaster, setIsRoaster } = useCurrentRoaster()
 
   const handleClick = () => {
     setIsRoaster(!isRoaster)

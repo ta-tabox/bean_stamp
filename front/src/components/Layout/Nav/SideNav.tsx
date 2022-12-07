@@ -1,18 +1,15 @@
 import type { FC } from 'react'
 import { memo } from 'react'
 
-import { useRecoilValue } from 'recoil'
-
 import { SideNavRoasterToggleButton, TopButton } from '@/components/Elements/Button'
 import { RoasterSideNav } from '@/components/Layout/Nav/RoasterSideNav'
 import { UserSideNav } from '@/components/Layout/Nav/UserSideNav'
 import { useSignedInUser } from '@/features/auth/hooks/useSignedInUser'
-import { isRoasterState } from '@/stores/isRoaster'
+import { useCurrentRoaster } from '@/features/roasters'
 
 export const SideNav: FC = memo(() => {
   const { signedInUser } = useSignedInUser()
-  const isRoaster = useRecoilValue(isRoasterState)
-
+  const { isRoaster } = useCurrentRoaster()
   // TODO roasterの定義とfitchメソッドの作成 toggle buttonにpropsにとして渡す
 
   return (

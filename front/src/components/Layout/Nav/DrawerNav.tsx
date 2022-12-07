@@ -1,15 +1,14 @@
 import type { Dispatch, FC } from 'react'
 
 import Drawer from 'react-modern-drawer'
-import { useRecoilValue } from 'recoil'
 
 import 'react-modern-drawer/dist/index.css'
 
 import { Hamburger } from '@/components/Elements/Hamburger'
 import { DrawerNavLink } from '@/components/Elements/Link'
 import { useAuth } from '@/features/auth'
+import { useCurrentRoaster } from '@/features/roasters'
 import type { User } from '@/features/users'
-import { isRoasterState } from '@/stores/isRoaster'
 
 type Props = {
   user: User
@@ -19,7 +18,7 @@ type Props = {
 
 export const DrawerNav: FC<Props> = (props) => {
   const { user, isOpen, setIsOpen } = props
-  const isRoaster = useRecoilValue(isRoasterState)
+  const { isRoaster } = useCurrentRoaster()
 
   const { signOut } = useAuth()
   const toggleDrawer = () => {

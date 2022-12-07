@@ -1,7 +1,7 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 
-import type { NotificationType } from '@/stores/notifications'
-import { notificationsState } from '@/stores/notifications'
+import type { NotificationType } from '@/stores/notificationsState'
+import { notificationsState } from '@/stores/notificationsState'
 
 type Type = 'info' | 'warning' | 'success' | 'error'
 type Props = {
