@@ -4,15 +4,14 @@ import { Route, Routes } from 'react-router-dom'
 
 import { CommonLayout } from '@/components/Layout'
 import { About, Help, Home, Page404 } from '@/components/Pages'
-import { useSignedInUser } from '@/features/auth'
+import { useLoadUser } from '@/features/auth'
 import { AuthRoutes } from '@/features/auth/routes'
 import { UsersRoutes } from '@/features/users/routes'
 import { ProtectedRoute } from '@/router/ProtectedRoute'
 import { RequireSignedOutRoute } from '@/router/RequireSignedOutRoute'
 
 export const AppRouter: FC = () => {
-  const { loadUser } = useSignedInUser()
-
+  const { loadUser } = useLoadUser()
   // ログイン中にリロードした際にStateにログイン情報を格納する
   useEffect(() => {
     loadUser()

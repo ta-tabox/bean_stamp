@@ -9,6 +9,7 @@ import { signUpWithSignUpParams } from '@/features/auth/api/signUp'
 import { useAuthCookies } from '@/features/auth/hooks/useAuthCookies'
 import { useAuthHeaders } from '@/features/auth/hooks/useAuthHeaders'
 import { useSignedInUser } from '@/features/auth/hooks/useSignedInUser'
+import { useCurrentRoaster } from '@/features/roasters'
 import { useErrorNotification } from '@/hooks/useErrorNotification'
 import { useMessage } from '@/hooks/useMessage'
 import type { ErrorResponse } from '@/types'
@@ -21,6 +22,7 @@ export const useAuth = () => {
   const [loading, setLoading] = useState(false)
 
   const { signedInUser, setIsSignedIn, setSignedInUser } = useSignedInUser()
+  const { setCurrentRoaster } = useCurrentRoaster()
   const { setAuthCookies, removeAuthCookies } = useAuthCookies()
   const { authHeaders } = useAuthHeaders()
   const { setErrorNotifications } = useErrorNotification()
@@ -36,7 +38,7 @@ export const useAuth = () => {
         // 認証情報をcookieにセット
         setAuthCookies({ res })
         setIsSignedIn(true)
-        setSignedInUser(res.data.data)
+        setSignedInUser(res.data.data) // グローバルステートにUserの値をセット
         return Promise.resolve(signedInUser)
       })
       .catch((err: AxiosError<ErrorResponse>) => {
@@ -87,7 +89,8 @@ export const useAuth = () => {
         // 認証情報をのcookieを削除
         removeAuthCookies()
         setIsSignedIn(false)
-        setSignedInUser(null) // LoginUserStateを削除
+        setSignedInUser(null) // SignedInUserStateを削除
+        setCurrentRoaster(null) // CurrentRoasterStateを削除
         showMessage({ message: 'ログアウトしました', type: 'success' })
         navigate('/auth/signin')
       })
@@ -108,7 +111,8 @@ export const useAuth = () => {
         // 認証情報をのcookieを削除
         removeAuthCookies()
         setIsSignedIn(false)
-        setSignedInUser(null)
+        setSignedInUser(null) // SignedInUserStateを削除
+        setCurrentRoaster(null) // CurrentRoasterStateを削除
         return Promise.resolve(null)
       })
       .catch((err) => Promise.reject(err))

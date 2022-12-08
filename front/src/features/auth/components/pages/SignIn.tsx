@@ -12,6 +12,7 @@ import { FormContainer, FormFooter, FormMain, FormTitle } from '@/components/For
 import { Head } from '@/components/Head'
 import { GuestSignInButton } from '@/features/auth/components/atoms/GuestSignInButton'
 import { useAuth } from '@/features/auth/hooks/useAuth'
+import { useLoadUser } from '@/features/auth/hooks/useLoadUser'
 import type { SignInParams } from '@/features/auth/types'
 import { EmailInput, PasswordInput } from '@/features/users'
 import { useMessage } from '@/hooks/useMessage'
@@ -26,10 +27,11 @@ export type SignInSubmitData = {
 }
 
 export const SignIn: FC = memo(() => {
+  const navigate = useNavigate()
   const { signIn, loading } = useAuth()
+  const { loadUser } = useLoadUser()
   const { notifications } = useNotification()
   const { showMessage } = useMessage()
-  const navigate = useNavigate()
 
   const [isError, setIsError] = useState(false)
 
@@ -43,7 +45,6 @@ export const SignIn: FC = memo(() => {
     const { params, isRememberMe } = data
     try {
       await signIn({ params, isRememberMe })
-      setIsError(false)
       showMessage({ message: 'ログインしました', type: 'success' })
       navigate('/users/home')
     } catch (error) {

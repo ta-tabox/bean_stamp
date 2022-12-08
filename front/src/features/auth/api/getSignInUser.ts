@@ -1,8 +1,12 @@
-import type { AuthHeaders, UserResponse } from '@/features/auth/types'
+import type { AuthHeaders } from '@/features/auth/types'
+import type { Roaster } from '@/features/roasters'
+import type { User } from '@/features/users'
 import axios from '@/lib/axios'
 
-type CurrentUserResponse = UserResponse & {
+type CurrentUserResponse = {
   isLogin: boolean
+  user: User
+  roaster: Roaster
 }
 
 type Options = {
