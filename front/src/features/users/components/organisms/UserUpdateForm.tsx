@@ -29,7 +29,7 @@ type Props = {
 }
 
 // react-hook-formで取り扱うデータの型
-type UserUpdateDate = UserUpdateParams & {
+type UserUpdateData = UserUpdateParams & {
   prefectureOption: PrefectureOption
 }
 
@@ -52,7 +52,7 @@ export const UserUpdateForm: FC<Props> = (props) => {
     handleSubmit,
     formState: { isDirty, errors },
     control,
-  } = useForm<UserUpdateDate>({
+  } = useForm<UserUpdateData>({
     criteriaMode: 'all',
     defaultValues: {
       name: user.name,
@@ -62,7 +62,7 @@ export const UserUpdateForm: FC<Props> = (props) => {
     },
   })
 
-  const onSubmit: SubmitHandler<UserUpdateDate> = useCallback(async (data) => {
+  const onSubmit: SubmitHandler<UserUpdateData> = useCallback(async (data) => {
     // PUTリクエスト用のフォームを作成する
     const createFormData = () => {
       const formData = new FormData()
