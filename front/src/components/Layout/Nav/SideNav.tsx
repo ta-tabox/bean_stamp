@@ -2,6 +2,7 @@ import type { FC } from 'react'
 import { memo } from 'react'
 
 import { SideNavRoasterToggleButton, TopButton } from '@/components/Elements/Button'
+import { Link } from '@/components/Elements/Link'
 import { RoasterSideNav } from '@/components/Layout/Nav/RoasterSideNav'
 import { UserSideNav } from '@/components/Layout/Nav/UserSideNav'
 import { useSignedInUser } from '@/features/auth/hooks/useSignedInUser'
@@ -9,8 +10,7 @@ import { useCurrentRoaster } from '@/features/roasters'
 
 export const SideNav: FC = memo(() => {
   const { signedInUser } = useSignedInUser()
-  const { isRoaster } = useCurrentRoaster()
-  // TODO roasterの定義とfitchメソッドの作成 toggle buttonにpropsにとして渡す
+  const { isRoaster, currentRoaster } = useCurrentRoaster()
 
   return (
     <nav className="h-full w-28">
@@ -28,9 +28,17 @@ export const SideNav: FC = memo(() => {
           <div className="w-12 mx-auto">
             <hr className="border-gray-200" />
           </div>
+
           {/* Roaster 切り替え */}
           <div className="mb-8">
-            <SideNavRoasterToggleButton user={signedInUser} />
+            {currentRoaster ? (
+              <SideNavRoasterToggleButton user={signedInUser} roaster={currentRoaster} />
+            ) : (
+              <div className="h-20 w-20 text-sm text-center">
+                <p className="text-xs">ロースターを</p>
+                <Link to="/roasters/new">登録する</Link>
+              </div>
+            )}
           </div>
         </div>
       )}

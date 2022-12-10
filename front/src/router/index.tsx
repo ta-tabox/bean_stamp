@@ -6,6 +6,7 @@ import { CommonLayout } from '@/components/Layout'
 import { About, Help, Home, Page404 } from '@/components/Pages'
 import { useLoadUser } from '@/features/auth'
 import { AuthRoutes } from '@/features/auth/routes'
+import { RoastersRoutes } from '@/features/roasters/routes'
 import { UsersRoutes } from '@/features/users/routes'
 import { ProtectedRoute } from '@/router/ProtectedRoute'
 import { RequireSignedOutRoute } from '@/router/RequireSignedOutRoute'
@@ -32,6 +33,7 @@ export const AppRouter: FC = () => {
       {/* ログイン済みを要求 */}
       <Route element={<ProtectedRoute />}>
         <Route path="users/*" element={<UsersRoutes />} />
+        <Route path="roasters/*" element={<RoastersRoutes />} />
       </Route>
       <Route path="*" element={<Page404 />} />
     </Routes>

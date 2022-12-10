@@ -22,7 +22,7 @@ export const useAuth = () => {
   const [loading, setLoading] = useState(false)
 
   const { signedInUser, setIsSignedIn, setSignedInUser } = useSignedInUser()
-  const { setCurrentRoaster } = useCurrentRoaster()
+  const { setCurrentRoaster, setIsRoaster } = useCurrentRoaster()
   const { setAuthCookies, removeAuthCookies } = useAuthCookies()
   const { authHeaders } = useAuthHeaders()
   const { setErrorNotifications } = useErrorNotification()
@@ -75,6 +75,7 @@ export const useAuth = () => {
         }
         return Promise.reject(err)
       })
+
       .finally(() => {
         setLoading(false)
       })
@@ -90,6 +91,7 @@ export const useAuth = () => {
         removeAuthCookies()
         setIsSignedIn(false)
         setSignedInUser(null) // SignedInUserStateを削除
+        setIsRoaster(false)
         setCurrentRoaster(null) // CurrentRoasterStateを削除
         showMessage({ message: 'ログアウトしました', type: 'success' })
         navigate('/auth/signin')
@@ -112,6 +114,7 @@ export const useAuth = () => {
         removeAuthCookies()
         setIsSignedIn(false)
         setSignedInUser(null) // SignedInUserStateを削除
+        setIsRoaster(false)
         setCurrentRoaster(null) // CurrentRoasterStateを削除
         return Promise.resolve(null)
       })
