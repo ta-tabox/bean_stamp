@@ -24,7 +24,12 @@ export const SideNav: FC = memo(() => {
             <hr className="border-gray-200" />
           </div>
           {/* ナビアイコン */}
-          <div className="ml-14">{isRoaster ? <RoasterSideNav /> : <UserSideNav user={signedInUser} />}</div>
+          <div className="ml-14">
+            {currentRoaster &&
+              (isRoaster ? <RoasterSideNav roaster={currentRoaster} /> : <UserSideNav user={signedInUser} />)}
+
+            {!currentRoaster && <UserSideNav user={signedInUser} />}
+          </div>
           <div className="w-12 mx-auto">
             <hr className="border-gray-200" />
           </div>

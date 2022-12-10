@@ -4,13 +4,11 @@ import { useEffect, memo } from 'react'
 import { Head } from '@/components/Head'
 import { useLoadUser } from '@/features/auth'
 import { useSignedInUser } from '@/features/auth/hooks/useSignedInUser'
-import { useCurrentRoaster } from '@/features/roasters'
 import { translatePrefectureCodeToName } from '@/utils/prefecture'
 
 export const UserHome: FC = memo(() => {
   const { signedInUser } = useSignedInUser()
   const { loadUser } = useLoadUser()
-  const { currentRoaster } = useCurrentRoaster()
 
   // NOTE ログイン直後のユーザー＆ロースター情報の更新はここでOKか？
   useEffect(() => {
@@ -26,8 +24,6 @@ export const UserHome: FC = memo(() => {
           {`${translatePrefectureCodeToName({ prefectureCode: signedInUser?.prefectureCode })}` || null}がエリアです
         </p>
       )}
-      {console.log(signedInUser)}
-      {console.log(currentRoaster)}
       <div className="h-64  bg-green-300" />
       <div className="h-64  bg-pink-300" />
       <div className="h-64  bg-green-300" />

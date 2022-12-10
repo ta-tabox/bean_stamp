@@ -10,6 +10,7 @@ import { UserHome } from '@/features/users/components/pages/UserHome'
 import { UserPassword } from '@/features/users/components/pages/UserPassword'
 
 export const UsersRoutes: FC = () => (
+  // TODO isRoaster trueの時にルーティングの制限を行う。:id, :id/following以外はroasters/homeにリダイレクト
   <Routes>
     <Route element={<MainLayout />}>
       <Route index element={<UserHome />} />

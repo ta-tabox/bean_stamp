@@ -13,6 +13,7 @@ export const RoasterHome: FC = memo(() => {
   return (
     <>
       <Head title="ホーム" />
+      {console.log('RoasterHome')}
       <h1>{currentRoaster && `${currentRoaster.name}`}のホームページです</h1>
       {area && <p>{`${area}` || null}がエリアです</p>}
       <div className="h-64  bg-green-300" />
