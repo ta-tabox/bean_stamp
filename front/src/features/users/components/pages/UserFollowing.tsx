@@ -12,6 +12,7 @@ import { RoasterItem } from '@/features/roasters/components/organisms/RoasterIte
 import { UserCard } from '@/features/users/components/organisms/UserCard'
 import { useGetRoastersFollowedByUser } from '@/features/users/hooks/useGetRoastersFollowedByUser'
 import { useGetUser } from '@/features/users/hooks/useGetUser'
+import { isNumber } from '@/utils/regexp'
 
 export const UserFollowing: FC = memo(() => {
   const urlParams = useParams<{ id: string }>()
@@ -27,7 +28,7 @@ export const UserFollowing: FC = memo(() => {
     }
 
     // urlParams.idが数値かどうか評価
-    if (urlParams.id && !Number.isNaN(parseInt(urlParams.id, 10))) {
+    if (urlParams.id && isNumber(urlParams.id)) {
       fetchData(urlParams.id)
     }
   }, [urlParams.id])

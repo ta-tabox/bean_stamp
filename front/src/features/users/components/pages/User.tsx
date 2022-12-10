@@ -7,6 +7,7 @@ import { ContentHeaderTitle } from '@/components/Elements/Header/ContentHeaderTi
 import { Spinner } from '@/components/Elements/Spinner'
 import { UserCard } from '@/features/users/components/organisms/UserCard'
 import { useGetUser } from '@/features/users/hooks/useGetUser'
+import { isNumber } from '@/utils/regexp'
 
 export const User: FC = () => {
   const urlParams = useParams<{ id: string }>()
@@ -15,7 +16,7 @@ export const User: FC = () => {
 
   useEffect(() => {
     // urlParams.idが数値かどうか評価
-    if (urlParams.id && !Number.isNaN(parseInt(urlParams.id, 10))) {
+    if (urlParams.id && isNumber(urlParams.id)) {
       getUser(urlParams.id)
     } else {
       navigate('/')

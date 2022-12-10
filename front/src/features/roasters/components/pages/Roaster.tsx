@@ -8,6 +8,7 @@ import { Spinner } from '@/components/Elements/Spinner'
 import { Head } from '@/components/Head'
 import { RoasterCard } from '@/features/roasters/components/organisms/RoasterCard'
 import { useGetRoaster } from '@/features/roasters/hooks/useGetRoaster'
+import { isNumber } from '@/utils/regexp'
 
 export const Roaster: FC = () => {
   const urlParams = useParams<{ id: string }>()
@@ -15,8 +16,7 @@ export const Roaster: FC = () => {
   const { roaster, getRoaster, loading } = useGetRoaster()
 
   useEffect(() => {
-    // TODO urlParams.idが数値かどうか評価 ルーティングに移動する
-    if (urlParams.id && !Number.isNaN(parseInt(urlParams.id, 10))) {
+    if (urlParams.id && isNumber(urlParams.id)) {
       getRoaster(urlParams.id)
     } else {
       navigate('/roasters/home')
