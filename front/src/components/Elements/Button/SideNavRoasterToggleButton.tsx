@@ -6,7 +6,7 @@ import type { Roaster } from '@/features/roasters'
 import { useCurrentRoaster } from '@/features/roasters'
 import defaultRoasterImage from '@/features/roasters/assets/defaultRoaster.png'
 import type { User } from '@/features/users'
-import defaultUserImage from '@/features/users/assets/default_user.png'
+import defaultUserImage from '@/features/users/assets/defaultUser.png'
 
 type Props = {
   user: User

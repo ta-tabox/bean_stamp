@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 
-import defaultUserImage from '@/features/users/assets/default_user.png'
+import defaultUserImage from '@/features/users/assets/defaultUser.png'
 import type { User } from '@/features/users/types'
 
 type Props = {

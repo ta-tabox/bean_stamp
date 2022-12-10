@@ -3,12 +3,18 @@ import { useNavigate } from 'react-router-dom'
 
 import { PrimaryButton } from '@/components/Elements/Button'
 import { Head } from '@/components/Head'
+import { useCurrentRoaster } from '@/features/roasters'
 
 export const Page404: FC = () => {
   const navigate = useNavigate()
+  const { isRoaster } = useCurrentRoaster()
 
   const handleClickHome = () => {
-    navigate('/')
+    if (isRoaster) {
+      navigate('/roasters/home')
+    } else {
+      navigate('/users/home')
+    }
   }
 
   return (
