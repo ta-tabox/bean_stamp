@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 
-import { useCurrentRoaster } from '@/features/roasters'
+import { useSignedInUser } from '@/features/auth'
 
 type Props = {
   redirectPath?: string
@@ -10,9 +10,9 @@ type Props = {
 
 export const RequireForNotBelongingToRoaster = (props: Props) => {
   const { redirectPath = '/users/home', children } = props
-  const { currentRoaster } = useCurrentRoaster()
+  const { isBelongingToRoaster } = useSignedInUser()
 
-  if (currentRoaster) {
+  if (isBelongingToRoaster) {
     return <Navigate to={redirectPath} replace />
   }
 

@@ -8,8 +8,8 @@ import { signOutReq } from '@/features/auth/api/signOut'
 import { signUpWithSignUpParams } from '@/features/auth/api/signUp'
 import { useAuthCookies } from '@/features/auth/hooks/useAuthCookies'
 import { useAuthHeaders } from '@/features/auth/hooks/useAuthHeaders'
+import { useResetStates } from '@/features/auth/hooks/useResetStates'
 import { useSignedInUser } from '@/features/auth/hooks/useSignedInUser'
-import { useCurrentRoaster } from '@/features/roasters'
 import { useErrorNotification } from '@/hooks/useErrorNotification'
 import { useMessage } from '@/hooks/useMessage'
 import type { ErrorResponse } from '@/types'
@@ -22,10 +22,11 @@ export const useAuth = () => {
   const [loading, setLoading] = useState(false)
 
   const { signedInUser, setIsSignedIn, setSignedInUser } = useSignedInUser()
-  const { setCurrentRoaster, setIsRoaster } = useCurrentRoaster()
   const { setAuthCookies, removeAuthCookies } = useAuthCookies()
   const { authHeaders } = useAuthHeaders()
   const { setErrorNotifications } = useErrorNotification()
+
+  const { resetStates } = useResetStates()
 
   // サインアップ
   type SignUpOptions = {
@@ -89,10 +90,7 @@ export const useAuth = () => {
       .then(() => {
         // 認証情報をのcookieを削除
         removeAuthCookies()
-        setIsSignedIn(false)
-        setSignedInUser(null) // SignedInUserStateを削除
-        setIsRoaster(false)
-        setCurrentRoaster(null) // CurrentRoasterStateを削除
+        resetStates()
         showMessage({ message: 'ログアウトしました', type: 'success' })
         navigate('/auth/signin')
       })
@@ -112,10 +110,7 @@ export const useAuth = () => {
       .then(() => {
         // 認証情報をのcookieを削除
         removeAuthCookies()
-        setIsSignedIn(false)
-        setSignedInUser(null) // SignedInUserStateを削除
-        setIsRoaster(false)
-        setCurrentRoaster(null) // CurrentRoasterStateを削除
+        resetStates()
         return Promise.resolve(null)
       })
       .catch((err) => Promise.reject(err))

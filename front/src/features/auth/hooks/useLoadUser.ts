@@ -1,14 +1,16 @@
 import { getSignInUser } from '@/features/auth/api/getSignInUser'
 import { useAuthCookies } from '@/features/auth/hooks/useAuthCookies'
 import { useAuthHeaders } from '@/features/auth/hooks/useAuthHeaders'
+import { useResetStates } from '@/features/auth/hooks/useResetStates'
 import { useSignedInUser } from '@/features/auth/hooks/useSignedInUser'
 import { useCurrentRoaster } from '@/features/roasters'
 
 export const useLoadUser = () => {
-  const { setIsSignedIn, setSignedInUser } = useSignedInUser()
+  const { setIsSignedIn, setSignedInUser, setIsBelongingToRoaster } = useSignedInUser()
   const { setCurrentRoaster } = useCurrentRoaster()
   const { authHeaders } = useAuthHeaders()
   const { removeAuthCookies } = useAuthCookies()
+  const { resetStates } = useResetStates()
 
   // ログインユーザーの読み込み
   const loadUser = () => {
@@ -17,19 +19,18 @@ export const useLoadUser = () => {
         if (res.data.isLogin) {
           setIsSignedIn(true)
           setSignedInUser(res.data.user)
-          setCurrentRoaster(res.data.roaster)
+          if (res.data.roaster) {
+            setIsBelongingToRoaster(true)
+            setCurrentRoaster(res.data.roaster)
+          }
         } else {
           removeAuthCookies()
-          setIsSignedIn(false)
-          setSignedInUser(null) // SignedInUserStateを削除
-          setCurrentRoaster(null) // CurrentRoasterStateを削除
+          resetStates()
         }
       })
       .catch(() => {
         removeAuthCookies()
-        setIsSignedIn(false)
-        setSignedInUser(null) // SignedInUserStateを削除
-        setCurrentRoaster(null) // CurrentRoasterStateを削除
+        resetStates()
       })
   }
   return { loadUser }

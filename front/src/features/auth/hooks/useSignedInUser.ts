@@ -1,5 +1,6 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 
+import { isBelongingToRoasterState } from '@/features/auth/stores/isBelongingToRoasterState'
 import { isSignedInState } from '@/features/auth/stores/isSignedInState'
 import { signedInUserState } from '@/features/auth/stores/signedInUserState'
 import type { User } from '@/features/users'
@@ -15,5 +16,9 @@ export const useSignedInUser = () => {
   const isSignedIn = useRecoilValue(isSignedInState)
   const setIsSignedIn = useSetRecoilState(isSignedInState)
 
-  return { signedInUser, setSignedInUser, isSignedIn, setIsSignedIn }
+  // ロースターに所属しているかどうかの状態を保持
+  const isBelongingToRoaster = useRecoilValue(isBelongingToRoasterState)
+  const setIsBelongingToRoaster = useSetRecoilState(isBelongingToRoasterState)
+
+  return { signedInUser, setSignedInUser, isSignedIn, setIsSignedIn, isBelongingToRoaster, setIsBelongingToRoaster }
 }

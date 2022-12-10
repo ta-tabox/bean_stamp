@@ -6,7 +6,7 @@ import axios from '@/lib/axios'
 type CurrentUserResponse = {
   isLogin: boolean
   user: User
-  roaster: Roaster
+  roaster: Roaster | null
 }
 
 type Options = {
