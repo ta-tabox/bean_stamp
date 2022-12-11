@@ -122,7 +122,8 @@ export const UserUpdateForm: FC<Props> = (props) => {
 
   // プレビュー機能
   const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
+    if (e.target.files && e.target.files.length) {
+      // WARNING ChromeではURL.createObjectURLは廃止予定？変更する必要があるかもしれない
       setPreviewImage([URL.createObjectURL(e.target.files[0])])
     }
   }

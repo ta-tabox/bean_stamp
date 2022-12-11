@@ -1,9 +1,12 @@
-import type { FC } from 'react'
+import type { ChangeEvent, FC } from 'react'
+import { useState } from 'react'
 
 import { useForm } from 'react-hook-form'
 
 import { PrimaryButton } from '@/components/Elements/Button'
+import { ImagePreview } from '@/components/Form'
 import { RoasterAddressInput } from '@/features/roasters/components/molecules/RoasterAddressInput'
+import { RoasterImageInput } from '@/features/roasters/components/molecules/RoasterImageInput'
 import { RoasterNameInput } from '@/features/roasters/components/molecules/RoasterNameInput'
 import { RoasterPhoneNumberInput } from '@/features/roasters/components/molecules/RoasterPhoneNumberInput'
 import { RoasterDescribeInput } from '@/features/roasters/components/molecules/RosterDescribeInput'
@@ -22,6 +25,7 @@ type Props = {
 
 export const RoasterForm: FC<Props> = (props) => {
   const { roaster = null, loading, submitTitle, onSubmit } = props
+  const [previewImage, setPreviewImage] = useState<Array<string>>()
 
   // フォーム初期値の設定 RoasterNew -> {}, RoasterEdit -> {初期値}
   const defaultValues = () => {
@@ -50,8 +54,22 @@ export const RoasterForm: FC<Props> = (props) => {
     defaultValues: defaultValues(),
   })
 
+  // プレビュー機能
+  const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length) {
+      // WARNING ChromeではURL.createObjectURLは廃止予定？変更する必要があるかもしれない
+      setPreviewImage([URL.createObjectURL(e.target.files[0])])
+    }
+  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      {/* プレビューフィールド */}
+      {previewImage && <ImagePreview images={previewImage} />}
+
+      {/* ファイル */}
+      <RoasterImageInput label="image" register={register} error={errors.image} onChange={handleChangeImage} />
+
       {/* 店舗名 */}
       <RoasterNameInput label="name" register={register} error={errors.name} />
 

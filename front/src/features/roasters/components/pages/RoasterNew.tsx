@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { AxiosError } from 'axios'
 
 import { NotificationMessage } from '@/components/Elements/Notification'
-import { FormContainer, FormFooter, FormMain, FormTitle } from '@/components/Form'
+import { FormContainer, FormMain, FormTitle } from '@/components/Form'
 import { Head } from '@/components/Head'
 import { useAuth, useLoadUser } from '@/features/auth'
 import { createRoaster } from '@/features/roasters/api/createRoaster'
@@ -70,9 +70,6 @@ export const RoasterNew: FC = memo(() => {
             {isError ? <NotificationMessage notifications={errorNotifications} type="error" /> : null}
             <RoasterForm submitTitle="登録" loading={loading} onSubmit={onSubmit} />
           </FormMain>
-          <FormFooter>
-            <div>Footer</div>
-          </FormFooter>
         </FormContainer>
       </div>
     </>

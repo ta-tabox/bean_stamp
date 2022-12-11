@@ -11,6 +11,7 @@ import { FormContainer, FormFooter, FormMain, FormTitle } from '@/components/For
 import { Head } from '@/components/Head'
 import { useAuth, useLoadUser } from '@/features/auth'
 import { updateRoaster } from '@/features/roasters/api/updateRoaster'
+import { RoasterThumbnail } from '@/features/roasters/components/molecules/RoasterThumbnail'
 import { RoasterForm } from '@/features/roasters/components/organisms/RoasterForm'
 import { useCurrentRoaster } from '@/features/roasters/hooks/useCurrentRoaster'
 import type { RoasterCreateData } from '@/features/roasters/types'
@@ -88,9 +89,9 @@ export const RoasterEdit: FC = () => {
       {currentRoaster && (
         <div className="mt-20">
           <FormContainer>
-            {/* <div className="flex justify-end -mb-10">
-              <UserThumbnail user={signedInUser} />
-            </div> */}
+            <div className="flex justify-end -mb-10">
+              <RoasterThumbnail roaster={currentRoaster} />
+            </div>
             <FormMain>
               <FormTitle>ロースター情報編集</FormTitle>
               {isError ? <NotificationMessage notifications={errorNotifications} type="error" /> : null}
