@@ -11,18 +11,19 @@ type InputProps = {
   required?: string | ValidationRule<boolean>
   pattern?: ValidationRule<RegExp>
   minLength?: ValidationRule<number>
+  maxLength?: ValidationRule<number>
   validate?: Validate<any> // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export const Input: FC<InputProps> = (props) => {
-  const { label, disabled, type, placeholder, register, required, pattern, minLength, validate } = props
+  const { label, disabled, type, placeholder, register, required, pattern, minLength, maxLength, validate } = props
   return (
     <input
       type={type}
       disabled={disabled}
       placeholder={placeholder}
       className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none"
-      {...register(label, { required, pattern, minLength, validate })}
+      {...register(label, { required, pattern, minLength, maxLength, validate })}
     />
   )
 }

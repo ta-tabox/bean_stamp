@@ -13,8 +13,8 @@ export const useLoadUser = () => {
   const { resetStates } = useResetStates()
 
   // ログインユーザーの読み込み
-  const loadUser = () => {
-    getSignInUser({ headers: authHeaders })
+  const loadUser = async () => {
+    await getSignInUser({ headers: authHeaders })
       .then((res) => {
         if (res.data.isLogin) {
           setIsSignedIn(true)

@@ -17,7 +17,7 @@ import { UserNameInput } from '@/features/users/components/molecules/UserNameInp
 import type { User, UserUpdateParams } from '@/features/users/types'
 import { useErrorNotification } from '@/hooks/useErrorNotification'
 import { useMessage } from '@/hooks/useMessage'
-import type { ErrorResponse } from '@/types'
+import type { DeviseErrorResponse } from '@/types'
 import type { PrefectureOption } from '@/utils/prefecture'
 import { prefectureOptions } from '@/utils/prefecture'
 
@@ -94,7 +94,7 @@ export const UserUpdateForm: FC<Props> = (props) => {
     } catch (error) {
       if (error instanceof AxiosError) {
         // NOTE errorの型指定 他に良い方法はないのか？
-        const typedError = error as AxiosError<ErrorResponse>
+        const typedError = error as AxiosError<DeviseErrorResponse>
         const errorMessages = typedError.response?.data.errors.fullMessages
         if (errorMessages) {
           setErrorNotifications(errorMessages)
@@ -112,10 +112,10 @@ export const UserUpdateForm: FC<Props> = (props) => {
         message: `ユーザー情報を変更しました。再度ログインをしてください。`,
         type: 'success',
       })
-      loadUser()
+      await loadUser()
     } else {
       showMessage({ message: 'ユーザー情報を変更しました', type: 'success' })
-      loadUser()
+      await loadUser()
       navigate('/users/home')
     }
   }, [])

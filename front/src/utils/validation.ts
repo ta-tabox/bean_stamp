@@ -7,6 +7,7 @@ export const validation = {
   pattern: {
     email: { value: regexp.email, message: 'メールアドレスの形式が正しくありません' },
     password: { value: regexp.password, message: '半角英数記号を入力してください' },
+    tel: { value: regexp.tel, message: '電話番号の形式が正しくありません。ハイフンなしの半角数字を入力してください' },
   },
   validate: {
     confirm: (targetValue: unknown, value: unknown, name?: string) =>

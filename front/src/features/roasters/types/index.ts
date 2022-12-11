@@ -13,3 +13,7 @@ export type Roaster = {
   address: string
   guest: boolean
 }
+
+export type RoasterCreateParams = Pick<Roaster, 'name' | 'phoneNumber' | 'prefectureCode' | 'describe' | 'address'> & {
+  image: string
+}

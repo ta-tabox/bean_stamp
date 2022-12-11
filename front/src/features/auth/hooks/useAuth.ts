@@ -12,7 +12,7 @@ import { useResetStates } from '@/features/auth/hooks/useResetStates'
 import { useSignedInUser } from '@/features/auth/hooks/useSignedInUser'
 import { useErrorNotification } from '@/hooks/useErrorNotification'
 import { useMessage } from '@/hooks/useMessage'
-import type { ErrorResponse } from '@/types'
+import type { DeviseErrorResponse } from '@/types'
 
 import type { AxiosError } from 'axios'
 
@@ -42,7 +42,7 @@ export const useAuth = () => {
         setSignedInUser(res.data.data) // グローバルステートにUserの値をセット
         return Promise.resolve(signedInUser)
       })
-      .catch((err: AxiosError<ErrorResponse>) => {
+      .catch((err: AxiosError<DeviseErrorResponse>) => {
         const errorMessages = err.response?.data.errors.fullMessages
         if (errorMessages) {
           setErrorNotifications(errorMessages)

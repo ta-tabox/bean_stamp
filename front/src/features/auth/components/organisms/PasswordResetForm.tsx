@@ -13,7 +13,7 @@ import { PasswordInput } from '@/features/users'
 import { PasswordConfirmationInput } from '@/features/users/components/molecules/PasswordConfirmationInput'
 import { useErrorNotification } from '@/hooks/useErrorNotification'
 import { useMessage } from '@/hooks/useMessage'
-import type { ErrorResponse } from '@/types'
+import type { DeviseErrorResponse } from '@/types'
 
 import type { AxiosError } from 'axios'
 import type { SubmitHandler } from 'react-hook-form'
@@ -51,7 +51,7 @@ export const PasswordResetForm: FC<Props> = (props) => {
         navigate('/auth/signin')
         showMessage({ message: 'パスワードの変更が完了しました', type: 'success' })
       })
-      .catch((err: AxiosError<ErrorResponse>) => {
+      .catch((err: AxiosError<DeviseErrorResponse>) => {
         const errorMessages = err.response?.data.errors.fullMessages
         if (errorMessages) {
           setErrorNotifications(errorMessages)

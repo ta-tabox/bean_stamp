@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { Roaster } from '@/features/roasters/components/pages/Roaster'
 import { RoasterHome } from '@/features/roasters/components/pages/RoasterHome'
+import { RoasterNew } from '@/features/roasters/components/pages/RoasterNew'
 import { UserCancel } from '@/features/users/components/pages/UserCancel'
 import { UserEdit } from '@/features/users/components/pages/UserEdit'
 import { UserFollowing } from '@/features/users/components/pages/UserFollowing'
@@ -15,7 +16,7 @@ export const RoastersRoutes: FC = () => (
     <Route element={<MainLayout />}>
       {/* ロースター未所属を要求 */}
       <Route element={<RequireForNotBelongingToRoaster redirectPath="/roasters/home" />}>
-        <Route path="new" element={<UserCancel />} />
+        <Route path="new" element={<RoasterNew />} />
       </Route>
       {/* ロースター所属を要求 */}
       <Route element={<RequireForBelongingToRoaster />}>
