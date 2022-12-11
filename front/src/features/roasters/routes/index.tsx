@@ -3,10 +3,10 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { Roaster } from '@/features/roasters/components/pages/Roaster'
+import { RoasterEdit } from '@/features/roasters/components/pages/RoasterEdit'
 import { RoasterHome } from '@/features/roasters/components/pages/RoasterHome'
 import { RoasterNew } from '@/features/roasters/components/pages/RoasterNew'
 import { UserCancel } from '@/features/users/components/pages/UserCancel'
-import { UserEdit } from '@/features/users/components/pages/UserEdit'
 import { UserFollowing } from '@/features/users/components/pages/UserFollowing'
 import { RequireForBelongingToRoaster } from '@/router/RequireForBelongingToRoaster'
 import { RequireForNotBelongingToRoaster } from '@/router/RequireForNotBelongingToRoaster'
@@ -22,7 +22,7 @@ export const RoastersRoutes: FC = () => (
       <Route element={<RequireForBelongingToRoaster />}>
         <Route index element={<RoasterHome />} />
         <Route path="home" element={<RoasterHome />} />
-        <Route path="edit" element={<UserEdit />} />
+        <Route path="edit" element={<RoasterEdit />} />
         <Route path="cancel" element={<UserCancel />} />
       </Route>
       {/* ロースター所属未所属を問わない */}
