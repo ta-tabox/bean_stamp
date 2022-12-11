@@ -1,3 +1,5 @@
+import type { PrefectureOption } from '@/utils/prefecture'
+
 export type Roaster = {
   id: number
   name: string
@@ -16,4 +18,9 @@ export type Roaster = {
 
 export type RoasterCreateParams = Pick<Roaster, 'name' | 'phoneNumber' | 'prefectureCode' | 'describe' | 'address'> & {
   image: string
+}
+
+// react-hook-formで取り扱うデータの型
+export type RoasterCreateData = RoasterCreateParams & {
+  prefectureOption: PrefectureOption
 }

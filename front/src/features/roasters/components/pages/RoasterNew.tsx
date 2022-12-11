@@ -9,69 +9,43 @@ import { PrimaryButton } from '@/components/Elements/Button'
 import { NotificationMessage } from '@/components/Elements/Notification'
 import { FormContainer, FormFooter, FormMain, FormTitle } from '@/components/Form'
 import { Head } from '@/components/Head'
-import { useAuth, useLoadUser, useSignedInUser } from '@/features/auth'
+import { useAuth, useLoadUser } from '@/features/auth'
 import { createRoaster } from '@/features/roasters/api/createRoaster'
 import { RoasterAddressInput } from '@/features/roasters/components/molecules/RoasterAddressInput'
 import { RoasterNameInput } from '@/features/roasters/components/molecules/RoasterNameInput'
 import { RoasterPhoneNumberInput } from '@/features/roasters/components/molecules/RoasterPhoneNumberInput'
 import { RoasterDescribeInput } from '@/features/roasters/components/molecules/RosterDescribeInput'
 import { useCurrentRoaster } from '@/features/roasters/hooks/useCurrentRoaster'
-import type { RoasterCreateParams } from '@/features/roasters/types'
+import type { RoasterCreateData } from '@/features/roasters/types'
+import { createRoasterFormData } from '@/features/roasters/utils/createRoasterFormData'
 import { PrefectureSelect } from '@/features/users'
 import { useErrorNotification } from '@/hooks/useErrorNotification'
 import { useMessage } from '@/hooks/useMessage'
-import { useNotification } from '@/hooks/useNotification'
 import type { ApplicationErrorResponse } from '@/types'
-import type { PrefectureOption } from '@/utils/prefecture'
 
 import type { FieldError, SubmitHandler } from 'react-hook-form'
 
-// react-hook-formで取り扱うデータの型
-type RoasterCreateData = RoasterCreateParams & {
-  prefectureOption: PrefectureOption
-}
-
 export const RoasterNew: FC = memo(() => {
-  const { notifications } = useNotification()
-  const { setErrorNotifications } = useErrorNotification()
+  const { setErrorNotifications, errorNotifications } = useErrorNotification()
   const { showMessage } = useMessage()
   const navigate = useNavigate()
   const { authHeaders } = useAuth()
   const { loadUser } = useLoadUser()
-  const { setIsBelongingToRoaster } = useSignedInUser()
-  const { setIsRoaster, setCurrentRoaster } = useCurrentRoaster()
+
+  const { setIsRoaster } = useCurrentRoaster()
 
   const [isError, setIsError] = useState(false)
   const [loading, setLoading] = useState(false)
 
   const {
     register,
-    watch,
     handleSubmit,
     formState: { dirtyFields, errors },
     control,
   } = useForm<RoasterCreateData>({ criteriaMode: 'all' })
 
   const onSubmit: SubmitHandler<RoasterCreateData> = useCallback(async (data) => {
-    // PUTリクエスト用のフォームを作成する
-    // FormDataじゃなくて普通にparamsとして送れないか？
-    const createFormData = () => {
-      const formData = new FormData()
-      // 画像が選択されていない場合は更新しない
-      // if (data.image[0]) {
-      //   formData.append('image', data.image[0])
-      // }
-      formData.append('roaster[name]', data.name)
-      formData.append('roaster[phone_number]', data.phoneNumber)
-      formData.append('roaster[prefecture_code]', data.prefectureOption.value.toString())
-      formData.append('roaster[address]', data.address)
-      if (data.describe) {
-        formData.append('roaster[describe]', data.describe)
-      }
-      return formData
-    }
-
-    const formData = createFormData()
+    const formData = createRoasterFormData(data)
 
     try {
       setLoading(true)
@@ -106,7 +80,7 @@ export const RoasterNew: FC = memo(() => {
         <FormContainer>
           <FormMain>
             <FormTitle>ロースター登録</FormTitle>
-            {isError ? <NotificationMessage notifications={notifications} type="error" /> : null}
+            {isError ? <NotificationMessage notifications={errorNotifications} type="error" /> : null}
             <form onSubmit={handleSubmit(onSubmit)}>
               {/* 店舗名 */}
               <RoasterNameInput label="name" register={register} error={errors.name} />
