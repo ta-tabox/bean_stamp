@@ -19,7 +19,7 @@ import { useErrorNotification } from '@/hooks/useErrorNotification'
 import { useMessage } from '@/hooks/useMessage'
 import type { DeviseErrorResponse } from '@/types'
 import type { PrefectureOption } from '@/utils/prefecture'
-import { prefectureOptions } from '@/utils/prefecture'
+import { convertPrefectureCodeToIndex, prefectureOptions } from '@/utils/prefecture'
 
 import type { SubmitHandler, FieldError } from 'react-hook-form'
 
@@ -42,8 +42,8 @@ export const UserUpdateForm: FC<Props> = (props) => {
   const { showMessage } = useMessage()
   const { setErrorNotifications } = useErrorNotification()
 
-  const userPrefectureCodeIndex = parseInt(user.prefectureCode, 10) - 1 // id -> 配列のindex合わせるため-1を行う
-
+  // codeId -> 配列のindexへ変換
+  const prefectureCodeIndex = convertPrefectureCodeToIndex(user.prefectureCode)
   const [loading, setLoading] = useState(false)
   const [previewImage, setPreviewImage] = useState<Array<string>>()
 
@@ -57,7 +57,7 @@ export const UserUpdateForm: FC<Props> = (props) => {
     defaultValues: {
       name: user.name,
       email: user.email,
-      prefectureOption: prefectureOptions[userPrefectureCodeIndex],
+      prefectureOption: prefectureOptions[prefectureCodeIndex],
       describe: user.describe,
     },
   })

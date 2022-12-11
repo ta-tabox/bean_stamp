@@ -9,7 +9,7 @@ import { RoasterPhoneNumberInput } from '@/features/roasters/components/molecule
 import { RoasterDescribeInput } from '@/features/roasters/components/molecules/RosterDescribeInput'
 import type { Roaster, RoasterCreateData } from '@/features/roasters/types'
 import { PrefectureSelect } from '@/features/users'
-import { prefectureOptions } from '@/utils/prefecture'
+import { convertPrefectureCodeToIndex, prefectureOptions } from '@/utils/prefecture'
 
 import type { FieldError, SubmitHandler } from 'react-hook-form'
 
@@ -27,11 +27,12 @@ export const RoasterForm: FC<Props> = (props) => {
   const defaultValues = () => {
     let values = {}
     if (roaster) {
-      const roasterPrefectureCodeIndex = parseInt(roaster.prefectureCode, 10) - 1 // id -> 配列のindex合わせるため-1を行う
+      // codeId -> 配列のindexへ変換
+      const prefectureCodeIndex = convertPrefectureCodeToIndex(roaster.prefectureCode)
       values = {
         name: roaster.name,
         phoneNumber: roaster.phoneNumber,
-        prefectureOption: prefectureOptions[roasterPrefectureCodeIndex],
+        prefectureOption: prefectureOptions[prefectureCodeIndex],
         address: roaster.address,
         describe: roaster.describe,
       }

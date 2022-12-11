@@ -33,40 +33,43 @@ export const RoasterEdit: FC = () => {
   const [isError, setIsError] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const onSubmit: SubmitHandler<RoasterCreateData> = useCallback(async (data) => {
-    if (currentRoaster === null) {
-      showMessage({ message: 'ロースターを登録をしてください', type: 'error' })
-      navigate('/roasters/create')
-      return
-    }
-
-    const formData = createRoasterFormData(data)
-
-    try {
-      setLoading(true)
-      await updateRoaster({ headers: authHeaders, id: currentRoaster.id.toString(), formData })
-      setIsError(false)
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        // NOTE errorの型指定 他に良い方法はないのか？
-        const typedError = error as AxiosError<ApplicationErrorResponse>
-        const errorMessages = typedError.response?.data.messages
-        if (errorMessages) {
-          setErrorNotifications(errorMessages)
-          setIsError(true)
-        }
+  const onSubmit: SubmitHandler<RoasterCreateData> = useCallback(
+    async (data) => {
+      if (currentRoaster === null) {
+        showMessage({ message: 'ロースターを登録をしてください', type: 'error' })
+        navigate('/roasters/create')
+        return
       }
-      return
-    } finally {
-      setLoading(false)
-    }
 
-    await loadUser()
+      const formData = createRoasterFormData(data)
 
-    setIsRoaster(true)
-    showMessage({ message: 'ロースター情報を変更しました', type: 'success' })
-    navigate('/roasters/home')
-  }, [])
+      try {
+        setLoading(true)
+        await updateRoaster({ headers: authHeaders, id: currentRoaster.id.toString(), formData })
+        setIsError(false)
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          // NOTE errorの型指定 他に良い方法はないのか？
+          const typedError = error as AxiosError<ApplicationErrorResponse>
+          const errorMessages = typedError.response?.data.messages
+          if (errorMessages) {
+            setErrorNotifications(errorMessages)
+            setIsError(true)
+          }
+        }
+        return
+      } finally {
+        setLoading(false)
+      }
+
+      await loadUser()
+
+      setIsRoaster(true)
+      showMessage({ message: 'ロースター情報を変更しました', type: 'success' })
+      navigate('/roasters/home')
+    },
+    [currentRoaster]
+  )
 
   return (
     <>
