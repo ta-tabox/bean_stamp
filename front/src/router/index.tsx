@@ -15,7 +15,7 @@ export const AppRouter: FC = () => {
   const { loadUser } = useLoadUser()
   // ログイン中にリロードした際にStateにログイン情報を格納する
   useEffect(() => {
-    loadUser()
+    void loadUser()
   }, [])
 
   return (

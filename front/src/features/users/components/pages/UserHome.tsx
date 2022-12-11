@@ -12,7 +12,7 @@ export const UserHome: FC = memo(() => {
 
   // NOTE ログイン直後のユーザー＆ロースター情報の更新はここでOKか？
   useEffect(() => {
-    loadUser()
+    void loadUser()
   }, [])
 
   return (

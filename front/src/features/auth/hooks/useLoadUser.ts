@@ -13,7 +13,7 @@ export const useLoadUser = () => {
   const { resetStates } = useResetStates()
 
   // ログインユーザーの読み込み
-  const loadUser = async () => {
+  const loadUser = async (): Promise<void> => {
     await getSignInUser({ headers: authHeaders })
       .then((res) => {
         if (res.data.isLogin) {
