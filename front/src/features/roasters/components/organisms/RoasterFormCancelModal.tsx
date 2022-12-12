@@ -3,8 +3,7 @@ import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { PrimaryButton, SecondaryButton } from '@/components/Elements/Button'
-import { Modal } from '@/components/Elements/Modal'
-import { FormContainer } from '@/components/Form'
+import { Modal, ModalContainer, ModalText } from '@/components/Elements/Modal'
 
 type Props = {
   isOpen: boolean
@@ -21,19 +20,21 @@ export const RoasterFormCancelModal: FC<Props> = memo((props) => {
 
   return (
     <Modal contentLabel="ロースターフォームデータのリセット" isOpen={isOpen} onClose={onClose}>
-      <FormContainer>
-        <p className="text-center text-md text-gray-400">
-          入力中のデータは削除されます。
-          <br />
-          キャンセルしますか？
-        </p>
+      <ModalContainer>
+        <ModalText>
+          <>
+            入力中のデータは削除されます。
+            <br />
+            キャンセルしますか？
+          </>
+        </ModalText>
         <div className="mx-2 md:mx-12">
           <div className="flex items-center justify-center mt-4 space-x-8">
             <SecondaryButton onClick={onClose}>戻る</SecondaryButton>
             <PrimaryButton onClick={handleSubmit}>OK</PrimaryButton>
           </div>
         </div>
-      </FormContainer>
+      </ModalContainer>
     </Modal>
   )
 })
