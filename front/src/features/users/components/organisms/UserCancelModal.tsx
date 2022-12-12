@@ -47,8 +47,8 @@ export const UserCancelModal: FC<Props> = memo((props) => {
               この操作は取り消すことができません。
             </p>
             <div className="flex items-center justify-center mt-4 space-x-8">
-              <DangerButton onClick={handleSubmit}>了承して削除する</DangerButton>
               <SecondaryButton onClick={onClose}>戻る</SecondaryButton>
+              <DangerButton onClick={handleSubmit}>了承して削除する</DangerButton>
             </div>
           </div>
         </FormMain>

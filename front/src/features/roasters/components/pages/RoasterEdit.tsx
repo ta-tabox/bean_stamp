@@ -96,7 +96,7 @@ export const RoasterEdit: FC = () => {
               <FormTitle>ロースター情報編集</FormTitle>
               {isError ? <NotificationMessage notifications={errorNotifications} type="error" /> : null}
 
-              <RoasterForm submitTitle="変更" loading={loading} onSubmit={onSubmit} roaster={currentRoaster} />
+              <RoasterForm submitTitle="更新" loading={loading} onSubmit={onSubmit} roaster={currentRoaster} />
 
               <FormFooter>
                 <Link to="/roasters/cancel">ロースターを削除する</Link>

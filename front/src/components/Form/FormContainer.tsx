@@ -6,5 +6,5 @@ type Props = {
 
 export const FormContainer: FC<Props> = (props) => {
   const { children } = props
-  return <div className="p-8 max-w-xl mx-auto container">{children}</div>
+  return <div className="p-4 sm:p-8 max-w-xl mx-auto container">{children}</div>
 }
