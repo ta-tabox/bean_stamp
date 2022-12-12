@@ -16,16 +16,21 @@ export const useLoadUser = () => {
   const loadUser = async (): Promise<void> => {
     await getSignInUser({ headers: authHeaders })
       .then((res) => {
-        if (res.data.isLogin) {
-          setIsSignedIn(true)
-          setSignedInUser(res.data.user)
-          if (res.data.roaster) {
-            setIsBelongingToRoaster(true)
-            setCurrentRoaster(res.data.roaster)
-          }
-        } else {
+        if (!res.data.isLogin) {
           removeAuthCookies()
           resetStates()
+          return
+        }
+
+        setIsSignedIn(true)
+        setSignedInUser(res.data.user)
+
+        if (res.data.roaster) {
+          setIsBelongingToRoaster(true)
+          setCurrentRoaster(res.data.roaster)
+        } else {
+          setIsBelongingToRoaster(false)
+          setCurrentRoaster(null)
         }
       })
       .catch(() => {
