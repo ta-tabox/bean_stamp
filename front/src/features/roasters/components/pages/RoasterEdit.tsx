@@ -45,6 +45,7 @@ export const RoasterEdit: FC = () => {
       // ゲストロースターを制限する
       if (currentRoaster.guest) {
         showMessage({ message: 'ゲストロースターの編集はできません', type: 'error' })
+        navigate('/')
         return
       }
 

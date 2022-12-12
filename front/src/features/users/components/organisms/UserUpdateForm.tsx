@@ -84,6 +84,7 @@ export const UserUpdateForm: FC<Props> = (props) => {
     // ゲストユーザーを制限する
     if (user.guest) {
       showMessage({ message: 'ゲストユーザーの編集はできません', type: 'error' })
+      navigate('/')
       return
     }
 

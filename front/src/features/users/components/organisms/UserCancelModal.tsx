@@ -22,6 +22,7 @@ export const UserCancelModal: FC<Props> = memo((props) => {
   const handleSubmit = async () => {
     if (signedInUser?.guest) {
       showMessage({ message: 'ゲストユーザーの削除はできません', type: 'error' })
+      navigate('/')
       return
     }
 
