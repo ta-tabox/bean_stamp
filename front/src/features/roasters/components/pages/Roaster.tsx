@@ -25,10 +25,10 @@ export const Roaster: FC = () => {
 
   return (
     <>
-      <Head title="ロースター詳細" />
+      <Head title="ロースター" />
       <ContentHeader>
         <div className="h-full flex justify-start items-end">
-          <ContentHeaderTitle title="ロースター詳細" />
+          <ContentHeaderTitle title="ロースター" />
         </div>
       </ContentHeader>
 

@@ -34,8 +34,8 @@ export const RoasterCard: FC<Props> = memo((props) => {
               ) : null}
             </div>
             <div className="flex items-baseline justify-around lg:justify-start">
-              {/* TODO follow機能実装時に人数を表示する */}
-              <Link to={`/roasters/${roaster.id}/following`}>フォロー人数</Link>
+              {/* TODO follow機能実装時に人数を表示する, followers.lengthなどで数字を取り出したい */}
+              <Link to={`/roasters/${roaster.id}/follower`}>フォロー人数</Link>
               <div className="ml-4">
                 {/* TODO コンポーネント化する */}
                 {roaster.id !== currentRoaster?.id ? (

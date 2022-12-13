@@ -1,16 +1,20 @@
 import type { FC } from 'react'
 import { memo } from 'react'
 
+import defaultUserImage from '@/features/users/assets/defaultUser.png'
+import type { User } from '@/features/users/types'
+import { translatePrefectureCodeToName } from '@/utils/prefecture'
+
 type Props = {
-  id: number
-  imageUrl: string
-  userName: string
-  area: string
+  user: User
   onClick: (id: number) => void
 }
 
 export const UserItem: FC<Props> = memo((props) => {
-  const { id, imageUrl, userName, area, onClick } = props
+  const { user, onClick } = props
+  const { id, name, prefectureCode, describe, image } = user
+  const area = translatePrefectureCodeToName({ prefectureCode })
+  const imageUrl = image.url
   return (
     <button type="button" className="block w-full" onClick={() => onClick(id)}>
       <div
@@ -21,14 +25,14 @@ export const UserItem: FC<Props> = memo((props) => {
           <div className="mb-2.5 sm:mb-0 sm:mr-4 flex-none">
             <img
               className="object-cover w-20 h-20 border-2 border-indigo-500 rounded-full"
-              src={imageUrl}
-              alt={`${userName}の画像`}
+              src={imageUrl ?? defaultUserImage}
+              alt={`${name}の画像`}
             />
           </div>
           <div className="w-full flex flex-col mb-4 sm:mb-0 sm:mr-4 overflow-hidden">
-            <p className="font-medium truncate">{userName}</p>
-            <p className="truncate">{area}</p>
-            <p className="truncate text-gray-500">詳細</p>
+            <p className="font-medium truncate">{name}</p>
+            <p className="truncate">@ {area}</p>
+            <p className="truncate text-gray-500">{describe}</p>
           </div>
         </div>
       </div>
