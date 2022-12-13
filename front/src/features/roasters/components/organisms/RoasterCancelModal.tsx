@@ -32,7 +32,6 @@ export const RoasterCancelModal: FC<Props> = memo((props) => {
       return
     }
 
-    // TODO ロースターCRUD関係の処理をhooksにまとめる？
     try {
       await deleteRoaster({ headers: authHeaders, id: roaster.id.toString() })
     } catch {

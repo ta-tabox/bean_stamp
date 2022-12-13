@@ -2,7 +2,7 @@ import type { FC } from 'react'
 import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import { CommonLayout } from '@/components/Layout'
+import { CommonLayout, MainLayout } from '@/components/Layout'
 import { About, Help, Home, Page404 } from '@/components/Pages'
 import { useLoadUser } from '@/features/auth'
 import { AuthRoutes } from '@/features/auth/routes'
@@ -32,8 +32,10 @@ export const AppRouter: FC = () => {
       </Route>
       {/* ログイン済みを要求 */}
       <Route element={<ProtectedRoute />}>
-        <Route path="users/*" element={<UsersRoutes />} />
-        <Route path="roasters/*" element={<RoastersRoutes />} />
+        <Route element={<MainLayout />}>
+          <Route path="users/*" element={<UsersRoutes />} />
+          <Route path="roasters/*" element={<RoastersRoutes />} />
+        </Route>
       </Route>
       <Route path="*" element={<Page404 />} />
     </Routes>
