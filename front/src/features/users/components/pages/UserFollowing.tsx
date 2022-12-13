@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import { useEffect, memo } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { Card } from '@/components/Elements/Card'
 import { ContentHeader } from '@/components/Elements/Header'
@@ -16,6 +16,7 @@ import { isNumber } from '@/utils/regexp'
 
 export const UserFollowing: FC = memo(() => {
   const urlParams = useParams<{ id: string }>()
+  const navigate = useNavigate()
   const { user, getUser, loading: userLoading } = useGetUser()
   const { roasters, getRoastersFollowedByUser, loading: roastersLoading } = useGetRoastersFollowedByUser()
 
@@ -33,9 +34,8 @@ export const UserFollowing: FC = memo(() => {
     }
   }, [urlParams.id])
 
-  // TODO ロースタークリックした時のアクション, ロースターページへ遷移
   const handleClickRoaster = (id: number) => {
-    alert(`RoasterId: ${id}`)
+    navigate(`/roasters/${id}`)
   }
 
   return (
