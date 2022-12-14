@@ -8,6 +8,7 @@ import { RoasterEdit } from '@/features/roasters/components/pages/RoasterEdit'
 import { RoasterFollower } from '@/features/roasters/components/pages/RoasterFollower'
 import { RoasterHome } from '@/features/roasters/components/pages/RoasterHome'
 import { RoasterNew } from '@/features/roasters/components/pages/RoasterNew'
+import { RoasterOffers } from '@/features/roasters/components/pages/RoasterOffers'
 import { RequireForBelongingToRoaster } from '@/router/RequireForBelongingToRoaster'
 import { RequireForNotBelongingToRoaster } from '@/router/RequireForNotBelongingToRoaster'
 
@@ -25,9 +26,10 @@ export const RoastersRoutes: FC = memo(() => (
       <Route path="cancel" element={<RoasterCancel />} />
     </Route>
     {/* ロースター所属未所属を問わない */}
-    {/* TODO RoasterにRoasterOfferとRoasterFollowerコンポーネントをネストさせる */}
-    <Route path=":id" element={<Roaster />} />
-    <Route path=":id/follower" element={<RoasterFollower />} />
+    <Route path=":id" element={<Roaster />}>
+      <Route index element={<RoasterOffers />} />
+      <Route path="follower" element={<RoasterFollower />} />
+    </Route>
     <Route path="*" element={<Navigate to="/roasters/home" replace />} />
   </Routes>
 ))

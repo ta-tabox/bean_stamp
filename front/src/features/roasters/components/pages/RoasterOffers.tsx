@@ -3,14 +3,12 @@ import { useEffect, memo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { Card } from '@/components/Elements/Card'
-import { ContentSubTitle } from '@/components/Elements/Content'
 import { Spinner } from '@/components/Elements/Spinner'
-import { Head } from '@/components/Head'
 import { useGetUsersFollowingToRoaster } from '@/features/roasters/hooks/useGetUsersFollowingToRoaster'
 import { UserItem } from '@/features/users/components/organisms/UserItem'
 import { isNumber } from '@/utils/regexp'
 
-export const RoasterFollower: FC = memo(() => {
+export const RoasterOffers: FC = memo(() => {
   const urlParams = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { users, getUsersFollowingToRoaster, loading: usersLoading } = useGetUsersFollowingToRoaster()
@@ -27,15 +25,12 @@ export const RoasterFollower: FC = memo(() => {
     }
   }, [urlParams.id])
 
-  const handleClickUser = (id: number) => {
-    navigate(`/users/${id}`)
+  const handleClickOffer = (id: number) => {
+    alert(`ここにオファー${id}`)
   }
 
   return (
     <>
-      <Head title="フォロワー" />
-      <ContentSubTitle title="フォロワー" />
-
       {/* ローディング */}
       {usersLoading && (
         <div className="flex justify-center">
@@ -45,15 +40,16 @@ export const RoasterFollower: FC = memo(() => {
 
       {!usersLoading && (
         <>
-          {/* フォローされているユーザー一覧 */}
+          {/* TODO ロースターのオファー一覧を表示する */}
           {users && (
             <section className="mb-20 py-4 text-gray-600">
+              <div>RoasterOffersコンポーネント</div>
               {users.length ? (
                 <Card>
                   <ol>
                     {users.map((user) => (
                       <li key={user.id}>
-                        <UserItem user={user} onClick={handleClickUser} />
+                        <UserItem user={user} onClick={handleClickOffer} />
                       </li>
                     ))}
                   </ol>
