@@ -1,14 +1,12 @@
 import type { FC } from 'react'
 import { memo } from 'react'
 
-import { useRecoilValue } from 'recoil'
-
 import { RoasterAsideContent } from '@/components/Layout/Aside/RoasterAsideContent'
 import { UserAsideContent } from '@/components/Layout/Aside/UserAsideContent'
-import { isRoasterState } from '@/stores/isRoaster'
+import { useCurrentRoaster } from '@/features/roasters'
 
 export const AsideContent: FC = memo(() => {
-  const isRoaster = useRecoilValue(isRoasterState)
+  const { isRoaster } = useCurrentRoaster()
 
   return (
     <aside className="h-full w-full border-l border-gray-200">

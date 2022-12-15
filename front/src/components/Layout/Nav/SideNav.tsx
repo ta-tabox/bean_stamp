@@ -1,19 +1,16 @@
 import type { FC } from 'react'
 import { memo } from 'react'
 
-import { useRecoilValue } from 'recoil'
-
 import { SideNavRoasterToggleButton, TopButton } from '@/components/Elements/Button'
+import { Link } from '@/components/Elements/Link'
 import { RoasterSideNav } from '@/components/Layout/Nav/RoasterSideNav'
 import { UserSideNav } from '@/components/Layout/Nav/UserSideNav'
-import { useAuth } from '@/features/auth'
-import { isRoasterState } from '@/stores/isRoaster'
+import { useSignedInUser } from '@/features/auth/hooks/useSignedInUser'
+import { useCurrentRoaster } from '@/features/roasters'
 
 export const SideNav: FC = memo(() => {
-  const { signedInUser } = useAuth()
-  const isRoaster = useRecoilValue(isRoasterState)
-
-  // TODO roasterの定義とfitchメソッドの作成 toggle buttonにpropsにとして渡す
+  const { signedInUser } = useSignedInUser()
+  const { isRoaster, currentRoaster } = useCurrentRoaster()
 
   return (
     <nav className="h-full w-28">
@@ -27,13 +24,26 @@ export const SideNav: FC = memo(() => {
             <hr className="border-gray-200" />
           </div>
           {/* ナビアイコン */}
-          <div className="ml-14">{isRoaster ? <RoasterSideNav /> : <UserSideNav user={signedInUser} />}</div>
+          <div className="ml-14">
+            {currentRoaster &&
+              (isRoaster ? <RoasterSideNav roaster={currentRoaster} /> : <UserSideNav user={signedInUser} />)}
+
+            {!currentRoaster && <UserSideNav user={signedInUser} />}
+          </div>
           <div className="w-12 mx-auto">
             <hr className="border-gray-200" />
           </div>
+
           {/* Roaster 切り替え */}
           <div className="mb-8">
-            <SideNavRoasterToggleButton user={signedInUser} />
+            {currentRoaster ? (
+              <SideNavRoasterToggleButton user={signedInUser} roaster={currentRoaster} />
+            ) : (
+              <div className="h-20 w-20 text-sm text-center">
+                <p className="text-xs">ロースターを</p>
+                <Link to="/roasters/new">登録する</Link>
+              </div>
+            )}
           </div>
         </div>
       )}

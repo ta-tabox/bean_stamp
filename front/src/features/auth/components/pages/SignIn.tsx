@@ -26,10 +26,10 @@ export type SignInSubmitData = {
 }
 
 export const SignIn: FC = memo(() => {
+  const navigate = useNavigate()
   const { signIn, loading } = useAuth()
   const { notifications } = useNotification()
   const { showMessage } = useMessage()
-  const navigate = useNavigate()
 
   const [isError, setIsError] = useState(false)
 
@@ -43,8 +43,7 @@ export const SignIn: FC = memo(() => {
     const { params, isRememberMe } = data
     try {
       await signIn({ params, isRememberMe })
-      setIsError(false)
-      showMessage({ message: 'ログインしました', type: 'success' })
+      showMessage({ message: 'サインインしました', type: 'success' })
       navigate('/users/home')
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -71,13 +70,13 @@ export const SignIn: FC = memo(() => {
               <div className="mt-2 ml-2 flex items-center align-middle">
                 <input id="rememberMe" type="checkbox" className="cursor-pointer" {...register('isRememberMe')} />
                 <label htmlFor="rememberMe" className="cursor-pointer text-gray-600 pl-3">
-                  ログインを記録する
+                  サインインを記録する
                 </label>
               </div>
 
               <div className="flex items-center justify-center mt-4">
                 <PrimaryButton loading={loading} disabled={!dirtyFields.params?.email || !dirtyFields.params.password}>
-                  ログイン
+                  サインイン
                 </PrimaryButton>
               </div>
             </form>

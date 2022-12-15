@@ -12,20 +12,20 @@ export const GuestSignInButton: FC = () => {
   const { showMessage } = useMessage()
   const navigate = useNavigate()
 
-  const handleClickGuestLogin = async () => {
+  const onClickGuestSignIn = async () => {
     const params = {
       email: 'guest@example.com',
       password: 'password',
     }
     try {
       await signIn({ params })
-      showMessage({ message: 'ゲストユーザーでログインしました', type: 'success' })
+      showMessage({ message: 'ゲストユーザーでサインインしました', type: 'success' })
       navigate('/users/home')
     } catch (error) {
       if (error instanceof AxiosError) {
-        showMessage({ message: 'ゲストログインに失敗しました', type: 'error' })
+        showMessage({ message: 'ゲストユーザーのサインインに失敗しました', type: 'error' })
       }
     }
   }
-  return <SecondaryButton onClick={handleClickGuestLogin}>ゲストログイン</SecondaryButton>
+  return <SecondaryButton onClick={onClickGuestSignIn}>ゲストユーザーでサインイン</SecondaryButton>
 }

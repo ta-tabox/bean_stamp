@@ -3,28 +3,34 @@ import { memo } from 'react'
 
 import { SideNavLink } from '@/components/Elements/Link'
 import { useAuth } from '@/features/auth'
+import type { Roaster } from '@/features/roasters'
 
-export const RoasterSideNav: FC = memo(() => {
+type Props = {
+  roaster: Roaster
+}
+
+export const RoasterSideNav: FC<Props> = memo((props) => {
+  const { roaster } = props
   const { signOut } = useAuth()
 
-  const handleClickSingout = () => {
+  const onClickSingOut = () => {
     signOut()
   }
 
   return (
     <ul className="flex flex-col">
       {/* ロースター用 */}
-      {/* TODO ロースターホームリンク */}
+      {/* ロースターホームリンク */}
       <li className="mb-2">
-        <SideNavLink title="Home" to="/roaster/home">
+        <SideNavLink title="Home" to="/roasters/home">
           <svg className="h-8 w-8">
             <use xlinkHref="#home" />
           </svg>
         </SideNavLink>
       </li>
-      {/* TODO ロースターページリンク */}
+      {/* ロースターページリンク */}
       <li className="mb-2">
-        <SideNavLink title="Roaster" to="/roaster/show">
+        <SideNavLink title="Roaster" to={`/roasters/${roaster.id}`}>
           <svg className="h-8 w-8">
             <use xlinkHref="#coffee-cup" />
           </svg>
@@ -55,9 +61,9 @@ export const RoasterSideNav: FC = memo(() => {
           </svg>
         </SideNavLink>
       </li>
-      {/* ログアウトリンク */}
+      {/* サインアウトリンク */}
       <li className="mb-2">
-        <button type="button" onClick={handleClickSingout}>
+        <button type="button" onClick={onClickSingOut}>
           <SideNavLink title="SignOut" to="#">
             <svg className="h-8 w-8">
               <use xlinkHref="#logout" />

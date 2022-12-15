@@ -5,19 +5,19 @@ import { Navigate, Link, useNavigate } from 'react-router-dom'
 import { PrimaryButton } from '@/components/Elements/Button'
 import { Head } from '@/components/Head'
 import { Header } from '@/components/Layout'
-import { useAuth } from '@/features/auth'
+import { useSignedInUser } from '@/features/auth'
 import { GuestSignInButton } from '@/features/auth/components/atoms/GuestSignInButton'
 
 export const Home: FC = memo(() => {
-  const { isSignedIn } = useAuth()
+  const { isSignedIn } = useSignedInUser()
   const navigate = useNavigate()
 
-  // ルートパスアクセス時にログイン済みならリダイレクト
+  // ルートパスアクセス時にサインイン済みならリダイレクト
   if (isSignedIn) {
     return <Navigate to="/users/home" replace />
   }
 
-  const handleClickLogin = () => {
+  const onClickSignIn = () => {
     navigate('/auth/signin')
   }
 
@@ -45,7 +45,7 @@ export const Home: FC = memo(() => {
                 登録する
               </Link>
               <div className="py-4 sm:y-8 flex flex-col md:flex-row md:space-x-4 space-y-2 md:space-y-0">
-                <PrimaryButton onClick={handleClickLogin}>ログイン</PrimaryButton>
+                <PrimaryButton onClick={onClickSignIn}>サインイン</PrimaryButton>
                 <GuestSignInButton />
               </div>
             </div>

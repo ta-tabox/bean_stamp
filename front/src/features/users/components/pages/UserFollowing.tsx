@@ -1,10 +1,9 @@
 import type { FC } from 'react'
 import { useEffect, memo } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { Card } from '@/components/Elements/Card'
-import { ContentHeader } from '@/components/Elements/Header'
-import { ContentHeaderTitle } from '@/components/Elements/Header/ContentHeaderTitle'
+import { ContentHeader, ContentHeaderTitle } from '@/components/Elements/Content'
 import { SearchLink } from '@/components/Elements/Link'
 import { Spinner } from '@/components/Elements/Spinner'
 import { Head } from '@/components/Head'
@@ -12,9 +11,11 @@ import { RoasterItem } from '@/features/roasters/components/organisms/RoasterIte
 import { UserCard } from '@/features/users/components/organisms/UserCard'
 import { useGetRoastersFollowedByUser } from '@/features/users/hooks/useGetRoastersFollowedByUser'
 import { useGetUser } from '@/features/users/hooks/useGetUser'
+import { isNumber } from '@/utils/regexp'
 
 export const UserFollowing: FC = memo(() => {
   const urlParams = useParams<{ id: string }>()
+  const navigate = useNavigate()
   const { user, getUser, loading: userLoading } = useGetUser()
   const { roasters, getRoastersFollowedByUser, loading: roastersLoading } = useGetRoastersFollowedByUser()
 
@@ -27,14 +28,13 @@ export const UserFollowing: FC = memo(() => {
     }
 
     // urlParams.idが数値かどうか評価
-    if (urlParams.id && !Number.isNaN(parseInt(urlParams.id, 10))) {
+    if (urlParams.id && isNumber(urlParams.id)) {
       fetchData(urlParams.id)
     }
   }, [urlParams.id])
 
-  // TODO ロースタークリックした時のアクション, ロースターページへ遷移
-  const handleClickRoaster = (id: number) => {
-    alert(`RoasterId: ${id}`)
+  const onClickRoaster = (id: number) => {
+    navigate(`/roasters/${id}`)
   }
 
   return (
@@ -67,7 +67,7 @@ export const UserFollowing: FC = memo(() => {
                   <ol>
                     {roasters.map((roaster) => (
                       <li key={roaster.id}>
-                        <RoasterItem roaster={roaster} onClick={handleClickRoaster} />
+                        <RoasterItem roaster={roaster} onClick={onClickRoaster} />
                       </li>
                     ))}
                   </ol>

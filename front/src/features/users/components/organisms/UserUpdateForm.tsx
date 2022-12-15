@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form'
 
 import { PrimaryButton } from '@/components/Elements/Button'
 import { ImagePreview } from '@/components/Form'
-import { useAuth } from '@/features/auth'
+import { useAuth, useLoadUser } from '@/features/auth'
 import { updateUser } from '@/features/users/api/updateUser'
 import { EmailInput } from '@/features/users/components/molecules/EmailInput'
 import { PrefectureSelect } from '@/features/users/components/molecules/PrefectureSelect'
@@ -17,9 +17,9 @@ import { UserNameInput } from '@/features/users/components/molecules/UserNameInp
 import type { User, UserUpdateParams } from '@/features/users/types'
 import { useErrorNotification } from '@/hooks/useErrorNotification'
 import { useMessage } from '@/hooks/useMessage'
-import type { ErrorResponse } from '@/types'
+import type { DeviseErrorResponse } from '@/types'
 import type { PrefectureOption } from '@/utils/prefecture'
-import { prefectureOptions } from '@/utils/prefecture'
+import { convertPrefectureCodeToIndex, prefectureOptions } from '@/utils/prefecture'
 
 import type { SubmitHandler, FieldError } from 'react-hook-form'
 
@@ -29,19 +29,21 @@ type Props = {
 }
 
 // react-hook-formで取り扱うデータの型
-type UserUpdateDate = UserUpdateParams & {
+type UserUpdateData = UserUpdateParams & {
   prefectureOption: PrefectureOption
 }
 
 export const UserUpdateForm: FC<Props> = (props) => {
   const { user, setIsError } = props
-  const { signOut, authHeaders, loadUser } = useAuth()
+  const { authHeaders } = useAuth()
   const navigate = useNavigate()
+
+  const { loadUser } = useLoadUser()
   const { showMessage } = useMessage()
   const { setErrorNotifications } = useErrorNotification()
 
-  const userPrefectureCodeIndex = parseInt(user.prefectureCode, 10) - 1 // id -> 配列のindex合わせるため-1を行う
-
+  // codeId -> 配列のindexへ変換
+  const prefectureCodeIndex = convertPrefectureCodeToIndex(user.prefectureCode)
   const [loading, setLoading] = useState(false)
   const [previewImage, setPreviewImage] = useState<Array<string>>()
 
@@ -50,17 +52,17 @@ export const UserUpdateForm: FC<Props> = (props) => {
     handleSubmit,
     formState: { isDirty, errors },
     control,
-  } = useForm<UserUpdateDate>({
+  } = useForm<UserUpdateData>({
     criteriaMode: 'all',
     defaultValues: {
       name: user.name,
       email: user.email,
-      prefectureOption: prefectureOptions[userPrefectureCodeIndex],
+      prefectureOption: prefectureOptions[prefectureCodeIndex],
       describe: user.describe,
     },
   })
 
-  const onSubmit: SubmitHandler<UserUpdateDate> = useCallback(async (data) => {
+  const onSubmit: SubmitHandler<UserUpdateData> = useCallback(async (data) => {
     // PUTリクエスト用のフォームを作成する
     const createFormData = () => {
       const formData = new FormData()
@@ -82,6 +84,7 @@ export const UserUpdateForm: FC<Props> = (props) => {
     // ゲストユーザーを制限する
     if (user.guest) {
       showMessage({ message: 'ゲストユーザーの編集はできません', type: 'error' })
+      navigate('/')
       return
     }
 
@@ -92,7 +95,7 @@ export const UserUpdateForm: FC<Props> = (props) => {
     } catch (error) {
       if (error instanceof AxiosError) {
         // NOTE errorの型指定 他に良い方法はないのか？
-        const typedError = error as AxiosError<ErrorResponse>
+        const typedError = error as AxiosError<DeviseErrorResponse>
         const errorMessages = typedError.response?.data.errors.fullMessages
         if (errorMessages) {
           setErrorNotifications(errorMessages)
@@ -104,23 +107,24 @@ export const UserUpdateForm: FC<Props> = (props) => {
       setLoading(false)
     }
 
-    // NOTE メールアドレス変更時にAPIとの認証ができなくなり、再ログインが求められる。
+    // NOTE メールアドレス変更時にAPIとの認証ができなくなり、再サインインが求められる。
     if (user.email !== data.email) {
       showMessage({
-        message: `ユーザー情報を変更しました。再度ログインをしてください。`,
+        message: `ユーザー情報を変更しました。再度サインインをしてください。`,
         type: 'success',
       })
-      loadUser()
+      await loadUser()
     } else {
       showMessage({ message: 'ユーザー情報を変更しました', type: 'success' })
-      loadUser()
+      await loadUser()
       navigate('/users/home')
     }
   }, [])
 
   // プレビュー機能
-  const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
+  const onChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length) {
+      // WARNING ChromeではURL.createObjectURLは廃止予定？変更する必要があるかもしれない
       setPreviewImage([URL.createObjectURL(e.target.files[0])])
     }
   }
@@ -131,7 +135,7 @@ export const UserUpdateForm: FC<Props> = (props) => {
       {previewImage && <ImagePreview images={previewImage} />}
 
       {/* ファイル */}
-      <UserImageInput label="image" register={register} error={errors.image} onChange={handleChangeImage} />
+      <UserImageInput label="image" register={register} error={errors.image} onChange={onChangeImage} />
 
       {/* 名前 */}
       <UserNameInput label="name" register={register} error={errors.name} />

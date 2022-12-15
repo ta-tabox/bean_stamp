@@ -116,7 +116,7 @@ export const SignUp: FC = memo(() => {
           <FormFooter>
             <h4 className="pb-2">
               アカウントをお持ちですか？
-              <Link to="/auth/signin">ログイン</Link>
+              <Link to="/auth/signin">サインイン</Link>
             </h4>
 
             <h4 className="pt-4 text-center text-sm text-gray-800 font-light">閲覧用</h4>

@@ -1,32 +1,33 @@
 import type { Dispatch, FC } from 'react'
 
 import Drawer from 'react-modern-drawer'
-import { useRecoilValue } from 'recoil'
 
 import 'react-modern-drawer/dist/index.css'
 
 import { Hamburger } from '@/components/Elements/Hamburger'
 import { DrawerNavLink } from '@/components/Elements/Link'
 import { useAuth } from '@/features/auth'
+import type { Roaster } from '@/features/roasters'
+import { useCurrentRoaster } from '@/features/roasters'
 import type { User } from '@/features/users'
-import { isRoasterState } from '@/stores/isRoaster'
 
 type Props = {
   user: User
+  roaster: Roaster | null
   isOpen: boolean
   setIsOpen: Dispatch<React.SetStateAction<boolean>>
 }
 
 export const DrawerNav: FC<Props> = (props) => {
-  const { user, isOpen, setIsOpen } = props
-  const isRoaster = useRecoilValue(isRoasterState)
+  const { user, roaster, isOpen, setIsOpen } = props
+  const { isRoaster } = useCurrentRoaster()
 
   const { signOut } = useAuth()
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState)
   }
 
-  const handleClickSignOut = () => {
+  const onClickSignOut = () => {
     signOut()
   }
 
@@ -34,18 +35,17 @@ export const DrawerNav: FC<Props> = (props) => {
     <Drawer open={isOpen} onClose={toggleDrawer} direction="right" size={170}>
       <div className="absolute bottom-0 inset-x-0">
         <ul className="flex flex-col w-full text-left ml-auto">
-          {/* TODO リンクの作成 */}
-          {isRoaster ? (
+          {isRoaster && roaster ? (
             <>
               {/* ロースター用 */}
               <li>
-                <DrawerNavLink to="/roaster/show" title="マイロースター" />
+                <DrawerNavLink to={`/roasters/${roaster.id}`} title="マイロースター" />
               </li>
             </>
           ) : (
             <>
               {/* ユーザー用 */}
-              <li className="">
+              <li>
                 <DrawerNavLink to={`/users/${user.id}`} title="マイページ" />
               </li>
               <li>
@@ -57,8 +57,8 @@ export const DrawerNav: FC<Props> = (props) => {
             <DrawerNavLink to="/help" title="ヘルプ" />
           </li>
           <li>
-            <button type="button" onClick={handleClickSignOut} className="w-full text-left">
-              <DrawerNavLink to="#" title="ログアウト" />
+            <button type="button" onClick={onClickSignOut} className="w-full text-left">
+              <DrawerNavLink to="#" title="サインアウト" />
             </button>
           </li>
         </ul>

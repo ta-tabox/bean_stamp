@@ -1,72 +1,32 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { useCookies } from 'react-cookie'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
-
-import type { AuthHeaders, SignInParams, SignUpParams } from '@/features/auth'
+import type { SignInParams, SignUpParams } from '@/features/auth'
 import { deleteUserReq } from '@/features/auth/api/deleteUser'
-import { getSignInUser } from '@/features/auth/api/getSignInUser'
 import { signInWithEmailAndPassword } from '@/features/auth/api/signIn'
 import { signOutReq } from '@/features/auth/api/signOut'
 import { signUpWithSignUpParams } from '@/features/auth/api/signUp'
-import { isSignedInState } from '@/features/auth/stores/isSignedInState'
-import { signedInUserState } from '@/features/auth/stores/signedInUserState'
-import type { User } from '@/features/users'
+import { useAuthCookies } from '@/features/auth/hooks/useAuthCookies'
+import { useAuthHeaders } from '@/features/auth/hooks/useAuthHeaders'
+import { useResetStates } from '@/features/auth/hooks/useResetStates'
+import { useSignedInUser } from '@/features/auth/hooks/useSignedInUser'
 import { useErrorNotification } from '@/hooks/useErrorNotification'
 import { useMessage } from '@/hooks/useMessage'
-import type { ErrorResponse } from '@/types'
+import type { DeviseErrorResponse } from '@/types'
 
-import type { AxiosError, AxiosResponse } from 'axios'
-import type { SetterOrUpdater } from 'recoil'
+import type { AxiosError } from 'axios'
 
 export const useAuth = () => {
   const navigate = useNavigate()
   const { showMessage } = useMessage()
   const [loading, setLoading] = useState(false)
-  const [cookies, setCookie, removeCookie] = useCookies(['uid', 'client', 'access-token'])
 
+  const { signedInUser, setIsSignedIn, setSignedInUser } = useSignedInUser()
+  const { setAuthCookies, removeAuthCookies } = useAuthCookies()
+  const { authHeaders } = useAuthHeaders()
   const { setErrorNotifications } = useErrorNotification()
 
-  const setExpireDate = (isRememberMe?: boolean) => {
-    const expireDate = 14 // rememberMe期間を14日に設定
-    return isRememberMe ? new Date(Date.now() + expireDate * 86400e3) : undefined
-  }
-
-  type SetAuthCookiesOptions = {
-    res: AxiosResponse
-    isRememberMe?: boolean
-  }
-
-  const setAuthCookies = ({ res, isRememberMe }: SetAuthCookiesOptions) => {
-    const expireDate = setExpireDate(isRememberMe)
-    setCookie('uid', res.headers.uid, { path: '/', expires: expireDate })
-    setCookie('client', res.headers.client, { path: '/', expires: expireDate })
-    setCookie('access-token', res.headers['access-token'], { path: '/', expires: expireDate })
-  }
-
-  const removeAuthCookies = () => {
-    removeCookie('uid')
-    removeCookie('client')
-    removeCookie('access-token')
-  }
-
-  const setAuthHeaders = (): AuthHeaders => ({
-    uid: cookies.uid as string,
-    client: cookies.client as string,
-    accessToken: cookies['access-token'] as string,
-  })
-
-  // devise-token-authで使用する認証トークン
-  const authHeaders = setAuthHeaders()
-
-  // Recoilでグローバルステートを定義
-  const signedInUser = useRecoilValue(signedInUserState) // Getterを定義
-  const setSignedInUser: SetterOrUpdater<User | null> = useSetRecoilState(signedInUserState) // Setter, Updaterを定義
-
-  // SignInの状態を保持
-  const isSignedIn = useRecoilValue(isSignedInState)
-  const setIsSignedIn = useSetRecoilState(isSignedInState)
+  const { resetStates } = useResetStates()
 
   // サインアップ
   type SignUpOptions = {
@@ -79,10 +39,10 @@ export const useAuth = () => {
         // 認証情報をcookieにセット
         setAuthCookies({ res })
         setIsSignedIn(true)
-        setSignedInUser(res.data.data)
+        setSignedInUser(res.data.data) // グローバルステートにUserの値をセット
         return Promise.resolve(signedInUser)
       })
-      .catch((err: AxiosError<ErrorResponse>) => {
+      .catch((err: AxiosError<DeviseErrorResponse>) => {
         const errorMessages = err.response?.data.errors.fullMessages
         if (errorMessages) {
           setErrorNotifications(errorMessages)
@@ -116,6 +76,7 @@ export const useAuth = () => {
         }
         return Promise.reject(err)
       })
+
       .finally(() => {
         setLoading(false)
       })
@@ -129,13 +90,12 @@ export const useAuth = () => {
       .then(() => {
         // 認証情報をのcookieを削除
         removeAuthCookies()
-        setIsSignedIn(false)
-        setSignedInUser(null) // LoginUserStateを削除
-        showMessage({ message: 'ログアウトしました', type: 'success' })
+        resetStates()
+        showMessage({ message: 'サインアウトしました', type: 'success' })
         navigate('/auth/signin')
       })
       .catch(() => {
-        showMessage({ message: 'ログアウトに失敗しました', type: 'error' })
+        showMessage({ message: 'サインアウトに失敗しました', type: 'error' })
       })
       .finally(() => {
         setLoading(false)
@@ -150,8 +110,7 @@ export const useAuth = () => {
       .then(() => {
         // 認証情報をのcookieを削除
         removeAuthCookies()
-        setIsSignedIn(false)
-        setSignedInUser(null)
+        resetStates()
         return Promise.resolve(null)
       })
       .catch((err) => Promise.reject(err))
@@ -160,30 +119,5 @@ export const useAuth = () => {
       })
   }
 
-  // ログインユーザーの読み込み
-  const loadUser = () => {
-    setLoading(true)
-
-    getSignInUser({ headers: authHeaders })
-      .then((res) => {
-        if (res.data.isLogin) {
-          setIsSignedIn(true)
-          setSignedInUser(res.data.data)
-        } else {
-          removeAuthCookies()
-          setIsSignedIn(false)
-          setSignedInUser(null) // LoginUserStateを削除
-        }
-      })
-      .catch(() => {
-        removeAuthCookies()
-        setIsSignedIn(false)
-        setSignedInUser(null) // LoginUserStateを削除
-      })
-      .finally(() => {
-        setLoading(false)
-      })
-  }
-
-  return { signUp, signIn, signOut, deleteUser, loadUser, loading, signedInUser, isSignedIn, authHeaders }
+  return { signUp, signIn, signOut, deleteUser, loading, authHeaders }
 }

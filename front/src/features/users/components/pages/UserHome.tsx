@@ -1,20 +1,29 @@
 import type { FC } from 'react'
-import { memo } from 'react'
+import { useEffect, memo } from 'react'
 
 import { Head } from '@/components/Head'
-import { useAuth } from '@/features/auth'
-import { PrefectureArray } from '@/utils/prefecture'
+import { useLoadUser } from '@/features/auth'
+import { useSignedInUser } from '@/features/auth/hooks/useSignedInUser'
+import { translatePrefectureCodeToName } from '@/utils/prefecture'
 
 export const UserHome: FC = memo(() => {
-  const { signedInUser } = useAuth()
+  const { signedInUser } = useSignedInUser()
+  const { loadUser } = useLoadUser()
 
-  const areaObj = signedInUser && PrefectureArray.find(({ id }) => id === parseInt(signedInUser.prefectureCode, 10))
-  const area = areaObj?.label
+  // NOTE サインイン直後のユーザー＆ロースター情報の更新はここでOKか？
+  useEffect(() => {
+    void loadUser()
+  }, [])
+
   return (
     <>
       <Head title="ホーム" />
       <h1>{signedInUser && `${signedInUser.name}`}のホームページです</h1>
-      {area && <p>{`${area}` || null}がエリアです</p>}
+      {signedInUser?.prefectureCode && (
+        <p>
+          {`${translatePrefectureCodeToName({ prefectureCode: signedInUser?.prefectureCode })}` || null}がエリアです
+        </p>
+      )}
       <div className="h-64  bg-green-300" />
       <div className="h-64  bg-pink-300" />
       <div className="h-64  bg-green-300" />

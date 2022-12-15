@@ -1,4 +1,7 @@
 // https://github.com/websandbag/typescript_prefectures_ja
+
+import { isNumber } from '@/utils/regexp'
+
 /**
  * インターフェース：都道府県
  */
@@ -86,3 +89,14 @@ const convertToOption = (prefecture: Prefecture): PrefectureOption => ({
 })
 
 export const prefectureOptions = PrefectureArray.map(convertToOption)
+
+// prefectureCode(PrefectureArray.id) -> 配列のindex合わせるため-1を行う
+export const convertPrefectureCodeToIndex = (code: string): number => {
+  let prefectureCodeIndex
+  if (isNumber(code)) {
+    prefectureCodeIndex = parseInt(code, 10) - 1
+  } else {
+    throw new Error('数字の文字列のみ有効')
+  }
+  return prefectureCodeIndex
+}

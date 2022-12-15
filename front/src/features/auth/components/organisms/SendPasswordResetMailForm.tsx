@@ -33,7 +33,7 @@ export const SendPasswordResetMailForm: FC = () => {
     formState: { isDirty, errors },
   } = useForm<SendResetMailType>({ criteriaMode: 'all' })
 
-  const onSendResetMail: SubmitHandler<SendResetMailType> = (data) => {
+  const onSubmitSendResetMail: SubmitHandler<SendResetMailType> = (data) => {
     const redirectUrl = `${FRONT_HOST}/auth/password_reset`
     const params = {
       email: data.email,
@@ -74,7 +74,7 @@ export const SendPasswordResetMailForm: FC = () => {
           )}
         </div>
 
-        <form onSubmit={handleSubmit(onSendResetMail)}>
+        <form onSubmit={handleSubmit(onSubmitSendResetMail)}>
           {/* メールアドレス */}
           <EmailInput label="email" register={register} error={errors.email} disabled={isSubmitted} />
           <div className="flex items-center justify-center mt-4">

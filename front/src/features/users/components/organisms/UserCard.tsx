@@ -4,7 +4,7 @@ import { Link as ReactLink } from 'react-router-dom'
 
 import { Card, CardContainer } from '@/components/Elements/Card'
 import { Link } from '@/components/Elements/Link'
-import { useAuth } from '@/features/auth'
+import { useSignedInUser } from '@/features/auth/hooks/useSignedInUser'
 import { UserImage } from '@/features/users/components/molecules/UserImage'
 import type { User } from '@/features/users/types'
 import { translatePrefectureCodeToName } from '@/utils/prefecture'
@@ -15,7 +15,7 @@ type Props = {
 
 export const UserCard: FC<Props> = memo((props) => {
   const { user } = props
-  const { signedInUser } = useAuth()
+  const { signedInUser } = useSignedInUser()
 
   return (
     <Card>

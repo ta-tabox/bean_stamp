@@ -17,6 +17,7 @@
     "axios": "^0.27.2",
     "axios-case-converter": "^0.9.0",
     "hamburger-react": "^2.5.0",
+    "pluralize": "^8.0.0",
     "react": "^18.2.0",
     "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
@@ -31,6 +32,7 @@
     "recoil-persist": "^4.2.0"
   },
   "devDependencies": {
+    "@types/pluralize": "^0.0.29",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "@types/react-helmet-async": "^1.0.3",
