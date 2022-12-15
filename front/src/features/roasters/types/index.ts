@@ -14,6 +14,7 @@ export type Roaster = {
   }
   address: string
   guest: boolean
+  followersCount: number
 }
 
 export type RoasterCreateParams = Pick<Roaster, 'name' | 'phoneNumber' | 'prefectureCode' | 'describe' | 'address'> & {
