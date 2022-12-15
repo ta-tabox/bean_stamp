@@ -9,7 +9,7 @@ export const Page404: FC = () => {
   const navigate = useNavigate()
   const { isRoaster } = useCurrentRoaster()
 
-  const handleClickHome = () => {
+  const onClickHome = () => {
     if (isRoaster) {
       navigate('/roasters/home')
     } else {
@@ -26,7 +26,7 @@ export const Page404: FC = () => {
             <div className="px-4 text-lg text-gray-500 border-r border-gray-400 tracking-wider">404 </div>
             <div className="ml-4 text-lg text-gray-500 uppercase tracking-wider">Not Found </div>
           </div>
-          <PrimaryButton onClick={handleClickHome}>GO TO HOME</PrimaryButton>
+          <PrimaryButton onClick={onClickHome}>GO TO HOME</PrimaryButton>
         </div>
       </div>
     </>

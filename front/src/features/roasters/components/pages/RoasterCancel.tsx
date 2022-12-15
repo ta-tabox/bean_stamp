@@ -12,7 +12,7 @@ export const RoasterCancel: FC = () => {
   const { isOpen, onOpen, onClose } = useModal()
   const { currentRoaster } = useCurrentRoaster()
 
-  const handleSubmit = () => {
+  const onClickDelete = () => {
     onOpen()
   }
 
@@ -30,7 +30,7 @@ export const RoasterCancel: FC = () => {
                 同ロースターによるオファーやビーンズなどのデータは全て失われます。
               </p>
               <div className="flex items-center justify-center mt-4">
-                <PrimaryButton onClick={handleSubmit}>削除する</PrimaryButton>
+                <PrimaryButton onClick={onClickDelete}>削除する</PrimaryButton>
               </div>
             </FormMain>
           </FormContainer>

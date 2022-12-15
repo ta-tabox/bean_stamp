@@ -107,10 +107,10 @@ export const UserUpdateForm: FC<Props> = (props) => {
       setLoading(false)
     }
 
-    // NOTE メールアドレス変更時にAPIとの認証ができなくなり、再ログインが求められる。
+    // NOTE メールアドレス変更時にAPIとの認証ができなくなり、再サインインが求められる。
     if (user.email !== data.email) {
       showMessage({
-        message: `ユーザー情報を変更しました。再度ログインをしてください。`,
+        message: `ユーザー情報を変更しました。再度サインインをしてください。`,
         type: 'success',
       })
       await loadUser()
@@ -122,7 +122,7 @@ export const UserUpdateForm: FC<Props> = (props) => {
   }, [])
 
   // プレビュー機能
-  const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length) {
       // WARNING ChromeではURL.createObjectURLは廃止予定？変更する必要があるかもしれない
       setPreviewImage([URL.createObjectURL(e.target.files[0])])
@@ -135,7 +135,7 @@ export const UserUpdateForm: FC<Props> = (props) => {
       {previewImage && <ImagePreview images={previewImage} />}
 
       {/* ファイル */}
-      <UserImageInput label="image" register={register} error={errors.image} onChange={handleChangeImage} />
+      <UserImageInput label="image" register={register} error={errors.image} onChange={onChangeImage} />
 
       {/* 名前 */}
       <UserNameInput label="name" register={register} error={errors.name} />

@@ -27,7 +27,7 @@ export const RoasterFollower: FC = memo(() => {
     }
   }, [urlParams.id])
 
-  const handleClickUser = (id: number) => {
+  const onClickUser = (id: number) => {
     navigate(`/users/${id}`)
   }
 
@@ -53,7 +53,7 @@ export const RoasterFollower: FC = memo(() => {
                   <ol>
                     {users.map((user) => (
                       <li key={user.id}>
-                        <UserItem user={user} onClick={handleClickUser} />
+                        <UserItem user={user} onClick={onClickUser} />
                       </li>
                     ))}
                   </ol>

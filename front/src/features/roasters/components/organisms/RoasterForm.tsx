@@ -58,13 +58,13 @@ export const RoasterForm: FC<Props> = (props) => {
     defaultValues: defaultValues(),
   })
 
-  const handleCancel = (): void => {
+  const onClickCancel = (): void => {
     // キャンセル確認モーダルオープン
     onOpen()
   }
 
   // プレビュー機能
-  const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length) {
       // WARNING ChromeではURL.createObjectURLは廃止予定？変更する必要があるかもしれない
       setPreviewImage([URL.createObjectURL(e.target.files[0])])
@@ -78,7 +78,7 @@ export const RoasterForm: FC<Props> = (props) => {
         {previewImage && <ImagePreview images={previewImage} />}
 
         {/* ファイル */}
-        <RoasterImageInput label="image" register={register} error={errors.image} onChange={handleChangeImage} />
+        <RoasterImageInput label="image" register={register} error={errors.image} onChange={onChangeImage} />
 
         {/* 店舗名 */}
         <RoasterNameInput label="name" register={register} error={errors.name} />
@@ -95,7 +95,7 @@ export const RoasterForm: FC<Props> = (props) => {
         <RoasterDescribeInput label="describe" register={register} error={errors.describe} />
 
         <div className="flex items-center justify-center space-x-4 mt-4">
-          <SecondaryButton onClick={handleCancel} isButton>
+          <SecondaryButton onClick={onClickCancel} isButton>
             キャンセル
           </SecondaryButton>
           {/* roasterあり→ どれか変更, なし→ 該当項目変更必須 */}

@@ -12,7 +12,7 @@ export const useLoadUser = () => {
   const { removeAuthCookies } = useAuthCookies()
   const { resetStates } = useResetStates()
 
-  // ログインユーザーの読み込み
+  // サインインユーザーの読み込み
   const loadUser = async (): Promise<void> => {
     await getSignInUser({ headers: authHeaders })
       .then((res) => {

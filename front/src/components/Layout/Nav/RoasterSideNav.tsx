@@ -13,7 +13,7 @@ export const RoasterSideNav: FC<Props> = memo((props) => {
   const { roaster } = props
   const { signOut } = useAuth()
 
-  const handleClickSingout = () => {
+  const onClickSingOut = () => {
     signOut()
   }
 
@@ -61,9 +61,9 @@ export const RoasterSideNav: FC<Props> = memo((props) => {
           </svg>
         </SideNavLink>
       </li>
-      {/* ログアウトリンク */}
+      {/* サインアウトリンク */}
       <li className="mb-2">
-        <button type="button" onClick={handleClickSingout}>
+        <button type="button" onClick={onClickSingOut}>
           <SideNavLink title="SignOut" to="#">
             <svg className="h-8 w-8">
               <use xlinkHref="#logout" />

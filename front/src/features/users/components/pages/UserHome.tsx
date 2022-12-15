@@ -10,7 +10,7 @@ export const UserHome: FC = memo(() => {
   const { signedInUser } = useSignedInUser()
   const { loadUser } = useLoadUser()
 
-  // NOTE ログイン直後のユーザー＆ロースター情報の更新はここでOKか？
+  // NOTE サインイン直後のユーザー＆ロースター情報の更新はここでOKか？
   useEffect(() => {
     void loadUser()
   }, [])

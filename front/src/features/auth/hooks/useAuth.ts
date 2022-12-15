@@ -91,11 +91,11 @@ export const useAuth = () => {
         // 認証情報をのcookieを削除
         removeAuthCookies()
         resetStates()
-        showMessage({ message: 'ログアウトしました', type: 'success' })
+        showMessage({ message: 'サインアウトしました', type: 'success' })
         navigate('/auth/signin')
       })
       .catch(() => {
-        showMessage({ message: 'ログアウトに失敗しました', type: 'error' })
+        showMessage({ message: 'サインアウトに失敗しました', type: 'error' })
       })
       .finally(() => {
         setLoading(false)

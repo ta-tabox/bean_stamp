@@ -33,7 +33,7 @@ export const UserFollowing: FC = memo(() => {
     }
   }, [urlParams.id])
 
-  const handleClickRoaster = (id: number) => {
+  const onClickRoaster = (id: number) => {
     navigate(`/roasters/${id}`)
   }
 
@@ -67,7 +67,7 @@ export const UserFollowing: FC = memo(() => {
                   <ol>
                     {roasters.map((roaster) => (
                       <li key={roaster.id}>
-                        <RoasterItem roaster={roaster} onClick={handleClickRoaster} />
+                        <RoasterItem roaster={roaster} onClick={onClickRoaster} />
                       </li>
                     ))}
                   </ol>

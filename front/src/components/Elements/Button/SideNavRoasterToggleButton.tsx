@@ -18,7 +18,7 @@ export const SideNavRoasterToggleButton: FC<Props> = memo((props) => {
   const { isRoaster, setIsRoaster } = useCurrentRoaster()
   const navigate = useNavigate()
 
-  const handleClick = () => {
+  const onClick = () => {
     if (isRoaster) {
       navigate('/users/home')
     } else {
@@ -33,7 +33,7 @@ export const SideNavRoasterToggleButton: FC<Props> = memo((props) => {
   return (
     <div>
       {/* TODO スタイル整える 感覚的に変更するのがわかるようにする */}
-      <button type="submit" onClick={handleClick}>
+      <button type="submit" onClick={onClick}>
         <img
           src={isRoaster ? userImageUrl : roasterImageUrl}
           alt={`${isRoaster ? user.name : roaster.name}のホームへのリンクの画像`}

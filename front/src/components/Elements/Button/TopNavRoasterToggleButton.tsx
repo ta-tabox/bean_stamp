@@ -8,7 +8,7 @@ export const TopNavRoasterToggleButton: FC = memo(() => {
   const { isRoaster, setIsRoaster } = useCurrentRoaster()
   const navigate = useNavigate()
 
-  const handleClick = () => {
+  const onClick = () => {
     if (isRoaster) {
       navigate('/users/home')
     } else {
@@ -24,7 +24,7 @@ export const TopNavRoasterToggleButton: FC = memo(() => {
       <button
         type="submit"
         className="w-24 pl-8 pr-2 py-1 border rounded cursor-pointer block text-center text-sm font-medium bg-indigo-500 border-indigo-600 text-white hover:bg-indigo-600 active:bg-indigo-700"
-        onClick={handleClick}
+        onClick={onClick}
       >
         {isRoaster ? 'User' : 'Roaster'}
       </button>

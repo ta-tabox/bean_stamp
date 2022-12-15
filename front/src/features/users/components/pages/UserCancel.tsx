@@ -10,7 +10,7 @@ import { useModal } from '@/hooks/useModal'
 export const UserCancel: FC = memo(() => {
   const { isOpen, onOpen, onClose } = useModal()
 
-  const handleClickCancel = () => {
+  const onClickCancel = () => {
     onOpen()
   }
 
@@ -27,7 +27,7 @@ export const UserCancel: FC = memo(() => {
               同アカウントによるウォンツやフォローなどのデータは全て失われます。
             </p>
             <div className="flex items-center justify-center mt-4">
-              <PrimaryButton onClick={handleClickCancel}>退会する</PrimaryButton>
+              <PrimaryButton onClick={onClickCancel}>退会する</PrimaryButton>
             </div>
           </FormMain>
         </FormContainer>

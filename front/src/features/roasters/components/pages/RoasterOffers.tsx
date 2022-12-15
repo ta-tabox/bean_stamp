@@ -25,7 +25,7 @@ export const RoasterOffers: FC = memo(() => {
     }
   }, [urlParams.id])
 
-  const handleClickOffer = (id: number) => {
+  const onClickOffer = (id: number) => {
     alert(`ここにオファー${id}`)
   }
 
@@ -49,7 +49,7 @@ export const RoasterOffers: FC = memo(() => {
                   <ol>
                     {users.map((user) => (
                       <li key={user.id}>
-                        <UserItem user={user} onClick={handleClickOffer} />
+                        <UserItem user={user} onClick={onClickOffer} />
                       </li>
                     ))}
                   </ol>

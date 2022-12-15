@@ -14,7 +14,7 @@ export const RoasterFormCancelModal: FC<Props> = memo((props) => {
   const { isOpen, onClose } = props
   const navigate = useNavigate()
 
-  const handleSubmit = () => {
+  const onClickOK = () => {
     navigate(-1)
   }
 
@@ -31,7 +31,7 @@ export const RoasterFormCancelModal: FC<Props> = memo((props) => {
         <div className="mx-2 md:mx-12">
           <div className="flex items-center justify-center mt-4 space-x-8">
             <SecondaryButton onClick={onClose}>戻る</SecondaryButton>
-            <PrimaryButton onClick={handleSubmit}>OK</PrimaryButton>
+            <PrimaryButton onClick={onClickOK}>OK</PrimaryButton>
           </div>
         </div>
       </ModalContainer>

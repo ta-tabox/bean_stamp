@@ -13,7 +13,7 @@ import { RequireSignedOutRoute } from '@/router/RequireSignedOutRoute'
 
 export const AppRouter: FC = () => {
   const { loadUser } = useLoadUser()
-  // ログイン中にリロードした際にStateにログイン情報を格納する
+  // サインイン中にリロードした際にStateにサインイン情報を格納する
   useEffect(() => {
     void loadUser()
   }, [])
@@ -26,11 +26,11 @@ export const AppRouter: FC = () => {
         <Route path="about" element={<About />} />
         <Route path="help" element={<Help />} />
       </Route>
-      {/* 未ログインを要求 */}
+      {/* 未サインインを要求 */}
       <Route element={<RequireSignedOutRoute />}>
         <Route path="auth/*" element={<AuthRoutes />} />
       </Route>
-      {/* ログイン済みを要求 */}
+      {/* サインイン済みを要求 */}
       <Route element={<ProtectedRoute />}>
         <Route element={<MainLayout />}>
           <Route path="users/*" element={<UsersRoutes />} />

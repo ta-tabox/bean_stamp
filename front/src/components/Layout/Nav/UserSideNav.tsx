@@ -14,7 +14,7 @@ export const UserSideNav: FC<Props> = memo((props) => {
   const { user } = props
   const { signOut } = useAuth()
 
-  const handleClickSignOut = () => {
+  const onClickSignOut = () => {
     signOut()
   }
 
@@ -83,7 +83,7 @@ export const UserSideNav: FC<Props> = memo((props) => {
       </li>
       {/* ログアウトリンク */}
       <li className="mb-2">
-        <button type="button" onClick={handleClickSignOut}>
+        <button type="button" onClick={onClickSignOut}>
           <SideNavLink title="SignOut" to="#">
             <svg className="h-8 w-8">
               <use xlinkHref="#logout" />

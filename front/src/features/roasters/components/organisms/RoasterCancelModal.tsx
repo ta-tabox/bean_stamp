@@ -25,7 +25,7 @@ export const RoasterCancelModal: FC<Props> = memo((props) => {
 
   const navigate = useNavigate()
 
-  const handleSubmit = async () => {
+  const onClickDelete = async () => {
     if (roaster.guest) {
       showMessage({ message: 'ゲストロースターの削除はできません', type: 'error' })
       navigate('/')
@@ -59,7 +59,7 @@ export const RoasterCancelModal: FC<Props> = memo((props) => {
           </ModalText>
           <div className="flex items-center justify-center mt-4 space-x-4 sm:space-x-8">
             <SecondaryButton onClick={onClose}>戻る</SecondaryButton>
-            <DangerButton onClick={handleSubmit}>了承して削除する</DangerButton>
+            <DangerButton onClick={onClickDelete}>了承して削除する</DangerButton>
           </div>
         </div>
       </ModalContainer>

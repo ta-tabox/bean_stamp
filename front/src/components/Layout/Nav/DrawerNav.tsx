@@ -27,7 +27,7 @@ export const DrawerNav: FC<Props> = (props) => {
     setIsOpen((prevState) => !prevState)
   }
 
-  const handleClickSignOut = () => {
+  const onClickSignOut = () => {
     signOut()
   }
 
@@ -57,8 +57,8 @@ export const DrawerNav: FC<Props> = (props) => {
             <DrawerNavLink to="/help" title="ヘルプ" />
           </li>
           <li>
-            <button type="button" onClick={handleClickSignOut} className="w-full text-left">
-              <DrawerNavLink to="#" title="ログアウト" />
+            <button type="button" onClick={onClickSignOut} className="w-full text-left">
+              <DrawerNavLink to="#" title="サインアウト" />
             </button>
           </li>
         </ul>
