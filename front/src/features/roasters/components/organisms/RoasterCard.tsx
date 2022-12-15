@@ -5,6 +5,7 @@ import { Link as ReactLink } from 'react-router-dom'
 import { PrimaryButton } from '@/components/Elements/Button'
 import { Card, CardContainer } from '@/components/Elements/Card'
 import { Link } from '@/components/Elements/Link'
+import { LinkToRoasterFollower } from '@/features/roasters/components/molecules/LinkToRoasterFollower'
 import { RoasterImage } from '@/features/roasters/components/molecules/RoasterImage'
 import { useCurrentRoaster } from '@/features/roasters/hooks/useCurrentRoaster'
 import type { Roaster } from '@/features/roasters/types'
@@ -28,22 +29,20 @@ export const RoasterCard: FC<Props> = memo((props) => {
                 <div className="text-2xl font-medium text-gray-800">{roaster.name}</div>
               </ReactLink>
               {roaster.id === currentRoaster?.id ? (
-                <div className="ml-4">
+                <div className="mt-2 lg:mt-0 lg:ml-4">
                   <Link to="/roasters/edit">編集</Link>
                 </div>
               ) : null}
             </div>
-            <div className="flex items-baseline justify-around lg:justify-start">
-              <Link to={`/roasters/${roaster.id}/follower`}>{`${roaster.followersCount} followers`}</Link>
+            <div className="mt-2 flex items-baseline justify-around lg:justify-start">
+              <LinkToRoasterFollower roaster={roaster} />
 
-              <div className="ml-4">
-                {/* TODO コンポーネント化する */}
-                {roaster.id !== currentRoaster?.id ? (
-                  <div className="ml-4">
-                    <PrimaryButton>Followボタン</PrimaryButton>
-                  </div>
-                ) : null}
-              </div>
+              {/* TODO コンポーネント化する */}
+              {roaster.id !== currentRoaster?.id ? (
+                <div className="ml-8">
+                  <PrimaryButton>Follow</PrimaryButton>
+                </div>
+              ) : null}
             </div>
             <div className="mt-4 text-gray-500 lg:max-w-md">
               <div>住所: {fullAddress({ roaster })}</div>
