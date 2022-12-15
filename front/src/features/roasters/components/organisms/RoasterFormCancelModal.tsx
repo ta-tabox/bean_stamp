@@ -19,7 +19,7 @@ export const RoasterFormCancelModal: FC<Props> = memo((props) => {
   }
 
   return (
-    <Modal contentLabel="ロースターフォームデータのリセット" isOpen={isOpen} onClose={onClose}>
+    <Modal contentLabel="ロースターフォームデータのリセット" isOpen={isOpen} onClose={onClose} closeButton>
       <ModalContainer>
         <ModalText>
           <>

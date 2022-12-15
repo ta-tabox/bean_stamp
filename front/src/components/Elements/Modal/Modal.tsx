@@ -3,8 +3,6 @@ import { memo } from 'react'
 
 import ReactModal from 'react-modal'
 
-import { SecondaryButton } from '@/components/Elements/Button'
-
 type Props = {
   children: ReactNode
   contentLabel: string
@@ -25,12 +23,18 @@ export const Modal: FC<Props> = memo((props) => {
       overlayClassName="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-30"
       onRequestClose={onClose}
     >
-      {closeButton && (
-        <div className="inline-block relative left-full -translate-x-full">
-          <SecondaryButton onClick={onClose}>Close</SecondaryButton>
-        </div>
-      )}
-      {children}
+      <div className={closeButton ? 'pt-0 pb-8' : 'py-8'}>
+        {closeButton && (
+          <div className="inline-block relative left-full -translate-x-full">
+            <button type="button" className="relative right-2 top-2" onClick={onClose}>
+              <svg className="w-8 h-8 text-gray-500 hover:text-gray-800">
+                <use xlinkHref="#x" />
+              </svg>
+            </button>
+          </div>
+        )}
+        {children}
+      </div>
     </ReactModal>
   )
 })

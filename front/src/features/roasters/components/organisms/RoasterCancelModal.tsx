@@ -46,7 +46,7 @@ export const RoasterCancelModal: FC<Props> = memo((props) => {
   }
 
   return (
-    <Modal contentLabel="ロースターの削除" isOpen={isOpen} onClose={onClose}>
+    <Modal contentLabel="ロースターの削除" isOpen={isOpen} onClose={onClose} closeButton>
       <ModalContainer>
         <ModalTitle>ロースターの削除</ModalTitle>
         <div className="sm:mx-12">

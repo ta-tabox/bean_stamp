@@ -37,7 +37,7 @@ export const UserDetailModal: FC<Props> = memo((props) => {
   const onClickUpdate = () => alert()
 
   return (
-    <Modal contentLabel={`${user?.name || 'ユーザー'}の詳細`} isOpen={isOpen} onClose={onClose}>
+    <Modal contentLabel={`${user?.name || 'ユーザー'}の詳細`} isOpen={isOpen} onClose={onClose} closeButton>
       <div className="form-container">
         <div className="form-main">
           <form>
