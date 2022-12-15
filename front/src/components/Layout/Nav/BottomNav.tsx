@@ -10,7 +10,7 @@ import { useCurrentRoaster } from '@/features/roasters'
 
 export const BottomNav: FC = () => {
   const { signedInUser } = useSignedInUser()
-  const { isRoaster } = useCurrentRoaster()
+  const { isRoaster, currentRoaster } = useCurrentRoaster()
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -23,10 +23,12 @@ export const BottomNav: FC = () => {
       {signedInUser && (
         <>
           <div className="h-full px-8 flex items-center justify-between">
-            {isRoaster ? <RoasterBottomNav /> : <UserBottomNav />}
+            {currentRoaster && (isRoaster ? <RoasterBottomNav roaster={currentRoaster} /> : <UserBottomNav />)}
+
+            {!currentRoaster && <UserBottomNav />}
             <Hamburger toggled={isOpen} toggle={toggleDrawer} />
           </div>
-          <DrawerNav user={signedInUser} isOpen={isOpen} setIsOpen={setIsOpen} />
+          <DrawerNav user={signedInUser} roaster={currentRoaster} isOpen={isOpen} setIsOpen={setIsOpen} />
         </>
       )}
     </nav>
