@@ -12,5 +12,9 @@ type Props = {
 export const LinkToRoasterFollower: FC<Props> = (props) => {
   const { roasterId, followersCount } = props
 
-  return <Link to={`/roasters/${roasterId}/follower`}>{pluralize('follower', followersCount, true)}</Link>
+  return (
+    <div className="w-28">
+      <Link to={`/roasters/${roasterId}/follower`}>{pluralize('follower', followersCount, true)}</Link>
+    </div>
+  )
 }

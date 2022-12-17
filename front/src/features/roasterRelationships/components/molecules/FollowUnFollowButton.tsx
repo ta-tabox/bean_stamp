@@ -4,8 +4,9 @@ import React, { useCallback } from 'react'
 import { useAuth } from '@/features/auth'
 import { createRoasterRelationship } from '@/features/roasterRelationships/api/createRoasterRelationship'
 import { deleteRoasterRelationship } from '@/features/roasterRelationships/api/deleteRoasterRelationship'
-import { FollowButton } from '@/features/roasterRelationships/components/molecules/FollowButton'
-import { UnFollowButton } from '@/features/roasterRelationships/components/molecules/UnFollowButton'
+import { FollowButton } from '@/features/roasterRelationships/components/atoms/FollowButton'
+import { UnFollowButton } from '@/features/roasterRelationships/components/atoms/UnFollowButton'
+import { useMessage } from '@/hooks/useMessage'
 
 type Props = {
   roasterId: number
@@ -18,6 +19,7 @@ type Props = {
 export const FollowUnFollowButton: FC<Props> = (props) => {
   const { roasterId, roasterRelationshipId, setRoasterRelationshipId, setFollowersCount, followersCount } = props
   const { authHeaders } = useAuth()
+  const { showMessage } = useMessage()
 
   const onClickFollow = () => {
     createRoasterRelationship({ headers: authHeaders, roasterId })
@@ -25,8 +27,8 @@ export const FollowUnFollowButton: FC<Props> = (props) => {
         setRoasterRelationshipId(response.data.roasterRelationship.id)
         setFollowersCount(followersCount + 1)
       })
-      .catch((error) => {
-        console.log(error)
+      .catch(() => {
+        showMessage({ message: 'フォローに失敗しました', type: 'error' })
       })
   }
 
@@ -37,8 +39,8 @@ export const FollowUnFollowButton: FC<Props> = (props) => {
           setRoasterRelationshipId(null)
           setFollowersCount(followersCount - 1)
         })
-        .catch((error) => {
-          console.log(error)
+        .catch(() => {
+          showMessage({ message: 'フォロー削除に失敗しました', type: 'error' })
         })
     }
   }, [roasterRelationshipId, followersCount])

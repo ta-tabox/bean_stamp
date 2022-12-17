@@ -25,6 +25,7 @@ export const RoasterCard: FC<Props> = memo((props) => {
   const [followersCount, setFollowersCount] = useState<number>(roaster.followersCount)
 
   const [loading, setLoading] = useState(true)
+
   useEffect(() => {
     setLoading(true)
     getRoasterRelationship({ headers: authHeaders, roasterId: roaster.id.toString() })
@@ -57,7 +58,7 @@ export const RoasterCard: FC<Props> = memo((props) => {
             <div className="mt-2 flex items-baseline justify-around lg:justify-start">
               <LinkToRoasterFollower roasterId={roaster.id} followersCount={followersCount} />
 
-              {/* TODO コンポーネント化する */}
+              {/* フォローボタン 自身のロースターの場合は非表示 */}
               {roaster.id !== currentRoaster?.id &&
                 (loading ? null : (
                   <FollowUnFollowButton
@@ -69,6 +70,7 @@ export const RoasterCard: FC<Props> = memo((props) => {
                   />
                 ))}
             </div>
+
             <div className="mt-4 text-gray-500 lg:max-w-md">
               <div>住所: {fullAddress({ roaster })}</div>
               <div>TEL: {roaster.phoneNumber}</div>
