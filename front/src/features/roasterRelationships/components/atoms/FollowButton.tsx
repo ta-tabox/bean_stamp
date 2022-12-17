@@ -5,16 +5,16 @@ type Props = {
   onClick: () => void
 }
 
-export const UnFollowButton: FC<Props> = memo((props) => {
+export const FollowButton: FC<Props> = memo((props) => {
   const { onClick } = props
 
   return (
     <button
       type="button"
       onClick={onClick}
-      className="btn bg-white border-gray-200 text-gray-600 hover:bg-gray-100 active:bg-gray-200 w-24"
+      className="btn bg-indigo-500 border-indigo-600 text-white hover:bg-indigo-600 active:bg-indigo-700 w-24"
     >
-      フォロー中
+      フォロー
     </button>
   )
 })

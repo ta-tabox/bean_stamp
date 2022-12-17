@@ -5,7 +5,7 @@ import { Link as ReactLink } from 'react-router-dom'
 import { Card, CardContainer } from '@/components/Elements/Card'
 import { Link } from '@/components/Elements/Link'
 import { useAuth } from '@/features/auth'
-import { FollowButton, getRoasterRelationship } from '@/features/roasterRelationships'
+import { FollowUnFollowButton, getRoasterRelationship } from '@/features/roasterRelationships'
 import { LinkToRoasterFollower } from '@/features/roasters/components/molecules/LinkToRoasterFollower'
 import { RoasterImage } from '@/features/roasters/components/molecules/RoasterImage'
 import { useCurrentRoaster } from '@/features/roasters/hooks/useCurrentRoaster'
@@ -22,6 +22,8 @@ export const RoasterCard: FC<Props> = memo((props) => {
   const { authHeaders } = useAuth()
 
   const [roasterRelationshipId, setRoasterRelationshipId] = useState<number | null>(null)
+  const [followersCount, setFollowersCount] = useState<number>(roaster.followersCount)
+
   const [loading, setLoading] = useState(true)
   useEffect(() => {
     setLoading(true)
@@ -53,15 +55,17 @@ export const RoasterCard: FC<Props> = memo((props) => {
               ) : null}
             </div>
             <div className="mt-2 flex items-baseline justify-around lg:justify-start">
-              <LinkToRoasterFollower roaster={roaster} />
+              <LinkToRoasterFollower roasterId={roaster.id} followersCount={followersCount} />
 
               {/* TODO コンポーネント化する */}
               {roaster.id !== currentRoaster?.id &&
                 (loading ? null : (
-                  <FollowButton
+                  <FollowUnFollowButton
                     roasterId={roaster.id}
                     roasterRelationshipId={roasterRelationshipId}
                     setRoasterRelationshipId={setRoasterRelationshipId}
+                    followersCount={followersCount}
+                    setFollowersCount={setFollowersCount}
                   />
                 ))}
             </div>
