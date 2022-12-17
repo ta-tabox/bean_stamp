@@ -1,10 +1,11 @@
 import type { FC } from 'react'
-import { memo } from 'react'
+import { useEffect, useState, memo } from 'react'
 import { Link as ReactLink } from 'react-router-dom'
 
-import { PrimaryButton } from '@/components/Elements/Button'
 import { Card, CardContainer } from '@/components/Elements/Card'
 import { Link } from '@/components/Elements/Link'
+import { useAuth } from '@/features/auth'
+import { FollowButton, getRoasterRelationship } from '@/features/roaster_relationships'
 import { LinkToRoasterFollower } from '@/features/roasters/components/molecules/LinkToRoasterFollower'
 import { RoasterImage } from '@/features/roasters/components/molecules/RoasterImage'
 import { useCurrentRoaster } from '@/features/roasters/hooks/useCurrentRoaster'
@@ -18,6 +19,23 @@ type Props = {
 export const RoasterCard: FC<Props> = memo((props) => {
   const { roaster } = props
   const { currentRoaster } = useCurrentRoaster()
+  const { authHeaders } = useAuth()
+
+  const [roasterRelationshipId, setRoasterRelationshipId] = useState<number | null>(null)
+  const [loading, setLoading] = useState(true)
+  useEffect(() => {
+    setLoading(true)
+    getRoasterRelationship({ headers: authHeaders, roasterId: roaster.id.toString() })
+      .then((response) => {
+        setRoasterRelationshipId(response.data.roasterRelationshipId)
+      })
+      .catch(() => {
+        console.log('Follow情報の取得に失敗')
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [])
 
   return (
     <Card>
@@ -38,11 +56,14 @@ export const RoasterCard: FC<Props> = memo((props) => {
               <LinkToRoasterFollower roaster={roaster} />
 
               {/* TODO コンポーネント化する */}
-              {roaster.id !== currentRoaster?.id ? (
-                <div className="ml-8">
-                  <PrimaryButton>Follow</PrimaryButton>
-                </div>
-              ) : null}
+              {roaster.id !== currentRoaster?.id &&
+                (loading ? null : (
+                  <FollowButton
+                    roasterId={roaster.id}
+                    roasterRelationshipId={roasterRelationshipId}
+                    setRoasterRelationshipId={setRoasterRelationshipId}
+                  />
+                ))}
             </div>
             <div className="mt-4 text-gray-500 lg:max-w-md">
               <div>住所: {fullAddress({ roaster })}</div>

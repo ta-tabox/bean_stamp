@@ -18,7 +18,7 @@ export const SecondaryButton: FC<Props> = memo((props) => {
       {!loading && (
         <button
           type={isButton ? 'button' : 'submit'}
-          className="btn btn-pop bg-white border-gray-200 text-gray-600 hover:bg-gray-100 active:bg-gray-200"
+          className="btn bg-white border-gray-200 text-gray-600 hover:bg-gray-100 active:bg-gray-200"
           disabled={disabled || loading}
           onClick={onClick}
         >

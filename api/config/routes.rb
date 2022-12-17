@@ -82,7 +82,7 @@ Rails.application.routes.draw do
         member { get 'followers' }
       end
 
-      resources :roaster_relationships, only: %i[create destroy]
+      resources :roaster_relationships, only: %i[index create destroy]
     end
   end
 end
