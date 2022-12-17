@@ -1,5 +1,5 @@
 import type { AuthHeaders } from '@/features/auth'
-import type { GetRoasterRelationshipResponse } from '@/features/roaster_relationships/types'
+import type { GetRoasterRelationshipResponse } from '@/features/roasterRelationships/types'
 import axios from '@/lib/axios'
 
 type Options = {

@@ -2,7 +2,7 @@ import type { FC } from 'react'
 
 import { SecondaryButton } from '@/components/Elements/Button'
 import { useAuth } from '@/features/auth'
-import { createRoasterRelationship } from '@/features/roaster_relationships/api/createRoasterRelationship'
+import { createRoasterRelationship } from '@/features/roasterRelationships/api/createRoasterRelationship'
 
 type Props = {
   roasterId: number

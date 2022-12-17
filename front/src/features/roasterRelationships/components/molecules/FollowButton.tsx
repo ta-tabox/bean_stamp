@@ -2,8 +2,8 @@ import type { Dispatch, FC } from 'react'
 
 import { PrimaryButton, SecondaryButton } from '@/components/Elements/Button'
 import { useAuth } from '@/features/auth'
-import { createRoasterRelationship } from '@/features/roaster_relationships/api/createRoasterRelationship'
-import { deleteRoasterRelationship } from '@/features/roaster_relationships/api/deleteRoasterRelationship'
+import { createRoasterRelationship } from '@/features/roasterRelationships/api/createRoasterRelationship'
+import { deleteRoasterRelationship } from '@/features/roasterRelationships/api/deleteRoasterRelationship'
 
 type Props = {
   roasterId: number
@@ -38,8 +38,12 @@ export const FollowButton: FC<Props> = (props) => {
   }
 
   return roasterRelationshipId ? (
-    <SecondaryButton onClick={onClickUnFollow}>UnFollow</SecondaryButton>
+    <SecondaryButton onClick={onClickUnFollow}>
+      <div className="w-16">UnFollow</div>
+    </SecondaryButton>
   ) : (
-    <PrimaryButton onClick={onClickFollow}>Follow</PrimaryButton>
+    <PrimaryButton onClick={onClickFollow}>
+      <div className="w-16">Follow</div>
+    </PrimaryButton>
   )
 }
