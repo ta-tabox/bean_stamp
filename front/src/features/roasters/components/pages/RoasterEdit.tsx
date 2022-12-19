@@ -9,7 +9,8 @@ import { NotificationMessage } from '@/components/Elements/Notification'
 import { Spinner } from '@/components/Elements/Spinner'
 import { FormContainer, FormFooter, FormMain, FormTitle } from '@/components/Form'
 import { Head } from '@/components/Head'
-import { useAuth, useLoadUser } from '@/features/auth'
+import { useLoadUser } from '@/features/auth'
+import { useAuthHeaders } from '@/features/auth/hooks/useAuthHeaders'
 import { updateRoaster } from '@/features/roasters/api/updateRoaster'
 import { RoasterThumbnail } from '@/features/roasters/components/molecules/RoasterThumbnail'
 import { RoasterForm } from '@/features/roasters/components/organisms/RoasterForm'
@@ -26,7 +27,7 @@ export const RoasterEdit: FC = () => {
   const { setErrorNotifications, errorNotifications } = useErrorNotification()
   const { showMessage } = useMessage()
   const navigate = useNavigate()
-  const { authHeaders } = useAuth()
+  const { authHeaders } = useAuthHeaders()
   const { loadUser } = useLoadUser()
 
   const { setIsRoaster, currentRoaster } = useCurrentRoaster()

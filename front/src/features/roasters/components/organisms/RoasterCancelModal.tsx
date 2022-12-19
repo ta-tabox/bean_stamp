@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom'
 
 import { DangerButton, SecondaryButton } from '@/components/Elements/Button'
 import { Modal, ModalContainer, ModalText, ModalTitle } from '@/components/Elements/Modal'
-import { useAuth, useLoadUser } from '@/features/auth'
+import { useLoadUser } from '@/features/auth'
+import { useAuthHeaders } from '@/features/auth/hooks/useAuthHeaders'
 import { deleteRoaster } from '@/features/roasters/api/deleteRoaster'
 import { useCurrentRoaster } from '@/features/roasters/hooks/useCurrentRoaster'
 import type { Roaster } from '@/features/roasters/types'
@@ -18,7 +19,7 @@ type Props = {
 
 export const RoasterCancelModal: FC<Props> = memo((props) => {
   const { isOpen, onClose, roaster } = props
-  const { authHeaders } = useAuth()
+  const { authHeaders } = useAuthHeaders()
   const { loadUser } = useLoadUser()
   const { setIsRoaster } = useCurrentRoaster()
   const { showMessage } = useMessage()

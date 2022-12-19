@@ -7,7 +7,8 @@ import { AxiosError } from 'axios'
 import { NotificationMessage } from '@/components/Elements/Notification'
 import { FormContainer, FormMain, FormTitle } from '@/components/Form'
 import { Head } from '@/components/Head'
-import { useAuth, useLoadUser } from '@/features/auth'
+import { useLoadUser } from '@/features/auth'
+import { useAuthHeaders } from '@/features/auth/hooks/useAuthHeaders'
 import { createRoaster } from '@/features/roasters/api/createRoaster'
 import { RoasterForm } from '@/features/roasters/components/organisms/RoasterForm'
 import { useCurrentRoaster } from '@/features/roasters/hooks/useCurrentRoaster'
@@ -23,7 +24,7 @@ export const RoasterNew: FC = memo(() => {
   const { setErrorNotifications, errorNotifications } = useErrorNotification()
   const { showMessage } = useMessage()
   const navigate = useNavigate()
-  const { authHeaders } = useAuth()
+  const { authHeaders } = useAuthHeaders()
   const { loadUser } = useLoadUser()
 
   const { setIsRoaster } = useCurrentRoaster()

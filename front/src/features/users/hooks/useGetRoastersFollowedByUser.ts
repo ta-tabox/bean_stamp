@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { useAuth } from '@/features/auth'
+import { useAuthHeaders } from '@/features/auth/hooks/useAuthHeaders'
 import type { Roaster } from '@/features/roasters'
 import { getRoastersFollowedByUser as getRoastersFollowedByUserRequest } from '@/features/users/api/getRoastersFollowedByUser'
 import { useMessage } from '@/hooks/useMessage'
@@ -9,7 +9,7 @@ import { useMessage } from '@/hooks/useMessage'
 export const useGetRoastersFollowedByUser = () => {
   const navigate = useNavigate()
   const { showMessage } = useMessage()
-  const { authHeaders } = useAuth()
+  const { authHeaders } = useAuthHeaders()
 
   const [loading, setLoading] = useState(false)
   const [roasters, setRoasters] = useState<Array<Roaster>>()

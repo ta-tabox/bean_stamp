@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { useAuth } from '@/features/auth'
+import { useAuthHeaders } from '@/features/auth/hooks/useAuthHeaders'
 import type { User } from '@/features/users'
 import { getUser as getUserRequest } from '@/features/users/api/getUser'
 import { useMessage } from '@/hooks/useMessage'
@@ -9,7 +9,7 @@ import { useMessage } from '@/hooks/useMessage'
 export const useGetUser = () => {
   const navigate = useNavigate()
   const { showMessage } = useMessage()
-  const { authHeaders } = useAuth()
+  const { authHeaders } = useAuthHeaders()
 
   const [loading, setLoading] = useState(false)
   const [user, setUser] = useState<User>()

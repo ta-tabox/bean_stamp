@@ -1,7 +1,7 @@
 import type { Dispatch, FC } from 'react'
 import React, { useCallback } from 'react'
 
-import { useAuth } from '@/features/auth'
+import { useAuthHeaders } from '@/features/auth/hooks/useAuthHeaders'
 import { createRoasterRelationship } from '@/features/roasterRelationships/api/createRoasterRelationship'
 import { deleteRoasterRelationship } from '@/features/roasterRelationships/api/deleteRoasterRelationship'
 import { FollowButton } from '@/features/roasterRelationships/components/atoms/FollowButton'
@@ -19,7 +19,7 @@ type Props = {
 
 export const FollowUnFollowButton: FC<Props> = (props) => {
   const { roasterId, roasterRelationshipId, setRoasterRelationshipId, setFollowersCount, followersCount } = props
-  const { authHeaders } = useAuth()
+  const { authHeaders } = useAuthHeaders()
   const { showMessage } = useMessage()
   const { getUsersFollowingToRoaster } = useGetUsersFollowingToRoaster()
 

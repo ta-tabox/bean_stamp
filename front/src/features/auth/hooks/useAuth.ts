@@ -119,5 +119,5 @@ export const useAuth = () => {
       })
   }
 
-  return { signUp, signIn, signOut, deleteUser, loading, authHeaders }
+  return { signUp, signIn, signOut, deleteUser, loading }
 }

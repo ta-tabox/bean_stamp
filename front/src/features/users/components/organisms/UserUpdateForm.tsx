@@ -7,7 +7,8 @@ import { useForm } from 'react-hook-form'
 
 import { PrimaryButton } from '@/components/Elements/Button'
 import { ImagePreview } from '@/components/Form'
-import { useAuth, useLoadUser } from '@/features/auth'
+import { useLoadUser } from '@/features/auth'
+import { useAuthHeaders } from '@/features/auth/hooks/useAuthHeaders'
 import { updateUser } from '@/features/users/api/updateUser'
 import { EmailInput } from '@/features/users/components/molecules/EmailInput'
 import { PrefectureSelect } from '@/features/users/components/molecules/PrefectureSelect'
@@ -35,7 +36,7 @@ type UserUpdateData = UserUpdateParams & {
 
 export const UserUpdateForm: FC<Props> = (props) => {
   const { user, setIsError } = props
-  const { authHeaders } = useAuth()
+  const { authHeaders } = useAuthHeaders()
   const navigate = useNavigate()
 
   const { loadUser } = useLoadUser()
