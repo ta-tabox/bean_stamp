@@ -3,22 +3,22 @@ import { useNavigate } from 'react-router-dom'
 
 import { useAuth } from '@/features/auth'
 import { getUsersFollowingToRoaster as getUsersFollowingToRoasterRequest } from '@/features/roasters/api/getUsersFollowingToRoaster'
-import type { User } from '@/features/users'
+import { useUsersFollowingToRoaster } from '@/features/roasters/hooks/useUsersFollowingToRoaster'
 import { useMessage } from '@/hooks/useMessage'
 
 export const useGetUsersFollowingToRoaster = () => {
   const navigate = useNavigate()
   const { showMessage } = useMessage()
   const { authHeaders } = useAuth()
+  const { usersFollowingToRoaster, setUsersFollowingToRoaster } = useUsersFollowingToRoaster()
 
   const [loading, setLoading] = useState(false)
-  const [users, setUsers] = useState<Array<User>>()
 
   const getUsersFollowingToRoaster = useCallback((id: string) => {
     setLoading(true)
     getUsersFollowingToRoasterRequest({ headers: authHeaders, id })
       .then((response) => {
-        setUsers(response.data)
+        setUsersFollowingToRoaster(response.data)
       })
       .catch(() => {
         navigate('/')
@@ -29,5 +29,5 @@ export const useGetUsersFollowingToRoaster = () => {
       })
   }, [])
 
-  return { users, getUsersFollowingToRoaster, loading }
+  return { usersFollowingToRoaster, getUsersFollowingToRoaster, loading }
 }

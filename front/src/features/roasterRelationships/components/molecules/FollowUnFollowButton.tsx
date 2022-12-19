@@ -6,6 +6,7 @@ import { createRoasterRelationship } from '@/features/roasterRelationships/api/c
 import { deleteRoasterRelationship } from '@/features/roasterRelationships/api/deleteRoasterRelationship'
 import { FollowButton } from '@/features/roasterRelationships/components/atoms/FollowButton'
 import { UnFollowButton } from '@/features/roasterRelationships/components/atoms/UnFollowButton'
+import { useGetUsersFollowingToRoaster } from '@/features/roasters'
 import { useMessage } from '@/hooks/useMessage'
 
 type Props = {
@@ -20,12 +21,14 @@ export const FollowUnFollowButton: FC<Props> = (props) => {
   const { roasterId, roasterRelationshipId, setRoasterRelationshipId, setFollowersCount, followersCount } = props
   const { authHeaders } = useAuth()
   const { showMessage } = useMessage()
+  const { getUsersFollowingToRoaster } = useGetUsersFollowingToRoaster()
 
   const onClickFollow = () => {
     createRoasterRelationship({ headers: authHeaders, roasterId })
       .then((response) => {
-        setRoasterRelationshipId(response.data.roasterRelationship.id)
-        setFollowersCount(followersCount + 1)
+        setRoasterRelationshipId(response.data.roasterRelationship.id) // deleteリクエストで使用するurl: /roaster_relationships/:idに使用
+        setFollowersCount(followersCount + 1) // RoasterCardで使用するfollower数
+        getUsersFollowingToRoaster(roasterId.toString()) // API:RoasterのFollower情報を更新 RoasterFollowerコンポーネントで表示
       })
       .catch(() => {
         showMessage({ message: 'フォローに失敗しました', type: 'error' })
@@ -36,8 +39,9 @@ export const FollowUnFollowButton: FC<Props> = (props) => {
     if (roasterRelationshipId) {
       deleteRoasterRelationship({ headers: authHeaders, id: roasterRelationshipId.toString() })
         .then(() => {
-          setRoasterRelationshipId(null)
-          setFollowersCount(followersCount - 1)
+          setRoasterRelationshipId(null) // roaster_relationship削除に伴うりセット
+          setFollowersCount(followersCount - 1) // RoasterCardで使用するfollower数
+          getUsersFollowingToRoaster(roasterId.toString()) // API:RoasterのFollower情報を更新 RoasterFollowerコンポーネントで表示
         })
         .catch(() => {
           showMessage({ message: 'フォロー削除に失敗しました', type: 'error' })

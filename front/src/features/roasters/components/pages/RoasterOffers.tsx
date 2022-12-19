@@ -11,7 +11,7 @@ import { isNumber } from '@/utils/regexp'
 export const RoasterOffers: FC = memo(() => {
   const urlParams = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { users, getUsersFollowingToRoaster, loading: usersLoading } = useGetUsersFollowingToRoaster()
+  const { usersFollowingToRoaster, getUsersFollowingToRoaster, loading: usersLoading } = useGetUsersFollowingToRoaster()
 
   useEffect(() => {
     const fetchData = (id: string) => {
@@ -41,13 +41,13 @@ export const RoasterOffers: FC = memo(() => {
       {!usersLoading && (
         <>
           {/* TODO ロースターのオファー一覧を表示する */}
-          {users && (
+          {usersFollowingToRoaster && (
             <section className="mb-20 py-4 text-gray-600">
               <div>RoasterOffersコンポーネント</div>
-              {users.length ? (
+              {usersFollowingToRoaster.length ? (
                 <Card>
                   <ol>
-                    {users.map((user) => (
+                    {usersFollowingToRoaster.map((user) => (
                       <li key={user.id}>
                         <UserItem user={user} onClick={onClickOffer} />
                       </li>

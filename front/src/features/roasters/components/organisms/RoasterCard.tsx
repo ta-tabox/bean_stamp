@@ -11,6 +11,7 @@ import { RoasterImage } from '@/features/roasters/components/molecules/RoasterIm
 import { useCurrentRoaster } from '@/features/roasters/hooks/useCurrentRoaster'
 import type { Roaster } from '@/features/roasters/types'
 import { fullAddress } from '@/features/roasters/utils/fullAddress'
+import { useMessage } from '@/hooks/useMessage'
 
 type Props = {
   roaster: Roaster
@@ -20,6 +21,7 @@ export const RoasterCard: FC<Props> = memo((props) => {
   const { roaster } = props
   const { currentRoaster } = useCurrentRoaster()
   const { authHeaders } = useAuth()
+  const { showMessage } = useMessage()
 
   const [roasterRelationshipId, setRoasterRelationshipId] = useState<number | null>(null)
   const [followersCount, setFollowersCount] = useState<number>(roaster.followersCount)
@@ -33,7 +35,7 @@ export const RoasterCard: FC<Props> = memo((props) => {
         setRoasterRelationshipId(response.data.roasterRelationshipId)
       })
       .catch(() => {
-        console.log('Follow情報の取得に失敗')
+        showMessage({ message: 'Follow情報の取得に失敗', type: 'error' })
       })
       .finally(() => {
         setLoading(false)

@@ -1,5 +1,5 @@
 import { useSignedInUser } from '@/features/auth/hooks/useSignedInUser'
-import { useCurrentRoaster } from '@/features/roasters'
+import { useCurrentRoaster } from '@/features/roasters' // TODO 循環参照の原因コード
 
 export const useResetStates = () => {
   const { setIsSignedIn, setSignedInUser, setIsBelongingToRoaster } = useSignedInUser()
