@@ -1,15 +1,17 @@
 import type { FC } from 'react'
-import { memo } from 'react'
+import { useEffect, useState, memo } from 'react'
 import { Link as ReactLink } from 'react-router-dom'
 
-import { PrimaryButton } from '@/components/Elements/Button'
 import { Card, CardContainer } from '@/components/Elements/Card'
 import { Link } from '@/components/Elements/Link'
+import { useAuthHeaders } from '@/features/auth/hooks/useAuthHeaders'
+import { FollowUnFollowButton, getRoasterRelationship } from '@/features/roasterRelationships'
 import { LinkToRoasterFollower } from '@/features/roasters/components/molecules/LinkToRoasterFollower'
 import { RoasterImage } from '@/features/roasters/components/molecules/RoasterImage'
 import { useCurrentRoaster } from '@/features/roasters/hooks/useCurrentRoaster'
 import type { Roaster } from '@/features/roasters/types'
 import { fullAddress } from '@/features/roasters/utils/fullAddress'
+import { useMessage } from '@/hooks/useMessage'
 
 type Props = {
   roaster: Roaster
@@ -18,6 +20,27 @@ type Props = {
 export const RoasterCard: FC<Props> = memo((props) => {
   const { roaster } = props
   const { currentRoaster } = useCurrentRoaster()
+  const { authHeaders } = useAuthHeaders()
+  const { showMessage } = useMessage()
+
+  const [roasterRelationshipId, setRoasterRelationshipId] = useState<number | null>(null)
+  const [followersCount, setFollowersCount] = useState<number>(roaster.followersCount)
+
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    setLoading(true)
+    getRoasterRelationship({ headers: authHeaders, roasterId: roaster.id.toString() })
+      .then((response) => {
+        setRoasterRelationshipId(response.data.roasterRelationshipId)
+      })
+      .catch(() => {
+        showMessage({ message: 'Follow情報の取得に失敗', type: 'error' })
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [])
 
   return (
     <Card>
@@ -35,15 +58,21 @@ export const RoasterCard: FC<Props> = memo((props) => {
               ) : null}
             </div>
             <div className="mt-2 flex items-baseline justify-around lg:justify-start">
-              <LinkToRoasterFollower roaster={roaster} />
+              <LinkToRoasterFollower roasterId={roaster.id} followersCount={followersCount} />
 
-              {/* TODO コンポーネント化する */}
-              {roaster.id !== currentRoaster?.id ? (
-                <div className="ml-8">
-                  <PrimaryButton>Follow</PrimaryButton>
-                </div>
-              ) : null}
+              {/* フォローボタン 自身のロースターの場合は非表示 */}
+              {roaster.id !== currentRoaster?.id &&
+                (loading ? null : (
+                  <FollowUnFollowButton
+                    roasterId={roaster.id}
+                    roasterRelationshipId={roasterRelationshipId}
+                    setRoasterRelationshipId={setRoasterRelationshipId}
+                    followersCount={followersCount}
+                    setFollowersCount={setFollowersCount}
+                  />
+                ))}
             </div>
+
             <div className="mt-4 text-gray-500 lg:max-w-md">
               <div>住所: {fullAddress({ roaster })}</div>
               <div>TEL: {roaster.phoneNumber}</div>

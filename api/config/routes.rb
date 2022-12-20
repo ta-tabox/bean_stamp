@@ -81,6 +81,8 @@ Rails.application.routes.draw do
       resources :roasters, only: %i[show create update destroy] do
         member { get 'followers' }
       end
+
+      resources :roaster_relationships, only: %i[index create destroy]
     end
   end
 end

@@ -3,14 +3,18 @@ import type { FC } from 'react'
 import pluralize from 'pluralize'
 
 import { Link } from '@/components/Elements/Link'
-import type { Roaster } from '@/features/roasters/types'
 
 type Props = {
-  roaster: Roaster
+  roasterId: number
+  followersCount: number
 }
 
 export const LinkToRoasterFollower: FC<Props> = (props) => {
-  const { roaster } = props
+  const { roasterId, followersCount } = props
 
-  return <Link to={`/roasters/${roaster.id}/follower`}>{pluralize('follower', roaster.followersCount, true)}</Link>
+  return (
+    <div className="w-28">
+      <Link to={`/roasters/${roasterId}/follower`}>{pluralize('follower', followersCount, true)}</Link>
+    </div>
+  )
 }
