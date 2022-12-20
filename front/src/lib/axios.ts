@@ -1,5 +1,6 @@
 import Axios from 'axios'
 import applyCaseMiddleware from 'axios-case-converter'
+import { Cookies } from 'react-cookie'
 
 import { API_HOST } from '@/config'
 
@@ -12,11 +13,20 @@ const options = {
   ignoreHeaders: true,
 }
 
+// cookieからAPI認証用のトークンを取得し、axiosのheaderとして使用する
+const cookies = new Cookies()
+const authHeaders = {
+  uid: cookies.get('uid') as string | '',
+  client: cookies.get('client') as string | '',
+  'access-token': cookies.get('access-token') as string | '',
+}
+
 const axios = applyCaseMiddleware(
   Axios.create({
     baseURL: `${API_HOST}/api/v1`,
     headers: {
       'Content-Type': 'application/json',
+      ...authHeaders,
     },
   }),
   options
