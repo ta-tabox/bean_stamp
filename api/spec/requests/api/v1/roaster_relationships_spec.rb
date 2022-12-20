@@ -16,7 +16,7 @@ RSpec.describe 'Api::V1::RoasterRelationships', type: :request do
       updated_user = User.find(user.id) # 更新後のユーザーを取得
 
       json = JSON.parse(response.body)
-      expect(json.dig('user', 'following_roasters_count')).to eq updated_user.following_roasters.length
+      expect(json.dig('roaster_relationship', 'user', 'following_roasters_count')).to eq updated_user.following_roasters.length
     end
 
     it "returns roaster's follower count" do
@@ -24,7 +24,7 @@ RSpec.describe 'Api::V1::RoasterRelationships', type: :request do
       updated_roaster = Roaster.find(roaster.id) # 更新後のロースターを取得
 
       json = JSON.parse(response.body)
-      expect(json.dig('roaster', 'followers_count')).to eq updated_roaster.followers.length
+      expect(json.dig('roaster_relationship', 'roaster', 'followers_count')).to eq updated_roaster.followers.length
     end
   end
 
