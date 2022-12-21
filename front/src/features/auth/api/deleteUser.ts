@@ -1,3 +1,3 @@
-import { BackendApi } from '@/lib/axios'
+import { BackendApiWithAuth } from '@/lib/axios'
 
-export const deleteUserReq = () => BackendApi.delete('auth')
+export const deleteUserReq = () => BackendApiWithAuth.delete('auth')

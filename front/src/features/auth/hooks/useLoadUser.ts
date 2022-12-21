@@ -1,6 +1,5 @@
 import { getSignInUser } from '@/features/auth/api/getSignInUser'
 import { useAuthCookies } from '@/features/auth/hooks/useAuthCookies'
-import { useAuthHeaders } from '@/features/auth/hooks/useAuthHeaders'
 import { useResetStates } from '@/features/auth/hooks/useResetStates'
 import { useSignedInUser } from '@/features/auth/hooks/useSignedInUser'
 import { useCurrentRoaster } from '@/features/roasters'
@@ -8,13 +7,12 @@ import { useCurrentRoaster } from '@/features/roasters'
 export const useLoadUser = () => {
   const { setIsSignedIn, setSignedInUser, setIsBelongingToRoaster } = useSignedInUser()
   const { setCurrentRoaster } = useCurrentRoaster()
-  const { authHeaders } = useAuthHeaders()
   const { removeAuthCookies } = useAuthCookies()
   const { resetStates } = useResetStates()
 
   // サインインユーザーの読み込み
   const loadUser = async (): Promise<void> => {
-    await getSignInUser({ headers: authHeaders })
+    await getSignInUser()
       .then((res) => {
         if (!res.data.isLogin) {
           removeAuthCookies()

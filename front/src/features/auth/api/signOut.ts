@@ -1,3 +1,3 @@
-import { BackendApi } from '@/lib/axios'
+import { BackendApiWithAuth } from '@/lib/axios'
 
-export const signOutReq = () => BackendApi.get('auth/sign_out')
+export const signOutReq = () => BackendApiWithAuth.get('auth/sign_out')

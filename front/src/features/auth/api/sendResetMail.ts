@@ -1,8 +1,8 @@
 import type { SendResetMailParams } from '@/features/auth/types'
-import axios from '@/lib/axios'
+import { BackendApi } from '@/lib/axios'
 
 type Options = {
   params: SendResetMailParams
 }
 
-export const sendResetMail = ({ params }: Options) => axios.post('auth/password', params)
+export const sendResetMail = ({ params }: Options) => BackendApi.post('auth/password', params)

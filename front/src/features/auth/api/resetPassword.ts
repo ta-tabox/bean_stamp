@@ -1,5 +1,5 @@
 import type { PasswordResetHeaders, PasswordResetParams } from '@/features/auth/types'
-import axios from '@/lib/axios'
+import { BackendApi } from '@/lib/axios'
 
 type Options = {
   headers: PasswordResetHeaders
@@ -9,7 +9,7 @@ type Options = {
 export const resetPassword = ({ headers, params }: Options) => {
   const { uid, client, accessToken, resetPasswordToken } = headers
 
-  return axios.put('auth/password', params, {
+  return BackendApi.put('auth/password', params, {
     headers: {
       uid,
       client,
