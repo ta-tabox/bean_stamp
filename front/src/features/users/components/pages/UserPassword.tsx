@@ -11,7 +11,6 @@ import { FormContainer, FormMain, FormTitle } from '@/components/Form'
 import { Head } from '@/components/Head'
 import type { PasswordResetParams } from '@/features/auth'
 import { useSignedInUser } from '@/features/auth'
-import { useAuthHeaders } from '@/features/auth/hooks/useAuthHeaders'
 import { updateUser } from '@/features/users/api/updateUser'
 import { PasswordConfirmationInput } from '@/features/users/components/molecules/PasswordConfirmationInput'
 import { PasswordInput } from '@/features/users/components/molecules/PasswordInput'
@@ -21,7 +20,6 @@ import { useNotification } from '@/hooks/useNotification'
 import type { SubmitHandler } from 'react-hook-form'
 
 export const UserPassword: FC = () => {
-  const { authHeaders } = useAuthHeaders()
   const { signedInUser } = useSignedInUser()
   const { showMessage } = useMessage()
   const { notifications } = useNotification()
@@ -55,7 +53,7 @@ export const UserPassword: FC = () => {
 
     try {
       setLoading(true)
-      await updateUser({ headers: authHeaders, formData })
+      await updateUser({ formData })
       setIsError(false)
     } catch (error) {
       if (error instanceof AxiosError) {

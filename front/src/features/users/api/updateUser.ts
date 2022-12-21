@@ -1,19 +1,13 @@
-import type { AuthHeaders, UserResponse } from '@/features/auth/types'
-import axios from '@/lib/axios'
+import type { UserResponse } from '@/features/auth/types'
+import { BackendApiWithAuth } from '@/lib/axios'
 
 type Options = {
-  headers: AuthHeaders
   formData: FormData
 }
 
-export const updateUser = ({ headers, formData }: Options) => {
-  const { uid, client, accessToken } = headers
-  return axios.patch<UserResponse>('auth', formData, {
+export const updateUser = ({ formData }: Options) =>
+  BackendApiWithAuth.patch<UserResponse>('auth', formData, {
     headers: {
-      uid,
-      client,
-      'access-token': accessToken,
       'Content-Type': 'multipart/form-data',
     },
   })
-}

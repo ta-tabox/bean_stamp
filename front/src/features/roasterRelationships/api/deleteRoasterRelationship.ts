@@ -1,19 +1,9 @@
-import type { AuthHeaders } from '@/features/auth/types'
 import type { RoasterRelationshipResponse } from '@/features/roasterRelationships/types'
-import axios from '@/lib/axios'
+import { BackendApiWithAuth } from '@/lib/axios'
 
 type Options = {
-  headers: AuthHeaders
   id: string
 }
 
-export const deleteRoasterRelationship = ({ headers, id }: Options) => {
-  const { uid, client, accessToken } = headers
-  return axios.delete<RoasterRelationshipResponse>(`roaster_relationships/${id}`, {
-    headers: {
-      uid,
-      client,
-      'access-token': accessToken,
-    },
-  })
-}
+export const deleteRoasterRelationship = ({ id }: Options) =>
+  BackendApiWithAuth.delete<RoasterRelationshipResponse>(`roaster_relationships/${id}`)

@@ -1,7 +1,6 @@
-import type { AuthHeaders } from '@/features/auth/types'
 import type { Roaster } from '@/features/roasters'
 import type { User } from '@/features/users'
-import axios from '@/lib/axios'
+import { BackendApiWithAuth } from '@/lib/axios'
 
 type CurrentUserResponse = {
   isLogin: boolean
@@ -9,18 +8,4 @@ type CurrentUserResponse = {
   roaster: Roaster | null
 }
 
-type Options = {
-  headers: AuthHeaders
-}
-
-export const getSignInUser = ({ headers }: Options) => {
-  const { uid, client, accessToken } = headers
-
-  return axios.get<CurrentUserResponse>('/auth/sessions', {
-    headers: {
-      uid,
-      client,
-      'access-token': accessToken,
-    },
-  })
-}
+export const getSignInUser = () => BackendApiWithAuth.get<CurrentUserResponse>('/auth/sessions')

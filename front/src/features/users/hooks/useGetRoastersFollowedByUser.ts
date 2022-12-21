@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { useAuthHeaders } from '@/features/auth/hooks/useAuthHeaders'
 import type { Roaster } from '@/features/roasters'
 import { getRoastersFollowedByUser as getRoastersFollowedByUserRequest } from '@/features/users/api/getRoastersFollowedByUser'
 import { useMessage } from '@/hooks/useMessage'
@@ -9,14 +8,13 @@ import { useMessage } from '@/hooks/useMessage'
 export const useGetRoastersFollowedByUser = () => {
   const navigate = useNavigate()
   const { showMessage } = useMessage()
-  const { authHeaders } = useAuthHeaders()
 
   const [loading, setLoading] = useState(false)
   const [roasters, setRoasters] = useState<Array<Roaster>>()
 
   const getRoastersFollowedByUser = useCallback((id: string) => {
     setLoading(true)
-    getRoastersFollowedByUserRequest({ headers: authHeaders, id })
+    getRoastersFollowedByUserRequest({ id })
       .then((response) => {
         setRoasters(response.data)
       })

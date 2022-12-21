@@ -4,7 +4,6 @@ import { Link as ReactLink } from 'react-router-dom'
 
 import { Card, CardContainer } from '@/components/Elements/Card'
 import { Link } from '@/components/Elements/Link'
-import { useAuthHeaders } from '@/features/auth/hooks/useAuthHeaders'
 import { FollowUnFollowButton, getRoasterRelationship } from '@/features/roasterRelationships'
 import { LinkToRoasterFollower } from '@/features/roasters/components/molecules/LinkToRoasterFollower'
 import { RoasterImage } from '@/features/roasters/components/molecules/RoasterImage'
@@ -20,7 +19,6 @@ type Props = {
 export const RoasterCard: FC<Props> = memo((props) => {
   const { roaster } = props
   const { currentRoaster } = useCurrentRoaster()
-  const { authHeaders } = useAuthHeaders()
   const { showMessage } = useMessage()
 
   const [roasterRelationshipId, setRoasterRelationshipId] = useState<number | null>(null)
@@ -30,7 +28,7 @@ export const RoasterCard: FC<Props> = memo((props) => {
 
   useEffect(() => {
     setLoading(true)
-    getRoasterRelationship({ headers: authHeaders, roasterId: roaster.id.toString() })
+    getRoasterRelationship({ roasterId: roaster.id.toString() })
       .then((response) => {
         setRoasterRelationshipId(response.data.roasterRelationshipId)
       })

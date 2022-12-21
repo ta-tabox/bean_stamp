@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import axios from '@/lib/axios'
+import { BackendApi } from '@/lib/axios'
 
 type checkType = {
   status: 'string'
@@ -8,8 +8,7 @@ type checkType = {
 
 // 動作確認用
 export const execTest = () =>
-  axios
-    .get<checkType>('/api/test')
+  BackendApi.get<checkType>('/api/test')
     .then((res) => {
       console.log(res.data)
     })

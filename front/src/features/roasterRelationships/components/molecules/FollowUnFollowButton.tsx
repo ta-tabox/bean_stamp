@@ -1,7 +1,6 @@
 import type { Dispatch, FC } from 'react'
 import React, { useCallback } from 'react'
 
-import { useAuthHeaders } from '@/features/auth/hooks/useAuthHeaders'
 import { createRoasterRelationship } from '@/features/roasterRelationships/api/createRoasterRelationship'
 import { deleteRoasterRelationship } from '@/features/roasterRelationships/api/deleteRoasterRelationship'
 import { FollowButton } from '@/features/roasterRelationships/components/atoms/FollowButton'
@@ -19,12 +18,11 @@ type Props = {
 
 export const FollowUnFollowButton: FC<Props> = (props) => {
   const { roasterId, roasterRelationshipId, setRoasterRelationshipId, setFollowersCount, followersCount } = props
-  const { authHeaders } = useAuthHeaders()
   const { showMessage } = useMessage()
   const { getUsersFollowingToRoaster } = useGetUsersFollowingToRoaster()
 
   const onClickFollow = () => {
-    createRoasterRelationship({ headers: authHeaders, roasterId })
+    createRoasterRelationship({ roasterId })
       .then((response) => {
         setRoasterRelationshipId(response.data.roasterRelationship.id) // deleteリクエストで使用するurl: /roaster_relationships/:idに使用
         setFollowersCount(followersCount + 1) // RoasterCardで使用するfollower数
@@ -37,7 +35,7 @@ export const FollowUnFollowButton: FC<Props> = (props) => {
 
   const onClickUnFollow = useCallback(() => {
     if (roasterRelationshipId) {
-      deleteRoasterRelationship({ headers: authHeaders, id: roasterRelationshipId.toString() })
+      deleteRoasterRelationship({ id: roasterRelationshipId.toString() })
         .then(() => {
           setRoasterRelationshipId(null) // roaster_relationship削除に伴うりセット
           setFollowersCount(followersCount - 1) // RoasterCardで使用するfollower数
