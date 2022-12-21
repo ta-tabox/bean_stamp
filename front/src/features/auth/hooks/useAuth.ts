@@ -86,7 +86,7 @@ export const useAuth = () => {
   const signOut = () => {
     setLoading(true)
 
-    signOutReq({ headers: authHeaders })
+    signOutReq()
       .then(() => {
         // 認証情報をのcookieを削除
         removeAuthCookies()
@@ -106,7 +106,7 @@ export const useAuth = () => {
   const deleteUser = async () => {
     setLoading(true)
 
-    await deleteUserReq({ headers: authHeaders })
+    await deleteUserReq()
       .then(() => {
         // 認証情報をのcookieを削除
         removeAuthCookies()

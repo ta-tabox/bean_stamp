@@ -31,5 +31,32 @@ const axios = applyCaseMiddleware(
   }),
   options
 )
+const createAxiosInstance = () => {
+  // applyCaseMiddlewareの機能を持つaxiosインスタンスを作成
+  const axiosInstance = applyCaseMiddleware(
+    Axios.create({
+      // apiのURLを指定
+      baseURL: `${API_HOST}/api/v1`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }),
+    options
+  )
+  // interceptors.requestでリクエスト実行時のアクションを定義
+  // api認証で使用するtokenをheadersに設定する
+  axiosInstance.interceptors.request.use((request) => {
+    if (request.headers) {
+      request.headers.uid = cookies.get('uid') as string | ''
+      request.headers.client = cookies.get('client') as string | ''
+      request.headers['access-token'] = cookies.get('access-token') as string | ''
+    }
+    return request
+  })
+
+  return axiosInstance
+}
+
+export const BackendApi = createAxiosInstance()
 
 export default axios
