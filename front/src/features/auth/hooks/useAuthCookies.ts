@@ -22,11 +22,11 @@ export const useAuthCookies = () => {
     setCookie('access-token', res.headers['access-token'], { path: '/', expires: expireDate })
   }
 
-  // 認証関係のCookiesを削除
+  // 認証関係のCookiesを削除 pathを指定しないと削除できない
   const removeAuthCookies = () => {
-    removeCookie('uid')
-    removeCookie('client')
-    removeCookie('access-token')
+    removeCookie('uid', { path: '/' })
+    removeCookie('client', { path: '/' })
+    removeCookie('access-token', { path: '/' })
   }
 
   return { setAuthCookies, removeAuthCookies }
