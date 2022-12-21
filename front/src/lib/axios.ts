@@ -46,8 +46,3 @@ BackendApiWithAuth.interceptors.request.use((request) => {
   }
   return request
 })
-
-// WARNING 置き換えが終わったら削除
-const axios = Axios.create()
-
-export default axios
