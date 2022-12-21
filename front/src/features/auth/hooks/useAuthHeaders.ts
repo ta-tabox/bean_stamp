@@ -2,6 +2,7 @@ import { useCookies } from 'react-cookie'
 
 import type { AuthHeaders } from '@/features/auth/types'
 
+// WARNING axiosインスタンス作成時に実装するため、不使用となる
 export const useAuthHeaders = () => {
   const [cookies] = useCookies(['uid', 'client', 'access-token'])
 

@@ -7,7 +7,6 @@ import { signInWithEmailAndPassword } from '@/features/auth/api/signIn'
 import { signOutReq } from '@/features/auth/api/signOut'
 import { signUpWithSignUpParams } from '@/features/auth/api/signUp'
 import { useAuthCookies } from '@/features/auth/hooks/useAuthCookies'
-import { useAuthHeaders } from '@/features/auth/hooks/useAuthHeaders'
 import { useResetStates } from '@/features/auth/hooks/useResetStates'
 import { useSignedInUser } from '@/features/auth/hooks/useSignedInUser'
 import { useErrorNotification } from '@/hooks/useErrorNotification'
@@ -23,7 +22,6 @@ export const useAuth = () => {
 
   const { signedInUser, setIsSignedIn, setSignedInUser } = useSignedInUser()
   const { setAuthCookies, removeAuthCookies } = useAuthCookies()
-  const { authHeaders } = useAuthHeaders()
   const { setErrorNotifications } = useErrorNotification()
 
   const { resetStates } = useResetStates()
