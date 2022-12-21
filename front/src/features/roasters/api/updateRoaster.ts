@@ -1,21 +1,14 @@
-import type { AuthHeaders } from '@/features/auth/types'
 import type { Roaster } from '@/features/roasters/types'
-import axios from '@/lib/axios'
+import { BackendApiWithAuth } from '@/lib/axios'
 
 type Options = {
-  headers: AuthHeaders
   id: string
   formData: FormData
 }
 
-export const updateRoaster = ({ headers, id, formData }: Options) => {
-  const { uid, client, accessToken } = headers
-  return axios.put<Roaster>(`roasters/${id}`, formData, {
+export const updateRoaster = ({ id, formData }: Options) =>
+  BackendApiWithAuth.put<Roaster>(`roasters/${id}`, formData, {
     headers: {
-      uid,
-      client,
-      'access-token': accessToken,
       'Content-Type': 'multipart/form-data',
     },
   })
-}

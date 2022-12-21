@@ -10,7 +10,6 @@ import { Spinner } from '@/components/Elements/Spinner'
 import { FormContainer, FormFooter, FormMain, FormTitle } from '@/components/Form'
 import { Head } from '@/components/Head'
 import { useLoadUser } from '@/features/auth'
-import { useAuthHeaders } from '@/features/auth/hooks/useAuthHeaders'
 import { updateRoaster } from '@/features/roasters/api/updateRoaster'
 import { RoasterThumbnail } from '@/features/roasters/components/molecules/RoasterThumbnail'
 import { RoasterForm } from '@/features/roasters/components/organisms/RoasterForm'
@@ -27,7 +26,6 @@ export const RoasterEdit: FC = () => {
   const { setErrorNotifications, errorNotifications } = useErrorNotification()
   const { showMessage } = useMessage()
   const navigate = useNavigate()
-  const { authHeaders } = useAuthHeaders()
   const { loadUser } = useLoadUser()
 
   const { setIsRoaster, currentRoaster } = useCurrentRoaster()
@@ -54,7 +52,7 @@ export const RoasterEdit: FC = () => {
 
       try {
         setLoading(true)
-        await updateRoaster({ headers: authHeaders, id: currentRoaster.id.toString(), formData })
+        await updateRoaster({ id: currentRoaster.id.toString(), formData })
         setIsError(false)
       } catch (error) {
         if (error instanceof AxiosError) {
