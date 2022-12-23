@@ -18,4 +18,9 @@ class Api::ApplicationController < ActionController::API
 
     render json: { message: 'ロースターをすでに登録しています' }, status: :method_not_allowed
   end
+
+  # ログイン中のユーザーが所属するロースターを返す V1
+  def current_api_v1_roaster
+    current_api_v1_user.roaster
+  end
 end
