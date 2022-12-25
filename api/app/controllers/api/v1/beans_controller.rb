@@ -1,12 +1,11 @@
 class Api::V1::BeansController < Api::ApplicationController
   before_action :authenticate_api_v1_user!
   before_action :user_belonged_to_roaster_required
-  # TODO: createを実装したタイミングでコメントアウトを外す
-  # before_action :set_bean, only: %i[show update destroy]
+  before_action :set_bean, only: %i[show update destroy]
 
-  # TODO: Jsonでコーヒー豆一覧を返す
   def index
     @beans = current_api_v1_roaster.beans.includes(%i[bean_images country roast_level]).recent
+    render formats: :json
   end
 
   def show
@@ -14,11 +13,8 @@ class Api::V1::BeansController < Api::ApplicationController
     render formats: :json
   end
 
-  # TODO: paramsを元にコーヒー豆レコードを作成→JSONで登録したコーヒー豆を返す
   def create
-    # TODO: front側でinput type=monthフィールドのデータをdateカラムに保存できる形に変換する
-    # e.g. "2021-01" => "2021-01-01"
-    # set_cropped_at
+    set_cropped_at
     @bean = current_api_v1_roaster.beans.build(bean_params)
     @bean.upload_images = params.dig(:bean_images, :image)
 
@@ -26,36 +22,32 @@ class Api::V1::BeansController < Api::ApplicationController
       @bean.upload_images.each do |img|
         @bean_image = @bean.bean_images.create(image: img, bean_id: @bean.id)
       end
-      flash[:notice] = 'コーヒー豆を登録しました' # 不要
-      redirect_to @bean # @beanのパーシャルを作成
+      render formats: :json
     else
-      @upload_image = @bean.bean_images.build # 不要
-      render 'new' # 不要 エラーメッセージを返す
+      render json: { messages: @bean.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def update
-    # TODO: front側でinput type=monthフィールドのデータをdateカラムに保存できる形に変換する
     set_cropped_at
     @bean.upload_images = params.dig(:bean_images, :image)
 
     if @bean.update_with_bean_images(bean_params)
-      flash[:notice] = 'コーヒー豆情報を更新しました'
-      redirect_to @bean
+      render formats: :json
     else
-      @upload_image = @bean.bean_images.build
-      render 'edit'
+      render json: { messages: @bean.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
-  # TODOレコードの削除、messageとstatusのみ返却
   def destroy
     if @bean.offers.any?
-      redirect_to request.referer, alert: "コーヒー豆「#{@bean.name}」はオファー中です"
+      render json: { message: "コーヒー豆「#{@bean.name}」はオファー中です" }, status: :method_not_allowed
+    end
+
+    if @bean.destroy
+      render json: { message: 'コーヒー豆を削除しました' }, status: :ok
     else
-      @bean.destroy
-      flash[:notice] = "コーヒー豆「#{@bean.name}」を削除しました"
-      redirect_to beans_path
+      render json: { message: 'コーヒー豆の削除に失敗しました' }, status: :method_not_allowed
     end
   end
 
@@ -81,7 +73,7 @@ class Api::V1::BeansController < Api::ApplicationController
         :bitterness,
         :sweetness,
         :roast_level_id,
-        bean_taste_tags_attributes: %i[id user_id mst_taste_tag_id],
+        bean_taste_tags_attributes: %i[id mst_taste_tag_id],
       )
   end
 
@@ -92,7 +84,7 @@ class Api::V1::BeansController < Api::ApplicationController
 
   # input type=monthフィールドのデータをdateカラムに保存できる形に変換する
   # e.g. "2021-01" => "2021-01-01"
-  # def set_cropped_at
-  #   params[:bean][:cropped_at] = "#{params[:bean][:cropped_at]}-01"
-  # end
+  def set_cropped_at
+    params[:bean][:cropped_at] = "#{params[:bean][:cropped_at]}-01"
+  end
 end
