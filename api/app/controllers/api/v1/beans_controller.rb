@@ -1,16 +1,18 @@
 class Api::V1::BeansController < Api::ApplicationController
   before_action :authenticate_api_v1_user!
   before_action :user_belonged_to_roaster_required
-  before_action :set_roaster_id_cookie, only: %i[index show]
-  before_action :set_bean, only: %i[show update destroy]
+  # TODO: createを実装したタイミングでコメントアウトを外す
+  # before_action :set_bean, only: %i[show update destroy]
 
   # TODO: Jsonでコーヒー豆一覧を返す
   def index
     @beans = current_api_v1_roaster.beans.includes(%i[bean_images country roast_level]).recent
   end
 
-  # TODO: JSONでコーヒー豆単体を返す
-  def show; end
+  def show
+    @bean = Bean.find_by(id: params[:id])
+    render formats: :json
+  end
 
   # TODO: paramsを元にコーヒー豆レコードを作成→JSONで登録したコーヒー豆を返す
   def create
@@ -85,7 +87,7 @@ class Api::V1::BeansController < Api::ApplicationController
 
   def set_bean
     return if @bean = current_api_v1_roaster.beans.find_by(id: params[:id])
-    redirect_to beans_path, alert: 'コーヒー豆を登録してください'
+    render json: { status: 'error', message: 'コーヒー豆を登録してください' }
   end
 
   # input type=monthフィールドのデータをdateカラムに保存できる形に変換する
