@@ -9,7 +9,6 @@ class Api::V1::BeansController < Api::ApplicationController
   end
 
   def show
-    @bean = Bean.find_by(id: params[:id])
     render formats: :json
   end
 
@@ -41,7 +40,7 @@ class Api::V1::BeansController < Api::ApplicationController
 
   def destroy
     if @bean.offers.any?
-      render json: { message: "コーヒー豆「#{@bean.name}」はオファー中です" }, status: :method_not_allowed
+      return render json: { message: "コーヒー豆「#{@bean.name}」はオファー中です" }, status: :method_not_allowed
     end
 
     if @bean.destroy
@@ -79,7 +78,7 @@ class Api::V1::BeansController < Api::ApplicationController
 
   def set_bean
     return if @bean = current_api_v1_roaster.beans.find_by(id: params[:id])
-    render json: { status: 'error', message: 'コーヒー豆を登録してください' }
+    render json: {  message: 'コーヒー豆を登録してください' }, status: :not_found
   end
 
   # input type=monthフィールドのデータをdateカラムに保存できる形に変換する
