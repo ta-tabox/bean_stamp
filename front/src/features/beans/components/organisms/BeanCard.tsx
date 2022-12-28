@@ -1,15 +1,15 @@
 import type { FC } from 'react'
-import { memo } from 'react'
 
 import { Card, CardContainer } from '@/components/Elements/Card'
 import { BeanImagesSwiper } from '@/features/beans/components/organisms/BeanImagesSwiper'
+import { BeanTasteChart } from '@/features/beans/components/organisms/BeanTasteChart'
 import type { Bean } from '@/features/beans/types'
 
 type Props = {
   bean: Bean
 }
 
-export const BeanCard: FC<Props> = memo((props) => {
+export const BeanCard: FC<Props> = (props) => {
   const { bean } = props
 
   return (
@@ -63,15 +63,20 @@ export const BeanCard: FC<Props> = memo((props) => {
             </section>
             <section className="pt-4 h-80 w-80 sm:h-96 sm:w-96 mx-auto relative">
               <div className="text-lg e-font">〜 Taste 〜</div>
-              <div>tasteチャートを表示する</div>
-              {/* TODO js-chartの導入 */}
-              {/* <div className="h-80 w-80 sm:h-96 sm:w-96 absolute top-4 left-3">
-                render partial: 'beans/taste_chart', locals: { bean: bean }
-              </div> */}
+              <div className="h-80 w-80 sm:h-96 sm:w-96 absolute top-4 left-3">
+                {/* Tasteチャート */}
+                <BeanTasteChart
+                  acidity={bean.acidity}
+                  flavor={bean.flavor}
+                  body={bean.body}
+                  bitterness={bean.bitterness}
+                  sweetness={bean.sweetness}
+                />
+              </div>
             </section>
           </div>
         </div>
       </CardContainer>
     </Card>
   )
-})
+}
