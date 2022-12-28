@@ -17,7 +17,7 @@ export const DangerButton: FC<Props> = memo((props) => {
       {!loading && (
         <button
           type="submit"
-          className="btn btn-pop bg-red-500 border-red-600 text-white hover:bg-red-600 active:bg-red-700"
+          className="btn bg-rose-500 border-rose-600 text-white hover:bg-rose-600 active:bg-rose-700 bg-"
           disabled={disabled || loading}
           onClick={onClick}
         >

@@ -14,7 +14,8 @@ export const BeansRoutes: FC = memo(() => (
     <Route element={<RequireForBelongingToRoaster />}>
       <Route index element={<Beans />} />
       <Route path="new" element={<BeanNew />} />
-      <Route path=":id" element={<Bean />}>
+      <Route path=":id">
+        <Route index element={<Bean />} />
         <Route path="edit" element={<BeanEdit />} />
       </Route>
       <Route path="*" element={<Navigate to="/roasters/home" replace />} />
