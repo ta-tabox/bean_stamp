@@ -17,7 +17,7 @@ export type Bean = {
   country: string
   roastLevel: string
   tastes: string[]
-  images: string[]
+  imageUrls: string[]
 }
 
 type TasteTag = {

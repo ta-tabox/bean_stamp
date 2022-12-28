@@ -6,13 +6,11 @@ import { ContentHeader, ContentHeaderTitle } from '@/components/Elements/Content
 import { Head } from '@/components/Head'
 import { BeanCard } from '@/features/beans/components/organisms/BeanCard'
 import { useGetBean } from '@/features/beans/hooks/useGetBean'
-import { useGetRoaster } from '@/features/roasters/hooks/useGetRoaster'
 import { isNumber } from '@/utils/regexp'
 
 export const Bean: FC = () => {
   const urlParams = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { roaster, getRoaster } = useGetRoaster()
   const { bean, getBean } = useGetBean()
   useEffect(() => {
     if (urlParams.id && isNumber(urlParams.id)) {
@@ -31,10 +29,7 @@ export const Bean: FC = () => {
         </div>
       </ContentHeader>
 
-      <section className="mt-8 mb-20">
-        {bean && <BeanCard bean={bean} />}
-        {/* index-> Offer一覧, follower -> フォロワー一覧 */}
-      </section>
+      <section className="mt-8 mb-20">{bean && <BeanCard bean={bean} />}</section>
     </>
   )
 }
