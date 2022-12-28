@@ -1,83 +1,62 @@
 import type { FC } from 'react'
 import { useEffect, memo } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-import { Card } from '@/components/Elements/Card'
+import { PrimaryButton } from '@/components/Elements/Button'
 import { ContentHeader, ContentHeaderTitle } from '@/components/Elements/Content'
-import { SearchLink } from '@/components/Elements/Link'
+import { Link } from '@/components/Elements/Link'
 import { Spinner } from '@/components/Elements/Spinner'
 import { Head } from '@/components/Head'
-import { RoasterItem } from '@/features/roasters/components/organisms/RoasterItem'
-import { UserCard } from '@/features/users/components/organisms/UserCard'
-import { useGetRoastersFollowedByUser } from '@/features/users/hooks/useGetRoastersFollowedByUser'
-import { useGetUser } from '@/features/users/hooks/useGetUser'
-import { isNumber } from '@/utils/regexp'
+import { BeanItem } from '@/features/beans/components/organisms/BeanItem'
+import { useGetBeans } from '@/features/beans/hooks/useGetBeans'
 
 export const Beans: FC = memo(() => {
-  const urlParams = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { user, getUser, loading: userLoading } = useGetUser()
-  const { roasters, getRoastersFollowedByUser, loading: roastersLoading } = useGetRoastersFollowedByUser()
+  const { beans, getBeans, loading } = useGetBeans()
 
   useEffect(() => {
-    const fetchData = (id: string) => {
-      // urlからユーザー情報を取得
-      getUser(id)
-      // urlからユーザーがフォローしているロースターを取得
-      getRoastersFollowedByUser(id)
-    }
+    // コーヒー豆一覧を取得
+    getBeans()
+  }, [])
 
-    // urlParams.idが数値かどうか評価
-    if (urlParams.id && isNumber(urlParams.id)) {
-      fetchData(urlParams.id)
-    }
-  }, [urlParams.id])
-
-  const onClickRoaster = (id: number) => {
-    navigate(`/roasters/${id}`)
+  const onClickNew = () => {
+    navigate('/beans/new')
   }
 
   return (
     <>
       <Head title="コーヒー豆一覧" />
       <ContentHeader>
-        <div className="h-full flex justify-start items-end">
+        <div className="h-full flex justify-between items-end">
           <ContentHeaderTitle title="コーヒー豆一覧" />
+          <PrimaryButton onClick={onClickNew}>新規作成</PrimaryButton>
         </div>
       </ContentHeader>
 
       {/* ローディング */}
-
-      {(userLoading || roastersLoading) && (
+      {loading && (
         <div className="flex justify-center">
           <Spinner />
         </div>
       )}
 
-      {!userLoading && !roastersLoading && (
+      {!loading && (
         <>
-          {/* ユーザー情報 */}
-          {user && <UserCard user={user} />}
-
-          {/* フォローしているロースター一覧 */}
-          {roasters && (
-            <section className="mt-4 mb-20 py-4 text-gray-600">
-              {roasters.length ? (
-                <Card>
-                  <ol>
-                    {roasters.map((roaster) => (
-                      <li key={roaster.id}>
-                        <RoasterItem roaster={roaster} onClick={onClickRoaster} />
-                      </li>
-                    ))}
-                  </ol>
-                </Card>
+          {/* 登録済みのコーヒ豆一覧 */}
+          {beans && (
+            <section className="mt-4">
+              {beans.length ? (
+                <ol>
+                  {beans.map((bean) => (
+                    <li key={bean.id}>
+                      <BeanItem bean={bean} />
+                    </li>
+                  ))}
+                </ol>
               ) : (
                 <div className="text-center text-gray-400">
-                  <p>フォローしているロースターがいません</p>
-                  <div className="mt-4 w-1/2 sm:w-1/3 mx-auto">
-                    <SearchLink type="roaster" />
-                  </div>
+                  <p>コーヒー豆が登録されていません</p>
+                  <Link to="/beans/new">コーヒー豆を登録する</Link>
                 </div>
               )}
             </section>

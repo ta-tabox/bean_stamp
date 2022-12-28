@@ -2,6 +2,7 @@ import type { FC } from 'react'
 
 import { Card, CardContainer } from '@/components/Elements/Card'
 import { BeanImagesSwiper } from '@/features/beans/components/molecules/BeanImagesSwiper'
+import { BeanInformation } from '@/features/beans/components/molecules/BeanInformation'
 import { BeanTasteChart } from '@/features/beans/components/molecules/BeanTasteChart'
 import { BeanTasteTags } from '@/features/beans/components/molecules/BeanTasteTags'
 import type { Bean } from '@/features/beans/types'
@@ -31,40 +32,9 @@ export const BeanCard: FC<Props> = (props) => {
             </section>
 
             {/* コーヒー豆詳細情報 */}
-            <section className="pt-4 grid-container grid-cols-2">
-              <div className="col-span-2 mb-2 text-lg e-font">〜 Detail 〜</div>
-              <div className="grid-item">
-                <span className="text-gray-500">生産国</span>
-                <span className="ml-auto text-gray-900"> {bean.country}</span>
-              </div>
-              <div className="grid-item">
-                <span className="text-gray-500">焙煎度</span>
-                <span className="ml-auto text-gray-900">{bean.roastLevel}</span>
-              </div>
-              <div className="grid-item">
-                <span className="text-gray-500">地域</span>
-                <span className="ml-auto text-gray-900"> {bean.subregion}</span>
-              </div>
-              <div className="grid-item">
-                <span className="text-gray-500">農園</span>
-                <span className="ml-auto text-gray-900"> {bean.farm}</span>
-              </div>
-              <div className="grid-item">
-                <span className="text-gray-500">品種</span>
-                <span className="ml-auto text-gray-900"> {bean.variety}</span>
-              </div>
-              <div className="grid-item">
-                <span className="text-gray-500">精製方法</span>
-                <span className="ml-auto text-gray-900"> {bean.process}</span>
-              </div>
-              <div className="grid-item">
-                <span className="text-gray-500">標高</span>
-                <span className="ml-auto text-gray-900"> {`${bean.elevation ?? ''} m`} </span>
-              </div>
-              <div className="grid-item">
-                <span className="text-gray-500">収穫</span>
-                <span className="ml-auto text-gray-900">{bean.croppedAt}</span>
-              </div>
+            <section className="pt-4">
+              <div className="mb-2 text-lg e-font">〜 Detail 〜</div>
+              <BeanInformation bean={bean} />
             </section>
 
             {/* Tasteチャート */}
