@@ -1,6 +1,7 @@
 import type { FC } from 'react'
 
 import { Card, CardContainer } from '@/components/Elements/Card'
+import { BeanTasteTags } from '@/features/beans/components/molecules/BeanTasteTags'
 import { BeanImagesSwiper } from '@/features/beans/components/organisms/BeanImagesSwiper'
 import { BeanTasteChart } from '@/features/beans/components/organisms/BeanTasteChart'
 import type { Bean } from '@/features/beans/types'
@@ -24,6 +25,7 @@ export const BeanCard: FC<Props> = (props) => {
             <p className="leading-relaxed">{bean.describe}</p>
             <section className="w-11/12 mx-auto pt-4">
               <div className="mb-2 text-center text-lg e-font">〜 Flavor 〜</div>
+              <BeanTasteTags tastes={bean.tastes} />
               {/* render partial: 'beans/taste_tag', locals: { bean: bean } */}
             </section>
             <section className="pt-4 grid-container grid-cols-2">
