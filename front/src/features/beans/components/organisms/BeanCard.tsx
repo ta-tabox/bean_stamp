@@ -1,9 +1,9 @@
 import type { FC } from 'react'
 
 import { Card, CardContainer } from '@/components/Elements/Card'
+import { BeanImagesSwiper } from '@/features/beans/components/molecules/BeanImagesSwiper'
+import { BeanTasteChart } from '@/features/beans/components/molecules/BeanTasteChart'
 import { BeanTasteTags } from '@/features/beans/components/molecules/BeanTasteTags'
-import { BeanImagesSwiper } from '@/features/beans/components/organisms/BeanImagesSwiper'
-import { BeanTasteChart } from '@/features/beans/components/organisms/BeanTasteChart'
 import type { Bean } from '@/features/beans/types'
 
 type Props = {
@@ -18,16 +18,19 @@ export const BeanCard: FC<Props> = (props) => {
       <CardContainer>
         <h1 className="w-11/12 mx-auto text-center pb-2 text-gray-900 text-xl lg:text-2xl title-font">{bean.name}</h1>
         <div className="w-11/12 mx-auto flex flex-col justify-center items-center">
-          {/* カルーセル */}
+          {/* 画像カルーセル */}
           <BeanImagesSwiper imageUrls={bean.imageUrls} beanName={bean.name} />
 
           <div className="text-center lg:w-10/12 w-full pt-4">
             <p className="leading-relaxed">{bean.describe}</p>
+
+            {/* フレーバーのタグ */}
             <section className="w-11/12 mx-auto pt-4">
               <div className="mb-2 text-center text-lg e-font">〜 Flavor 〜</div>
               <BeanTasteTags tastes={bean.tastes} />
-              {/* render partial: 'beans/taste_tag', locals: { bean: bean } */}
             </section>
+
+            {/* コーヒー豆詳細情報 */}
             <section className="pt-4 grid-container grid-cols-2">
               <div className="col-span-2 mb-2 text-lg e-font">〜 Detail 〜</div>
               <div className="grid-item">
@@ -63,10 +66,11 @@ export const BeanCard: FC<Props> = (props) => {
                 <span className="ml-auto text-gray-900">{bean.croppedAt}</span>
               </div>
             </section>
+
+            {/* Tasteチャート */}
             <section className="pt-4 h-80 w-80 sm:h-96 sm:w-96 mx-auto relative">
               <div className="text-lg e-font">〜 Taste 〜</div>
               <div className="h-80 w-80 sm:h-96 sm:w-96 absolute top-4 left-3">
-                {/* Tasteチャート */}
                 <BeanTasteChart
                   acidity={bean.acidity}
                   flavor={bean.flavor}
