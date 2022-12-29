@@ -5,17 +5,21 @@ import { useForm } from 'react-hook-form'
 
 import { PrimaryButton, SecondaryButton } from '@/components/Elements/Button'
 import { ImagePreview } from '@/components/Form'
+import { BeanCroppedAtInput } from '@/features/beans/components/molecules/BeanCroppedAtInput'
 import { BeanDescribeInput } from '@/features/beans/components/molecules/BeanDescribeInput'
+import { BeanElevationInput } from '@/features/beans/components/molecules/BeanElevationInput'
 import { BeanFarmInput } from '@/features/beans/components/molecules/BeanFarmInput'
 import { BeanNameInput } from '@/features/beans/components/molecules/BeanNameInput'
 import { BeanProcessInput } from '@/features/beans/components/molecules/BeanProcessInput'
 import { BeanSubregionInput } from '@/features/beans/components/molecules/BeanSubregionInput'
+import { BeanTasteRangeInput } from '@/features/beans/components/molecules/BeanTasteRangeInput'
 import { BeanVarietyInput } from '@/features/beans/components/molecules/BeanVarietyInput'
 import type { BeanCreateUpdateData } from '@/features/beans/types'
 import { RoasterFormCancelModal } from '@/features/roasters/components/organisms/RoasterFormCancelModal'
 import { useModal } from '@/hooks/useModal'
 
 import type { SubmitHandler } from 'react-hook-form'
+import { BeanImageInput } from '@/features/beans/components/molecules/BeanImageInput'
 
 type Props = {
   bean?: BeanCreateUpdateData | null
@@ -30,7 +34,7 @@ export const BeanForm: FC<Props> = (props) => {
 
   const [previewImage, setPreviewImage] = useState<Array<string>>()
 
-  // フォーム初期値の設定 RoasterNew -> {}, RoasterEdit -> {初期値}
+  // フォーム初期値の設定 RoasterNew -> {}, Roaster Edit -> {初期値}
   const defaultValues = () => {
     let values: BeanCreateUpdateData | undefined
     if (bean) {
@@ -86,7 +90,7 @@ export const BeanForm: FC<Props> = (props) => {
 
   return (
     <>
-      <h2 className="e-font text-gray-500 text-center text-sm;">〜 Images 〜</h2>
+      <h2 className="e-font text-gray-500 text-center text-sm">〜 Images 〜</h2>
       {/* TODO 既存画像のカルーセル表示 */}
       {bean && <div>カルーセルを表示</div>}
 
@@ -95,10 +99,10 @@ export const BeanForm: FC<Props> = (props) => {
         {previewImage && <ImagePreview images={previewImage} />}
 
         {/* 画像インプット */}
-        {/* <RoasterImageInput label="image" register={register} error={errors.image ?errors.image[0] } onChange={onChangeImage} /> */}
+        {/* <BeanImageInput label="image" register={register} error={errors.image ?errors.image[0] } onChange={onChangeImage} /> */}
 
         <section className="mt-4">
-          <h2 className="e-font text-gray-500 text-center text-sm;">〜 Detail 〜</h2>
+          <h2 className="e-font text-gray-500 text-center text-sm">〜 Detail 〜</h2>
           {/* タイトル */}
           <BeanNameInput label="name" register={register} error={errors.name} />
           {/* 生産国 セレクト */}
@@ -108,29 +112,35 @@ export const BeanForm: FC<Props> = (props) => {
 
           {/* 農園 */}
           <BeanFarmInput label="farm" register={register} />
+
           {/* 品種 */}
           <BeanVarietyInput label="variety" register={register} />
+
           {/* 標高 */}
+          <BeanElevationInput label="elevation" register={register} error={errors.elevation} />
+
           {/* 精製方法 */}
           <BeanProcessInput label="process" register={register} />
 
           {/* 収穫期 */}
+          <BeanCroppedAtInput label="croppedAt" register={register} />
+
           {/* 紹介文 */}
           <BeanDescribeInput label="describe" register={register} error={errors.describe} />
         </section>
         {/* テイスト */}
         <section className="mt-4 w-11/12 sm:w-2/3 md:w-full mx-auto md:grid md:grid-cols-2 md:content-between">
-          <h2 className="md:col-span-2 text-gray-500 text-center text-sm;">〜 Taste 〜</h2>
-          <div className="flex justify-between w-11/12">acidity</div>
-          <div className="flex justify-between w-11/12">flavor</div>
-          <div className="flex justify-between w-11/12">body</div>
-          <div className="flex justify-between w-11/12">bitterness</div>
-          <div className="flex justify-between w-11/12">sweetness</div>
+          <h2 className="md:col-span-2 text-gray-500 text-center text-sm">〜 Taste 〜</h2>
+          <BeanTasteRangeInput name="酸味" label="acidity" register={register} />
+          <BeanTasteRangeInput name="フレーバー" label="flavor" register={register} />
+          <BeanTasteRangeInput name="ボディ" label="body" register={register} />
+          <BeanTasteRangeInput name="苦味" label="bitterness" register={register} />
+          <BeanTasteRangeInput name="甘味" label="sweetness" register={register} />
         </section>
 
         {/* テイストタグ */}
         <section className="my-4">
-          <h2 className="e-font text-gray-500 text-center text-sm;">〜 Flavor 〜</h2>
+          <h2 className="e-font text-gray-500 text-center text-sm">〜 Flavor 〜</h2>
         </section>
 
         <div className="flex items-center justify-center space-x-4 mt-4">
