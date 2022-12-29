@@ -20,20 +20,8 @@ export type Bean = {
   imageUrls: string[]
 }
 
-type TasteTag = {
-  id: number
-  mstTasteTagId: number
-}
-
-type CreateTasteTagsParams = {
-  beanTasteTagsAttributes: Pick<TasteTag, 'mstTasteTagId'>[]
-}
-
-type UpdateTasteTagsParams = {
-  beanTasteTagsAttributes: TasteTag[]
-}
-
-export type BeanCreateParams = Pick<
+// react-hook-formで取り扱うデータの型
+export type BeanCreateUpdateData = Pick<
   Bean,
   | 'name'
   | 'subregion'
@@ -50,6 +38,9 @@ export type BeanCreateParams = Pick<
   | 'sweetness'
 > & {
   countryId: number
+  // countryOption
+  // roastLevelIdOption
   roastLevelId: number
+  tasteTagIds: number[]
   image: string[]
-} & (CreateTasteTagsParams | UpdateTasteTagsParams)
+}
