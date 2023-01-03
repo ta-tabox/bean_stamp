@@ -15,7 +15,7 @@ export const BeanFarmInput: FC<InputProps> = (props) => {
     <FormInputWrap>
       <Input label={label} type="text" placeholder="農園" register={register} />
       <FormIconWrap>
-        <i className="fa-solid fa-tractor fa-lg" />
+        <i className="fa-solid fa-tractor fa-lg ml-3 p-1" />
       </FormIconWrap>
     </FormInputWrap>
   )

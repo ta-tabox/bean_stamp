@@ -15,7 +15,7 @@ export const BeanVarietyInput: FC<InputProps> = (props) => {
     <FormInputWrap>
       <Input label={label} type="text" placeholder="品種" register={register} />
       <FormIconWrap>
-        <i className="fa-solid fa-leaf fa-lg" />
+        <i className="fa-solid fa-leaf fa-lg ml-3 p-1" />
       </FormIconWrap>
     </FormInputWrap>
   )

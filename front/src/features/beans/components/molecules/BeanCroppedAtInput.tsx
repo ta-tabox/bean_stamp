@@ -15,7 +15,7 @@ export const BeanCroppedAtInput: FC<InputProps> = (props) => {
     <FormInputWrap>
       <Input label={label} type="month" placeholder="収穫時期" register={register} />
       <FormIconWrap>
-        <i className="fa-regular fa-calendar fa-lg" />
+        <i className="fa-regular fa-calendar fa-lg ml-3 p-1" />
       </FormIconWrap>
     </FormInputWrap>
   )

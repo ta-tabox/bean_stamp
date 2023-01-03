@@ -18,7 +18,7 @@ export const BeanElevationInput: FC<InputProps> = (props) => {
       <FormInputWrap>
         <Input label={label} type="number" placeholder="標高" register={register} maxLength={validation.maxLength(4)} />
         <FormIconWrap>
-          <i className="fa-solid fa-mountain fa-lg" />
+          <i className="fa-solid fa-mountain fa-lg ml-3 p-1" />
         </FormIconWrap>
       </FormInputWrap>
       {error?.types?.maxLength && <AlertMessage>{error.types.maxLength}</AlertMessage>}

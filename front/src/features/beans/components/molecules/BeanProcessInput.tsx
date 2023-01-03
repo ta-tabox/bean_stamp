@@ -15,7 +15,7 @@ export const BeanProcessInput: FC<InputProps> = (props) => {
     <FormInputWrap>
       <Input label={label} type="text" placeholder="精製方法" register={register} />
       <FormIconWrap>
-        <i className="fa-solid fa-industry fa-lg" />
+        <i className="fa-solid fa-industry fa-lg ml-3 p-1" />
       </FormIconWrap>
     </FormInputWrap>
   )

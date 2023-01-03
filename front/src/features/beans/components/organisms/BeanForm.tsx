@@ -19,7 +19,6 @@ import { RoasterFormCancelModal } from '@/features/roasters/components/organisms
 import { useModal } from '@/hooks/useModal'
 
 import type { SubmitHandler } from 'react-hook-form'
-import { BeanImageInput } from '@/features/beans/components/molecules/BeanImageInput'
 
 type Props = {
   bean?: BeanCreateUpdateData | null
@@ -97,10 +96,8 @@ export const BeanForm: FC<Props> = (props) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* プレビューフィールド */}
         {previewImage && <ImagePreview images={previewImage} />}
-
         {/* 画像インプット */}
         {/* <BeanImageInput label="image" register={register} error={errors.image ?errors.image[0] } onChange={onChangeImage} /> */}
-
         <section className="mt-4">
           <h2 className="e-font text-gray-500 text-center text-sm">〜 Detail 〜</h2>
           {/* タイトル */}
@@ -137,12 +134,10 @@ export const BeanForm: FC<Props> = (props) => {
           <BeanTasteRangeInput name="苦味" label="bitterness" register={register} />
           <BeanTasteRangeInput name="甘味" label="sweetness" register={register} />
         </section>
-
         {/* テイストタグ */}
         <section className="my-4">
           <h2 className="e-font text-gray-500 text-center text-sm">〜 Flavor 〜</h2>
         </section>
-
         <div className="flex items-center justify-center space-x-4 mt-4">
           <SecondaryButton onClick={onClickCancel} isButton>
             キャンセル

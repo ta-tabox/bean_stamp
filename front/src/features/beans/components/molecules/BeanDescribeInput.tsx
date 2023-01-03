@@ -24,7 +24,7 @@ export const BeanDescribeInput: FC<InputProps> = (props) => {
           maxLength={validation.maxLength(300)}
         />
         <FormIconWrap>
-          <i className="fa-solid fa-pen-to-square fa-lg" />
+          <i className="fa-solid fa-pen-to-square fa-lg ml-3 p-1" />
         </FormIconWrap>
       </FormInputWrap>
       {error?.types?.maxLength && <AlertMessage>{error.types.maxLength}</AlertMessage>}
