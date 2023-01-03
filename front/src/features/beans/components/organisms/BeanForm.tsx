@@ -5,16 +5,20 @@ import { useForm } from 'react-hook-form'
 
 import { PrimaryButton, SecondaryButton } from '@/components/Elements/Button'
 import { ImagePreview } from '@/components/Form'
+import { BeanCountrySelectInput } from '@/features/beans/components/molecules/BeanCountrySelectInput'
 import { BeanCroppedAtInput } from '@/features/beans/components/molecules/BeanCroppedAtInput'
 import { BeanDescribeInput } from '@/features/beans/components/molecules/BeanDescribeInput'
 import { BeanElevationInput } from '@/features/beans/components/molecules/BeanElevationInput'
 import { BeanFarmInput } from '@/features/beans/components/molecules/BeanFarmInput'
 import { BeanNameInput } from '@/features/beans/components/molecules/BeanNameInput'
 import { BeanProcessInput } from '@/features/beans/components/molecules/BeanProcessInput'
+import { BeanRoastLevelSelectInput } from '@/features/beans/components/molecules/BeanRoastLevelSelectInput'
 import { BeanSubregionInput } from '@/features/beans/components/molecules/BeanSubregionInput'
 import { BeanTasteRangeInput } from '@/features/beans/components/molecules/BeanTasteRangeInput'
 import { BeanVarietyInput } from '@/features/beans/components/molecules/BeanVarietyInput'
 import type { BeanCreateUpdateData } from '@/features/beans/types'
+import { countryOptions } from '@/features/beans/utils/country'
+import { roastLevelOptions } from '@/features/beans/utils/roastLevel'
 import { RoasterFormCancelModal } from '@/features/roasters/components/organisms/RoasterFormCancelModal'
 import { useModal } from '@/hooks/useModal'
 
@@ -37,9 +41,6 @@ export const BeanForm: FC<Props> = (props) => {
   const defaultValues = () => {
     let values: BeanCreateUpdateData | undefined
     if (bean) {
-      // TODO 外部キーを保存している要素に対して同様の処理を行う
-      // codeId -> 配列のindexへ変換
-      // const prefectureCodeIndex = convertPrefectureCodeToIndex(bean.prefectureCode)
       values = {
         name: bean.name,
         subregion: bean.subregion,
@@ -54,8 +55,10 @@ export const BeanForm: FC<Props> = (props) => {
         body: bean.body,
         bitterness: bean.bitterness,
         sweetness: bean.sweetness,
-        countryId: bean.countryId, // indexに合わせる必要があるかも
-        roastLevelId: bean.roastLevelId, // indexに合わせる必要があるかも
+        countryOption: countryOptions[bean.countryId],
+        countryId: bean.countryId, // react hook formでは使用しないが、型の関係上入れている
+        roastLevelOption: roastLevelOptions[bean.roastLevelId],
+        roastLevelId: bean.roastLevelId, // react hook formでは使用しないが、型の関係上入れている
         tasteTagIds: bean.tasteTagIds,
         image: bean.image,
         // prefectureOption: prefectureOptions[prefectureCodeIndex],
@@ -103,7 +106,11 @@ export const BeanForm: FC<Props> = (props) => {
           {/* タイトル */}
           <BeanNameInput label="name" register={register} error={errors.name} />
           {/* 生産国 セレクト */}
+          <BeanCountrySelectInput label="countryOption" control={control} />
+
           {/* 焙煎度 セレクト */}
+          <BeanRoastLevelSelectInput label="roastLevelOption" control={control} />
+
           {/* 地域 */}
           <BeanSubregionInput label="subregion" register={register} />
 

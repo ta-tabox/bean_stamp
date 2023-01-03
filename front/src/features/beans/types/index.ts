@@ -1,3 +1,6 @@
+import type { CountryOption } from '@/features/beans/utils/country'
+import type { RoastLevelOption } from '@/features/beans/utils/roastLevel'
+
 export type Bean = {
   id: number
   roasterId: number
@@ -38,8 +41,8 @@ export type BeanCreateUpdateData = Pick<
   | 'sweetness'
 > & {
   countryId: number
-  // countryOption
-  // roastLevelIdOption
+  countryOption: CountryOption
+  roastLevelOption: RoastLevelOption
   roastLevelId: number
   tasteTagIds: number[]
   image: string[]
