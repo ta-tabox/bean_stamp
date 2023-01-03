@@ -99,17 +99,17 @@ class Api::V1::BeansController < Api::ApplicationController
 
   # bean_paramsとtaste_tag_paramsを適切な構造で組み合わせる
   def merge_bean_params_with_taste_tag_params
-    taste_tag_ids = params[:taste_tag][:taste_tag_ids]
+    taste_tag_ids = params.dig('taste_tag', 'taste_tag_ids')
     bean_taste_tags_attributes = {}
     if @bean
       # update時 中間テーブルbean_taste_tagのidを組みこむ
       bean_taste_tag_ids = @bean&.bean_taste_tag_ids
-      taste_tag_ids.each_with_index do |taste_tag_id, index|
+      taste_tag_ids&.each_with_index do |taste_tag_id, index|
         bean_taste_tags_attributes.store(index.to_s, { 'id' => bean_taste_tag_ids[index], 'mst_taste_tag_id' => taste_tag_id })
       end
     else
       # 新規作成時
-      taste_tag_ids.each_with_index do |taste_tag_id, index|
+      taste_tag_ids&.each_with_index do |taste_tag_id, index|
         bean_taste_tags_attributes.store(index.to_s, { 'mst_taste_tag_id' => taste_tag_id })
       end
     end

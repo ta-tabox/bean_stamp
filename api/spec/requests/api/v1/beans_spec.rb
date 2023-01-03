@@ -62,7 +62,12 @@ RSpec.describe 'Api::V1::Beans', type: :request do
   describe 'POST #create' do
     let(:auth_tokens) { sign_in_with_token(user_with_no_beans) }
 
-    subject { proc { post api_v1_beans_path, params: { bean: bean_params, bean_images: attributes_for(:bean_image_params) }, headers: auth_tokens } }
+    subject do
+      proc {
+        post api_v1_beans_path, params: { bean: bean_params, taste_tag: taste_tag_params, bean_images: attributes_for(:bean_image_params) },
+                                headers: auth_tokens
+      }
+    end
 
     shared_examples 'does not create a bean' do
       it { is_expected.not_to change(Bean, :count) }
@@ -87,14 +92,15 @@ RSpec.describe 'Api::V1::Beans', type: :request do
 
     context 'with valid parameters' do
       # bean_paramsを正常なパラメータで定義する
-      let(:bean_params) { attributes_for(:bean, bean_taste_tags_attributes: { '0' => { mst_taste_tag_id: '2' }, '1' => { mst_taste_tag_id: '3' } }) }
-
+      let(:bean_params) { attributes_for(:bean) }
+      let(:taste_tag_params) { { taste_tag_ids: [0, 2, 3] } }
       it_behaves_like 'creates the bean'
     end
 
     # bean_paramsに正常ではないパラメータを渡すときのテスト
     context 'with no name' do
       let(:bean_params) { attributes_for(:bean, name: nil) }
+      let(:taste_tag_params) { { taste_tag_ids: [0, 2, 3] } }
       let(:error_message) { 'タイトルを入力してください' }
 
       it_behaves_like 'does not create a bean'
@@ -102,6 +108,8 @@ RSpec.describe 'Api::V1::Beans', type: :request do
 
     context 'with no country' do
       let(:bean_params) { attributes_for(:bean, country_id: 0) }
+      let(:taste_tag_params) { { taste_tag_ids: [0, 2, 3] } }
+
       let(:error_message) { '生産国を選択してください' }
 
       it_behaves_like 'does not create a bean'
@@ -109,6 +117,8 @@ RSpec.describe 'Api::V1::Beans', type: :request do
 
     context 'with too much text in describe' do
       let(:bean_params) { attributes_for(:bean, describe: ('a' * 301).to_s) }
+      let(:taste_tag_params) { { taste_tag_ids: [0, 2, 3] } }
+
       let(:error_message) { 'コーヒー紹介は300文字以内で入力してください' }
 
       it_behaves_like 'does not create a bean'
@@ -116,20 +126,25 @@ RSpec.describe 'Api::V1::Beans', type: :request do
 
     context 'with no taste_tags' do
       let(:bean_params) { attributes_for(:bean) }
+      let(:taste_tag_params) { { taste_tag_ids: [] } }
       let(:error_message) { 'Flavorは2つ以上登録してください' }
 
       it_behaves_like 'does not create a bean'
     end
 
     context 'with one taste_tag' do
-      let(:bean_params) { attributes_for(:bean, bean_taste_tags_attributes: { '0' => { mst_taste_tag_id: '2' } }) }
+      let(:bean_params) { attributes_for(:bean) }
+      let(:taste_tag_params) { { taste_tag_ids: [3] } }
+
       let(:error_message) { 'Flavorは2つ以上登録してください' }
 
       it_behaves_like 'does not create a bean'
     end
 
     context 'with duplication of taste_tags' do
-      let(:bean_params) { attributes_for(:bean, bean_taste_tags_attributes: { '0' => { mst_taste_tag_id: '2' }, '1' => { mst_taste_tag_id: '2' } }) }
+      let(:bean_params) { attributes_for(:bean) }
+      let(:taste_tag_params) { { taste_tag_ids: [1, 3, 3] } }
+
       let(:error_message) { 'Flavorが重複しています' }
 
       it_behaves_like 'does not create a bean'
@@ -138,7 +153,7 @@ RSpec.describe 'Api::V1::Beans', type: :request do
 
   # コーヒー豆更新
   describe 'PUT #update' do
-    subject { proc { put api_v1_bean_path(bean), params: { bean: bean_params }, headers: auth_tokens } }
+    subject { proc { put api_v1_bean_path(bean), params: { bean: bean_params, taste_tag: taste_tag_params }, headers: auth_tokens } }
 
     shared_examples 'does not update the bean' do
       it { is_expected.not_to change(Bean.find(bean.id), attribute) }
@@ -153,6 +168,7 @@ RSpec.describe 'Api::V1::Beans', type: :request do
 
     context 'when the roaster has not the bean' do
       let(:auth_tokens) { sign_in_with_token(user_with_no_beans) }
+      let(:taste_tag_params) { { taste_tag_ids: [0, 2, 3] } }
       let(:bean_params) { attributes_for(:bean, :update) }
 
       it 'returns error and message by json' do
@@ -169,6 +185,7 @@ RSpec.describe 'Api::V1::Beans', type: :request do
       context 'with valid parameters' do
         # bean_paramsに正常なパラメータを定義する
         let(:bean_params) { attributes_for(:bean, :update) }
+        let(:taste_tag_params) { { taste_tag_ids: [0, 2, 3] } }
 
         it { is_expected.to change { Bean.find(bean.id).name }.from('テストビーン').to('アップデートビーン') }
         it 'return the bean by json' do
@@ -182,6 +199,7 @@ RSpec.describe 'Api::V1::Beans', type: :request do
       # bean_paramsに正常ではないパラメータを渡すときのテスト
       context 'with no name' do
         let(:bean_params) { attributes_for(:bean, name: nil) }
+        let(:taste_tag_params) { { taste_tag_ids: [0, 2, 3] } }
         let(:error_message) { 'タイトルを入力してください' }
         let(:attribute) { :name }
 
@@ -190,6 +208,7 @@ RSpec.describe 'Api::V1::Beans', type: :request do
 
       context 'with no country' do
         let(:bean_params) { attributes_for(:bean, country_id: 0) }
+        let(:taste_tag_params) { { taste_tag_ids: [0, 2, 3] } }
         let(:error_message) { '生産国を選択してください' }
         let(:attribute) { :country }
 
@@ -198,6 +217,8 @@ RSpec.describe 'Api::V1::Beans', type: :request do
 
       context 'with too much text in describe' do
         let(:bean_params) { attributes_for(:bean, describe: ('a' * 301).to_s) }
+        let(:taste_tag_params) { { taste_tag_ids: [0, 2, 3] } }
+
         let(:error_message) { 'コーヒー紹介は300文字以内で入力してください' }
         let(:attribute) { :describe }
 
