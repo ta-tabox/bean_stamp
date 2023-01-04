@@ -16,7 +16,7 @@ class Api::V1::BeansController < Api::ApplicationController
     set_cropped_at
     bean_params_with_taste_tags = merge_bean_params_with_taste_tag_params
     @bean = current_api_v1_roaster.beans.build(bean_params_with_taste_tags)
-    @bean.upload_images = params.dig(:bean_images, :image)
+    @bean.upload_images = params.dig(:bean_image, :images)
 
     if @bean.save
       @bean.upload_images.each do |img|
@@ -31,7 +31,7 @@ class Api::V1::BeansController < Api::ApplicationController
   def update
     set_cropped_at
     bean_params_with_taste_tags = merge_bean_params_with_taste_tag_params
-    @bean.upload_images = params.dig(:bean_images, :image)
+    @bean.upload_images = params.dig(:bean_image, :images)
 
     if @bean.update_with_bean_images(bean_params_with_taste_tags)
       render formats: :json
@@ -81,6 +81,14 @@ class Api::V1::BeansController < Api::ApplicationController
       .require(:taste_tag)
       .permit(
         taste_tag_ids: [],
+      )
+  end
+
+  def images_params
+    params
+      .require(:bean_image)
+      .permit(
+        images: [],
       )
   end
 

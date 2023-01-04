@@ -75,7 +75,7 @@ export const RoasterForm: FC<Props> = (props) => {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* プレビューフィールド */}
-        {previewImage && <ImagePreview images={previewImage} />}
+        {previewImage && <ImagePreview imageUrls={previewImage} />}
 
         {/* ファイル */}
         <RoasterImageInput label="image" register={register} error={errors.image} onChange={onChangeImage} />

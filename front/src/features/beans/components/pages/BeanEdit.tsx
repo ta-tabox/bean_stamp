@@ -9,7 +9,7 @@ import { FormContainer, FormFooter, FormMain, FormTitle } from '@/components/For
 import { Head } from '@/components/Head'
 import { useLoadUser } from '@/features/auth'
 import { BeanForm } from '@/features/beans/components/organisms/BeanForm'
-import type { BeanCreateUpdateData } from '@/features/beans/types'
+import type { BeanApiType, BeanCreateUpdateData } from '@/features/beans/types'
 import { useCurrentRoaster } from '@/features/roasters/hooks/useCurrentRoaster'
 import { useErrorNotification } from '@/hooks/useErrorNotification'
 import { useMessage } from '@/hooks/useMessage'
@@ -62,7 +62,7 @@ export const BeanEdit: FC = () => {
     // }
   }, [])
 
-  let bean: BeanCreateUpdateData | undefined
+  let bean: BeanApiType | undefined
 
   return (
     <>

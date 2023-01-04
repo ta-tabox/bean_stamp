@@ -43,7 +43,7 @@ export type BeanApiType = Pick<
   countryId: number
   roastLevelId: number
   tasteTagIds: number[]
-  image: string[]
+  images: string[]
 }
 
 // react-hook-formで取り扱うデータの型
@@ -68,5 +68,5 @@ export type BeanCreateUpdateData = Pick<
   roastLevelOption: RoastLevelOption
   // roastLevelId: number
   tasteTagIds: number[]
-  image: string[]
+  images: string[]
 }

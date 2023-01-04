@@ -16,7 +16,7 @@ export const BeanImageInput: FC<InputProps> = (props) => {
   return (
     <>
       <FormInputWrap>
-        <FileInput label={label} register={register} onChange={onChange} />
+        <FileInput label={label} multiple register={register} onChange={onChange} />
         <FormIconWrap>
           <i className="fa-solid fa-image fa-lg ml-3 p-1" />
         </FormIconWrap>

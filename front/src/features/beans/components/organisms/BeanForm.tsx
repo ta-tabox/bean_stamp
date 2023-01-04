@@ -1,4 +1,4 @@
-import type { FC } from 'react'
+import type { ChangeEvent, FC } from 'react'
 import { useState } from 'react'
 
 import { useForm } from 'react-hook-form'
@@ -10,6 +10,7 @@ import { BeanCroppedAtInput } from '@/features/beans/components/molecules/BeanCr
 import { BeanDescribeInput } from '@/features/beans/components/molecules/BeanDescribeInput'
 import { BeanElevationInput } from '@/features/beans/components/molecules/BeanElevationInput'
 import { BeanFarmInput } from '@/features/beans/components/molecules/BeanFarmInput'
+import { BeanImageInput } from '@/features/beans/components/molecules/BeanImageInput'
 import { BeanNameInput } from '@/features/beans/components/molecules/BeanNameInput'
 import { BeanProcessInput } from '@/features/beans/components/molecules/BeanProcessInput'
 import { BeanRoastLevelSelectInput } from '@/features/beans/components/molecules/BeanRoastLevelSelectInput'
@@ -20,6 +21,7 @@ import type { BeanApiType, BeanCreateUpdateData } from '@/features/beans/types'
 import { countryOptions } from '@/features/beans/utils/country'
 import { roastLevelOptions } from '@/features/beans/utils/roastLevel'
 import { RoasterFormCancelModal } from '@/features/roasters/components/organisms/RoasterFormCancelModal'
+import { useMessage } from '@/hooks/useMessage'
 import { useModal } from '@/hooks/useModal'
 
 import type { SubmitHandler, FieldError } from 'react-hook-form'
@@ -34,8 +36,9 @@ type Props = {
 export const BeanForm: FC<Props> = (props) => {
   const { bean = null, loading, submitTitle, onSubmit } = props
   const { isOpen, onOpen, onClose } = useModal()
+  const { showMessage } = useMessage()
 
-  const [previewImage, setPreviewImage] = useState<Array<string>>()
+  const [previewImage, setPreviewImage] = useState<Array<string> | null>()
 
   // フォーム初期値の設定 RoasterNew -> {}, Roaster Edit -> {初期値}
   const defaultValues = () => {
@@ -58,8 +61,7 @@ export const BeanForm: FC<Props> = (props) => {
         countryOption: countryOptions[bean.countryId],
         roastLevelOption: roastLevelOptions[bean.roastLevelId],
         tasteTagIds: bean.tasteTagIds,
-        image: bean.image,
-        // prefectureOption: prefectureOptions[prefectureCodeIndex],
+        images: bean.images,
       }
     }
     return values
@@ -70,6 +72,7 @@ export const BeanForm: FC<Props> = (props) => {
     handleSubmit,
     formState: { isDirty, dirtyFields, errors },
     control,
+    resetField,
   } = useForm<BeanCreateUpdateData>({
     criteriaMode: 'all',
     defaultValues: defaultValues(),
@@ -81,12 +84,26 @@ export const BeanForm: FC<Props> = (props) => {
   }
 
   // プレビュー機能
-  // const onChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
-  //   if (e.target.files && e.target.files.length) {
-  //     // WARNING ChromeではURL.createObjectURLは廃止予定？変更する必要があるかもしれない
-  //     setPreviewImage([URL.createObjectURL(e.target.files[0])])
-  //   }
-  // }
+  const onChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
+    const maxImageNum = 4
+
+    if (!e.target.files) {
+      setPreviewImage(null)
+      return
+    }
+
+    if (e.target.files.length <= maxImageNum) {
+      const previewImages = Array.from(e.target.files)
+      const previewImageUrls = previewImages.map((image) => URL.createObjectURL(image))
+      setPreviewImage(previewImageUrls)
+    } else {
+      resetField('images')
+      showMessage({ message: `画像は最大${maxImageNum}枚まで投稿できます`, type: 'error' })
+      setPreviewImage(null)
+    }
+
+    // TODO 画像サイズのバリデーションとリファクタリングを行う
+  }
 
   return (
     <>
@@ -96,9 +113,12 @@ export const BeanForm: FC<Props> = (props) => {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* プレビューフィールド */}
-        {previewImage && <ImagePreview images={previewImage} />}
+        {previewImage && <ImagePreview imageUrls={previewImage} />}
+
         {/* 画像インプット */}
+        <BeanImageInput label="images[]" register={register} onChange={onChangeImage} />
         {/* <BeanImageInput label="image" register={register} error={errors.image ?errors.image[0] } onChange={onChangeImage} /> */}
+
         <section className="mt-4">
           <h2 className="e-font text-gray-500 text-center text-sm">〜 Detail 〜</h2>
           {/* タイトル */}
