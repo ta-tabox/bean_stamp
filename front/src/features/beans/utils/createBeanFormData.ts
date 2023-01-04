@@ -3,7 +3,7 @@ import type { BeanCreateUpdateData } from '@/features/beans/types'
 export const createBeanFormData = (data: BeanCreateUpdateData): FormData => {
   const formData = new FormData()
   // 画像が選択されていない場合は更新しない
-  if (data.images[0]) {
+  if (data.images) {
     // FileListを配列として取り扱う
     const beanImages = Array.from(data.images)
 

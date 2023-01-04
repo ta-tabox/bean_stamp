@@ -17,11 +17,11 @@ import { BeanRoastLevelSelectInput } from '@/features/beans/components/molecules
 import { BeanSubregionInput } from '@/features/beans/components/molecules/BeanSubregionInput'
 import { BeanTasteRangeInput } from '@/features/beans/components/molecules/BeanTasteRangeInput'
 import { BeanVarietyInput } from '@/features/beans/components/molecules/BeanVarietyInput'
+import { useValidateUploadImages } from '@/features/beans/hooks/useValidateUploadImages'
 import type { BeanApiType, BeanCreateUpdateData } from '@/features/beans/types'
 import { countryOptions } from '@/features/beans/utils/country'
 import { roastLevelOptions } from '@/features/beans/utils/roastLevel'
 import { RoasterFormCancelModal } from '@/features/roasters/components/organisms/RoasterFormCancelModal'
-import { useMessage } from '@/hooks/useMessage'
 import { useModal } from '@/hooks/useModal'
 
 import type { SubmitHandler, FieldError } from 'react-hook-form'
@@ -36,7 +36,7 @@ type Props = {
 export const BeanForm: FC<Props> = (props) => {
   const { bean = null, loading, submitTitle, onSubmit } = props
   const { isOpen, onOpen, onClose } = useModal()
-  const { showMessage } = useMessage()
+  const { validateUploadImages } = useValidateUploadImages()
 
   const [previewImage, setPreviewImage] = useState<Array<string> | null>()
 
@@ -61,7 +61,7 @@ export const BeanForm: FC<Props> = (props) => {
         countryOption: countryOptions[bean.countryId],
         roastLevelOption: roastLevelOptions[bean.roastLevelId],
         tasteTagIds: bean.tasteTagIds,
-        images: bean.images,
+        images: undefined,
       }
     }
     return values
@@ -72,7 +72,8 @@ export const BeanForm: FC<Props> = (props) => {
     handleSubmit,
     formState: { isDirty, dirtyFields, errors },
     control,
-    resetField,
+    setError,
+    clearErrors,
   } = useForm<BeanCreateUpdateData>({
     criteriaMode: 'all',
     defaultValues: defaultValues(),
@@ -83,26 +84,24 @@ export const BeanForm: FC<Props> = (props) => {
     onOpen()
   }
 
-  // プレビュー機能
+  // プレビューとバリデーションを実施
   const onChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
-    const maxImageNum = 4
+    clearErrors(['images'])
 
     if (!e.target.files) {
       setPreviewImage(null)
       return
     }
 
-    if (e.target.files.length <= maxImageNum) {
-      const previewImages = Array.from(e.target.files)
-      const previewImageUrls = previewImages.map((image) => URL.createObjectURL(image))
+    const validateResult = validateUploadImages({ setError, targetFiles: e.target.files })
+
+    if (validateResult) {
+      const uploadImages = Array.from(e.target.files)
+      const previewImageUrls = uploadImages.map((image) => URL.createObjectURL(image))
       setPreviewImage(previewImageUrls)
     } else {
-      resetField('images')
-      showMessage({ message: `画像は最大${maxImageNum}枚まで投稿できます`, type: 'error' })
       setPreviewImage(null)
     }
-
-    // TODO 画像サイズのバリデーションとリファクタリングを行う
   }
 
   return (
@@ -116,8 +115,7 @@ export const BeanForm: FC<Props> = (props) => {
         {previewImage && <ImagePreview imageUrls={previewImage} />}
 
         {/* 画像インプット */}
-        <BeanImageInput label="images[]" register={register} onChange={onChangeImage} />
-        {/* <BeanImageInput label="image" register={register} error={errors.image ?errors.image[0] } onChange={onChangeImage} /> */}
+        <BeanImageInput label="images[]" register={register} onChange={onChangeImage} error={errors.images} />
 
         <section className="mt-4">
           <h2 className="e-font text-gray-500 text-center text-sm">〜 Detail 〜</h2>

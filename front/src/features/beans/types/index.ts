@@ -63,10 +63,8 @@ export type BeanCreateUpdateData = Pick<
   | 'bitterness'
   | 'sweetness'
 > & {
-  // countryId: number
   countryOption: CountryOption
   roastLevelOption: RoastLevelOption
-  // roastLevelId: number
   tasteTagIds: number[]
-  images: string[]
+  images?: FileList
 }

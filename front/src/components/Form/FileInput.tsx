@@ -8,7 +8,8 @@ type Props = {
   multiple?: boolean
   register: UseFormRegister<any> // eslint-disable-line @typescript-eslint/no-explicit-any
   required?: string | ValidationRule<boolean>
-  validate?: Validate<any> // eslint-disable-line @typescript-eslint/no-explicit-any
+  maxLength?: ValidationRule<number>
+  validate?: Validate<any> | Record<string, Validate<any>> // eslint-disable-line @typescript-eslint/no-explicit-any
   onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
