@@ -4,11 +4,10 @@ import { Controller } from 'react-hook-form'
 import Select from 'react-select'
 
 import { AlertMessage, FormIconWrap, FormInputWrap } from '@/components/Form'
-
+import { countryOptions } from '@/features/beans/utils/country'
 import { validation } from '@/utils/validation'
 
 import type { Control, FieldError } from 'react-hook-form'
-import { countryOptions } from '@/features/beans/utils/country'
 
 type InputProps = {
   label: string

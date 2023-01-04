@@ -23,6 +23,29 @@ export type Bean = {
   imageUrls: string[]
 }
 
+// Create, Update時のAPIリクエスト、レスポンス用の型
+export type BeanApiType = Pick<
+  Bean,
+  | 'name'
+  | 'subregion'
+  | 'farm'
+  | 'variety'
+  | 'elevation'
+  | 'process'
+  | 'croppedAt'
+  | 'describe'
+  | 'acidity'
+  | 'flavor'
+  | 'body'
+  | 'bitterness'
+  | 'sweetness'
+> & {
+  countryId: number
+  roastLevelId: number
+  tasteTagIds: number[]
+  image: string[]
+}
+
 // react-hook-formで取り扱うデータの型
 export type BeanCreateUpdateData = Pick<
   Bean,
@@ -40,10 +63,10 @@ export type BeanCreateUpdateData = Pick<
   | 'bitterness'
   | 'sweetness'
 > & {
-  countryId: number
+  // countryId: number
   countryOption: CountryOption
   roastLevelOption: RoastLevelOption
-  roastLevelId: number
+  // roastLevelId: number
   tasteTagIds: number[]
   image: string[]
 }

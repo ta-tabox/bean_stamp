@@ -13,7 +13,6 @@ export type RoastLevelOption = {
  * ローストレベル一覧
  */
 const roastLevels: RoastLevel[] = [
-  { id: 0, name: '選択されていません' },
   { id: 1, name: '浅煎り' },
   { id: 2, name: '中浅煎り' },
   { id: 3, name: '中煎り' },

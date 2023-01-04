@@ -14,7 +14,6 @@ export type CountryOption = {
  * 生産国一覧
  */
 const countries: Country[] = [
-  { id: 0, name: '選択されていません', area: '' },
   { id: 1, name: 'ブラジル', area: 'Latin America' },
   { id: 2, name: 'ベトナム', area: 'Asia' },
   { id: 3, name: 'コロンビア', area: 'Latin America' },
@@ -60,19 +59,6 @@ const countries: Country[] = [
   { id: 43, name: 'ネパール', area: 'Asia' },
   { id: 44, name: '日本', area: 'Asia' },
 ]
-
-// NOTE 使わないかも コード→県名変換関数
-// type Options = {
-//   countryId: string
-// }
-
-// const translateCountryIdToName = ({ countryId }: Options) => {
-//   const selectedCountry = countryArray.find(({ id }) => id === parseInt(countryId, 10))
-//   if (selectedCountry) {
-//     return selectedCountry.name
-//   }
-//   return ''
-// }
 
 // countryArrayからreact-selectで取り扱うoptionの形に変換
 const convertToOption = (country: Country): CountryOption => ({

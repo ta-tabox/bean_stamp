@@ -16,16 +16,16 @@ import { BeanRoastLevelSelectInput } from '@/features/beans/components/molecules
 import { BeanSubregionInput } from '@/features/beans/components/molecules/BeanSubregionInput'
 import { BeanTasteRangeInput } from '@/features/beans/components/molecules/BeanTasteRangeInput'
 import { BeanVarietyInput } from '@/features/beans/components/molecules/BeanVarietyInput'
-import type { BeanCreateUpdateData } from '@/features/beans/types'
+import type { BeanApiType, BeanCreateUpdateData } from '@/features/beans/types'
 import { countryOptions } from '@/features/beans/utils/country'
 import { roastLevelOptions } from '@/features/beans/utils/roastLevel'
 import { RoasterFormCancelModal } from '@/features/roasters/components/organisms/RoasterFormCancelModal'
 import { useModal } from '@/hooks/useModal'
 
-import type { SubmitHandler } from 'react-hook-form'
+import type { SubmitHandler, FieldError } from 'react-hook-form'
 
 type Props = {
-  bean?: BeanCreateUpdateData | null
+  bean?: BeanApiType | null
   loading: boolean
   submitTitle: string
   onSubmit: SubmitHandler<BeanCreateUpdateData>
@@ -56,9 +56,7 @@ export const BeanForm: FC<Props> = (props) => {
         bitterness: bean.bitterness,
         sweetness: bean.sweetness,
         countryOption: countryOptions[bean.countryId],
-        countryId: bean.countryId, // react hook formでは使用しないが、型の関係上入れている
         roastLevelOption: roastLevelOptions[bean.roastLevelId],
-        roastLevelId: bean.roastLevelId, // react hook formでは使用しないが、型の関係上入れている
         tasteTagIds: bean.tasteTagIds,
         image: bean.image,
         // prefectureOption: prefectureOptions[prefectureCodeIndex],
@@ -106,10 +104,14 @@ export const BeanForm: FC<Props> = (props) => {
           {/* タイトル */}
           <BeanNameInput label="name" register={register} error={errors.name} />
           {/* 生産国 セレクト */}
-          <BeanCountrySelectInput label="countryOption" control={control} />
+          <BeanCountrySelectInput label="countryOption" control={control} error={errors.countryOption as FieldError} />
 
           {/* 焙煎度 セレクト */}
-          <BeanRoastLevelSelectInput label="roastLevelOption" control={control} />
+          <BeanRoastLevelSelectInput
+            label="roastLevelOption"
+            control={control}
+            error={errors.countryOption as FieldError}
+          />
 
           {/* 地域 */}
           <BeanSubregionInput label="subregion" register={register} />
@@ -150,7 +152,12 @@ export const BeanForm: FC<Props> = (props) => {
             キャンセル
           </SecondaryButton>
           {/* beanあり(更新時)→ どれか変更, なし(新規作成時)→ 該当項目変更必須 */}
-          <PrimaryButton disabled={bean ? !isDirty : !dirtyFields.name} loading={loading}>
+          <PrimaryButton
+            disabled={
+              bean ? !isDirty : !dirtyFields.name || !dirtyFields.countryOption || !dirtyFields.roastLevelOption
+            }
+            loading={loading}
+          >
             {submitTitle}
           </PrimaryButton>
         </div>

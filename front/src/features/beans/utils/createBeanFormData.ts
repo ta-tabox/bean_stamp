@@ -1,0 +1,26 @@
+import type { BeanCreateUpdateData } from '@/features/beans/types'
+
+export const createBeanFormData = (data: BeanCreateUpdateData): FormData => {
+  const formData = new FormData()
+  // 画像が選択されていない場合は更新しない
+  // if (data.image[0]) {
+  //   formData.append('bean[image]', data.image[0])
+  // }
+  formData.append('bean[name]', data.name)
+  formData.append('bean[subregion]', data.subregion || '')
+  formData.append('bean[farm]', data.farm || '')
+  formData.append('bean[variety]', data.variety || '')
+  formData.append('bean[elevation]', data.elevation?.toString() || '')
+  formData.append('bean[process]', data.process || '')
+  formData.append('bean[croppedAt]', data.croppedAt || '')
+  formData.append('bean[describe]', data.describe || '')
+  formData.append('bean[acidity]', data.acidity.toString())
+  formData.append('bean[flavor]', data.flavor.toString())
+  formData.append('bean[body]', data.body.toString())
+  formData.append('bean[bitterness]', data.bitterness.toString())
+  formData.append('bean[sweetness]', data.sweetness.toString())
+  formData.append('bean[countryId]', data.countryOption.value.toString())
+  formData.append('bean[roastLevelId]', data.roastLevelOption.value.toString())
+
+  return formData
+}
