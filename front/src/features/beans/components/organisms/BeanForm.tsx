@@ -16,11 +16,13 @@ import { BeanProcessInput } from '@/features/beans/components/molecules/BeanProc
 import { BeanRoastLevelSelectInput } from '@/features/beans/components/molecules/BeanRoastLevelSelectInput'
 import { BeanSubregionInput } from '@/features/beans/components/molecules/BeanSubregionInput'
 import { BeanTasteRangeInput } from '@/features/beans/components/molecules/BeanTasteRangeInput'
+import { BeanTasteTagSelectInput } from '@/features/beans/components/molecules/BeanTasteTagSelectInput'
 import { BeanVarietyInput } from '@/features/beans/components/molecules/BeanVarietyInput'
 import { useValidateUploadImages } from '@/features/beans/hooks/useValidateUploadImages'
 import type { BeanApiType, BeanCreateUpdateData } from '@/features/beans/types'
 import { countryOptions } from '@/features/beans/utils/country'
 import { roastLevelOptions } from '@/features/beans/utils/roastLevel'
+import { tasteTagOptions } from '@/features/beans/utils/tasteTag'
 import { RoasterFormCancelModal } from '@/features/roasters/components/organisms/RoasterFormCancelModal'
 import { useModal } from '@/hooks/useModal'
 
@@ -60,7 +62,7 @@ export const BeanForm: FC<Props> = (props) => {
         sweetness: bean.sweetness,
         countryOption: countryOptions[bean.countryId],
         roastLevelOption: roastLevelOptions[bean.roastLevelId],
-        tasteTagIds: bean.tasteTagIds,
+        tasteTagOptions: bean.tasteTagIds.map((tasteTagId) => tasteTagOptions[bean.tasteTagIds[tasteTagId]]),
         images: undefined,
       }
     }
@@ -72,6 +74,7 @@ export const BeanForm: FC<Props> = (props) => {
     handleSubmit,
     formState: { isDirty, dirtyFields, errors },
     control,
+    watch,
     setError,
     clearErrors,
   } = useForm<BeanCreateUpdateData>({
@@ -128,7 +131,7 @@ export const BeanForm: FC<Props> = (props) => {
           <BeanRoastLevelSelectInput
             label="roastLevelOption"
             control={control}
-            error={errors.countryOption as FieldError}
+            error={errors.roastLevelOption as FieldError}
           />
 
           {/* 地域 */}
@@ -164,6 +167,14 @@ export const BeanForm: FC<Props> = (props) => {
         {/* テイストタグ */}
         <section className="my-4">
           <h2 className="e-font text-gray-500 text-center text-sm">〜 Flavor 〜</h2>
+          <BeanTasteTagSelectInput
+            label="tasteTagOptions"
+            control={control}
+            error={errors.tasteTagOptions as FieldError}
+            watch={watch}
+            setError={setError}
+            clearErrors={clearErrors}
+          />
         </section>
         <div className="flex items-center justify-center space-x-4 mt-4">
           <SecondaryButton onClick={onClickCancel} isButton>

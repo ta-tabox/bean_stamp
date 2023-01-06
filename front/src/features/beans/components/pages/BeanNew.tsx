@@ -32,6 +32,7 @@ export const BeanNew: FC = memo(() => {
 
   const onSubmit: SubmitHandler<BeanCreateUpdateData> = useCallback(async (data) => {
     const formData = createBeanFormData(data)
+    console.log(data)
 
     try {
       setLoading(true)
