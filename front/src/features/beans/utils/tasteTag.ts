@@ -1,3 +1,5 @@
+import { capitalize } from '@/utils/capitalize'
+
 type TasteTag = {
   id: number
   name: string
@@ -88,7 +90,7 @@ const tasteTags: TasteTag[] = [
 
 // tasteTagsからreact-selectで取り扱うoptionの形に変換
 const convertToOption = (tasteTag: TasteTag): TasteTagOption => ({
-  label: tasteTag.name,
+  label: capitalize(tasteTag.name),
   value: tasteTag.id,
 })
 

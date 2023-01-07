@@ -8,9 +8,18 @@ export const createBeanFormData = (data: BeanCreateUpdateData): FormData => {
     const beanImages = Array.from(data.images)
 
     beanImages.forEach((image) => {
-      formData.append('bean_image[images][]', image)
+      formData.append('beanImage[images][]', image)
     })
   }
+
+  // tasteTagOptionからidの配列を作成、formに渡す
+  if (data.tasteTagOptions) {
+    const tasteTagIds = data.tasteTagOptions.map((tasteTagOption) => tasteTagOption.value)
+    tasteTagIds.forEach((tasteTagId) => {
+      formData.append('tasteTag[tasteTagIds][]', tasteTagId.toString())
+    })
+  }
+
   formData.append('bean[name]', data.name)
   formData.append('bean[subregion]', data.subregion || '')
   formData.append('bean[farm]', data.farm || '')

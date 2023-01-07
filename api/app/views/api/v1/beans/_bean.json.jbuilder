@@ -14,7 +14,7 @@ json.extract! bean, :id,
               :body,
               :bitterness,
               :sweetness
-json.cropped_at "#{bean.cropped_at.year}年 #{bean.cropped_at.month}月"
+json.cropped_at "#{bean.cropped_at.year}年 #{bean.cropped_at&.month}月" if bean.cropped_at
 json.country bean.country.name # ネストした属性 country_id から変換
 json.roast_level bean.roast_level.name # ネストした属性 roast_lavel_id から変換
 json.tastes = bean.taste_tags.map(&:name) # 1対多の属性 tasteの配列を返す

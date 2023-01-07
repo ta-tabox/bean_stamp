@@ -26,6 +26,7 @@ export const BeanTasteTagSelectInput: FC<InputProps> = (props) => {
   const maxTasteTagNum = 3
   const minTasteTagNum = 2
 
+  // タグのバリデーション
   useEffect(() => {
     clearErrors('tasteTagOptions')
     const tasteTags = watch('tasteTagOptions')
@@ -33,6 +34,8 @@ export const BeanTasteTagSelectInput: FC<InputProps> = (props) => {
     if (!tasteTags) {
       return
     }
+
+    // 最小数のバリデーション
     if (tasteTags.length < minTasteTagNum) {
       setError('tasteTagOptions', {
         types: {
@@ -40,6 +43,8 @@ export const BeanTasteTagSelectInput: FC<InputProps> = (props) => {
         },
       })
     }
+
+    // 最大数のバリデーション
     if (tasteTags.length > maxTasteTagNum) {
       setError('tasteTagOptions', {
         types: {
@@ -63,6 +68,7 @@ export const BeanTasteTagSelectInput: FC<InputProps> = (props) => {
               options={tasteTagOptions}
               isClearable
               isMulti
+              menuPlacement="top"
               styles={{ control: () => ({}), valueContainer: (provided) => ({ ...provided, padding: 0 }) }} // デフォルトのスタイルをクリア
               className="rs-container" // react-selectコンポーネントのクラス名
               classNamePrefix="rs" // react-selectコンポーネント化のクラスに"rs__"プリフィックスをつける
@@ -72,8 +78,7 @@ export const BeanTasteTagSelectInput: FC<InputProps> = (props) => {
           )}
         />
         <FormIconWrap>
-          {/* TODO アイコンを変える */}
-          <i className="fa-solid fa-earth-asia fa-lg ml-3 p-1" />
+          <i className="fa-solid fa-mug-hot fa-lg ml-3 p-1" />
         </FormIconWrap>
       </FormInputWrap>
       {error?.types?.required && <AlertMessage>{error.types.required}</AlertMessage>}

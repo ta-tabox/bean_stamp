@@ -32,7 +32,9 @@ export const BeanNew: FC = memo(() => {
 
   const onSubmit: SubmitHandler<BeanCreateUpdateData> = useCallback(async (data) => {
     const formData = createBeanFormData(data)
-    console.log(data)
+
+    //  TODO formDataのタグをAPIで登録する形に変換する
+    // TODO APIのテストが落ちているので対応する
 
     try {
       setLoading(true)
