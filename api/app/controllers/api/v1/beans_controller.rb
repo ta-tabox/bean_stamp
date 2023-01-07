@@ -16,7 +16,7 @@ class Api::V1::BeansController < Api::ApplicationController
     set_cropped_at
     bean_params_with_taste_tags = merge_bean_params_with_taste_tag_params
     @bean = current_api_v1_roaster.beans.build(bean_params_with_taste_tags)
-    @bean.upload_images = params.dig(:bean_image, :images)
+    @bean.upload_images = images_param[:images]
 
     if @bean.save
       @bean.upload_images.each do |img|
@@ -84,7 +84,7 @@ class Api::V1::BeansController < Api::ApplicationController
       )
   end
 
-  def images_params
+  def images_param
     params
       .require(:bean_image)
       .permit(
@@ -107,7 +107,7 @@ class Api::V1::BeansController < Api::ApplicationController
 
   # bean_paramsとtaste_tag_paramsを適切な構造で組み合わせる
   def merge_bean_params_with_taste_tag_params
-    taste_tag_ids = params.dig('taste_tag', 'taste_tag_ids')
+    taste_tag_ids = taste_tag_params['taste_tag_ids']
     bean_taste_tags_attributes = {}
     if @bean
       # update時 中間テーブルbean_taste_tagのidを組みこむ

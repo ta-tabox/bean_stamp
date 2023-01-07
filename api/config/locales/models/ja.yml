@@ -6,6 +6,8 @@ ja:
       bean: コーヒー豆
       bean_image: コーヒー豆イメージ
       offer: オファー
+      mst_taste_tag: タグ
+      bean_taste_tags_mst_taste_tag: フレーバー
     attributes:
       user:
         name: 名前
@@ -41,6 +43,8 @@ ja:
       bean_image:
         image: イメージ
         images: 紹介画像
+      bean_taste_tags:
+        mst_taste_tag: フレーバー
       offer:
         ended_at: オファー終了日
         roasted_at: 焙煎日

@@ -64,7 +64,7 @@ RSpec.describe 'Api::V1::Beans', type: :request do
 
     subject do
       proc {
-        post api_v1_beans_path, params: { bean: bean_params, taste_tag: taste_tag_params, bean_images: attributes_for(:bean_image_params) },
+        post api_v1_beans_path, params: { bean: bean_params, taste_tag: taste_tag_params, bean_image: attributes_for(:bean_image_params_for_api) },
                                 headers: auth_tokens
       }
     end
@@ -126,8 +126,8 @@ RSpec.describe 'Api::V1::Beans', type: :request do
 
     context 'with no taste_tags' do
       let(:bean_params) { attributes_for(:bean) }
-      let(:taste_tag_params) { { taste_tag_ids: [] } }
-      let(:error_message) { 'Flavorは2つ以上登録してください' }
+      let(:taste_tag_params) { { taste_tag_ids: [nil] } }
+      let(:error_message) { 'フレーバーを入力してください' }
 
       it_behaves_like 'does not create a bean'
     end
