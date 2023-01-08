@@ -24,7 +24,11 @@ export const BeanCancelModal: FC<Props> = memo((props) => {
     try {
       await deleteBean({ id: bean.id.toString() })
     } catch {
-      showMessage({ message: 'コーヒー豆の削除に失敗しました', type: 'error' })
+      showMessage({
+        message: 'コーヒー豆の削除に失敗しました',
+        type: 'error',
+      })
+      return
     }
 
     showMessage({ message: 'コーヒー豆を削除しました', type: 'success' })
@@ -41,6 +45,8 @@ export const BeanCancelModal: FC<Props> = memo((props) => {
               コーヒー豆「{`${bean.name}`}」を削除します。
               <br />
               この操作は取り消すことができません。
+              <br />
+              ＊オファーがあるコーヒー豆を削除することはできません。
             </>
           </ModalText>
           <div className="flex items-center justify-center mt-4 space-x-4 sm:space-x-8">
