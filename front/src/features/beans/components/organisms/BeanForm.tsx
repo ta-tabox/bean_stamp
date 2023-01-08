@@ -20,7 +20,6 @@ import { BeanTasteRangeInput } from '@/features/beans/components/molecules/BeanT
 import { BeanTasteTagSelectInput } from '@/features/beans/components/molecules/BeanTasteTagSelectInput'
 import { BeanVarietyInput } from '@/features/beans/components/molecules/BeanVarietyInput'
 import { BeanFormCancelModal } from '@/features/beans/components/organisms/BeanFormCancelModal'
-import { useValidateUploadImages } from '@/features/beans/hooks/useValidateUploadImages'
 import type { Bean, BeanCreateUpdateData } from '@/features/beans/types'
 import { countryOptions } from '@/features/beans/utils/country'
 import { roastLevelOptions } from '@/features/beans/utils/roastLevel'
@@ -39,7 +38,6 @@ type Props = {
 export const BeanForm: FC<Props> = (props) => {
   const { bean = null, loading, submitTitle, onSubmit } = props
   const { isOpen, onOpen, onClose } = useModal()
-  const { validateUploadImages } = useValidateUploadImages()
 
   const [previewImage, setPreviewImage] = useState<Array<string> | null>()
 
@@ -75,10 +73,8 @@ export const BeanForm: FC<Props> = (props) => {
     handleSubmit,
     formState: { isDirty, dirtyFields, errors },
     control,
-    watch,
-    setError,
-    clearErrors,
   } = useForm<BeanCreateUpdateData>({
+    mode: 'onTouched',
     criteriaMode: 'all',
     defaultValues: defaultValues(),
   })
@@ -88,24 +84,16 @@ export const BeanForm: FC<Props> = (props) => {
     onOpen()
   }
 
-  // プレビューとバリデーションを実施
+  // プレビュー表示
   const onChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
-    clearErrors(['images'])
-
     if (!e.target.files) {
       setPreviewImage(null)
       return
     }
 
-    const validateResult = validateUploadImages({ setError, targetFiles: e.target.files })
-
-    if (validateResult) {
-      const uploadImages = Array.from(e.target.files)
-      const previewImageUrls = uploadImages.map((image) => URL.createObjectURL(image))
-      setPreviewImage(previewImageUrls)
-    } else {
-      setPreviewImage(null)
-    }
+    const previewImages = Array.from(e.target.files)
+    const previewImageUrls = previewImages.map((image) => URL.createObjectURL(image))
+    setPreviewImage(previewImageUrls)
   }
 
   return (
@@ -176,9 +164,6 @@ export const BeanForm: FC<Props> = (props) => {
             label="tasteTagOptions"
             control={control}
             error={errors.tasteTagOptions as FieldError}
-            watch={watch}
-            setError={setError}
-            clearErrors={clearErrors}
           />
         </section>
         <div className="flex items-center justify-center space-x-4 mt-4">

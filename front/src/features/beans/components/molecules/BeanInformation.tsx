@@ -8,6 +8,13 @@ type Props = {
 
 export const BeanInformation: FC<Props> = (props) => {
   const { bean } = props
+
+  const formatCroppedAt = (croppedAt: string): string => {
+    const date = new Date(croppedAt)
+    const [year, month] = [date.getFullYear(), date.getMonth()]
+    return `${year}年 ${month + 1}月`
+  }
+
   return (
     <div className="grid-container grid-cols-2">
       <div className="grid-item">
@@ -36,12 +43,12 @@ export const BeanInformation: FC<Props> = (props) => {
       </div>
       <div className="grid-item">
         <span className="text-gray-500">標高</span>
-        <span className="ml-auto text-gray-900"> {`${bean.elevation ?? ''} m`} </span>
+        <span className="ml-auto text-gray-900"> {bean.elevation && `${bean.elevation} m`} </span>
       </div>
       <div className="grid-item">
         <span className="text-gray-500">収穫</span>
         {/* TODO 年月表示にする */}
-        <span className="ml-auto text-gray-900">{bean.croppedAt}</span>
+        <span className="ml-auto text-gray-900">{bean.croppedAt && formatCroppedAt(bean.croppedAt)}</span>
       </div>
     </div>
   )

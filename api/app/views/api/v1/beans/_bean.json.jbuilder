@@ -13,7 +13,7 @@ json.extract! bean, :id,
               :body,
               :bitterness,
               :sweetness
-json.cropped_at "#{bean.cropped_at.year}-#{bean.cropped_at&.month}" if bean.cropped_at
+json.cropped_at bean.cropped_at.strftime('%Y-%m') if bean.cropped_at
 
 json.country do
   json.id bean.country.id

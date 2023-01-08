@@ -11,19 +11,42 @@ type InputProps = {
   onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
+const maxImageNum = 4
+const maxImageMb = 5
+
 export const BeanImageInput: FC<InputProps> = (props) => {
   const { label, register, error, onChange } = props
   return (
     <>
       <FormInputWrap>
-        <FileInput label={label} multiple register={register} onChange={onChange} />
+        <FileInput
+          label={label}
+          multiple
+          register={register}
+          onChange={onChange}
+          validate={{
+            maxLength: (values: FileList) => {
+              if (values.length > maxImageNum) {
+                return `画像は最大${maxImageNum}枚まで投稿できます`
+              }
+              return true
+            },
+            maxSize: (values: FileList) => {
+              for (let i = 0; i < values.length; i += 1) {
+                const sizeInMb = values[i].size / 1024 / 1024
+                if (sizeInMb > maxImageMb) {
+                  return `画像は最大5MBのサイズまで投稿できます. ${maxImageMb}MBより小さいファイルを選択してください.`
+                }
+              }
+              return true
+            },
+          }}
+        />
         <FormIconWrap>
           <i className="fa-solid fa-image fa-lg ml-3 p-1" />
         </FormIconWrap>
       </FormInputWrap>
-      {error?.types?.required && <AlertMessage>{error.types.required}</AlertMessage>}
-      {/* 画像のonChangeにてsetErrorを実行 */}
-      {error?.types?.validate && <AlertMessage>{error.types.validate}</AlertMessage>}
+      {error?.types?.maxSize && <AlertMessage>{error.types.maxSize}</AlertMessage>}
       {error?.types?.maxLength && <AlertMessage>{error.types.maxLength}</AlertMessage>}
     </>
   )

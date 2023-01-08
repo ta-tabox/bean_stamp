@@ -20,7 +20,7 @@ export const BeanCard: FC<Props> = (props) => {
         <h1 className="w-11/12 mx-auto text-center pb-2 text-gray-900 text-xl lg:text-2xl title-font">{bean.name}</h1>
         <div className="w-11/12 mx-auto flex flex-col justify-center items-center">
           {/* 画像カルーセル */}
-          <div className="lg:w-10/12 h-64 lg:h-96">
+          <div className="w-full h-64 lg:w-10/12 lg:h-96">
             <BeanImagesSwiper imageUrls={bean.imageUrls} beanName={bean.name} />
           </div>
 
