@@ -5,14 +5,17 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { DangerButton, PrimaryButton, SecondaryButton } from '@/components/Elements/Button'
 import { ContentHeader, ContentHeaderTitle } from '@/components/Elements/Content'
 import { Head } from '@/components/Head'
+import { BeanCancelModal } from '@/features/beans/components/organisms/BeanCancelModal'
 import { BeanCard } from '@/features/beans/components/organisms/BeanCard'
 import { useGetBean } from '@/features/beans/hooks/useGetBean'
+import { useModal } from '@/hooks/useModal'
 import { isNumber } from '@/utils/regexp'
 
 export const Bean: FC = () => {
   const urlParams = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { bean, getBean } = useGetBean()
+  const { isOpen, onOpen, onClose } = useModal()
 
   useEffect(() => {
     if (urlParams.id && isNumber(urlParams.id)) {
@@ -34,11 +37,9 @@ export const Bean: FC = () => {
     }
   }
 
-  // TODO destroyリクエストの実行
   const onClickDelete = () => {
-    alert('削除します')
+    onOpen()
   }
-
   return (
     <>
       <Head title="コーヒー豆詳細" />
@@ -53,7 +54,14 @@ export const Bean: FC = () => {
         </div>
       </ContentHeader>
 
-      <section className="mt-8 mb-20">{bean && <BeanCard bean={bean} />}</section>
+      <section className="mt-8 mb-20">
+        {bean && (
+          <>
+            <BeanCard bean={bean} />
+            <BeanCancelModal bean={bean} isOpen={isOpen} onClose={onClose} />
+          </>
+        )}
+      </section>
     </>
   )
 }

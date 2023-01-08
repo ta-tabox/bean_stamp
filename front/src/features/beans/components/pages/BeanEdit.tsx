@@ -4,18 +4,20 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { AxiosError } from 'axios'
 
-import { Link } from '@/components/Elements/Link'
+import { DangerButton } from '@/components/Elements/Button'
 import { NotificationMessage } from '@/components/Elements/Notification'
 import { Spinner } from '@/components/Elements/Spinner'
 import { FormContainer, FormFooter, FormMain, FormTitle } from '@/components/Form'
 import { Head } from '@/components/Head'
 import { updateBean } from '@/features/beans/api/updateBean'
+import { BeanCancelModal } from '@/features/beans/components/organisms/BeanCancelModal'
 import { BeanForm } from '@/features/beans/components/organisms/BeanForm'
 import { useGetBean } from '@/features/beans/hooks/useGetBean'
 import type { BeanCreateUpdateData } from '@/features/beans/types'
 import { createBeanFormData } from '@/features/beans/utils/createBeanFormData'
 import { useErrorNotification } from '@/hooks/useErrorNotification'
 import { useMessage } from '@/hooks/useMessage'
+import { useModal } from '@/hooks/useModal'
 import type { ApplicationErrorResponse } from '@/types'
 import { isNumber } from '@/utils/regexp'
 
@@ -25,7 +27,7 @@ export const BeanEdit: FC = () => {
   const { setErrorNotifications, errorNotifications } = useErrorNotification()
   const { showMessage } = useMessage()
   const urlParams = useParams<{ id: string }>()
-
+  const { isOpen, onOpen, onClose } = useModal()
   const navigate = useNavigate()
 
   const { bean, getBean } = useGetBean()
@@ -75,6 +77,10 @@ export const BeanEdit: FC = () => {
     [bean]
   )
 
+  const onClickDelete = () => {
+    onOpen()
+  }
+
   return (
     <>
       <Head title="コーヒー豆編集" />
@@ -93,11 +99,11 @@ export const BeanEdit: FC = () => {
               <BeanForm submitTitle="更新" loading={loading} onSubmit={onSubmit} bean={bean} />
 
               <FormFooter>
-                {/* TODO destroyリクエストをモーダル表示から実行できるようにする */}
-                <Link to="/beans/cancel">コーヒー豆を削除する</Link>
+                <DangerButton onClick={onClickDelete}>コーヒー豆を削除する</DangerButton>
               </FormFooter>
             </FormMain>
           </FormContainer>
+          <BeanCancelModal bean={bean} isOpen={isOpen} onClose={onClose} />
         </div>
       )}
     </>
