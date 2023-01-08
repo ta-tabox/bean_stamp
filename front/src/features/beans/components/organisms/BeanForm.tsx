@@ -19,12 +19,12 @@ import { BeanSubregionInput } from '@/features/beans/components/molecules/BeanSu
 import { BeanTasteRangeInput } from '@/features/beans/components/molecules/BeanTasteRangeInput'
 import { BeanTasteTagSelectInput } from '@/features/beans/components/molecules/BeanTasteTagSelectInput'
 import { BeanVarietyInput } from '@/features/beans/components/molecules/BeanVarietyInput'
+import { BeanFormCancelModal } from '@/features/beans/components/organisms/BeanFormCancelModal'
 import { useValidateUploadImages } from '@/features/beans/hooks/useValidateUploadImages'
 import type { Bean, BeanCreateUpdateData } from '@/features/beans/types'
 import { countryOptions } from '@/features/beans/utils/country'
 import { roastLevelOptions } from '@/features/beans/utils/roastLevel'
 import { tasteTagOptions } from '@/features/beans/utils/tasteTag'
-import { RoasterFormCancelModal } from '@/features/roasters/components/organisms/RoasterFormCancelModal'
 import { useModal } from '@/hooks/useModal'
 
 import type { SubmitHandler, FieldError } from 'react-hook-form'
@@ -196,7 +196,7 @@ export const BeanForm: FC<Props> = (props) => {
           </PrimaryButton>
         </div>
       </form>
-      <RoasterFormCancelModal isOpen={isOpen} onClose={onClose} />
+      <BeanFormCancelModal isOpen={isOpen} onClose={onClose} />
     </>
   )
 }
