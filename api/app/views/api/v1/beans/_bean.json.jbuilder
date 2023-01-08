@@ -7,16 +7,29 @@ json.extract! bean, :id,
               :variety,
               :elevation,
               :process,
-              :cropped_at,
               :describe,
               :acidity,
               :flavor,
               :body,
               :bitterness,
               :sweetness
-json.cropped_at "#{bean.cropped_at.year}年 #{bean.cropped_at&.month}月" if bean.cropped_at
-json.country bean.country.name # ネストした属性 country_id から変換
-json.roast_level bean.roast_level.name # ネストした属性 roast_lavel_id から変換
-json.tastes = bean.taste_tags.map(&:name) # 1対多の属性 tasteの配列を返す
+json.cropped_at "#{bean.cropped_at.year}-#{bean.cropped_at&.month}" if bean.cropped_at
+
+json.country do
+  json.id bean.country.id
+  json.name bean.country.name # ネストした属性 country_id から変換
+end
+
+json.roast_level do
+  json.id bean.roast_level.id
+  json.name bean.roast_level.name
+end
+
+json.taste do
+  # 1対多の属性 配列を返す tag.id == 0は未選択状態なので除く
+  json.ids bean.taste_tags.reject { |tag| tag.id.zero? }.map(&:id)
+  json.names = bean.taste_tags.reject { |tag| tag.id.zero? }.map(&:name)
+end
+
 # WARNING 画像update時には以前の画像も残って返される. 変数beanがupdate時に再代入されないため、update前のデータをそのまま持っている？
-json.image_urls = bean.bean_images.map { |bean_image| bean_image.image.thumb.url } # 1対多の属性 urlの配列を返す
+json.image_urls = bean.bean_images.map { |bean_image| bean_image.image.url } # 1対多の属性 urlの配列を返す

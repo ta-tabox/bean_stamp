@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 class Api::V1::BeansController < Api::ApplicationController
   before_action :authenticate_api_v1_user!
   before_action :user_belonged_to_roaster_required
@@ -107,20 +108,22 @@ class Api::V1::BeansController < Api::ApplicationController
 
   # bean_paramsとtaste_tag_paramsを適切な構造で組み合わせる
   def merge_bean_params_with_taste_tag_params
-    taste_tag_ids = taste_tag_params['taste_tag_ids']
+    update_taste_tag_ids = taste_tag_params['taste_tag_ids']
+    update_taste_tag_ids << 0 if update_taste_tag_ids.length == 2
     bean_taste_tags_attributes = {}
     if @bean
       # update時 中間テーブルbean_taste_tagのidを組みこむ
       bean_taste_tag_ids = @bean&.bean_taste_tag_ids
-      taste_tag_ids&.each_with_index do |taste_tag_id, index|
-        bean_taste_tags_attributes.store(index.to_s, { 'id' => bean_taste_tag_ids[index], 'mst_taste_tag_id' => taste_tag_id })
+      update_taste_tag_ids&.each_with_index do |update_taste_tag_id, index|
+        bean_taste_tags_attributes.store(index.to_s, { 'id' => bean_taste_tag_ids[index], 'mst_taste_tag_id' => update_taste_tag_id })
       end
     else
       # 新規作成時
-      taste_tag_ids&.each_with_index do |taste_tag_id, index|
+      update_taste_tag_ids&.each_with_index do |taste_tag_id, index|
         bean_taste_tags_attributes.store(index.to_s, { 'mst_taste_tag_id' => taste_tag_id })
       end
     end
     bean_params.merge({ 'bean_taste_tags_attributes' => bean_taste_tags_attributes })
   end
 end
+# rubocop:enable Metrics/ClassLength

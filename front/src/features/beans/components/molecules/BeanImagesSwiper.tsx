@@ -20,7 +20,7 @@ export const BeanImagesSwiper: FC<Props> = (props) => {
       navigation
       pagination={{ clickable: true, dynamicBullets: true }}
       scrollbar={{ draggable: true }}
-      className="w-full lg:w-10/12 h-64 lg:h-96"
+      className="w-full h-full"
     >
       {imageUrls.map((imageUrl) => (
         <SwiperSlide key={imageUrl}>

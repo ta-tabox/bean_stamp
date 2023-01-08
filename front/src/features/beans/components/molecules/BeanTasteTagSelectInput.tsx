@@ -26,8 +26,10 @@ export const BeanTasteTagSelectInput: FC<InputProps> = (props) => {
   const maxTasteTagNum = 3
   const minTasteTagNum = 2
 
-  // タグのバリデーション
   useEffect(() => {
+    // この方法では一度submitされた後ではuseEffectでセットするErrorがうまく反映されない
+    // 詳しくは要調査だが、おそらく一度submitを行うとreact-hook-formのvalidationがonChangeで実行され、そちらでエラーがセットされるので、上書きされているのではないか？
+    // react-hook-formのcontrollerにてruleを設定する方がいいかもしれない
     clearErrors('tasteTagOptions')
     const tasteTags = watch('tasteTagOptions')
 
@@ -52,7 +54,7 @@ export const BeanTasteTagSelectInput: FC<InputProps> = (props) => {
         },
       })
     }
-  }, [watch('tasteTagOptions')])
+  }, [watch('tasteTagOptions'), setError, clearErrors])
 
   return (
     <>
@@ -81,6 +83,7 @@ export const BeanTasteTagSelectInput: FC<InputProps> = (props) => {
           <i className="fa-solid fa-mug-hot fa-lg ml-3 p-1" />
         </FormIconWrap>
       </FormInputWrap>
+      {/* {console.log(error)} */}
       {error?.types?.required && <AlertMessage>{error.types.required}</AlertMessage>}
       {error?.types?.maxLength && <AlertMessage>{error.types.maxLength}</AlertMessage>}
       {error?.types?.minLength && <AlertMessage>{error.types.minLength}</AlertMessage>}

@@ -12,11 +12,11 @@ export const BeanInformation: FC<Props> = (props) => {
     <div className="grid-container grid-cols-2">
       <div className="grid-item">
         <span className="text-gray-500">生産国</span>
-        <span className="ml-auto text-gray-900"> {bean.country}</span>
+        <span className="ml-auto text-gray-900"> {bean.country.name}</span>
       </div>
       <div className="grid-item">
         <span className="text-gray-500">焙煎度</span>
-        <span className="ml-auto text-gray-900">{bean.roastLevel}</span>
+        <span className="ml-auto text-gray-900">{bean.roastLevel.name}</span>
       </div>
       <div className="grid-item">
         <span className="text-gray-500">地域</span>
@@ -40,6 +40,7 @@ export const BeanInformation: FC<Props> = (props) => {
       </div>
       <div className="grid-item">
         <span className="text-gray-500">収穫</span>
+        {/* TODO 年月表示にする */}
         <span className="ml-auto text-gray-900">{bean.croppedAt}</span>
       </div>
     </div>

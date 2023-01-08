@@ -7,12 +7,10 @@ import { AxiosError } from 'axios'
 import { NotificationMessage } from '@/components/Elements/Notification'
 import { FormContainer, FormMain, FormTitle } from '@/components/Form'
 import { Head } from '@/components/Head'
-import { useLoadUser } from '@/features/auth'
 import { createBean } from '@/features/beans/api/createBean'
 import { BeanForm } from '@/features/beans/components/organisms/BeanForm'
 import type { BeanCreateUpdateData } from '@/features/beans/types'
 import { createBeanFormData } from '@/features/beans/utils/createBeanFormData'
-import { useCurrentRoaster } from '@/features/roasters/hooks/useCurrentRoaster'
 import { useErrorNotification } from '@/hooks/useErrorNotification'
 import { useMessage } from '@/hooks/useMessage'
 import type { ApplicationErrorResponse } from '@/types'
@@ -23,18 +21,12 @@ export const BeanNew: FC = memo(() => {
   const { setErrorNotifications, errorNotifications } = useErrorNotification()
   const { showMessage } = useMessage()
   const navigate = useNavigate()
-  const { loadUser } = useLoadUser()
-
-  const { setIsRoaster } = useCurrentRoaster()
 
   const [isError, setIsError] = useState(false)
   const [loading, setLoading] = useState(false)
 
   const onSubmit: SubmitHandler<BeanCreateUpdateData> = useCallback(async (data) => {
     const formData = createBeanFormData(data)
-
-    //  TODO formDataのタグをAPIで登録する形に変換する
-    // TODO APIのテストが落ちているので対応する
 
     try {
       setLoading(true)
@@ -55,11 +47,9 @@ export const BeanNew: FC = memo(() => {
       setLoading(false)
     }
 
-    await loadUser()
-
-    setIsRoaster(true)
     showMessage({ message: 'コーヒー豆を作成しました', type: 'success' })
-    navigate('/beans')
+    // WARNING 遷移先はコーヒー豆詳細ページが望ましい。createリクエストの返却値としてidを入手したい
+    navigate('/beans/')
   }, [])
 
   return (

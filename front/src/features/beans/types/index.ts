@@ -18,33 +18,10 @@ export type Bean = {
   body: number
   bitterness: number
   sweetness: number
-  country: string
-  roastLevel: string
-  tastes: string[]
+  country: { id: number; name: string }
+  roastLevel: { id: number; name: string }
+  taste: { ids: number[]; names: string[] }
   imageUrls: string[]
-}
-
-// Create, Update時のAPIリクエスト、レスポンス用の型
-export type BeanApiType = Pick<
-  Bean,
-  | 'name'
-  | 'subregion'
-  | 'farm'
-  | 'variety'
-  | 'elevation'
-  | 'process'
-  | 'croppedAt'
-  | 'describe'
-  | 'acidity'
-  | 'flavor'
-  | 'body'
-  | 'bitterness'
-  | 'sweetness'
-> & {
-  countryId: number
-  roastLevelId: number
-  tasteTagIds: number[]
-  images: string[]
 }
 
 // react-hook-formで取り扱うデータの型
@@ -67,9 +44,5 @@ export type BeanCreateUpdateData = Pick<
   countryOption: CountryOption
   roastLevelOption: RoastLevelOption
   tasteTagOptions: Array<TasteTagOption>
-  // tasteTagOption1: TasteTagOption
-  // tasteTagOption2: TasteTagOption
-  // tasteTagOption3: TasteTagOption
-  // tasteTagIds: number[]
   images?: FileList
 }

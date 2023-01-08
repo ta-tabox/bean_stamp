@@ -1,7 +1,6 @@
 import type { ChangeEventHandler, FC } from 'react'
 
 import { AlertMessage, FileInput, FormIconWrap, FormInputWrap } from '@/components/Form'
-import { validation } from '@/utils/validation'
 
 import type { FieldError, UseFormRegister } from 'react-hook-form'
 
@@ -17,7 +16,7 @@ export const BeanImageInput: FC<InputProps> = (props) => {
   return (
     <>
       <FormInputWrap>
-        <FileInput label={label} multiple register={register} onChange={onChange} required={validation.required} />
+        <FileInput label={label} multiple register={register} onChange={onChange} />
         <FormIconWrap>
           <i className="fa-solid fa-image fa-lg ml-3 p-1" />
         </FormIconWrap>

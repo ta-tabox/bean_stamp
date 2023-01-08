@@ -20,7 +20,9 @@ export const BeanCard: FC<Props> = (props) => {
         <h1 className="w-11/12 mx-auto text-center pb-2 text-gray-900 text-xl lg:text-2xl title-font">{bean.name}</h1>
         <div className="w-11/12 mx-auto flex flex-col justify-center items-center">
           {/* 画像カルーセル */}
-          <BeanImagesSwiper imageUrls={bean.imageUrls} beanName={bean.name} />
+          <div className="lg:w-10/12 h-64 lg:h-96">
+            <BeanImagesSwiper imageUrls={bean.imageUrls} beanName={bean.name} />
+          </div>
 
           <div className="text-center lg:w-10/12 w-full pt-4">
             <p className="leading-relaxed">{bean.describe}</p>
@@ -28,7 +30,7 @@ export const BeanCard: FC<Props> = (props) => {
             {/* フレーバーのタグ */}
             <section className="w-11/12 mx-auto pt-4">
               <div className="mb-2 text-center text-lg e-font">〜 Flavor 〜</div>
-              <BeanTasteTags tastes={bean.tastes} />
+              <BeanTasteTags tastes={bean.taste.names} />
             </section>
 
             {/* コーヒー豆詳細情報 */}

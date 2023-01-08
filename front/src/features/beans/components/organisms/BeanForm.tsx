@@ -11,6 +11,7 @@ import { BeanDescribeInput } from '@/features/beans/components/molecules/BeanDes
 import { BeanElevationInput } from '@/features/beans/components/molecules/BeanElevationInput'
 import { BeanFarmInput } from '@/features/beans/components/molecules/BeanFarmInput'
 import { BeanImageInput } from '@/features/beans/components/molecules/BeanImageInput'
+import { BeanImagesSwiper } from '@/features/beans/components/molecules/BeanImagesSwiper'
 import { BeanNameInput } from '@/features/beans/components/molecules/BeanNameInput'
 import { BeanProcessInput } from '@/features/beans/components/molecules/BeanProcessInput'
 import { BeanRoastLevelSelectInput } from '@/features/beans/components/molecules/BeanRoastLevelSelectInput'
@@ -19,7 +20,7 @@ import { BeanTasteRangeInput } from '@/features/beans/components/molecules/BeanT
 import { BeanTasteTagSelectInput } from '@/features/beans/components/molecules/BeanTasteTagSelectInput'
 import { BeanVarietyInput } from '@/features/beans/components/molecules/BeanVarietyInput'
 import { useValidateUploadImages } from '@/features/beans/hooks/useValidateUploadImages'
-import type { BeanApiType, BeanCreateUpdateData } from '@/features/beans/types'
+import type { Bean, BeanCreateUpdateData } from '@/features/beans/types'
 import { countryOptions } from '@/features/beans/utils/country'
 import { roastLevelOptions } from '@/features/beans/utils/roastLevel'
 import { tasteTagOptions } from '@/features/beans/utils/tasteTag'
@@ -29,7 +30,7 @@ import { useModal } from '@/hooks/useModal'
 import type { SubmitHandler, FieldError } from 'react-hook-form'
 
 type Props = {
-  bean?: BeanApiType | null
+  bean?: Bean | null
   loading: boolean
   submitTitle: string
   onSubmit: SubmitHandler<BeanCreateUpdateData>
@@ -60,9 +61,9 @@ export const BeanForm: FC<Props> = (props) => {
         body: bean.body,
         bitterness: bean.bitterness,
         sweetness: bean.sweetness,
-        countryOption: countryOptions[bean.countryId],
-        roastLevelOption: roastLevelOptions[bean.roastLevelId],
-        tasteTagOptions: bean.tasteTagIds.map((tasteTagId) => tasteTagOptions[bean.tasteTagIds[tasteTagId]]),
+        countryOption: countryOptions[bean.country.id - 1], // idをindexに合わせる
+        roastLevelOption: roastLevelOptions[bean.roastLevel.id - 1], // idをindexに合わせる
+        tasteTagOptions: bean.taste.ids.map((id) => tasteTagOptions[id - 1]), // 初期値としてオプションの配列を渡す idをindexに合わせる
         images: undefined,
       }
     }
@@ -110,8 +111,12 @@ export const BeanForm: FC<Props> = (props) => {
   return (
     <>
       <h2 className="e-font text-gray-500 text-center text-sm">〜 Images 〜</h2>
-      {/* TODO 既存画像のカルーセル表示 */}
-      {bean && <div>カルーセルを表示</div>}
+      {/* 既存画像のカルーセル */}
+      {bean && (
+        <div className="my-2 h-64 lg:h-96">
+          <BeanImagesSwiper imageUrls={bean.imageUrls} beanName={bean.name} />
+        </div>
+      )}
 
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* プレビューフィールド */}

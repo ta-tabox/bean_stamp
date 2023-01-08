@@ -1,68 +1,79 @@
 import type { FC } from 'react'
-import { useCallback, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useCallback, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+
+import { AxiosError } from 'axios'
 
 import { Link } from '@/components/Elements/Link'
 import { NotificationMessage } from '@/components/Elements/Notification'
 import { Spinner } from '@/components/Elements/Spinner'
 import { FormContainer, FormFooter, FormMain, FormTitle } from '@/components/Form'
 import { Head } from '@/components/Head'
-import { useLoadUser } from '@/features/auth'
+import { updateBean } from '@/features/beans/api/updateBean'
 import { BeanForm } from '@/features/beans/components/organisms/BeanForm'
-import type { BeanApiType, BeanCreateUpdateData } from '@/features/beans/types'
-import { useCurrentRoaster } from '@/features/roasters/hooks/useCurrentRoaster'
+import { useGetBean } from '@/features/beans/hooks/useGetBean'
+import type { BeanCreateUpdateData } from '@/features/beans/types'
+import { createBeanFormData } from '@/features/beans/utils/createBeanFormData'
 import { useErrorNotification } from '@/hooks/useErrorNotification'
 import { useMessage } from '@/hooks/useMessage'
+import type { ApplicationErrorResponse } from '@/types'
+import { isNumber } from '@/utils/regexp'
 
 import type { SubmitHandler } from 'react-hook-form'
 
 export const BeanEdit: FC = () => {
   const { setErrorNotifications, errorNotifications } = useErrorNotification()
   const { showMessage } = useMessage()
-  const navigate = useNavigate()
-  const { loadUser } = useLoadUser()
+  const urlParams = useParams<{ id: string }>()
 
-  const { setIsRoaster, currentRoaster } = useCurrentRoaster()
+  const navigate = useNavigate()
+
+  const { bean, getBean } = useGetBean()
 
   const [isError, setIsError] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const onSubmit: SubmitHandler<BeanCreateUpdateData> = useCallback((data) => {
-    console.log(data)
-    // if (currentRoaster === null) {
-    //   showMessage({ message: 'ロースターを登録をしてください', type: 'error' })
-    //   navigate('/roasters/create')
-    //   return
-    // }
-    // const formData = createRoasterFormData(data)
+  useEffect(() => {
+    if (urlParams.id && isNumber(urlParams.id)) {
+      getBean(urlParams.id)
+    } else {
+      navigate('/roasters/home')
+    }
+  }, [urlParams.id])
 
-    // try {
-    //   setLoading(true)
-    //   await updateRoaster({ id: currentRoaster.id.toString(), formData })
-    //   setIsError(false)
-    // } catch (error) {
-    //   if (error instanceof AxiosError) {
-    //     // NOTE errorの型指定 他に良い方法はないのか？
-    //     const typedError = error as AxiosError<ApplicationErrorResponse>
-    //     const errorMessages = typedError.response?.data.messages
-    //     if (errorMessages) {
-    //       setErrorNotifications(errorMessages)
-    //       setIsError(true)
-    //     }
-    //   }
-    //   return
-    // } finally {
-    //   setLoading(false)
+  const onSubmit: SubmitHandler<BeanCreateUpdateData> = useCallback(
+    async (data) => {
+      if (!bean) {
+        showMessage({ message: 'コーヒー豆を登録をしてください', type: 'error' })
+        navigate('/beans/create')
+        return
+      }
 
-    //   await loadUser()
+      const formData = createBeanFormData(data)
 
-    //   setIsRoaster(true)
-    //   showMessage({ message: 'ロースター情報を変更しました', type: 'success' })
-    //   navigate('/roasters/home')
-    // }
-  }, [])
-
-  let bean: BeanApiType | undefined
+      try {
+        setLoading(true)
+        await updateBean({ id: bean.id.toString(), formData })
+        setIsError(false)
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          // NOTE errorの型指定 他に良い方法はないのか？
+          const typedError = error as AxiosError<ApplicationErrorResponse>
+          const errorMessages = typedError.response?.data.messages
+          if (errorMessages) {
+            setErrorNotifications(errorMessages)
+            setIsError(true)
+          }
+        }
+        return
+      } finally {
+        setLoading(false)
+      }
+      showMessage({ message: 'コーヒー豆情報を変更しました', type: 'success' })
+      navigate(`/beans/${bean.id}`)
+    },
+    [bean]
+  )
 
   return (
     <>
@@ -72,7 +83,7 @@ export const BeanEdit: FC = () => {
           <Spinner />
         </div>
       )}
-      {currentRoaster && (
+      {bean && (
         <div className="mt-20">
           <FormContainer>
             <FormMain>
