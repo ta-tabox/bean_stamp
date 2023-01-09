@@ -4,7 +4,8 @@ class Api::V1::BeansController < Api::ApplicationController
   before_action :set_bean, only: %i[show update destroy]
 
   def index
-    @beans = current_api_v1_roaster.beans.includes(%i[bean_images country roast_level]).recent
+    pagy, @beans = pagy(current_api_v1_roaster.beans.includes(%i[bean_images country roast_level]).recent)
+    pagy_headers_merge(pagy)
     render formats: :json
   end
 
