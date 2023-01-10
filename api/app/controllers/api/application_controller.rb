@@ -3,6 +3,9 @@ class Api::ApplicationController < ActionController::API
   # skip_before_action :verify_authenticity_token いらない気がする
   # helper_method :current_user, :user_signed_in? そもそもViewがないのにhelper_methodがいるのか？
 
+  # Pagyによるpaginationモジュールを読み込む
+  include Pagy::Backend
+
   private
 
   # ユーザーにロースター所属を求める V1
@@ -17,5 +20,10 @@ class Api::ApplicationController < ActionController::API
     return unless current_api_v1_user.roaster_id?
 
     render json: { message: 'ロースターをすでに登録しています' }, status: :method_not_allowed
+  end
+
+  # ログイン中のユーザーが所属するロースターを返す V1
+  def current_api_v1_roaster
+    current_api_v1_user.roaster
   end
 end

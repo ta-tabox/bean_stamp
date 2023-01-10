@@ -20,7 +20,7 @@ export const Modal: FC<Props> = memo((props) => {
       contentLabel={contentLabel}
       isOpen={isOpen}
       className="min-w-max absolute top-1/2 left-1/2 right-auto bottom-auto -translate-x-1/2 -translate-y-1/2 border-1 border-indigo-400 bg-white text-gray-800 overflow-auto rounded-lg outline-none"
-      overlayClassName="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-30"
+      overlayClassName="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-30 z-50"
       onRequestClose={onClose}
     >
       <div className={closeButton ? 'pt-0 pb-8' : 'py-8'}>

@@ -61,7 +61,7 @@ Pagy::DEFAULT[:items] = 10
 
 # Headers extra: http response headers (and other helpers) useful for API pagination
 # See http://ddnexus.github.io/pagy/extras/headers
-# require 'pagy/extras/headers'
+require 'pagy/extras/headers' # APIとしてpagyを使用するために有効化
 # Pagy::DEFAULT[:headers] = { page: 'Current-Page',
 #                            items: 'Page-Items',
 #                            count: 'Total-Count',

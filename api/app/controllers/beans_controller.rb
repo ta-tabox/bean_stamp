@@ -82,7 +82,7 @@ class BeansController < ApplicationController
         :bitterness,
         :sweetness,
         :roast_level_id,
-        bean_taste_tags_attributes: %i[id user_id mst_taste_tag_id],
+        bean_taste_tags_attributes: %i[id mst_taste_tag_id],
       )
   end
 

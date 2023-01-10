@@ -63,6 +63,7 @@ class Api::V1::RoastersController < Api::ApplicationController
   def correct_roaster
     return if current_api_v1_user.belonged_roaster?(@roaster)
 
+    # TODO: status: :method_not_allowedを指定する
     render json: { status: 'error', message: '所属していないロースターの更新・削除はできません' }
   end
 end

@@ -19,6 +19,7 @@ export const Input: FC<InputProps> = (props) => {
   const { label, disabled, type, placeholder, register, required, pattern, minLength, maxLength, validate } = props
   return (
     <input
+      id={label}
       type={type}
       disabled={disabled}
       placeholder={placeholder}

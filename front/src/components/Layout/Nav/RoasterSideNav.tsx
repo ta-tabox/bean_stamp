@@ -36,7 +36,7 @@ export const RoasterSideNav: FC<Props> = memo((props) => {
           </svg>
         </SideNavLink>
       </li>
-      {/* TODO ビーンズリンク */}
+      {/* ビーンズリンク */}
       <li className="mb-2">
         <SideNavLink title="Beans" to="/beans">
           <svg className="h-8 w-8 transform -rotate-45">

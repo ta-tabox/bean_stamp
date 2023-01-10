@@ -118,6 +118,11 @@ FactoryBot.define do
     image { [Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/sample.jpg'), 'image/jpg')] }
   end
 
+  # API:createアクションのparams[:bean_image]用のパラメータ
+  factory :bean_image_params_for_api, class: BeanImage do
+    images { [Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/sample.jpg'), 'image/jpg')] }
+  end
+
   factory :too_big_bean_image, class: BeanImage do
     image { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/over_5mb_sample.jpg'), 'image/jpg') }
   end

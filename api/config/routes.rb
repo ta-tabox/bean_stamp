@@ -83,6 +83,10 @@ Rails.application.routes.draw do
       end
 
       resources :roaster_relationships, only: %i[index create destroy]
+
+      resources :beans do
+        resources :offers, only: [:new]
+      end
     end
   end
 end

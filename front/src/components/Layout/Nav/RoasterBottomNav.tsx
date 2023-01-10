@@ -36,8 +36,8 @@ export const RoasterBottomNav: FC<Props> = memo((props) => {
           </svg>
         </BottomNavItem>
       </Link>
-      {/* TODO ビーンズリンク */}
-      <Link to="/roaster/show">
+      {/* ビーンズリンク */}
+      <Link to="/beans">
         <BottomNavItem>
           <svg className="h-8 w-8 transform -rotate-45">
             <use xlinkHref="#coffee-bean-solid" />

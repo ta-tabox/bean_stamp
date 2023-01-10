@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_16_143145) do
+ActiveRecord::Schema.define(version: 2023_01_08_142634) do
 
   create_table "bean_images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "image"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2022_09_16_143145) do
     t.bigint "mst_taste_tag_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["bean_id", "mst_taste_tag_id"], name: "index_bean_taste_tags_on_bean_id_and_mst_taste_tag_id", unique: true
+    t.index ["bean_id", "mst_taste_tag_id"], name: "index_bean_taste_tags_on_bean_id_and_mst_taste_tag_id"
     t.index ["bean_id"], name: "index_bean_taste_tags_on_bean_id"
     t.index ["mst_taste_tag_id"], name: "index_bean_taste_tags_on_mst_taste_tag_id"
   end
