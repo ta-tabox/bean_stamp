@@ -11,21 +11,30 @@ export const useGetBeans = () => {
 
   const [beans, setBeans] = useState<Array<Bean>>([])
   const [loading, setLoading] = useState(false)
+  const [currentPage, setCurrentPage] = useState<number>()
+  const [totalPage, setTotalPage] = useState<number>()
 
-  const getBeans = () => {
+  type GetBeans = {
+    page: string | null
+  }
+  const getBeans = ({ page }: GetBeans) => {
     setLoading(true)
-    getBeansRequest()
+    getBeansRequest({ page })
       .then((response) => {
         setBeans(response.data)
+        const newCurrentPage = parseInt(response.headers['current-page'], 10)
+        const newTotalPage = parseInt(response.headers['total-pages'], 10)
+        setCurrentPage(newCurrentPage)
+        setTotalPage(newTotalPage)
       })
       .catch(() => {
         navigate('/')
-        showMessage({ message: 'ロースターが存在しません', type: 'error' })
+        showMessage({ message: 'コーヒー豆が存在しません', type: 'error' })
       })
       .finally(() => {
         setLoading(false)
       })
   }
 
-  return { beans, getBeans, loading }
+  return { beans, getBeans, currentPage, totalPage, loading }
 }

@@ -204,38 +204,27 @@
   border-top: black solid 1px;
 }
 
-/* pagy-style */
-.pagy-nav,
-.pagy-nav-js {
+/* pagination style */
+.pagination {
   @apply flex justify-center items-center text-gray-600 space-x-2 pb-4;
 }
 
-.pagy-nav .page a,
-.pagy-nav .page.active,
-.pagy-nav .page.prev.disabled,
-.pagy-nav .page.next.disabled,
-.pagy-nav-js .page a,
-.pagy-nav-js .page.active,
-.pagy-nav-js .page.prev.disabled,
-.pagy-nav-js .page.next.disabled {
-  @apply block rounded-lg px-3 py-1 text-sm;
+.page-item {
+  @apply rounded-lg text-sm hover:bg-gray-200;
 }
 
-.pagy-nav .page a,
-.pagy-nav-js .page a {
-  @apply hover:bg-gray-200;
+.previous-link,
+.next-link,
+.page-link {
+  @apply block px-3 py-1 rounded-lg;
 }
 
-.pagy-nav .page.prev.disabled,
-.pagy-nav .page.next.disabled,
-.pagy-nav-js .page.prev.disabled,
-.pagy-nav-js .page.next.disabled {
-  @apply text-gray-300 cursor-default;
+.pagination .active {
+  @apply text-gray-900 cursor-default bg-gray-300 font-medium rounded-lg;
 }
 
-.pagy-nav .page.active,
-.pagy-nav-js .page.active {
-  @apply text-gray-900 cursor-default bg-gray-300 font-medium;
+.pagination .disabled {
+  @apply text-gray-300 cursor-default bg-gray-50;
 }
 
 /* rating */
