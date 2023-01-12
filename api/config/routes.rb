@@ -84,8 +84,13 @@ Rails.application.routes.draw do
 
       resources :roaster_relationships, only: %i[index create destroy]
 
-      resources :beans do
-        resources :offers, only: [:new]
+      resources :beans, only: %i[index show create update destroy]
+
+      resources :offers, only: %i[index show create update destroy] do
+        collection { get 'search' }
+        member do
+          get 'wanted_users'
+        end
       end
     end
   end
