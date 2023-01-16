@@ -28,8 +28,8 @@ export const RoasterBottomNav: FC<Props> = memo((props) => {
           <i className="fa-solid fa-mug-saucer fa-xl" />
         </BottomNavItem>
       </Link>
-      {/* TODO Offersリンク */}
-      <Link to="/roaster/show">
+      {/* Offersリンク */}
+      <Link to="/offers">
         <BottomNavItem>
           <svg className="w-8 h-8">
             <use xlinkHref="#clipboard-solid" />
