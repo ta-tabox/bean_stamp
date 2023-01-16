@@ -5,9 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { DangerButton, SecondaryButton } from '@/components/Elements/Button'
 import { ContentHeader, ContentHeaderTitle } from '@/components/Elements/Content'
 import { Head } from '@/components/Head'
-import { BeanCancelModal } from '@/features/beans/components/organisms/BeanCancelModal'
-import { BeanCard } from '@/features/beans/components/organisms/BeanCard'
-import { useGetBean } from '@/features/beans/hooks/useGetBean'
+import { useGetOffer } from '@/features/offers/hooks/useGetOffer'
 import { useModal } from '@/hooks/useModal'
 import { isNumber } from '@/utils/regexp'
 
@@ -15,21 +13,22 @@ import { isNumber } from '@/utils/regexp'
 export const Offer: FC = () => {
   const urlParams = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { bean, getBean } = useGetBean()
+  const { offer, getOffer } = useGetOffer()
   const { isOpen, onOpen, onClose } = useModal()
 
   useEffect(() => {
     if (urlParams.id && isNumber(urlParams.id)) {
-      getBean(urlParams.id)
+      getOffer(urlParams.id)
     } else {
-      navigate('/roasters/home')
+      navigate('/')
     }
   }, [urlParams.id])
 
   const onClickEdit = () => {
-    if (bean) {
-      const editUrl = `/beans/${bean.id}/edit`
-      navigate(editUrl)
+    if (offer) {
+      // const editUrl = `/offer/${offer.id}/edit`
+      // navigate(editUrl)
+      alert('編集の導線どうする？')
     }
   }
 
@@ -50,10 +49,12 @@ export const Offer: FC = () => {
       </ContentHeader>
 
       <section className="mt-8 mb-20">
-        {bean && (
+        {offer && (
           <>
-            <BeanCard bean={bean} />
-            <BeanCancelModal bean={bean} isOpen={isOpen} onClose={onClose} />
+            <div>{offer.id}</div>
+            <div>{offer.amount}</div>
+            {/* <BeanCard bean={bean} />
+            <BeanCancelModal bean={bean} isOpen={isOpen} onClose={onClose} /> */}
           </>
         )}
       </section>

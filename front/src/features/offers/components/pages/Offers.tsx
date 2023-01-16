@@ -8,19 +8,18 @@ import { Link } from '@/components/Elements/Link'
 import { Pagination } from '@/components/Elements/Pagination'
 import { Spinner } from '@/components/Elements/Spinner'
 import { Head } from '@/components/Head'
-import { BeanItem } from '@/features/beans/components/organisms/BeanItem'
-import { useGetBeans } from '@/features/beans/hooks/useGetBeans'
+import { useGetOffers } from '@/features/offers/hooks/useGetOffers'
 
 // TODO Offer一覧ページの作成
 export const Offers: FC = memo(() => {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
 
-  const { beans, getBeans, currentPage, totalPage, loading } = useGetBeans()
+  const { offers, getOffers, currentPage, totalPage, loading } = useGetOffers()
 
   useEffect(() => {
-    // コーヒー豆一覧を取得
-    getBeans({ page: searchParams.get('page') })
+    // オファー 一覧を取得
+    getOffers({ page: searchParams.get('page') })
   }, [searchParams])
 
   const onClickNew = () => {
@@ -47,14 +46,15 @@ export const Offers: FC = memo(() => {
       {!loading && (
         <>
           {/* 登録済みのコーヒ豆一覧 */}
-          {beans && (
+          {offers && (
             <section className="mt-4">
-              {beans.length ? (
+              {offers.length ? (
                 <>
                   <ol>
-                    {beans.map((bean) => (
-                      <li key={bean.id}>
-                        <BeanItem bean={bean} />
+                    {offers.map((offer) => (
+                      <li key={offer.id}>
+                        {/* <BeanItem bean={bean} /> */}
+                        <div>{offer.id}</div>
                       </li>
                     ))}
                   </ol>
@@ -62,7 +62,7 @@ export const Offers: FC = memo(() => {
                 </>
               ) : (
                 <div className="text-center text-gray-400">
-                  <p>オファーがありませんん</p>
+                  <p>オファーがありません</p>
                   <Link to="/beans">オファーを作成する</Link>
                 </div>
               )}
