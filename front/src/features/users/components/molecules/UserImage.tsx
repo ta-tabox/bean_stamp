@@ -10,7 +10,7 @@ type Props = {
 export const UserImage: FC<Props> = (props) => {
   const { user } = props
 
-  const imageUrl = user.image.url ? `${user.image.url}` : defaultUserImage
+  const imageUrl = user.imageUrl ? `${user.imageUrl}` : defaultUserImage
 
   return (
     <img

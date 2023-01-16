@@ -11,9 +11,8 @@ type Props = {
 
 export const RoasterItem: FC<Props> = (props) => {
   const { roaster, onClick } = props
-  const { id, name, prefectureCode, address, describe, image } = roaster
+  const { id, name, prefectureCode, address, describe, imageUrl } = roaster
   const area = translatePrefectureCodeToName({ prefectureCode })
-  const imageUrl = image.url
 
   return (
     <button type="button" className="block w-full" onClick={() => onClick(id)}>

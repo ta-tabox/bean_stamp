@@ -1,11 +1,7 @@
 export type User = {
   email: string
-  image: {
-    url: string | null
-    thumb: {
-      url: string | null
-    }
-  }
+  imageUrl: string | null
+  thumbUrl: string | null
   id: number
   name: string
   prefectureCode: string

@@ -10,7 +10,7 @@ type Props = {
 export const RoasterImage: FC<Props> = (props) => {
   const { roaster } = props
 
-  const imageUrl = roaster.image.url ? `${roaster.image.url}` : defaultRoasterImage
+  const imageUrl = roaster.imageUrl ? `${roaster.imageUrl}` : defaultRoasterImage
 
   return (
     <img
