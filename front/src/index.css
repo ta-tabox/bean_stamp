@@ -191,9 +191,11 @@
   @apply flex w-11/12 mx-auto border-t border-gray-200 py-2;
 }
 
+/*
 .roaster-name {
   @apply w-2/3 md:w-1/3 ml-auto text-right text-base text-gray-500 tracking-widest hover:text-gray-800 truncate;
 }
+*/
 
 /* debug-field */
 .debug_dump {
@@ -290,7 +292,7 @@
 }
 
 /* offer status */
-.on_offering {
+/*.on_offering {
   @apply bg-blue-500 text-white;
 }
 .on_roasting {
@@ -304,7 +306,7 @@
 }
 .end_of_sales {
   @apply bg-gray-700 text-white;
-}
+}*/
 
 /* want receipted_badge */
 .unreceipted {

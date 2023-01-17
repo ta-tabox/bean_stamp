@@ -1,22 +1,22 @@
 import type { FC } from 'react'
 
 import defaultRoasterImage from '@/features/roasters/assets/defaultRoaster.png'
-import type { Roaster } from '@/features/roasters/types'
 
 type Props = {
-  roaster: Roaster
+  name: string
+  thumbnailUrl: string | null
 }
 
 export const RoasterThumbnail: FC<Props> = (props) => {
-  const { roaster } = props
+  const { name, thumbnailUrl } = props
 
-  const imageUrl = roaster.thumbUrl ? `${roaster.thumbUrl}` : defaultRoasterImage
+  const imageUrl = thumbnailUrl ? `${thumbnailUrl}` : defaultRoasterImage
 
   return (
     <img
       className="object-cover w-20 h-20 border-2 border-indigo-500 rounded-full"
       src={`${imageUrl}`}
-      alt={`${roaster.name}の画像`}
+      alt={`${name}の画像`}
     />
   )
 }

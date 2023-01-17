@@ -5,7 +5,9 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { DangerButton, SecondaryButton } from '@/components/Elements/Button'
 import { ContentHeader, ContentHeaderTitle } from '@/components/Elements/Content'
 import { Head } from '@/components/Head'
+import { BeanCard } from '@/features/beans'
 import { useGetOffer } from '@/features/offers/hooks/useGetOffer'
+import { OfferCard } from '@/features/offers/organisms/OfferCard'
 import { useModal } from '@/hooks/useModal'
 import { isNumber } from '@/utils/regexp'
 
@@ -51,10 +53,14 @@ export const Offer: FC = () => {
       <section className="mt-8 mb-20">
         {offer && (
           <>
-            <div>{offer.id}</div>
-            <div>{offer.amount}</div>
-            {/* <BeanCard bean={bean} />
-            <BeanCancelModal bean={bean} isOpen={isOpen} onClose={onClose} /> */}
+            <section className="mt-16">
+              <OfferCard offer={offer} />
+            </section>
+
+            <section className="mt-8 mb-20">
+              <BeanCard bean={offer.bean} />
+            </section>
+            {/* <BeanCancelModal bean={bean} isOpen={isOpen} onClose={onClose} /> */}
           </>
         )}
       </section>
