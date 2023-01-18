@@ -173,7 +173,12 @@ export const BeanForm: FC<Props> = (props) => {
           {/* beanあり(更新時)→ どれか変更, なし(新規作成時)→ 該当項目変更必須 */}
           <PrimaryButton
             disabled={
-              bean ? !isDirty : !dirtyFields.name || !dirtyFields.countryOption || !dirtyFields.roastLevelOption
+              bean
+                ? !isDirty
+                : !dirtyFields.name ||
+                  !dirtyFields.countryOption ||
+                  !dirtyFields.roastLevelOption ||
+                  !dirtyFields.tasteTagOptions
             }
             loading={loading}
           >

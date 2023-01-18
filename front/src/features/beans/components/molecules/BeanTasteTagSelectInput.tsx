@@ -33,13 +33,13 @@ export const BeanTasteTagSelectInput: FC<InputProps> = (props) => {
             required: validation.required,
             validate: {
               minLength: (value: TasteTagOption[]) => {
-                if (value.length < minTasteTagNum) {
+                if (value?.length < minTasteTagNum) {
                   return `フレーバーは${minTasteTagNum}個以上登録してください`
                 }
                 return true
               },
               maxLength: (value: TasteTagOption[]) => {
-                if (value.length > maxTasteTagNum) {
+                if (value?.length > maxTasteTagNum) {
                   return `フレーバーは最大${maxTasteTagNum}個まで登録できます`
                 }
                 return true
