@@ -2,7 +2,9 @@ import type { FC } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Card } from '@/components/Elements/Card'
+import { OfferPricePerWeight } from '@/features/offers/components/molecules/OfferPricePerWeight'
 import { OfferStatusTag } from '@/features/offers/components/molecules/OfferStatusTag'
+import { OfferWantedUserStats } from '@/features/offers/components/molecules/OfferWantedUserStats'
 import type { Offer } from '@/features/offers/types'
 import { getFormattedDate } from '@/features/offers/utils/getFormattedDate'
 import { RoasterNameLink, RoasterThumbnail } from '@/features/roasters'
@@ -13,7 +15,20 @@ type Props = {
 
 export const OfferCard: FC<Props> = (props) => {
   const { offer } = props
-  const { createdAt, endedAt, roastedAt, receiptStartedAt, receiptEndedAt, status, roaster, wantCount } = offer
+  const {
+    id,
+    createdAt,
+    endedAt,
+    roastedAt,
+    receiptStartedAt,
+    receiptEndedAt,
+    status,
+    roaster,
+    amount,
+    price,
+    weight,
+    wantCount,
+  } = offer
 
   return (
     <Card>
@@ -35,34 +50,34 @@ export const OfferCard: FC<Props> = (props) => {
               {/* <%= render partial: 'offers/want_form', locals: { offer: offer} %> */}
               {/* <%= render partial: 'offers/like_form', locals: { offer: offer} %> */}
             </div>
-            {/* TODO カウント linkをつける */}
-            <div className="mr-4">wants countを出す</div>
+            <div className="mr-4">
+              <OfferWantedUserStats offerId={id} roasterId={roaster.id} count={wantCount} amount={amount} />
+            </div>
           </div>
         </div>
         <div className="mt-4 grid-container grid-cols-2">
           <div className="grid-item">
             <span className="text-gray-500">オファー作成日</span>
-            <span className="ml-auto text-gray-900">{getFormattedDate(createdAt)}</span>
+            <span className="ml-auto text-gray-800">{getFormattedDate(createdAt)}</span>
           </div>
           <div className="col-start-1 grid-item">
             <span className="text-gray-500">オファー終了日</span>
-            <span className="ml-auto text-gray-900">{getFormattedDate(endedAt)}</span>
+            <span className="ml-auto text-gray-800">{getFormattedDate(endedAt)}</span>
           </div>
           <div className="lg:ml-4 grid-item">
             <span className="text-gray-500">ロースト日</span>
-            <span className="ml-auto text-gray-900">{getFormattedDate(roastedAt)}</span>
+            <span className="ml-auto text-gray-800">{getFormattedDate(roastedAt)}</span>
           </div>
           <div className="grid-item">
             <span className="text-gray-500">受け取り開始日</span>
-            <span className="ml-auto text-gray-900">{getFormattedDate(receiptStartedAt)}</span>
+            <span className="ml-auto text-gray-800">{getFormattedDate(receiptStartedAt)}</span>
           </div>
           <div className="lg:ml-4 grid-item">
             <span className="text-gray-500">受け取り終了日</span>
-            <span className="ml-auto text-gray-900">{getFormattedDate(receiptEndedAt)}</span>
+            <span className="ml-auto text-gray-800">{getFormattedDate(receiptEndedAt)}</span>
           </div>
           <div className="col-span-2 w-11/12 lg:w-full mx-auto pr-2 flex justify-end">
-            {/* TODO 金額と重量 */}
-            {/* <%= render partial:'offers/price_weight', locals: { offer: offer } %> */}
+            <OfferPricePerWeight price={price} weight={weight} />
           </div>
         </div>
       </div>
