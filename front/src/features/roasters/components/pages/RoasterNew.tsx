@@ -15,7 +15,7 @@ import type { RoasterCreateData } from '@/features/roasters/types'
 import { createRoasterFormData } from '@/features/roasters/utils/createRoasterFormData'
 import { useErrorNotification } from '@/hooks/useErrorNotification'
 import { useMessage } from '@/hooks/useMessage'
-import type { ApplicationErrorResponse } from '@/types'
+import type { ApplicationMessagesResponse } from '@/types'
 
 import type { SubmitHandler } from 'react-hook-form'
 
@@ -40,7 +40,7 @@ export const RoasterNew: FC = memo(() => {
     } catch (error) {
       if (error instanceof AxiosError) {
         // NOTE errorの型指定 他に良い方法はないのか？
-        const typedError = error as AxiosError<ApplicationErrorResponse>
+        const typedError = error as AxiosError<ApplicationMessagesResponse>
         const errorMessages = typedError.response?.data.messages
         if (errorMessages) {
           setErrorNotifications(errorMessages)
