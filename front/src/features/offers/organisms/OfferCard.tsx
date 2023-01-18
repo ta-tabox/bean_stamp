@@ -2,12 +2,14 @@ import type { FC } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Card } from '@/components/Elements/Card'
+import { LikeUnLikeButton } from '@/features/likes'
 import { OfferPricePerWeight } from '@/features/offers/components/molecules/OfferPricePerWeight'
 import { OfferStatusTag } from '@/features/offers/components/molecules/OfferStatusTag'
 import { OfferWantedUserStats } from '@/features/offers/components/molecules/OfferWantedUserStats'
 import type { Offer } from '@/features/offers/types'
 import { getFormattedDate } from '@/features/offers/utils/getFormattedDate'
 import { RoasterNameLink, RoasterThumbnail } from '@/features/roasters'
+import { WantUnWantButton } from '@/features/wants'
 
 type Props = {
   offer: Offer
@@ -45,10 +47,9 @@ export const OfferCard: FC<Props> = (props) => {
           </div>
           <div className="flex justify-between items-end">
             {/* TODO want likeボタン */}
-            <div className="flex">
-              want, link ボタン
-              {/* <%= render partial: 'offers/want_form', locals: { offer: offer} %> */}
-              {/* <%= render partial: 'offers/like_form', locals: { offer: offer} %> */}
+            <div className="flex space-x-2">
+              <WantUnWantButton />
+              <LikeUnLikeButton />
             </div>
             <div className="mr-4">
               <OfferWantedUserStats offerId={id} roasterId={roaster.id} count={wantCount} amount={amount} />
