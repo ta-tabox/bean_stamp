@@ -6,12 +6,12 @@ import { DangerButton, SecondaryButton } from '@/components/Elements/Button'
 import { ContentHeader, ContentHeaderTitle } from '@/components/Elements/Content'
 import { Head } from '@/components/Head'
 import { BeanCard } from '@/features/beans'
+import { OfferCancelModal } from '@/features/offers/components/organisms/OfferCancelModal'
 import { useGetOffer } from '@/features/offers/hooks/useGetOffer'
 import { OfferCard } from '@/features/offers/organisms/OfferCard'
 import { useModal } from '@/hooks/useModal'
 import { isNumber } from '@/utils/regexp'
 
-// TODO Offerコンテンツの作成
 export const Offer: FC = () => {
   const urlParams = useParams<{ id: string }>()
   const navigate = useNavigate()
@@ -60,7 +60,7 @@ export const Offer: FC = () => {
             <section className="mt-8 mb-20">
               <BeanCard bean={offer.bean} />
             </section>
-            {/* <BeanCancelModal bean={bean} isOpen={isOpen} onClose={onClose} /> */}
+            <OfferCancelModal offer={offer} isOpen={isOpen} onClose={onClose} />
           </>
         )}
       </section>

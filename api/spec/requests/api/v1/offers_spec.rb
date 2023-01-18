@@ -86,7 +86,7 @@ RSpec.describe 'Api::V1::Offers', type: :request do
         subject.call
         json = JSON.parse(response.body)
         expect(response).to have_http_status(:not_found)
-        expect(json['message']).to eq 'コーヒー豆を登録してください'
+        expect(json['messages'].first).to eq 'コーヒー豆を登録してください'
       end
     end
 
@@ -166,7 +166,7 @@ RSpec.describe 'Api::V1::Offers', type: :request do
         it_behaves_like 'does not create a offer'
       end
 
-      # 日付データの順番をテストする
+      # 日���データの順番をテストする
       context 'when the roasterd_at is earlier than the ended_at' do
         let(:offer_params) { attributes_for(:offer, :too_early_roasted_at, bean_id: bean.id) }
         let(:error_message) { '焙煎日はオファー終了日以降の日付を入力してください' }
@@ -209,7 +209,7 @@ RSpec.describe 'Api::V1::Offers', type: :request do
         subject.call
         json = JSON.parse(response.body)
         expect(response).to have_http_status(:not_found)
-        expect(json['message']).to eq 'オファーを登録してください'
+        expect(json['messages'].first).to eq 'オファーを登録してください'
       end
     end
 
@@ -313,7 +313,7 @@ RSpec.describe 'Api::V1::Offers', type: :request do
         subject.call
         json = JSON.parse(response.body)
         expect(response).to have_http_status(:not_found)
-        expect(json['message']).to eq 'オファーを登録してください'
+        expect(json['messages'].first).to eq 'オファーを登録してください'
       end
     end
 
@@ -377,7 +377,7 @@ RSpec.describe 'Api::V1::Offers', type: :request do
         subject
         json = JSON.parse(response.body)
         expect(response).to have_http_status(:method_not_allowed)
-        expect(json['message']).to eq 'ロースターを登録をしてください'
+        expect(json['messages'].first).to eq 'ロースターを登録をしてください'
       end
     end
 
@@ -390,7 +390,7 @@ RSpec.describe 'Api::V1::Offers', type: :request do
         subject
         json = JSON.parse(response.body)
         expect(response).to have_http_status(:not_found)
-        expect(json['message']).to eq 'オファーを登録してください'
+        expect(json['messages'].first).to eq 'オファーを登録してください'
       end
     end
 

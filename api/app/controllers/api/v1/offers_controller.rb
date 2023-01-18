@@ -38,13 +38,14 @@ class Api::V1::OffersController < Api::ApplicationController
 
   def destroy
     if @offer.wants.any?
-      render json: { messages: "コーヒー豆「#{@offer.bean.name}」のオファーはウォンツされています" }, status: :unprocessable_entity
+      render json: { messages: ["コーヒー豆「#{@offer.bean.name}」のオファーはウォンツされています"] }, status: :unprocessable_entity
+      return
     end
 
     if @offer.destroy
-      render json: { message: "コーヒー豆「#{@offer.bean.name}」のオファーを1件削除しました" }, status: :ok
+      render json: { messages: ["コーヒー豆「#{@offer.bean.name}」のオファーを1件削除しました"] }, status: :ok
     else
-      render json: { message: "コーヒー豆「#{@offer.bean.name}」のオファーの削除に失敗しました" }, status: :method_not_allowed
+      render json: { messages: ["コーヒー豆「#{@offer.bean.name}」のオファーの削除に失敗しました"] }, status: :method_not_allowed
     end
   end
 
@@ -75,7 +76,7 @@ class Api::V1::OffersController < Api::ApplicationController
   def roaster_had_bean_requierd
     return if current_api_v1_roaster.beans.find_by(id: offer_params[:bean_id])
 
-    render json: { message: 'コーヒー豆を登録してください' }, status: :not_found
+    render json: { messages: ['コーヒー豆を登録してください'] }, status: :not_found
   end
 
   def set_offer
@@ -86,6 +87,6 @@ class Api::V1::OffersController < Api::ApplicationController
     @offer = current_api_v1_roaster.offers.find_by(id: params[:id])
     return if @offer
 
-    render json: { message: 'オファーを登録してください' }, status: :not_found
+    render json: { messages: ['オファーを登録してください'] }, status: :not_found
   end
 end
