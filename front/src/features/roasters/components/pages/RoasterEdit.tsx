@@ -90,7 +90,7 @@ export const RoasterEdit: FC = () => {
         <div className="mt-20">
           <FormContainer>
             <div className="flex justify-end -mb-10">
-              <RoasterThumbnail name={currentRoaster.name} thumbnailUrl={currentRoaster.thumbUrl} />
+              <RoasterThumbnail name={currentRoaster.name} thumbnailUrl={currentRoaster.thumbnailUrl} />
             </div>
             <FormMain>
               <FormTitle>ロースター情報編集</FormTitle>

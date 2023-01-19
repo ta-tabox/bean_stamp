@@ -13,9 +13,8 @@ export type Offer = {
   receiptEndedAt: string
   status: OfferStatus
   createdAt: string
-  roasterId: number
   wantCount: number
-  roaster: Pick<Roaster, 'id' | 'name' | 'thumbUrl'>
+  roaster: Pick<Roaster, 'id' | 'name' | 'thumbnailUrl'>
   bean: Bean
 }
 

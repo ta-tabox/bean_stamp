@@ -10,12 +10,10 @@ type Props = {
 export const RoasterThumbnail: FC<Props> = (props) => {
   const { name, thumbnailUrl } = props
 
-  const imageUrl = thumbnailUrl ? `${thumbnailUrl}` : defaultRoasterImage
-
   return (
     <img
       className="object-cover w-20 h-20 border-2 border-indigo-500 rounded-full"
-      src={`${imageUrl}`}
+      src={`${thumbnailUrl ?? defaultRoasterImage}`}
       alt={`${name}の画像`}
     />
   )

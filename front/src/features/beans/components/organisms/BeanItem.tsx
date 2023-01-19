@@ -29,7 +29,7 @@ export const BeanItem: FC<Props> = (props) => {
       <Card>
         <div className="px-4 md:px-6">
           <div className="flex justify-center -mt-16 md:justify-end items-end">
-            <BeanThumbnail bean={bean} />
+            <BeanThumbnail name={bean.name} thumbnailUrl={bean.thumbnailUrl} />
           </div>
           <div className="mt-2 px-4 lg:flex items-baseline md:flex md:justify-between">
             <h1 className="pl-3 lg:pl-0 text-xl lg:text-2xl font-medium text-gray-800">{bean.name}</h1>

@@ -33,4 +33,4 @@ end
 
 # WARNING 画像update時には以前の画像も残って返される. 変数beanがupdate時に再代入されないため、update前のデータをそのまま持っている？
 json.image_urls = bean.bean_images.map { |bean_image| bean_image.image.url } # 1対多の属性 urlの配列を返す
-json.thumb_url = bean.bean_images[0].image.thumb.url
+json.thumbnail_url = bean.bean_images[0].image.thumb.url

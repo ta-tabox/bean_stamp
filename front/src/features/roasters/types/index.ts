@@ -7,7 +7,7 @@ export type Roaster = {
   prefectureCode: string
   describe: string | null
   imageUrl: string | null
-  thumbUrl: string | null
+  thumbnailUrl: string | null
   address: string
   guest: boolean
   followersCount: number
