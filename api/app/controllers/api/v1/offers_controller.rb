@@ -43,7 +43,7 @@ class Api::V1::OffersController < Api::ApplicationController
     end
 
     if @offer.destroy
-      render json: { messages: ['オファーを1件削除しました'] }, status: :ok
+      render json: { messages: ['オファーを削除しました'] }, status: :ok
     else
       render json: { messages: ['オファーの削除に失敗しました'] }, status: :method_not_allowed
     end

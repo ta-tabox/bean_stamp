@@ -25,14 +25,13 @@ export const OfferCancelModal: FC<Props> = memo((props) => {
 
   const onClickDelete = () => {
     deleteOffer({ id: offer.id.toString() })
-      .then((response) => {
-        const successMessage = response.data.messages[0]
-        showMessage({ message: successMessage, type: 'success' })
+      .then(() => {
+        showMessage({ message: 'オファーを削除しました', type: 'success' })
         navigate('/offers')
       })
       .catch((error) => {
-        // TODO エラーパターンによりコメントを変えるようにする。APIからメッセージを取得しない
         const typedError = error as AxiosError<ApplicationMessagesResponse>
+        // APIからのエラーメッセージを設定
         const errorMessages = typedError.response?.data.messages[0]
         showMessage({
           message: errorMessages ?? '',
