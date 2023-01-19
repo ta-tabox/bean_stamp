@@ -183,9 +183,9 @@
   @apply container sm:w-11/12 mx-auto py-2 sm:py-4 bg-white md:rounded-lg border border-gray-100 md:shadow-md;
 } */
 
-.grid-container {
+/*.grid-container {
   @apply lg:grid content-between;
-}
+} */
 
 .grid-item {
   @apply flex w-11/12 mx-auto border-t border-gray-200 py-2;

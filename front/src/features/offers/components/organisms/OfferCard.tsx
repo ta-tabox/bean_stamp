@@ -38,10 +38,10 @@ export const OfferCard: FC<Props> = (props) => {
         <div className="w-11/12 mx-auto">
           <div className="flex justify-center -mt-16 md:justify-end">
             <Link to={`/roasters/${roaster.id}`}>
-              <RoasterThumbnail name={roaster.name} thumbnailUrl={roaster.thumbUrl} />
+              <RoasterThumbnail name={roaster.name} thumbnailUrl={roaster.thumbnailUrl} />
             </Link>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between mb-2">
             <OfferStatusTag status={status} />
             <RoasterNameLink id={roaster.id} name={roaster.name} />
           </div>
@@ -56,7 +56,7 @@ export const OfferCard: FC<Props> = (props) => {
             </div>
           </div>
         </div>
-        <div className="mt-4 grid-container grid-cols-2">
+        <div className="mt-4 lg:grid content-between grid-cols-2">
           <div className="grid-item">
             <span className="text-gray-500">オファー作成日</span>
             <span className="ml-auto text-gray-800">{getFormattedDate(createdAt)}</span>

@@ -26,7 +26,7 @@ export const OfferStatusTag: FC<Props> = (props) => {
   }
 
   return (
-    <div className="font-medium mb-4">
+    <div className="font-medium">
       <Tag
         backgroundColorClass={`${backgroundColors[status]}`}
         textColorClass="text-white"

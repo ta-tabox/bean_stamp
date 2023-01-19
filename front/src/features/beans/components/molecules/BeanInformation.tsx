@@ -16,7 +16,7 @@ export const BeanInformation: FC<Props> = (props) => {
   }
 
   return (
-    <div className="grid-container grid-cols-2">
+    <div className="lg:grid content-between grid-cols-2">
       <div className="grid-item">
         <span className="text-gray-500">生産国</span>
         <span className="ml-auto text-gray-900"> {bean.country.name}</span>

@@ -7,8 +7,8 @@ import { ContentHeader, ContentHeaderTitle } from '@/components/Elements/Content
 import { Head } from '@/components/Head'
 import { BeanCard } from '@/features/beans'
 import { OfferCancelModal } from '@/features/offers/components/organisms/OfferCancelModal'
+import { OfferCard } from '@/features/offers/components/organisms/OfferCard'
 import { useGetOffer } from '@/features/offers/hooks/useGetOffer'
-import { OfferCard } from '@/features/offers/organisms/OfferCard'
 import { useCurrentRoaster } from '@/features/roasters'
 import { useModal } from '@/hooks/useModal'
 import { isNumber } from '@/utils/regexp'
@@ -45,7 +45,7 @@ export const Offer: FC = () => {
       <ContentHeader>
         <div className="h-full flex flex-col sm:flex-row justify-between sm:items-end">
           <ContentHeaderTitle title="オファー詳細" />
-          {offer && offer.roasterId === currentRoaster?.id && (
+          {offer && offer.roaster.id === currentRoaster?.id && (
             <div className="flex items-end ml-auto space-x-2">
               <SecondaryButton onClick={onClickEdit}>編集</SecondaryButton>
               <DangerButton onClick={onClickDelete}>削除</DangerButton>
