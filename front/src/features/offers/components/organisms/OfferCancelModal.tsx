@@ -31,6 +31,7 @@ export const OfferCancelModal: FC<Props> = memo((props) => {
         navigate('/offers')
       })
       .catch((error) => {
+        // TODO エラーパターンによりコメントを変えるようにする。APIからメッセージを取得しない
         const typedError = error as AxiosError<ApplicationMessagesResponse>
         const errorMessages = typedError.response?.data.messages[0]
         showMessage({

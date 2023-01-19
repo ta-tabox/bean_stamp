@@ -43,7 +43,7 @@ RSpec.describe 'Api::V1::Beans', type: :request do
         subject
         json = JSON.parse(response.body)
         expect(response).to have_http_status(:not_found)
-        expect(json['message']).to eq 'コーヒー豆を登録してください'
+        expect(json['messages'].first).to eq 'コーヒー豆を登録してください'
       end
     end
 
@@ -175,7 +175,7 @@ RSpec.describe 'Api::V1::Beans', type: :request do
         subject.call
         json = JSON.parse(response.body)
         expect(response).to have_http_status(:not_found)
-        expect(json['message']).to eq 'コーヒー豆を登録してください'
+        expect(json['messages'].first).to eq 'コーヒー豆を登録してください'
       end
     end
 
@@ -237,7 +237,7 @@ RSpec.describe 'Api::V1::Beans', type: :request do
         subject.call
         json = JSON.parse(response.body)
         expect(response).to have_http_status(:not_found)
-        expect(json['message']).to eq 'コーヒー豆を登録してください'
+        expect(json['messages'].first).to eq 'コーヒー豆を登録してください'
       end
     end
 
@@ -250,7 +250,7 @@ RSpec.describe 'Api::V1::Beans', type: :request do
           subject.call
           json = JSON.parse(response.body)
           expect(response).to have_http_status(:success)
-          expect(json).to include('message')
+          expect(json).to include('messages')
         end
       end
 
@@ -262,7 +262,7 @@ RSpec.describe 'Api::V1::Beans', type: :request do
           subject.call
           json = JSON.parse(response.body)
           expect(response).to have_http_status(:method_not_allowed)
-          expect(json['message']).to eq "コーヒー豆「#{bean.name}」はオファー中です"
+          expect(json['messages'].first).to eq "コーヒー豆「#{bean.name}」はオファー中です"
         end
       end
     end

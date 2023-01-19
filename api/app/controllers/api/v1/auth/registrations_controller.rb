@@ -40,7 +40,7 @@ class Api::V1::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsCon
   def ensure_normal_user
     user = current_api_v1_user
     if user.guest?
-      render json: { status: :bad_request, message: 'ゲストユーザーの変更はできません' }
+      render json: { status: :bad_request, messages: ['ゲストユーザーの変更はできません'] }
     end
   end
 end

@@ -32,13 +32,13 @@ class Api::V1::RoasterRelationshipsController < Api::ApplicationController
     @roaster = Roaster.find_by(id: params[:roaster_id])
     return if @roaster
 
-    render json: { message: 'ロースターが存在しません' }, status: :not_found
+    render json: { messages: ['ロースターが存在しません'] }, status: :not_found
   end
 
   def set_roaster_from_following_roasters
     @roaster = RoasterRelationship.find_by(id: params[:id])&.roaster
     return if @roaster
 
-    render json: { message: 'フォローが存在しません' }, status: :not_found
+    render json: { messages: ['フォローが存在しません'] }, status: :not_found
   end
 end

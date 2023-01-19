@@ -38,14 +38,14 @@ class Api::V1::OffersController < Api::ApplicationController
 
   def destroy
     if @offer.wants.any?
-      render json: { messages: ["コーヒー豆「#{@offer.bean.name}」のオファーはウォンツされています"] }, status: :unprocessable_entity
+      render json: { messages: ['オファーはウォンツされています'] }, status: :unprocessable_entity
       return
     end
 
     if @offer.destroy
-      render json: { messages: ["コーヒー豆「#{@offer.bean.name}」のオファーを1件削除しました"] }, status: :ok
+      render json: { messages: ['オファーを1件削除しました'] }, status: :ok
     else
-      render json: { messages: ["コーヒー豆「#{@offer.bean.name}」のオファーの削除に失敗しました"] }, status: :method_not_allowed
+      render json: { messages: ['オファーの削除に失敗しました'] }, status: :method_not_allowed
     end
   end
 

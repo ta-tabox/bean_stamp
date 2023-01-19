@@ -43,13 +43,13 @@ class Api::V1::BeansController < Api::ApplicationController
 
   def destroy
     if @bean.offers.any?
-      return render json: { message: "コーヒー豆「#{@bean.name}」はオファー中です" }, status: :method_not_allowed
+      return render json: { messages: ['コーヒー豆はオファー中です'] }, status: :method_not_allowed
     end
 
     if @bean.destroy
-      render json: { message: 'コーヒー豆を削除しました' }, status: :ok
+      render json: { messages: ['コーヒー豆を削除しました'] }, status: :ok
     else
-      render json: { message: 'コーヒー豆の削除に失敗しました' }, status: :method_not_allowed
+      render json: { messages: ['コーヒー豆の削除に失敗しました'] }, status: :method_not_allowed
     end
   end
 
@@ -89,7 +89,7 @@ class Api::V1::BeansController < Api::ApplicationController
     @bean = current_api_v1_roaster.beans.find_by(id: params[:id])
     return if @bean
 
-    render json: { message: 'コーヒー豆を登録してください' }, status: :not_found
+    render json: { messages: ['コーヒー豆を登録してください'] }, status: :not_found
   end
 
   # input type=monthフィールドのデータをdateカラムに保存できる形に変換する

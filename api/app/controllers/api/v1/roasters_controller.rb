@@ -29,9 +29,9 @@ class Api::V1::RoastersController < Api::ApplicationController
 
   def destroy
     if @roaster.destroy
-      render json: { message: 'ロースターを削除しました' }, status: :ok
+      render json: { messages: ['ロースターを削除しました'] }, status: :ok
     else
-      render json: { message: 'ロースターの削除に失敗しました' }, status: :method_not_allowed
+      render json: { messages: ['ロースターの削除に失敗しました'] }, status: :method_not_allowed
     end
   end
 
@@ -63,7 +63,6 @@ class Api::V1::RoastersController < Api::ApplicationController
   def correct_roaster
     return if current_api_v1_user.belonged_roaster?(@roaster)
 
-    # TODO: status: :method_not_allowedを指定する
-    render json: { status: 'error', message: '所属していないロースターの更新・削除はできません' }
+    render json: { messages: ['所属していないロースターの更新・削除はできません'] }, status: :method_not_allowed
   end
 end
