@@ -6,14 +6,15 @@ import { validation } from '@/utils/validation'
 
 import type { FieldError, UseFormRegister } from 'react-hook-form'
 
-type InputProps = {
+type Props = {
   label: string
   register: UseFormRegister<any> // eslint-disable-line @typescript-eslint/no-explicit-any
   error?: FieldError
+  receiptStartedAt: string
 }
 
-export const OfferReceiptEndedAtInput: FC<InputProps> = (props) => {
-  const { label, register, error } = props
+export const OfferReceiptEndedAtInput: FC<Props> = (props) => {
+  const { label, register, error, receiptStartedAt } = props
   return (
     <>
       <FormInputWrap>
@@ -24,10 +25,16 @@ export const OfferReceiptEndedAtInput: FC<InputProps> = (props) => {
             required={validation.required}
             min={getToday()}
             max={getNextMonthToday({ next: 2 })}
+            shouldBeAfterDate={receiptStartedAt}
+            shouldBeAfterDateName="受け取り開始日"
+            shouldBeBeforeDate={getNextMonthToday({ next: 3 })} // maxで入力値制限するため不使用
+            shouldBeBeforeDateName=""
           />
         </Label>
       </FormInputWrap>
       {error?.types?.required && <AlertMessage>{error.types.required}</AlertMessage>}
+      {error?.types?.shouldBeBeforeDate && <AlertMessage>{error.types.shouldBeBeforeDate}</AlertMessage>}
+      {error?.types?.shouldBeAfterDate && <AlertMessage>{error.types.shouldBeAfterDate}</AlertMessage>}
     </>
   )
 }

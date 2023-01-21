@@ -14,5 +14,21 @@ export const validation = {
   validate: {
     confirm: (targetValue: unknown, value: unknown, name?: string) =>
       targetValue === value || `${name || '値'}が一致しません`,
+    shouldBeAfterDate: (minDate: string, value: unknown, name?: string) => {
+      const targetMinDate = new Date(minDate)
+      const valueDate = new Date(value as string)
+      if (targetMinDate >= valueDate) {
+        return `${name || ''}より後の日程を入力してください`
+      }
+      return true
+    },
+    shouldBeBeforeDate: (maxDate: string, value: unknown, name?: string) => {
+      const targetMaxDate = new Date(maxDate)
+      const valueDate = new Date(value as string)
+      if (targetMaxDate <= valueDate) {
+        return `${name || ''}より前の日程を入力してください`
+      }
+      return true
+    },
   },
 }

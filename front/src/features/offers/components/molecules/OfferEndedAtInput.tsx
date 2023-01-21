@@ -10,10 +10,11 @@ type InputProps = {
   label: string
   register: UseFormRegister<any> // eslint-disable-line @typescript-eslint/no-explicit-any
   error?: FieldError
+  roastedAt: string
 }
 
 export const OfferEndedAtInput: FC<InputProps> = (props) => {
-  const { label, register, error } = props
+  const { label, register, error, roastedAt } = props
 
   return (
     <>
@@ -25,10 +26,16 @@ export const OfferEndedAtInput: FC<InputProps> = (props) => {
             required={validation.required}
             min={getToday()}
             max={getNextMonthToday({ next: 1 })}
+            shouldBeAfterDate={getToday()}
+            shouldBeAfterDateName="本日"
+            shouldBeBeforeDate={roastedAt}
+            shouldBeBeforeDateName="焙煎日"
           />
         </Label>
       </FormInputWrap>
       {error?.types?.required && <AlertMessage>{error.types.required}</AlertMessage>}
+      {error?.types?.shouldBeBeforeDate && <AlertMessage>{error.types.shouldBeBeforeDate}</AlertMessage>}
+      {error?.types?.shouldBeAfterDate && <AlertMessage>{error.types.shouldBeAfterDate}</AlertMessage>}
     </>
   )
 }

@@ -75,7 +75,7 @@ export const IndexOfferCard: FC<Props> = (props) => {
             <span className="ml-auto text-gray-800">{formattedToJaDate(endedAt)}</span>
           </div>
           <div className="lg:ml-4 grid-item">
-            <span className="text-gray-500">ロースト日</span>
+            <span className="text-gray-500">焙煎日</span>
             <span className="ml-auto text-gray-800">{formattedToJaDate(roastedAt)}</span>
           </div>
           <div className="grid-item">

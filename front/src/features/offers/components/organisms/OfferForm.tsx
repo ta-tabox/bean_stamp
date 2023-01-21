@@ -52,6 +52,7 @@ export const OfferForm: FC<Props> = (props) => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { isDirty, dirtyFields, errors },
   } = useForm<OfferCreateUpdateData>({
     mode: 'onTouched',
@@ -66,11 +67,27 @@ export const OfferForm: FC<Props> = (props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {/* TODO 日時のバリデーション */}
-      <OfferEndedAtInput label="endedAt" register={register} error={errors.endedAt} />
-      <OfferRoastedAtInput label="roastedAt" register={register} error={errors.roastedAt} />
-      <OfferReceiptStartedAt label="receiptStartedAt" register={register} error={errors.receiptStartedAt} />
-      <OfferReceiptEndedAtInput label="receiptEndedAt" register={register} error={errors.receiptEndedAt} />
+      <OfferEndedAtInput label="endedAt" register={register} error={errors.endedAt} roastedAt={watch('roastedAt')} />
+      <OfferRoastedAtInput
+        label="roastedAt"
+        register={register}
+        error={errors.roastedAt}
+        endedAt={watch('endedAt')}
+        receiptStartedAt={watch('receiptStartedAt')}
+      />
+      <OfferReceiptStartedAt
+        label="receiptStartedAt"
+        register={register}
+        error={errors.receiptStartedAt}
+        roastedAt={watch('roastedAt')}
+        receiptEndedAt={watch('receiptEndedAt')}
+      />
+      <OfferReceiptEndedAtInput
+        label="receiptEndedAt"
+        register={register}
+        error={errors.receiptEndedAt}
+        receiptStartedAt={watch('receiptStartedAt')}
+      />
 
       <OfferPriceInput label="price" register={register} error={errors.price} />
       <OfferWeightInput label="weight" register={register} error={errors.weight} />
