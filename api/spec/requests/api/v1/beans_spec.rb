@@ -262,7 +262,7 @@ RSpec.describe 'Api::V1::Beans', type: :request do
           subject.call
           json = JSON.parse(response.body)
           expect(response).to have_http_status(:method_not_allowed)
-          expect(json['messages'].first).to eq "コーヒー豆「#{bean.name}」はオファー中です"
+          expect(json['messages'].first).to eq 'コーヒー豆はオファー中です'
         end
       end
     end
