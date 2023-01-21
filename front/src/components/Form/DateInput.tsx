@@ -8,8 +8,8 @@ type InputProps = {
   register: UseFormRegister<any> // eslint-disable-line @typescript-eslint/no-explicit-any
   placeholder?: string
   required?: string | ValidationRule<boolean>
-  min?: ValidationRule<number>
-  max?: ValidationRule<number>
+  min?: string | number
+  max?: string | number
   validate?: Validate<any> // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
@@ -21,8 +21,10 @@ export const DateInput: FC<InputProps> = (props) => {
       type="date"
       disabled={disabled}
       placeholder={placeholder}
+      min={min}
+      max={max}
       className="appearance-none border pl-1 sm:pl-4 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none"
-      {...register(label, { required, min, max, validate })}
+      {...register(label, { required, validate })}
     />
   )
 }

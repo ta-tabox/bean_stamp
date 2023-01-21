@@ -8,7 +8,7 @@ import { OfferPricePerWeight } from '@/features/offers/components/molecules/Offe
 import { OfferStatusTag } from '@/features/offers/components/molecules/OfferStatusTag'
 import { OfferWantedUserStats } from '@/features/offers/components/molecules/OfferWantedUserStats'
 import type { Offer } from '@/features/offers/types'
-import { getFormattedDate } from '@/features/offers/utils/getFormattedDate'
+import { formattedToJaDate } from '@/utils/date'
 
 type Props = {
   offer: Offer
@@ -72,19 +72,19 @@ export const IndexOfferCard: FC<Props> = (props) => {
           </div>
           <div className="col-start-1 grid-item">
             <span className="text-gray-500">オファー終了日</span>
-            <span className="ml-auto text-gray-800">{getFormattedDate(endedAt)}</span>
+            <span className="ml-auto text-gray-800">{formattedToJaDate(endedAt)}</span>
           </div>
           <div className="lg:ml-4 grid-item">
             <span className="text-gray-500">ロースト日</span>
-            <span className="ml-auto text-gray-800">{getFormattedDate(roastedAt)}</span>
+            <span className="ml-auto text-gray-800">{formattedToJaDate(roastedAt)}</span>
           </div>
           <div className="grid-item">
             <span className="text-gray-500">受け取り開始日</span>
-            <span className="ml-auto text-gray-800">{getFormattedDate(receiptStartedAt)}</span>
+            <span className="ml-auto text-gray-800">{formattedToJaDate(receiptStartedAt)}</span>
           </div>
           <div className="lg:ml-4 grid-item">
             <span className="text-gray-500">受け取り終了日</span>
-            <span className="ml-auto text-gray-800">{getFormattedDate(receiptEndedAt)}</span>
+            <span className="ml-auto text-gray-800">{formattedToJaDate(receiptEndedAt)}</span>
           </div>
           <div className="col-span-2 w-11/12 lg:w-full mx-auto pr-2 flex justify-end">
             <OfferPricePerWeight price={price} weight={weight} />

@@ -1,6 +1,7 @@
 import type { FC } from 'react'
 
 import { AlertMessage, DateInput, FormInputWrap, Label } from '@/components/Form'
+import { getNextMonthToday, getToday } from '@/utils/date'
 import { validation } from '@/utils/validation'
 
 import type { FieldError, UseFormRegister } from 'react-hook-form'
@@ -17,7 +18,13 @@ export const OfferReceiptEndedAtInput: FC<InputProps> = (props) => {
     <>
       <FormInputWrap>
         <Label label="受け取り終了日">
-          <DateInput label={label} register={register} required={validation.required} />
+          <DateInput
+            label={label}
+            register={register}
+            required={validation.required}
+            min={getToday()}
+            max={getNextMonthToday({ next: 2 })}
+          />
         </Label>
       </FormInputWrap>
       {error?.types?.required && <AlertMessage>{error.types.required}</AlertMessage>}

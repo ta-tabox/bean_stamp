@@ -26,6 +26,7 @@ export const Offers: FC = () => {
     navigate('/beans')
   }
 
+  // TODO オファー一覧 検索機能の実装
   return (
     <>
       <Head title="オファー 一覧" />

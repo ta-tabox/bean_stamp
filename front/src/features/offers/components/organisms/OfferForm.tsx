@@ -66,6 +66,7 @@ export const OfferForm: FC<Props> = (props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      {/* TODO 日時のバリデーション */}
       <OfferEndedAtInput label="endedAt" register={register} error={errors.endedAt} />
       <OfferRoastedAtInput label="roastedAt" register={register} error={errors.roastedAt} />
       <OfferReceiptStartedAt label="receiptStartedAt" register={register} error={errors.receiptStartedAt} />

@@ -36,6 +36,8 @@ export const WantedUsers: FC = memo(() => {
       <Head title="ウォンツしたユーザー" />
       <ContentSubTitle title="ウォンツしたユーザー" />
 
+      {/* TODO オファー情報の表示 */}
+
       {/* ローディング */}
       {usersLoading && (
         <div className="flex justify-center">
