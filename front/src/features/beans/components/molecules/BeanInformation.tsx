@@ -47,7 +47,6 @@ export const BeanInformation: FC<Props> = (props) => {
       </div>
       <div className="grid-item">
         <span className="text-gray-500">収穫</span>
-        {/* TODO 年月表示にする */}
         <span className="ml-auto text-gray-900">{bean.croppedAt && formatCroppedAt(bean.croppedAt)}</span>
       </div>
     </div>

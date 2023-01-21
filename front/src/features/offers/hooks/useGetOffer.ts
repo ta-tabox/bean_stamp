@@ -27,5 +27,5 @@ export const useGetOffer = () => {
       })
   }
 
-  return { offer, getOffer, loading }
+  return { offer, getOffer, setOffer, loading }
 }

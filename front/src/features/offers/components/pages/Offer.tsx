@@ -8,6 +8,7 @@ import { Head } from '@/components/Head'
 import { BeanCard } from '@/features/beans'
 import { OfferCancelModal } from '@/features/offers/components/organisms/OfferCancelModal'
 import { OfferCard } from '@/features/offers/components/organisms/OfferCard'
+import { OfferEditModal } from '@/features/offers/components/organisms/OfferEditModal'
 import { useGetOffer } from '@/features/offers/hooks/useGetOffer'
 import { useCurrentRoaster } from '@/features/roasters'
 import { useModal } from '@/hooks/useModal'
@@ -16,9 +17,10 @@ import { isNumber } from '@/utils/regexp'
 export const Offer: FC = () => {
   const urlParams = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { offer, getOffer } = useGetOffer()
+  const { offer, getOffer, setOffer } = useGetOffer()
   const { currentRoaster } = useCurrentRoaster()
-  const { isOpen, onOpen, onClose } = useModal()
+  const { isOpen: isOpenDelete, onOpen: onOpenDelete, onClose: onCloseDelete } = useModal()
+  const { isOpen: isOpenOfferEdit, onOpen: onOpenOfferEdit, onClose: onCloseOfferEdit } = useModal()
 
   useEffect(() => {
     if (urlParams.id && isNumber(urlParams.id)) {
@@ -30,14 +32,12 @@ export const Offer: FC = () => {
 
   const onClickEdit = () => {
     if (offer) {
-      // const editUrl = `/offer/${offer.id}/edit`
-      // navigate(editUrl)
-      alert('編集の導線どうする？')
+      onOpenOfferEdit()
     }
   }
 
   const onClickDelete = () => {
-    onOpen()
+    onOpenDelete()
   }
   return (
     <>
@@ -64,7 +64,8 @@ export const Offer: FC = () => {
             <section className="mt-8 mb-20">
               <BeanCard bean={offer.bean} />
             </section>
-            <OfferCancelModal offer={offer} isOpen={isOpen} onClose={onClose} />
+            <OfferCancelModal offer={offer} isOpen={isOpenDelete} onClose={onCloseDelete} />
+            <OfferEditModal offer={offer} isOpen={isOpenOfferEdit} onClose={onCloseOfferEdit} setOffer={setOffer} />
           </>
         )}
       </section>
