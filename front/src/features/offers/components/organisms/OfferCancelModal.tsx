@@ -44,20 +44,18 @@ export const OfferCancelModal: FC<Props> = memo((props) => {
     <Modal contentLabel="オファーの削除" isOpen={isOpen} onClose={onClose} closeButton>
       <ModalContainer>
         <ModalTitle>オファーの削除</ModalTitle>
-        <div className="sm:mx-12">
-          <ModalText>
-            <>
-              「{`${offer.bean.name}`}」のオファーを削除します。
-              <br />
-              この操作は取り消すことができません。
-              <br />
-              ＊ウォンツされているオファーを削除することはできません。
-            </>
-          </ModalText>
-          <div className="flex items-center justify-center mt-4 space-x-4 sm:space-x-8">
-            <SecondaryButton onClick={onClose}>戻る</SecondaryButton>
-            <DangerButton onClick={onClickDelete}>了承して削除する</DangerButton>
-          </div>
+        <ModalText>
+          <>
+            「{`${offer.bean.name}`}」のオファーを削除します。
+            <br />
+            この操作は取り消すことができません。
+            <br />
+            ＊ウォンツされているオファーを削除することはできません。
+          </>
+        </ModalText>
+        <div className="flex items-center justify-center mt-4 space-x-4 sm:space-x-8">
+          <SecondaryButton onClick={onClose}>戻る</SecondaryButton>
+          <DangerButton onClick={onClickDelete}>了承して削除する</DangerButton>
         </div>
       </ModalContainer>
     </Modal>

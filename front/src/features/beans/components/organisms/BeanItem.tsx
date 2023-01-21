@@ -6,6 +6,8 @@ import { Card } from '@/components/Elements/Card'
 import { BeanInformation } from '@/features/beans/components/molecules/BeanInformation'
 import { BeanThumbnail } from '@/features/beans/components/molecules/BeanThumbnail'
 import type { Bean } from '@/features/beans/types'
+import { OfferNewModal } from '@/features/offers'
+import { useModal } from '@/hooks/useModal'
 
 type Props = {
   bean: Bean
@@ -14,13 +16,14 @@ type Props = {
 export const BeanItem: FC<Props> = (props) => {
   const { bean } = props
   const navigate = useNavigate()
+  const { isOpen, onClose, onOpen } = useModal()
 
   const onClickShow = () => {
     navigate(`/beans/${bean.id}`)
   }
 
   const onClickOffer = () => {
-    alert(`beans-${bean.id}のオファー作成`)
+    onOpen()
   }
 
   return (
@@ -44,6 +47,7 @@ export const BeanItem: FC<Props> = (props) => {
           </section>
         </div>
       </Card>
+      <OfferNewModal isOpen={isOpen} beanName={bean.name} onClose={onClose} beanId={bean.id} />
     </article>
   )
 }

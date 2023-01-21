@@ -18,7 +18,6 @@ export const IndexOfferCard: FC<Props> = (props) => {
   const { offer } = props
   const {
     id,
-    createdAt,
     endedAt,
     roastedAt,
     receiptStartedAt,

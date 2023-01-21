@@ -19,3 +19,8 @@ export type Offer = {
 }
 
 export type OfferStatus = 'on_offering' | 'on_roasting' | 'on_preparing' | 'on_selling' | 'end_of_sales'
+
+export type OfferCreateUpdateData = Pick<
+  Offer,
+  'beanId' | 'price' | 'weight' | 'amount' | 'endedAt' | 'roastedAt' | 'receiptStartedAt' | 'receiptEndedAt'
+>
