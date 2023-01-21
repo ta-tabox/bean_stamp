@@ -19,9 +19,9 @@ export const Modal: FC<Props> = memo((props) => {
     <ReactModal
       contentLabel={contentLabel}
       isOpen={isOpen}
-      className="min-w-max absolute top-1/2 left-1/2 right-auto bottom-auto -translate-x-1/2 -translate-y-1/2 border-1 border-indigo-400 bg-white text-gray-800 overflow-auto rounded-lg outline-none"
+      className="absolute top-1/2 left-1/2 right-auto bottom-auto -translate-x-1/2 -translate-y-1/2 border-1 border-indigo-400 bg-white text-gray-800 overflow-auto rounded-lg outline-none w-11/12 sm:w-2/3 md:w-1/2"
       overlayClassName="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-30 z-50"
-      onRequestClose={onClose}
+      // onRequestClose={onClose} モーダル外をクリックするとモーダルが閉じる
     >
       <div className={closeButton ? 'pt-0 pb-8' : 'py-8'}>
         {closeButton && (

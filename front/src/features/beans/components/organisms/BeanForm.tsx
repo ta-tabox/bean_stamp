@@ -41,7 +41,7 @@ export const BeanForm: FC<Props> = (props) => {
 
   const [previewImage, setPreviewImage] = useState<Array<string> | null>()
 
-  // フォーム初期値の設定 RoasterNew -> {}, Roaster Edit -> {初期値}
+  // フォーム初期値の設定 BeanNew -> {}, BeanEdit -> {初期値}
   const defaultValues = () => {
     let values: BeanCreateUpdateData | undefined
     if (bean) {

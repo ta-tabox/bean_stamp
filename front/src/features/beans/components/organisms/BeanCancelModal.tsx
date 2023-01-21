@@ -39,20 +39,18 @@ export const BeanCancelModal: FC<Props> = memo((props) => {
     <Modal contentLabel="コーヒー豆の削除" isOpen={isOpen} onClose={onClose} closeButton>
       <ModalContainer>
         <ModalTitle>コーヒー豆の削除</ModalTitle>
-        <div className="sm:mx-12">
-          <ModalText>
-            <>
-              コーヒー豆「{`${bean.name}`}」を削除します。
-              <br />
-              この操作は取り消すことができません。
-              <br />
-              ＊オファーがあるコーヒー豆を削除することはできません。
-            </>
-          </ModalText>
-          <div className="flex items-center justify-center mt-4 space-x-4 sm:space-x-8">
-            <SecondaryButton onClick={onClose}>戻る</SecondaryButton>
-            <DangerButton onClick={onClickDelete}>了承して削除する</DangerButton>
-          </div>
+        <ModalText>
+          <>
+            コーヒー豆「{`${bean.name}`}」を削除します。
+            <br />
+            この操作は取り消すことができません。
+            <br />
+            ＊オファーがあるコーヒー豆を削除することはできません。
+          </>
+        </ModalText>
+        <div className="flex items-center justify-center mt-4 space-x-4 sm:space-x-8">
+          <SecondaryButton onClick={onClose}>戻る</SecondaryButton>
+          <DangerButton onClick={onClickDelete}>了承して削除する</DangerButton>
         </div>
       </ModalContainer>
     </Modal>
