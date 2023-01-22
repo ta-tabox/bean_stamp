@@ -43,7 +43,9 @@ export const OfferDetailCard: FC<Props> = (props) => {
           </div>
           <div className="flex justify-between mb-2">
             <OfferStatusTag status={status} />
-            <RoasterNameLink id={roaster.id} name={roaster.name} />
+            <div className="w-2/3 md:w-1/3 ml-auto">
+              <RoasterNameLink id={roaster.id} name={roaster.name} />
+            </div>
           </div>
           <div className="flex justify-between items-end">
             {/* TODO want likeボタン */}

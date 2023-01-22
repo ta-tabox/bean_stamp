@@ -48,7 +48,7 @@ export const RoasterHome: FC = memo(() => {
                 <>
                   <ol>
                     {offers.map((offer) => (
-                      <li key={offer.id} className="mt-16">
+                      <li key={offer.id} className="my-20">
                         <OfferContentCard offer={offer} />
                       </li>
                     ))}
