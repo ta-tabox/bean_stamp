@@ -47,7 +47,6 @@ export const UserFollowing: FC = memo(() => {
       </ContentHeader>
 
       {/* ローディング */}
-
       {(userLoading || roastersLoading) && (
         <div className="flex justify-center">
           <Spinner />
