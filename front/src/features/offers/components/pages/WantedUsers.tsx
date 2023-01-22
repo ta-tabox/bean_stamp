@@ -6,7 +6,7 @@ import { Card } from '@/components/Elements/Card'
 import { ContentHeader, ContentHeaderTitle } from '@/components/Elements/Content'
 import { Spinner } from '@/components/Elements/Spinner'
 import { Head } from '@/components/Head'
-import { OfferCard } from '@/features/offers/components/organisms/OfferCard'
+import { OfferDetailCard } from '@/features/offers/components/organisms/OfferDetailCard'
 import { useGetOffer } from '@/features/offers/hooks/useGetOffer'
 import { useGetUsersWantedToOffer } from '@/features/offers/hooks/useGetUsersWantedToOffer'
 import { UserItem } from '@/features/users/components/organisms/UserItem'
@@ -57,7 +57,7 @@ export const WantedUsers: FC = memo(() => {
           {/* オファー情報 */}
           {offer && (
             <section className="mt-16">
-              <OfferCard offer={offer} />
+              <OfferDetailCard offer={offer} />
             </section>
           )}
 

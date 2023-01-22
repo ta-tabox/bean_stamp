@@ -7,7 +7,7 @@ import { ContentHeader, ContentHeaderTitle } from '@/components/Elements/Content
 import { Head } from '@/components/Head'
 import { BeanCard } from '@/features/beans'
 import { OfferCancelModal } from '@/features/offers/components/organisms/OfferCancelModal'
-import { OfferCard } from '@/features/offers/components/organisms/OfferCard'
+import { OfferDetailCard } from '@/features/offers/components/organisms/OfferDetailCard'
 import { OfferEditModal } from '@/features/offers/components/organisms/OfferEditModal'
 import { useGetOffer } from '@/features/offers/hooks/useGetOffer'
 import { useCurrentRoaster } from '@/features/roasters'
@@ -58,7 +58,7 @@ export const Offer: FC = () => {
         {offer && (
           <>
             <section className="mt-16">
-              <OfferCard offer={offer} />
+              <OfferDetailCard offer={offer} />
             </section>
 
             <section className="mt-8 mb-20">

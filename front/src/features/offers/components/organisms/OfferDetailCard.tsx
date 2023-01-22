@@ -15,7 +15,7 @@ type Props = {
   offer: Offer
 }
 
-export const OfferCard: FC<Props> = (props) => {
+export const OfferDetailCard: FC<Props> = (props) => {
   const { offer } = props
   const {
     id,
