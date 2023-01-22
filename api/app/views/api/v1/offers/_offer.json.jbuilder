@@ -5,7 +5,7 @@ json.want_count offer.wanted_users.length
 json.roaster do
   json.id offer.roaster.id
   json.name offer.roaster.name
-  json.thumb_url offer.roaster.image.url
+  json.thumbnail_url offer.roaster.image.thumb.url
 end
 json.bean do
   json.partial! 'api/v1/beans/bean', bean: offer.bean
