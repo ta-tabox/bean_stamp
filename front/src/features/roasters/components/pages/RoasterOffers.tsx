@@ -1,62 +1,58 @@
 import type { FC } from 'react'
 import { useEffect, memo } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 
-import { Card } from '@/components/Elements/Card'
+import { Pagination } from '@/components/Elements/Pagination'
 import { Spinner } from '@/components/Elements/Spinner'
-import { useGetUsersFollowingToRoaster } from '@/features/roasters/hooks/useGetUsersFollowingToRoaster'
-import { UserItem } from '@/features/users/components/organisms/UserItem'
+import { OfferContentCard } from '@/features/offers'
+import { useGetOffersByRoaster } from '@/features/roasters/hooks/useGetOffersByRoaster'
 import { isNumber } from '@/utils/regexp'
 
 export const RoasterOffers: FC = memo(() => {
   const urlParams = useParams<{ id: string }>()
-  const navigate = useNavigate()
-  const { usersFollowingToRoaster, getUsersFollowingToRoaster, loading: usersLoading } = useGetUsersFollowingToRoaster()
+  const [searchParams] = useSearchParams()
+  const { offersByRoaster: offers, getOffersByRoaster, loading, currentPage, totalPage } = useGetOffersByRoaster()
 
   useEffect(() => {
-    const fetchData = (id: string) => {
+    const fetchData = (id: string, page: string | null) => {
       // urlからユーザーがフォローしているロースターを取得
-      getUsersFollowingToRoaster(id)
+      getOffersByRoaster({ id, page })
     }
 
     // urlParams.idが数値かどうか評価
     if (urlParams.id && isNumber(urlParams.id)) {
-      fetchData(urlParams.id)
+      fetchData(urlParams.id, searchParams.get('page'))
     }
-  }, [urlParams.id])
-
-  const onClickOffer = (id: number) => {
-    alert(`ここにオファー${id}`)
-  }
+  }, [urlParams.id, searchParams])
 
   return (
     <>
       {/* ローディング */}
-      {usersLoading && (
+      {loading && (
         <div className="flex justify-center">
           <Spinner />
         </div>
       )}
 
-      {!usersLoading && (
+      {!loading && (
         <>
-          {/* TODO ロースターのオファー一覧を表示する */}
-          {usersFollowingToRoaster && (
-            <section className="mb-20 py-4 text-gray-600">
-              <div>RoasterOffersコンポーネント</div>
-              {usersFollowingToRoaster.length ? (
-                <Card>
+          {/* オファー 一覧 */}
+          {offers && (
+            <section className="mt-4">
+              {offers.length ? (
+                <>
                   <ol>
-                    {usersFollowingToRoaster.map((user) => (
-                      <li key={user.id}>
-                        <UserItem user={user} onClick={onClickOffer} />
+                    {offers.map((offer) => (
+                      <li key={offer.id} className="mt-16">
+                        <OfferContentCard offer={offer} />
                       </li>
                     ))}
                   </ol>
-                </Card>
+                  {currentPage && totalPage && <Pagination currentPage={currentPage} totalPage={totalPage} />}
+                </>
               ) : (
                 <div className="text-center text-gray-400">
-                  <p>フォローしているユーザーがいません</p>
+                  <p>オファーがありません</p>
                 </div>
               )}
             </section>

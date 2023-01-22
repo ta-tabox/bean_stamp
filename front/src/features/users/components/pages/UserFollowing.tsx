@@ -70,6 +70,7 @@ export const UserFollowing: FC = memo(() => {
                       </li>
                     ))}
                   </ol>
+                  {/* TODO ページネーションの実装 */}
                 </Card>
               ) : (
                 <div className="text-center text-gray-400">

@@ -2,7 +2,7 @@ class Api::V1::RoastersController < Api::ApplicationController
   before_action :authenticate_api_v1_user!
   before_action :user_not_belonged_to_roaster_required, only: %i[create]
   before_action :user_belonged_to_roaster_required, only: %i[update destroy]
-  before_action :set_roaster, only: %i[show update destroy followers]
+  before_action :set_roaster, only: %i[show update destroy followers offers]
   before_action :correct_roaster, only: %i[update destroy]
 
   def show
@@ -37,6 +37,14 @@ class Api::V1::RoastersController < Api::ApplicationController
 
   def followers
     @users = @roaster.followers
+    render formats: :json
+  end
+
+  def offers
+    offers = @roaster.offers.recent
+    offers&.map(&:update_status)
+    pagy, @offers = pagy(offers.includes(:roaster, bean: :bean_images))
+    pagy_headers_merge(pagy)
     render formats: :json
   end
 
