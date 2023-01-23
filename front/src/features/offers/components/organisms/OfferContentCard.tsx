@@ -2,10 +2,10 @@ import type { FC } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Card } from '@/components/Elements/Card'
-import { BeanDetail, BeanImagesSwiper, BeanTasteChart, BeanTasteTags } from '@/features/beans'
+import { BeanImagesSwiper, BeanTasteTags } from '@/features/beans'
 import { LikeUnLikeButton } from '@/features/likes'
+import { OfferContentTab } from '@/features/offers/components/molecules/OfferContentTab'
 import { OfferPricePerWeight } from '@/features/offers/components/molecules/OfferPricePerWeight'
-import { OfferSchedule } from '@/features/offers/components/molecules/OfferSchedule'
 import { OfferStatusTag } from '@/features/offers/components/molecules/OfferStatusTag'
 import { OfferWantedUserStats } from '@/features/offers/components/molecules/OfferWantedUserStats'
 import type { Offer } from '@/features/offers/types'
@@ -58,46 +58,15 @@ export const OfferContentCard: FC<Props> = (props) => {
           </div>
         </header>
 
-        {/* TODO タグ機能の実装 */}
-        <div className="w-11/12 mx-auto flex flex-wrap">
-          <div className="tab-panel w-full lg:w-1/2 lg:pr-4 mb-4 lg:mb-0">
-            <ul className="tab-group">
-              <li className="offer-overview-tag py-2 text-lg px-1 tab is-active e-font">Overview</li>
-              <li className="offer-taste-tag py-2 text-lg px-1 tab e-font">Taste</li>
-              <li className="offer-schedule-tag py-2 text-lg px-1 tab e-font">Schedule</li>
-            </ul>
-
-            {/* コンテンツ */}
-            <div className="panel-group w-full lg:h-80">
-              {/* 詳細 */}
-              <section className="offer-overview panel is-show">
-                <BeanDetail bean={bean} />
-              </section>
-
-              {/* テイストチャート */}
-              <section className="offer-taste panel">
-                <div className="max-w-sm mx-auto">
-                  <BeanTasteChart
-                    acidity={bean.acidity}
-                    flavor={bean.flavor}
-                    body={bean.body}
-                    bitterness={bean.bitterness}
-                    sweetness={bean.sweetness}
-                  />
-                </div>
-              </section>
-
-              {/* スケジュール */}
-              <section className="offer-schedule panel">
-                <OfferSchedule offer={offer} />
-              </section>
-            </div>
-
+        <div className="w-11/12 mx-auto flex flex-wrap mt-4">
+          <div className="w-full lg:w-1/2 lg:pr-4 mb-4 lg:mb-0">
+            <OfferContentTab offer={offer} />
             {/* 価格 */}
             <div className="pt-4 flex justify-end">
               <OfferPricePerWeight price={price} weight={weight} />
             </div>
           </div>
+
           {/* 画像  */}
           <div className="w-full lg:w-1/2 h-64 md:h-96 lg:h-auto">
             <BeanImagesSwiper beanName={bean.name} imageUrls={bean.imageUrls} />

@@ -30,6 +30,7 @@
     "react-paginate": "^8.1.4",
     "react-router-dom": "6",
     "react-select": "^5.4.0",
+    "react-tabs": "^6.0.0",
     "react-toastify": "^9.0.8",
     "recoil": "^0.7.5",
     "recoil-persist": "^4.2.0",
