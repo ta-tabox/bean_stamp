@@ -1,8 +1,8 @@
 import type { FC } from 'react'
 
 import { Card, CardContainer } from '@/components/Elements/Card'
+import { BeanDetail } from '@/features/beans/components/molecules/BeanDetail'
 import { BeanImagesSwiper } from '@/features/beans/components/molecules/BeanImagesSwiper'
-import { BeanInformation } from '@/features/beans/components/molecules/BeanInformation'
 import { BeanTasteChart } from '@/features/beans/components/molecules/BeanTasteChart'
 import { BeanTasteTags } from '@/features/beans/components/molecules/BeanTasteTags'
 import type { Bean } from '@/features/beans/types'
@@ -36,7 +36,9 @@ export const BeanCard: FC<Props> = (props) => {
             {/* コーヒー豆詳細情報 */}
             <section className="pt-4">
               <div className="mb-2 text-lg e-font">〜 Detail 〜</div>
-              <BeanInformation bean={bean} />
+              <div className="lg:grid content-between grid-cols-2">
+                <BeanDetail bean={bean} />
+              </div>
             </section>
 
             {/* Tasteチャート */}

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { PrimaryButton, SecondaryButton } from '@/components/Elements/Button'
 import { Card } from '@/components/Elements/Card'
-import { BeanInformation } from '@/features/beans/components/molecules/BeanInformation'
+import { BeanDetail } from '@/features/beans/components/molecules/BeanDetail'
 import { BeanThumbnail } from '@/features/beans/components/molecules/BeanThumbnail'
 import type { Bean } from '@/features/beans/types'
 import { OfferNewModal } from '@/features/offers'
@@ -41,9 +41,8 @@ export const BeanItem: FC<Props> = (props) => {
               <SecondaryButton onClick={onClickShow}>詳細</SecondaryButton>
             </div>
           </div>
-          <div className="flex justify-end items-end" />
-          <section className="mt-4">
-            <BeanInformation bean={bean} />
+          <section className="lg:grid content-between grid-cols-2 mt-4">
+            <BeanDetail bean={bean} />
           </section>
         </div>
       </Card>

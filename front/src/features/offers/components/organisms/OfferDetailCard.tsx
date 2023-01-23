@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom'
 import { Card } from '@/components/Elements/Card'
 import { LikeUnLikeButton } from '@/features/likes'
 import { OfferPricePerWeight } from '@/features/offers/components/molecules/OfferPricePerWeight'
+import { OfferSchedule } from '@/features/offers/components/molecules/OfferSchedule'
 import { OfferStatusTag } from '@/features/offers/components/molecules/OfferStatusTag'
 import { OfferWantedUserStats } from '@/features/offers/components/molecules/OfferWantedUserStats'
 import type { Offer } from '@/features/offers/types'
 import { RoasterNameLink, RoasterThumbnail } from '@/features/roasters'
 import { WantUnWantButton } from '@/features/wants'
-import { formattedToJaDate } from '@/utils/date'
 
 type Props = {
   offer: Offer
@@ -17,20 +17,7 @@ type Props = {
 
 export const OfferDetailCard: FC<Props> = (props) => {
   const { offer } = props
-  const {
-    id,
-    createdAt,
-    endedAt,
-    roastedAt,
-    receiptStartedAt,
-    receiptEndedAt,
-    status,
-    roaster,
-    amount,
-    price,
-    weight,
-    wantCount,
-  } = offer
+  const { id, status, roaster, amount, price, weight, wantCount } = offer
 
   return (
     <Card>
@@ -59,26 +46,7 @@ export const OfferDetailCard: FC<Props> = (props) => {
           </div>
         </div>
         <div className="mt-4 lg:grid content-between grid-cols-2">
-          <div className="grid-item">
-            <span className="text-gray-500">オファー作成日</span>
-            <span className="ml-auto text-gray-800">{formattedToJaDate(createdAt)}</span>
-          </div>
-          <div className="col-start-1 grid-item">
-            <span className="text-gray-500">オファー終了日</span>
-            <span className="ml-auto text-gray-800">{formattedToJaDate(endedAt)}</span>
-          </div>
-          <div className="lg:ml-4 grid-item">
-            <span className="text-gray-500">焙煎日</span>
-            <span className="ml-auto text-gray-800">{formattedToJaDate(roastedAt)}</span>
-          </div>
-          <div className="grid-item">
-            <span className="text-gray-500">受け取り開始日</span>
-            <span className="ml-auto text-gray-800">{formattedToJaDate(receiptStartedAt)}</span>
-          </div>
-          <div className="lg:ml-4 grid-item">
-            <span className="text-gray-500">受け取り終了日</span>
-            <span className="ml-auto text-gray-800">{formattedToJaDate(receiptEndedAt)}</span>
-          </div>
+          <OfferSchedule offer={offer} />
           <div className="col-span-2 w-11/12 lg:w-full mx-auto pr-2 flex justify-end">
             <OfferPricePerWeight price={price} weight={weight} />
           </div>

@@ -2,15 +2,15 @@ import type { FC } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Card } from '@/components/Elements/Card'
-import { BeanImagesSwiper, BeanTasteChart, BeanTasteTags } from '@/features/beans'
+import { BeanDetail, BeanImagesSwiper, BeanTasteChart, BeanTasteTags } from '@/features/beans'
 import { LikeUnLikeButton } from '@/features/likes'
 import { OfferPricePerWeight } from '@/features/offers/components/molecules/OfferPricePerWeight'
+import { OfferSchedule } from '@/features/offers/components/molecules/OfferSchedule'
 import { OfferStatusTag } from '@/features/offers/components/molecules/OfferStatusTag'
 import { OfferWantedUserStats } from '@/features/offers/components/molecules/OfferWantedUserStats'
 import type { Offer } from '@/features/offers/types'
 import { RoasterNameLink, RoasterThumbnail } from '@/features/roasters'
 import { WantUnWantButton } from '@/features/wants'
-import { formattedToJaDate } from '@/utils/date'
 
 type Props = {
   offer: Offer
@@ -18,27 +18,7 @@ type Props = {
 
 export const OfferContentCard: FC<Props> = (props) => {
   const { offer } = props
-  const {
-    id,
-    createdAt,
-    endedAt,
-    roastedAt,
-    receiptStartedAt,
-    receiptEndedAt,
-    status,
-    roaster,
-    amount,
-    price,
-    weight,
-    wantCount,
-    bean,
-  } = offer
-
-  const formatCroppedAt = (croppedAt: string): string => {
-    const date = new Date(croppedAt)
-    const [year, month] = [date.getFullYear(), date.getMonth()]
-    return `${year}年 ${month + 1}月`
-  }
+  const { id, status, roaster, amount, price, weight, wantCount, bean } = offer
 
   return (
     <article className="text-gray-600">
@@ -86,44 +66,14 @@ export const OfferContentCard: FC<Props> = (props) => {
               <li className="offer-taste-tag py-2 text-lg px-1 tab e-font">Taste</li>
               <li className="offer-schedule-tag py-2 text-lg px-1 tab e-font">Schedule</li>
             </ul>
-            {/* TODO コンポーネント化 */}
+
             {/* コンテンツ */}
             <div className="panel-group w-full lg:h-80">
               {/* 詳細 */}
               <section className="offer-overview panel is-show">
-                <div className="flex border-t border-gray-200 py-2">
-                  <span className="text-gray-500">生産国</span>
-                  <span className="ml-auto text-gray-800">{bean.country.name}</span>
-                </div>
-                <div className="flex border-t border-gray-200 py-2">
-                  <span className="text-gray-500">焙煎度</span>
-                  <span className="ml-auto text-gray-800">{bean.roastLevel.name}</span>
-                </div>
-                <div className="flex border-t border-gray-200 py-2">
-                  <span className="text-gray-500">地域</span>
-                  <span className="ml-auto text-gray-800">{bean.subregion}</span>
-                </div>
-                <div className="flex border-t border-gray-200 py-2">
-                  <span className="text-gray-500">農園</span>
-                  <span className="ml-auto text-gray-800">{bean.farm}</span>
-                </div>
-                <div className="flex border-t border-gray-200 py-2">
-                  <span className="text-gray-500">品種</span>
-                  <span className="ml-auto text-gray-800">{bean.variety}</span>
-                </div>
-                <div className="flex border-t border-gray-200 py-2">
-                  <span className="text-gray-500">精製方法</span>
-                  <span className="ml-auto text-gray-800">{bean.process}</span>
-                </div>
-                <div className="flex border-t border-gray-200 py-2">
-                  <span className="text-gray-500">標高</span>
-                  <span className="ml-auto text-gray-800">{bean.elevation && `${bean.elevation} m`} </span>
-                </div>
-                <div className="flex border-t border-gray-200 py-2">
-                  <span className="text-gray-500">収穫</span>
-                  <span className="ml-auto text-gray-800">{bean.croppedAt && formatCroppedAt(bean.croppedAt)}</span>
-                </div>
+                <BeanDetail bean={bean} />
               </section>
+
               {/* テイストチャート */}
               <section className="offer-taste panel">
                 <div className="max-w-sm mx-auto">
@@ -136,31 +86,13 @@ export const OfferContentCard: FC<Props> = (props) => {
                   />
                 </div>
               </section>
-              {/* TODO コンポーネント化 */}
+
               {/* スケジュール */}
               <section className="offer-schedule panel">
-                <div className="flex border-t border-gray-200 py-2">
-                  <span className="text-gray-500">オファー作成日</span>
-                  <span className="ml-auto text-gray-800">{formattedToJaDate(createdAt)}</span>
-                </div>
-                <div className="flex border-t border-gray-200 py-2">
-                  <span className="text-gray-500">オファー終了日</span>
-                  <span className="ml-auto text-gray-800">{formattedToJaDate(endedAt)}</span>
-                </div>
-                <div className="flex border-t border-gray-200 py-2">
-                  <span className="text-gray-500">焙煎日</span>
-                  <span className="ml-auto text-gray-800">{formattedToJaDate(roastedAt)}</span>
-                </div>
-                <div className="flex border-t border-gray-200 py-2">
-                  <span className="text-gray-500">受け取り開始日</span>
-                  <span className="ml-auto text-gray-800">{formattedToJaDate(receiptStartedAt)}</span>
-                </div>
-                <div className="flex border-t border-gray-200 py-2">
-                  <span className="text-gray-500">受け取り終了日</span>
-                  <span className="ml-auto text-gray-800">{formattedToJaDate(receiptEndedAt)}</span>
-                </div>
+                <OfferSchedule offer={offer} />
               </section>
             </div>
+
             {/* 価格 */}
             <div className="pt-4 flex justify-end">
               <OfferPricePerWeight price={price} weight={weight} />

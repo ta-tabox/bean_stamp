@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom'
 
 import { SecondaryButton } from '@/components/Elements/Button'
 import { Card } from '@/components/Elements/Card'
-import { BeanThumbnail } from '@/features/beans'
+import { BeanDetail, BeanThumbnail } from '@/features/beans'
 import { OfferPricePerWeight } from '@/features/offers/components/molecules/OfferPricePerWeight'
+import { OfferSchedule } from '@/features/offers/components/molecules/OfferSchedule'
 import { OfferStatusTag } from '@/features/offers/components/molecules/OfferStatusTag'
 import { OfferWantedUserStats } from '@/features/offers/components/molecules/OfferWantedUserStats'
 import type { Offer } from '@/features/offers/types'
-import { formattedToJaDate } from '@/utils/date'
 
 type Props = {
   offer: Offer
@@ -58,34 +58,9 @@ export const IndexOfferCard: FC<Props> = (props) => {
           </div>
         </div>
         <div className="mt-4 lg:grid content-between grid-cols-2">
-          <div className="grid-item">
-            <span className="text-gray-500">生産国</span>
-            <span className="ml-auto text-gray-800">{bean.country.name}</span>
-          </div>
-          <div className="lg:ml-4 grid-item">
-            <span className="text-gray-500">焙煎度</span>
-            <span className="ml-auto text-gray-800">{bean.roastLevel.name}</span>
-          </div>
-          <div className="grid-item">
-            <span className="text-gray-500">精製方法</span>
-            <span className="ml-auto text-gray-800">{bean.process}</span>
-          </div>
-          <div className="col-start-1 grid-item">
-            <span className="text-gray-500">オファー終了日</span>
-            <span className="ml-auto text-gray-800">{formattedToJaDate(endedAt)}</span>
-          </div>
-          <div className="lg:ml-4 grid-item">
-            <span className="text-gray-500">焙煎日</span>
-            <span className="ml-auto text-gray-800">{formattedToJaDate(roastedAt)}</span>
-          </div>
-          <div className="grid-item">
-            <span className="text-gray-500">受け取り開始日</span>
-            <span className="ml-auto text-gray-800">{formattedToJaDate(receiptStartedAt)}</span>
-          </div>
-          <div className="lg:ml-4 grid-item">
-            <span className="text-gray-500">受け取り終了日</span>
-            <span className="ml-auto text-gray-800">{formattedToJaDate(receiptEndedAt)}</span>
-          </div>
+          {/* NOTE モバイルで見にくいのでタブ表示にしてもいいかも */}
+          <BeanDetail bean={bean} />
+          <OfferSchedule offer={offer} />
           <div className="col-span-2 w-11/12 lg:w-full mx-auto pr-2 flex justify-end">
             <OfferPricePerWeight price={price} weight={weight} />
           </div>

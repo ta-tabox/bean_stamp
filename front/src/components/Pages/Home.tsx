@@ -40,7 +40,7 @@ export const Home: FC = memo(() => {
               </h1>
               <Link
                 to="/auth/signup"
-                className="text-center hover:text-gray-300 bg-yellow-800 text-white hover:bg-black w-40 sm:w-56 p-4 text-2xl font-medium rounded btn-pop"
+                className="text-center hover:text-gray-300 bg-yellow-800 text-white hover:bg-black w-40 sm:w-56 p-4 text-2xl font-medium rounded shadow-md hover:shadow-lg transition transform hover:-translate-y-0.5"
               >
                 登録する
               </Link>
