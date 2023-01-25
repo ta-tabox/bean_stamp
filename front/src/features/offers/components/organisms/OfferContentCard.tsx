@@ -44,7 +44,7 @@ export const OfferContentCard: FC<Props> = (props) => {
               </div>
             </div>
             <Link to={`/offers/${id}`}>
-              <h1 className="mb-2 text-gray-800 text-lg md:text-2xl title-font">{bean.name}</h1>
+              <h1 className="inline-block mb-2 text-gray-800 text-lg md:text-2xl title-font">{bean.name}</h1>
             </Link>
             <div className="flex justify-between items-end">
               <div className="flex space-x-2">
