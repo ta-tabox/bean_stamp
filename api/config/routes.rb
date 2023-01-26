@@ -90,7 +90,6 @@ Rails.application.routes.draw do
       resources :beans, only: %i[index show create update destroy]
 
       resources :offers, only: %i[index show create update destroy] do
-        collection { get 'search' }
         member do
           get 'wanted_users'
         end

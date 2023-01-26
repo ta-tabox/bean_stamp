@@ -328,6 +328,7 @@ RSpec.describe 'Api::V1::Offers', type: :request do
     end
   end
 
+  # TODO indexに組み込む
   # オファー検索
   describe 'GET #search' do
     let(:auth_tokens) { sign_in_with_token(user_with_a_offer) }

@@ -9,6 +9,7 @@ import { Pagination } from '@/components/Elements/Pagination'
 import { Spinner } from '@/components/Elements/Spinner'
 import { Head } from '@/components/Head'
 import { IndexOfferCard } from '@/features/offers/components/organisms/IndexOfferCard'
+import { OfferStatusFilterForm } from '@/features/offers/components/organisms/OfferStatusFilterForm'
 import { useGetOffers } from '@/features/offers/hooks/useGetOffers'
 
 export const Offers: FC = () => {
@@ -19,20 +20,20 @@ export const Offers: FC = () => {
 
   useEffect(() => {
     // オファー 一覧を取得
-    getOffers({ page: searchParams.get('page') })
+    void getOffers({ page: searchParams.get('page'), status: searchParams.get('status') })
   }, [searchParams])
 
   const onClickNew = () => {
     navigate('/beans')
   }
 
-  // TODO オファー一覧 検索機能の実装
   return (
     <>
       <Head title="オファー 一覧" />
       <ContentHeader>
         <div className="h-full flex justify-between items-end">
           <ContentHeaderTitle title="オファー 一覧" />
+          <OfferStatusFilterForm />
           <PrimaryButton onClick={onClickNew}>コーヒー豆をオファーする</PrimaryButton>
         </div>
       </ContentHeader>

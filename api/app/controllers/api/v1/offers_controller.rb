@@ -6,11 +6,17 @@ class Api::V1::OffersController < Api::ApplicationController
   # TODO: before_action :set_recommended_offers ユーザーのおすすめのオファーをセットする
 
   def index
-    offers = current_api_v1_roaster.offers
-    offers&.map(&:update_status)
-    pagy, @offers = pagy(offers.includes(:roaster, { bean: %i[roast_level bean_images] }).active.recent)
+    status = params[:search]
+    all_offers = current_api_v1_roaster.offers
+    all_offers&.map(&:update_status)
+    offers = if status.blank?
+               all_offers.active.recent
+             else
+               all_offers.search_status(status)
+             end
+    pagy, @offers = pagy(offers.includes(:roaster, { bean: %i[roast_level bean_images] }))
     pagy_headers_merge(pagy)
-    render formats: :json
+    render 'index', formats: :json
   end
 
   def show
@@ -47,18 +53,6 @@ class Api::V1::OffersController < Api::ApplicationController
     else
       render json: { messages: ['オファーの削除に失敗しました'] }, status: :method_not_allowed
     end
-  end
-
-  def search
-    status = params[:search]
-    offers = if status.blank?
-               current_api_v1_roaster.offers.active.recent
-             else
-               current_api_v1_roaster.offers.search_status(status)
-             end
-    pagy, @offers = pagy(offers.includes(:roaster, { bean: %i[roast_level bean_images] }))
-    pagy_headers_merge(pagy)
-    render 'index', formats: :json
   end
 
   def wanted_users
