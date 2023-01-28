@@ -26,6 +26,7 @@ class Offer < ApplicationRecord
   scope :recent, -> { order(created_at: :desc) }
   scope :active, -> { where('receipt_ended_at > ?', Date.current) }
   scope :search_status, ->(status) { where(status: status) }
+
   # userと同都道府県のロースター 且つ favorite_taste_group_idsのタグを持つコーヒー豆
   # 且つ ユーザーが所属するロースター以外のオファーを返す
   # user.roaster.id = nilの場合null以外で検索→レコードが取得できない → '0' 以外で検索するようにする

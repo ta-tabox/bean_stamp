@@ -12,9 +12,9 @@ type Props = {
 
 export const UserItem: FC<Props> = memo((props) => {
   const { user, onClick } = props
-  const { id, name, prefectureCode, describe, image } = user
+  const { id, name, prefectureCode, describe, imageUrl } = user
   const area = translatePrefectureCodeToName({ prefectureCode })
-  const imageUrl = image.url
+
   return (
     <button type="button" className="block w-full" onClick={() => onClick(id)}>
       <div

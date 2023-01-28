@@ -2,7 +2,7 @@ class Api::V1::RoastersController < Api::ApplicationController
   before_action :authenticate_api_v1_user!
   before_action :user_not_belonged_to_roaster_required, only: %i[create]
   before_action :user_belonged_to_roaster_required, only: %i[update destroy]
-  before_action :set_roaster, only: %i[show update destroy followers]
+  before_action :set_roaster, only: %i[show update destroy followers offers]
   before_action :correct_roaster, only: %i[update destroy]
 
   def show
@@ -29,14 +29,22 @@ class Api::V1::RoastersController < Api::ApplicationController
 
   def destroy
     if @roaster.destroy
-      render json: { message: 'ロースターを削除しました' }, status: :ok
+      render json: { messages: ['ロースターを削除しました'] }, status: :ok
     else
-      render json: { message: 'ロースターの削除に失敗しました' }, status: :method_not_allowed
+      render json: { messages: ['ロースターの削除に失敗しました'] }, status: :method_not_allowed
     end
   end
 
   def followers
     @users = @roaster.followers
+    render formats: :json
+  end
+
+  def offers
+    offers = @roaster.offers.recent
+    offers&.map(&:update_status)
+    pagy, @offers = pagy(offers.includes(:roaster, bean: :bean_images))
+    pagy_headers_merge(pagy)
     render formats: :json
   end
 
@@ -63,7 +71,6 @@ class Api::V1::RoastersController < Api::ApplicationController
   def correct_roaster
     return if current_api_v1_user.belonged_roaster?(@roaster)
 
-    # TODO: status: :method_not_allowedを指定する
-    render json: { status: 'error', message: '所属していないロースターの更新・削除はできません' }
+    render json: { messages: ['所属していないロースターの更新・削除はできません'] }, status: :method_not_allowed
   end
 end

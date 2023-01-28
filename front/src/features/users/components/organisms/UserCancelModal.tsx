@@ -39,18 +39,16 @@ export const UserCancelModal: FC<Props> = memo((props) => {
     <Modal contentLabel="本当に退会しますか？" isOpen={isOpen} onClose={onClose} closeButton>
       <ModalContainer>
         <ModalTitle>アカウントの削除</ModalTitle>
-        <div className="sm:mx-12">
-          <ModalText>
-            <>
-              アカウント{`${signedInUser?.name || ''}`}を削除します。
-              <br />
-              この操作は取り消すことができません。
-            </>
-          </ModalText>
-          <div className="flex items-center justify-center mt-4 space-x-4 sm:space-x-8">
-            <SecondaryButton onClick={onClose}>戻る</SecondaryButton>
-            <DangerButton onClick={onClickDelete}>了承して削除する</DangerButton>
-          </div>
+        <ModalText>
+          <>
+            アカウント{`${signedInUser?.name || ''}`}を削除します。
+            <br />
+            この操作は取り消すことができません。
+          </>
+        </ModalText>
+        <div className="flex items-center justify-center mt-4 space-x-4 sm:space-x-8">
+          <SecondaryButton onClick={onClose}>戻る</SecondaryButton>
+          <DangerButton onClick={onClickDelete}>了承して削除する</DangerButton>
         </div>
       </ModalContainer>
     </Modal>

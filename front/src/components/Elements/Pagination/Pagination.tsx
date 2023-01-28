@@ -10,13 +10,15 @@ type Props = {
 
 export const Pagination: FC<Props> = (props) => {
   const { currentPage, totalPage } = props
-  const [, setSearchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
 
   // page番号をクエリに仕込む
   const handlePageClick = (event: { selected: number }) => {
     const { selected } = event
-    // URLに?page= をセット, selectedは実際のページ-1が入る
-    setSearchParams({ page: (selected + 1).toString() })
+    const currentParams = Object.fromEntries([...searchParams])
+
+    // URLに?page= をセット・更新, selectedは実際のページ-1が入る
+    setSearchParams({ ...currentParams, page: (selected + 1).toString() })
   }
 
   return (

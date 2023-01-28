@@ -27,8 +27,8 @@ export const SideNavRoasterToggleButton: FC<Props> = memo((props) => {
     setIsRoaster(!isRoaster)
   }
 
-  const userImageUrl = user.image.url ? `${user.image.url}` : defaultUserImage
-  const roasterImageUrl = roaster.image.url ? `${roaster.image.url}` : defaultRoasterImage
+  const userImageUrl = user.imageUrl ? `${user.imageUrl}` : defaultUserImage
+  const roasterImageUrl = roaster.imageUrl ? `${roaster.imageUrl}` : defaultRoasterImage
 
   return (
     <div>

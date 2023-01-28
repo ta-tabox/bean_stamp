@@ -18,7 +18,7 @@ import type { RoasterCreateData } from '@/features/roasters/types'
 import { createRoasterFormData } from '@/features/roasters/utils/createRoasterFormData'
 import { useErrorNotification } from '@/hooks/useErrorNotification'
 import { useMessage } from '@/hooks/useMessage'
-import type { ApplicationErrorResponse } from '@/types'
+import type { ApplicationMessagesResponse } from '@/types'
 
 import type { SubmitHandler } from 'react-hook-form'
 
@@ -57,7 +57,7 @@ export const RoasterEdit: FC = () => {
       } catch (error) {
         if (error instanceof AxiosError) {
           // NOTE errorの型指定 他に良い方法はないのか？
-          const typedError = error as AxiosError<ApplicationErrorResponse>
+          const typedError = error as AxiosError<ApplicationMessagesResponse>
           const errorMessages = typedError.response?.data.messages
           if (errorMessages) {
             setErrorNotifications(errorMessages)
@@ -90,7 +90,7 @@ export const RoasterEdit: FC = () => {
         <div className="mt-20">
           <FormContainer>
             <div className="flex justify-end -mb-10">
-              <RoasterThumbnail roaster={currentRoaster} />
+              <RoasterThumbnail name={currentRoaster.name} thumbnailUrl={currentRoaster.thumbnailUrl} />
             </div>
             <FormMain>
               <FormTitle>ロースター情報編集</FormTitle>

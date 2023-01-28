@@ -47,7 +47,6 @@ export const UserFollowing: FC = memo(() => {
       </ContentHeader>
 
       {/* ローディング */}
-
       {(userLoading || roastersLoading) && (
         <div className="flex justify-center">
           <Spinner />
@@ -71,6 +70,7 @@ export const UserFollowing: FC = memo(() => {
                       </li>
                     ))}
                   </ol>
+                  {/* TODO ページネーションの実装 */}
                 </Card>
               ) : (
                 <div className="text-center text-gray-400">

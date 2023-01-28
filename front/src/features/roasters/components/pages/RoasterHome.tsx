@@ -1,29 +1,69 @@
 import type { FC } from 'react'
-import { memo } from 'react'
+import { useEffect, memo } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
+import { ContentHeader, ContentHeaderTitle } from '@/components/Elements/Content'
+import { Link } from '@/components/Elements/Link'
+import { Pagination } from '@/components/Elements/Pagination'
+import { Spinner } from '@/components/Elements/Spinner'
 import { Head } from '@/components/Head'
+import { OfferContentCard } from '@/features/offers'
 import { useCurrentRoaster } from '@/features/roasters/hooks/useCurrentRoaster'
-import { PrefectureArray } from '@/utils/prefecture'
+import { useGetOffersByRoaster } from '@/features/roasters/hooks/useGetOffersByRoaster'
 
 export const RoasterHome: FC = memo(() => {
   const { currentRoaster } = useCurrentRoaster()
+  const [searchParams] = useSearchParams()
+  const { offersByRoaster: offers, getOffersByRoaster, loading, currentPage, totalPage } = useGetOffersByRoaster()
 
-  const areaObj = currentRoaster && PrefectureArray.find(({ id }) => id === parseInt(currentRoaster.prefectureCode, 10))
-  const area = areaObj?.label
+  useEffect(() => {
+    // オファー 一覧を取得
+    if (currentRoaster) {
+      getOffersByRoaster({ id: currentRoaster.id.toString(), page: searchParams.get('page') })
+    }
+  }, [currentRoaster, searchParams])
+
   return (
     <>
       <Head title="ホーム" />
-      <h1>{currentRoaster && `${currentRoaster.name}`}のホームページです</h1>
-      {area && <p>{`${area}` || null}がエリアです</p>}
-      <div className="h-64  bg-green-300" />
-      <div className="h-64  bg-pink-300" />
-      <div className="h-64  bg-green-300" />
-      <div className="h-64  bg-pink-300" />
-      <div className="h-64  bg-green-300" />
-      <div className="h-64  bg-pink-300" />
-      <div className="h-64  bg-green-300" />
-      <div className="h-64  bg-pink-300" />
-      <div className="h-64  bg-green-300" />
+      <ContentHeader>
+        <div className="h-full flex justify-between items-end">
+          <ContentHeaderTitle title={`${currentRoaster?.name ?? ''}のホーム`} />
+        </div>
+      </ContentHeader>
+
+      {/* ローディング */}
+      {loading && (
+        <div className="flex justify-center">
+          <Spinner />
+        </div>
+      )}
+
+      {!loading && (
+        <>
+          {/* オファー 一覧 */}
+          {offers && (
+            <section className="mt-4">
+              {offers.length ? (
+                <>
+                  <ol>
+                    {offers.map((offer) => (
+                      <li key={offer.id} className="my-20">
+                        <OfferContentCard offer={offer} />
+                      </li>
+                    ))}
+                  </ol>
+                  {currentPage && totalPage && <Pagination currentPage={currentPage} totalPage={totalPage} />}
+                </>
+              ) : (
+                <div className="text-center text-gray-400">
+                  <Link to="/beans">オファーを作成する</Link>
+                </div>
+              )}
+            </section>
+          )}
+        </>
+      )}
     </>
   )
 })

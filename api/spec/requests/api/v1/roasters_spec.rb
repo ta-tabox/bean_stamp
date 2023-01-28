@@ -65,7 +65,7 @@ RSpec.describe 'Api::V1::Roasters', type: :request do
         subject.call
         json = JSON.parse(response.body)
         expect(response).to have_http_status(:method_not_allowed)
-        expect(json['message']).to eq 'ロースターをすでに登録しています'
+        expect(json['messages'].first).to eq 'ロースターをすでに登録しています'
       end
     end
 
@@ -152,7 +152,7 @@ RSpec.describe 'Api::V1::Roasters', type: :request do
         subject.call
         json = JSON.parse(response.body)
         expect(response).to have_http_status(:method_not_allowed)
-        expect(json['message']).to eq 'ロースターを登録をしてください'
+        expect(json['messages'].first).to eq 'ロースターを登録をしてください'
       end
     end
 
@@ -200,7 +200,7 @@ RSpec.describe 'Api::V1::Roasters', type: :request do
         subject.call
         json = JSON.parse(response.body)
         expect(response).to have_http_status(:method_not_allowed)
-        expect(json['message']).to eq 'ロースターを登録をしてください'
+        expect(json['messages'].first).to eq 'ロースターを登録をしてください'
       end
     end
 
@@ -212,7 +212,7 @@ RSpec.describe 'Api::V1::Roasters', type: :request do
         subject.call
         json = JSON.parse(response.body)
         expect(response).to have_http_status(:success)
-        expect(json).to include('message')
+        expect(json).to include('messages')
       end
     end
   end

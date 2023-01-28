@@ -73,19 +73,29 @@ Rails.application.routes.draw do
       end
 
       resources :users, only: [:show] do
+        collection do
+          get 'current_offers', to: 'users#current_offers' # api/v1/users/current_offers
+        end
         member do
           get 'roasters_followed_by_user', to: 'users#roasters_followed_by_user' # api/v1/users/#{id}/roasters_followed_by_user
         end
       end
 
       resources :roasters, only: %i[show create update destroy] do
-        member { get 'followers' }
+        member do
+          get 'followers'
+          get 'offers'
+        end
       end
 
       resources :roaster_relationships, only: %i[index create destroy]
 
-      resources :beans do
-        resources :offers, only: [:new]
+      resources :beans, only: %i[index show create update destroy]
+
+      resources :offers, only: %i[index show create update destroy] do
+        member do
+          get 'wanted_users'
+        end
       end
     end
   end

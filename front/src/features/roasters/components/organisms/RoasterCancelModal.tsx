@@ -48,18 +48,16 @@ export const RoasterCancelModal: FC<Props> = memo((props) => {
     <Modal contentLabel="ロースターの削除" isOpen={isOpen} onClose={onClose} closeButton>
       <ModalContainer>
         <ModalTitle>ロースターの削除</ModalTitle>
-        <div className="sm:mx-12">
-          <ModalText>
-            <>
-              ロースター「{`${roaster.name}`}」を削除します。
-              <br />
-              この操作は取り消すことができません。
-            </>
-          </ModalText>
-          <div className="flex items-center justify-center mt-4 space-x-4 sm:space-x-8">
-            <SecondaryButton onClick={onClose}>戻る</SecondaryButton>
-            <DangerButton onClick={onClickDelete}>了承して削除する</DangerButton>
-          </div>
+        <ModalText>
+          <>
+            ロースター「{`${roaster.name}`}」を削除します。
+            <br />
+            この操作は取り消すことができません。
+          </>
+        </ModalText>
+        <div className="flex items-center justify-center mt-4 space-x-4 sm:space-x-8">
+          <SecondaryButton onClick={onClose}>戻る</SecondaryButton>
+          <DangerButton onClick={onClickDelete}>了承して削除する</DangerButton>
         </div>
       </ModalContainer>
     </Modal>

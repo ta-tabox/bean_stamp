@@ -22,6 +22,7 @@ export type Bean = {
   roastLevel: { id: number; name: string }
   taste: { ids: number[]; names: string[] }
   imageUrls: string[]
+  thumbnailUrl: string
 }
 
 // react-hook-formで取り扱うデータの型

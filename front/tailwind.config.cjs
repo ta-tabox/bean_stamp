@@ -7,6 +7,10 @@ module.exports = {
         noto: ['Noto Sans JP'],
         notoserif: ['Noto Serif'],
       },
+      // prettier-ignore
+      maxHeight: {
+        '128': '32rem',
+      },
     },
   },
   variants: {

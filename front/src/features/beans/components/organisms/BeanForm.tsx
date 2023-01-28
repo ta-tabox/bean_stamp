@@ -41,7 +41,7 @@ export const BeanForm: FC<Props> = (props) => {
 
   const [previewImage, setPreviewImage] = useState<Array<string> | null>()
 
-  // フォーム初期値の設定 RoasterNew -> {}, Roaster Edit -> {初期値}
+  // フォーム初期値の設定 BeanNew -> {}, BeanEdit -> {初期値}
   const defaultValues = () => {
     let values: BeanCreateUpdateData | undefined
     if (bean) {
@@ -173,7 +173,12 @@ export const BeanForm: FC<Props> = (props) => {
           {/* beanあり(更新時)→ どれか変更, なし(新規作成時)→ 該当項目変更必須 */}
           <PrimaryButton
             disabled={
-              bean ? !isDirty : !dirtyFields.name || !dirtyFields.countryOption || !dirtyFields.roastLevelOption
+              bean
+                ? !isDirty
+                : !dirtyFields.name ||
+                  !dirtyFields.countryOption ||
+                  !dirtyFields.roastLevelOption ||
+                  !dirtyFields.tasteTagOptions
             }
             loading={loading}
           >

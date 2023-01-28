@@ -28,11 +28,9 @@ export const RoasterFormCancelModal: FC<Props> = memo((props) => {
             キャンセルしますか？
           </>
         </ModalText>
-        <div className="mx-2 md:mx-12">
-          <div className="flex items-center justify-center mt-4 space-x-8">
-            <SecondaryButton onClick={onClose}>戻る</SecondaryButton>
-            <PrimaryButton onClick={onClickOK}>OK</PrimaryButton>
-          </div>
+        <div className="flex items-center justify-center mt-4 space-x-8">
+          <SecondaryButton onClick={onClose}>戻る</SecondaryButton>
+          <PrimaryButton onClick={onClickOK}>OK</PrimaryButton>
         </div>
       </ModalContainer>
     </Modal>

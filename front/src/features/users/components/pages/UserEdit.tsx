@@ -29,7 +29,7 @@ export const UserEdit: FC = () => {
         <div className="mt-20">
           <FormContainer>
             <div className="flex justify-end -mb-10">
-              <UserThumbnail user={signedInUser} />
+              <UserThumbnail name={signedInUser.name} thumbnailUrl={signedInUser.thumbnailUrl} />
             </div>
             <FormMain>
               <FormTitle>ユーザー情報編集</FormTitle>

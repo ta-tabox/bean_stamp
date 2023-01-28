@@ -57,6 +57,7 @@ export const RoasterFollower: FC = memo(() => {
                       </li>
                     ))}
                   </ol>
+                  {/* ページネーションの実装 */}
                 </Card>
               ) : (
                 <div className="text-center text-gray-400">

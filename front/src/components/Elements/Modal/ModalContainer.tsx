@@ -6,5 +6,5 @@ type Props = {
 
 export const ModalContainer: FC<Props> = (props) => {
   const { children } = props
-  return <div className="px-4 sm:px-8">{children}</div>
+  return <div className="p-4 sm:p-8 max-w-xl mx-auto container">{children}</div>
 }

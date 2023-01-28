@@ -40,7 +40,7 @@ export const UserSideNav: FC<Props> = memo((props) => {
           </svg>
         </SideNavLink>
       </li>
-      {/* TODO フォローリンク */}
+      {/* フォローリンク */}
       <li className="mb-2">
         <SideNavLink title="Follow" to={`/users/${user.id}/following`}>
           <svg className="h-8 w-8">

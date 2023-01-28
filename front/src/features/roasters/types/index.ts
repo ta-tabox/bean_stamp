@@ -6,12 +6,8 @@ export type Roaster = {
   phoneNumber: string
   prefectureCode: string
   describe: string | null
-  image: {
-    url: string | null
-    thumb: {
-      url: string | null
-    }
-  }
+  imageUrl: string | null
+  thumbnailUrl: string | null
   address: string
   guest: boolean
   followersCount: number

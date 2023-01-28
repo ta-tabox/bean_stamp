@@ -8,6 +8,7 @@ import { Head } from '@/components/Head'
 import { BeanCancelModal } from '@/features/beans/components/organisms/BeanCancelModal'
 import { BeanCard } from '@/features/beans/components/organisms/BeanCard'
 import { useGetBean } from '@/features/beans/hooks/useGetBean'
+import { OfferNewModal } from '@/features/offers'
 import { useModal } from '@/hooks/useModal'
 import { isNumber } from '@/utils/regexp'
 
@@ -15,7 +16,8 @@ export const Bean: FC = () => {
   const urlParams = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { bean, getBean } = useGetBean()
-  const { isOpen, onOpen, onClose } = useModal()
+  const { isOpen: isOpenDelete, onOpen: onOpenDelete, onClose: onCloseDelete } = useModal()
+  const { isOpen: isOpenOfferNew, onOpen: onOpenOfferNew, onClose: onCloseOfferNew } = useModal()
 
   useEffect(() => {
     if (urlParams.id && isNumber(urlParams.id)) {
@@ -25,9 +27,8 @@ export const Bean: FC = () => {
     }
   }, [urlParams.id])
 
-  // TODO オファー作成モーダルの表示
   const onClickOffer = () => {
-    alert('オファー作成')
+    onOpenOfferNew()
   }
 
   const onClickEdit = () => {
@@ -38,7 +39,7 @@ export const Bean: FC = () => {
   }
 
   const onClickDelete = () => {
-    onOpen()
+    onOpenDelete()
   }
   return (
     <>
@@ -58,7 +59,8 @@ export const Bean: FC = () => {
         {bean && (
           <>
             <BeanCard bean={bean} />
-            <BeanCancelModal bean={bean} isOpen={isOpen} onClose={onClose} />
+            <BeanCancelModal bean={bean} isOpen={isOpenDelete} onClose={onCloseDelete} />
+            <OfferNewModal beanId={bean.id} beanName={bean.name} isOpen={isOpenOfferNew} onClose={onCloseOfferNew} />
           </>
         )}
       </section>
