@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import type { Offer } from '@/features/offers/types'
 import { getCurrentOffers as getCurrentOffersRequest } from '@/features/users/api/getCurrentOffers'
 import { useMessage } from '@/hooks/useMessage'
+import { usePagination } from '@/hooks/usePagination'
 
 export const useGetCurrentOffers = () => {
   const navigate = useNavigate()
@@ -11,8 +12,7 @@ export const useGetCurrentOffers = () => {
 
   const [loading, setLoading] = useState(false)
   const [offers, setOffers] = useState<Array<Offer>>()
-  const [currentPage, setCurrentPage] = useState<number>()
-  const [totalPage, setTotalPage] = useState<number>()
+  const { setPagination } = usePagination()
 
   type GetCurrentOffers = {
     page: string | null
@@ -23,10 +23,7 @@ export const useGetCurrentOffers = () => {
     getCurrentOffersRequest({ page })
       .then((response) => {
         setOffers(response.data)
-        const newCurrentPage = parseInt(response.headers['current-page'], 10)
-        const newTotalPage = parseInt(response.headers['total-pages'], 10)
-        setCurrentPage(newCurrentPage)
-        setTotalPage(newTotalPage)
+        setPagination({ headers: response.headers })
       })
       .catch(() => {
         navigate('/')
@@ -37,5 +34,5 @@ export const useGetCurrentOffers = () => {
       })
   }
 
-  return { currentOffers: offers, getCurrentOffers, loading, currentPage, totalPage }
+  return { currentOffers: offers, getCurrentOffers, loading }
 }

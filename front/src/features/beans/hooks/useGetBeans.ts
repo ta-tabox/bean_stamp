@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { getBeans as getBeansRequest } from '@/features/beans/api/getBeans'
 import type { Bean } from '@/features/beans/types'
 import { useMessage } from '@/hooks/useMessage'
+import { usePagination } from '@/hooks/usePagination'
 
 export const useGetBeans = () => {
   const navigate = useNavigate()
@@ -11,8 +12,7 @@ export const useGetBeans = () => {
 
   const [beans, setBeans] = useState<Array<Bean>>([])
   const [loading, setLoading] = useState(false)
-  const [currentPage, setCurrentPage] = useState<number>()
-  const [totalPage, setTotalPage] = useState<number>()
+  const { setPagination } = usePagination()
 
   type GetBeans = {
     page: string | null
@@ -22,10 +22,7 @@ export const useGetBeans = () => {
     getBeansRequest({ page })
       .then((response) => {
         setBeans(response.data)
-        const newCurrentPage = parseInt(response.headers['current-page'], 10)
-        const newTotalPage = parseInt(response.headers['total-pages'], 10)
-        setCurrentPage(newCurrentPage)
-        setTotalPage(newTotalPage)
+        setPagination({ headers: response.headers })
       })
       .catch(() => {
         navigate('/')
@@ -36,5 +33,5 @@ export const useGetBeans = () => {
       })
   }
 
-  return { beans, getBeans, currentPage, totalPage, loading }
+  return { beans, getBeans, loading }
 }

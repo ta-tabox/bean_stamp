@@ -10,12 +10,14 @@ import { Spinner } from '@/components/Elements/Spinner'
 import { Head } from '@/components/Head'
 import { BeanItem } from '@/features/beans/components/organisms/BeanItem'
 import { useGetBeans } from '@/features/beans/hooks/useGetBeans'
+import { usePagination } from '@/hooks/usePagination'
 
 export const Beans: FC = memo(() => {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
 
-  const { beans, getBeans, currentPage, totalPage, loading } = useGetBeans()
+  const { beans, getBeans, loading } = useGetBeans()
+  const { currentPage, totalPage } = usePagination()
 
   useEffect(() => {
     // コーヒー豆一覧を取得

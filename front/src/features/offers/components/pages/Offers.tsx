@@ -11,12 +11,14 @@ import { Head } from '@/components/Head'
 import { IndexOfferCard } from '@/features/offers/components/organisms/IndexOfferCard'
 import { OfferStatusFilterForm } from '@/features/offers/components/organisms/OfferStatusFilterForm'
 import { useGetOffers } from '@/features/offers/hooks/useGetOffers'
+import { usePagination } from '@/hooks/usePagination'
 
 export const Offers: FC = () => {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
 
-  const { offers, getOffers, currentPage, totalPage, loading } = useGetOffers()
+  const { offers, getOffers, loading } = useGetOffers()
+  const { currentPage, totalPage } = usePagination()
 
   useEffect(() => {
     // オファー 一覧を取得

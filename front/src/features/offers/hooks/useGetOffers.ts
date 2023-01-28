@@ -5,6 +5,7 @@ import { getOffers as getOffersRequest } from '@/features/offers/api/getOffers'
 import { getOffersWithSearch } from '@/features/offers/api/getOffersWithSearch'
 import type { Offer } from '@/features/offers/types'
 import { useMessage } from '@/hooks/useMessage'
+import { usePagination } from '@/hooks/usePagination'
 
 export const useGetOffers = () => {
   const navigate = useNavigate()
@@ -12,8 +13,7 @@ export const useGetOffers = () => {
 
   const [offers, setOffers] = useState<Array<Offer>>([])
   const [loading, setLoading] = useState(false)
-  const [currentPage, setCurrentPage] = useState<number>()
-  const [totalPage, setTotalPage] = useState<number>()
+  const { setPagination } = usePagination()
 
   type GetOffers = {
     page: string | null
@@ -37,11 +37,12 @@ export const useGetOffers = () => {
     }
 
     setOffers(response.data)
-    const newCurrentPage = parseInt(response.headers['current-page'], 10)
-    const newTotalPage = parseInt(response.headers['total-pages'], 10)
-    setCurrentPage(newCurrentPage)
-    setTotalPage(newTotalPage)
+    setPagination({ headers: response.headers })
+    // const newCurrentPage = parseInt(response.headers['current-page'], 10)
+    // const newTotalPage = parseInt(response.headers['total-pages'], 10)
+    // setCurrentPage(newCurrentPage)
+    // setTotalPage(newTotalPage)
   }
 
-  return { offers, getOffers, currentPage, totalPage, loading }
+  return { offers, getOffers, loading }
 }

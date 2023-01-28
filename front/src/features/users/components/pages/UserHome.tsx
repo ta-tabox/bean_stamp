@@ -12,11 +12,13 @@ import { useLoadUser } from '@/features/auth'
 import { useSignedInUser } from '@/features/auth/hooks/useSignedInUser'
 import { OfferContentCard } from '@/features/offers'
 import { useGetCurrentOffers } from '@/features/users/hooks/useGetCurrentOffers'
+import { usePagination } from '@/hooks/usePagination'
 
 export const UserHome: FC = memo(() => {
   const { signedInUser } = useSignedInUser()
   const { loadUser } = useLoadUser()
-  const { currentOffers, getCurrentOffers, loading, totalPage, currentPage } = useGetCurrentOffers()
+  const { currentOffers, getCurrentOffers, loading } = useGetCurrentOffers()
+  const { currentPage, totalPage } = usePagination()
   const [searchParams, setSearchParams] = useSearchParams()
 
   // NOTE サインイン直後のユーザー＆ロースター情報の更新はここでOKか？
