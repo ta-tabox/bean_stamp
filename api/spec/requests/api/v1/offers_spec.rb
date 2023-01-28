@@ -193,7 +193,7 @@ RSpec.describe 'Api::V1::Offers', type: :request do
         it_behaves_like 'does not create a offer'
       end
 
-      # 日���データの順番をテストする
+      # 日付データの順番をテストする
       context 'when the roasterd_at is earlier than the ended_at' do
         let(:offer_params) { attributes_for(:offer, :too_early_roasted_at, bean_id: bean.id) }
         let(:error_message) { '焙煎日はオファー終了日以降の日付を入力してください' }
@@ -355,7 +355,7 @@ RSpec.describe 'Api::V1::Offers', type: :request do
     end
   end
 
-  # オファ���に��ォン��したユーザー一覧
+  # オファーにwantしたユーザー一覧
   describe 'GET #wanted_users' do
     let(:wanted_user) { create(:user) }
 
