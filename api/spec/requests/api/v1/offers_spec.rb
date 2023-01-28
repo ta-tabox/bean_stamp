@@ -35,6 +35,33 @@ RSpec.describe 'Api::V1::Offers', type: :request do
     end
   end
 
+  # オファーフィルタリング
+  describe 'GET #index with status params' do
+    subject { get api_v1_offers_path, params: { search: status }, headers: auth_tokens }
+
+    let(:auth_tokens) { sign_in_with_token(user_with_a_offer) }
+    let(:bean) { create(:bean, :with_image_and_tags, roaster: user_with_a_offer.roaster) }
+    let!(:offering_offer) { create(:offer, bean: bean) }
+    let!(:preparing_offer) { create(:offer, :on_preparing, bean: bean) }
+    let!(:selling_offer) { create(:offer, :on_selling, bean: bean) }
+    let!(:sold_offer) { create(:offer, :end_of_sales, bean: bean) }
+    # ターゲット
+    let!(:roasting_bean) { create(:bean, :with_image_and_tags, name: 'roasting_bean', roaster: user_with_a_offer.roaster) }
+    let!(:roasting_offer) { create(:offer, :on_roasting, bean: roasting_bean) }
+
+    # ロースト中のウォンツをsearch
+    context 'when search for on_roasting' do
+      let(:status) { 'on_roasting' }
+      it 'returns offers on_roasting by json' do
+        subject
+        json = JSON.parse(response.body)
+        expect(response).to have_http_status(:success)
+        expect(json.length).to eq 1
+        expect(json[0]['roasted_at']).to eq roasting_offer.roasted_at.strftime('%Y-%m-%d')
+      end
+    end
+  end
+
   # オファー情報取得
   describe 'GET #show' do
     subject { get api_v1_offer_path(offer), headers: auth_tokens }
@@ -328,33 +355,7 @@ RSpec.describe 'Api::V1::Offers', type: :request do
     end
   end
 
-  # TODO indexに組み込む
-  # オファー検索
-  describe 'GET #search' do
-    let(:auth_tokens) { sign_in_with_token(user_with_a_offer) }
-    let(:bean) { create(:bean, :with_image_and_tags, roaster: user_with_a_offer.roaster) }
-    let!(:offering_offer) { create(:offer, bean: bean) }
-    let!(:preparing_offer) { create(:offer, :on_preparing, bean: bean) }
-    let!(:selling_offer) { create(:offer, :on_selling, bean: bean) }
-    let!(:sold_offer) { create(:offer, :end_of_sales, bean: bean) }
-    # ターゲット
-    let!(:roasting_bean) { create(:bean, :with_image_and_tags, name: 'roasting_bean', roaster: user_with_a_offer.roaster) }
-    let!(:roasting_offer) { create(:offer, :on_roasting, bean: roasting_bean) }
-
-    # ロースト中のウォンツをsearch
-    context 'when search for on_roasting' do
-      let(:status) { 'on_roasting' }
-      it 'returns offers on_roasting by json' do
-        get search_api_v1_offers_path, params: { search: status }, headers: auth_tokens
-        json = JSON.parse(response.body)
-        expect(response).to have_http_status(:success)
-        expect(json.length).to eq 1
-        expect(json[0]['roasted_at']).to eq roasting_offer.roasted_at.strftime('%Y-%m-%d')
-      end
-    end
-  end
-
-  # オファーにウォンツしたユーザー一覧
+  # オファ���に��ォン��したユーザー一覧
   describe 'GET #wanted_users' do
     let(:wanted_user) { create(:user) }
 
