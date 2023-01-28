@@ -9,7 +9,7 @@ class Api::V1::UsersController < Api::ApplicationController
   def roasters_followed_by_user
     pagy, @roasters = pagy(@user.following_roasters)
     pagy_headers_merge(pagy)
-    render formats: :json
+    render 'api/v1/roasters/index', formats: :json
   end
 
   def current_offers

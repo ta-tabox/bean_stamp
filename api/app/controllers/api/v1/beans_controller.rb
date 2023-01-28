@@ -23,7 +23,7 @@ class Api::V1::BeansController < Api::ApplicationController
       @bean.upload_images.each do |img|
         @bean_image = @bean.bean_images.create(image: img, bean_id: @bean.id)
       end
-      render formats: :json
+      render 'show', formats: :json
     else
       render json: { messages: @bean.errors.full_messages }, status: :unprocessable_entity
     end
@@ -35,7 +35,7 @@ class Api::V1::BeansController < Api::ApplicationController
     @bean.upload_images = params.dig(:bean_image, :images)
 
     if @bean.update_with_bean_images(bean_params_with_taste_tags)
-      render formats: :json
+      render 'show', formats: :json
     else
       render json: { messages: @bean.errors.full_messages }, status: :unprocessable_entity
     end
