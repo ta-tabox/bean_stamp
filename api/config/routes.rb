@@ -73,6 +73,9 @@ Rails.application.routes.draw do
       end
 
       resources :users, only: [:show] do
+        collection do
+          get 'current_offers', to: 'users#current_offers' # api/v1/users/current_offers
+        end
         member do
           get 'roasters_followed_by_user', to: 'users#roasters_followed_by_user' # api/v1/users/#{id}/roasters_followed_by_user
         end

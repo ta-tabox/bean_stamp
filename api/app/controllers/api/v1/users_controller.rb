@@ -11,6 +11,16 @@ class Api::V1::UsersController < Api::ApplicationController
     render formats: :json
   end
 
+  def current_offers
+    # enum型のon_offeringでオファー中のオファーを引っ張るとオファーが終了しているのに、
+    # statusが更新されていないものを取ることがある→where文でended_atを直接参照するようにした
+    offers = Offer.where('ended_at >= ?', Date.current).following_by(current_api_v1_user).recent
+    offers&.map(&:update_status)
+    pagy, @offers = pagy(offers.includes(:roaster, bean: %i[bean_images roast_level]))
+    pagy_headers_merge(pagy)
+    render 'api/v1/offers/index', formats: :json
+  end
+
   private
 
   def set_user
