@@ -65,7 +65,6 @@ export const UserFollowing: FC = memo(() => {
       )}
 
       {/* フォローしているロースター一覧 */}
-
       {roasters && (
         <section className="mt-4 mb-20 py-4 text-gray-600">
           {roasters.length ? (
