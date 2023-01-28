@@ -6,12 +6,14 @@ import { Pagination } from '@/components/Elements/Pagination'
 import { Spinner } from '@/components/Elements/Spinner'
 import { OfferContentCard } from '@/features/offers'
 import { useGetOffersByRoaster } from '@/features/roasters/hooks/useGetOffersByRoaster'
+import { usePagination } from '@/hooks/usePagination'
 import { isNumber } from '@/utils/regexp'
 
 export const RoasterOffers: FC = memo(() => {
   const urlParams = useParams<{ id: string }>()
   const [searchParams] = useSearchParams()
-  const { offersByRoaster: offers, getOffersByRoaster, loading, currentPage, totalPage } = useGetOffersByRoaster()
+  const { offersByRoaster: offers, getOffersByRoaster, loading } = useGetOffersByRoaster()
+  const { currentPage, totalPage } = usePagination()
 
   useEffect(() => {
     const fetchData = (id: string, page: string | null) => {

@@ -26,7 +26,7 @@ export const FollowUnFollowButton: FC<Props> = (props) => {
       .then((response) => {
         setRoasterRelationshipId(response.data.roasterRelationship.id) // deleteリクエストで使用するurl: /roaster_relationships/:idに使用
         setFollowersCount(followersCount + 1) // RoasterCardで使用するfollower数
-        getUsersFollowingToRoaster(roasterId.toString()) // API:RoasterのFollower情報を更新 RoasterFollowerコンポーネントで表示
+        getUsersFollowingToRoaster({ id: roasterId.toString(), page: null }) // API:RoasterのFollower情報を更新 RoasterFollowerコンポーネントで表示
       })
       .catch(() => {
         showMessage({ message: 'フォローに失敗しました', type: 'error' })
@@ -39,7 +39,7 @@ export const FollowUnFollowButton: FC<Props> = (props) => {
         .then(() => {
           setRoasterRelationshipId(null) // roaster_relationship削除に伴うりセット
           setFollowersCount(followersCount - 1) // RoasterCardで使用するfollower数
-          getUsersFollowingToRoaster(roasterId.toString()) // API:RoasterのFollower情報を更新 RoasterFollowerコンポーネントで表示
+          getUsersFollowingToRoaster({ id: roasterId.toString(), page: null }) // API:RoasterのFollower情報を更新 RoasterFollowerコンポーネントで表示
         })
         .catch(() => {
           showMessage({ message: 'フォロー削除に失敗しました', type: 'error' })

@@ -13,7 +13,7 @@ class Api::V1::RoastersController < Api::ApplicationController
     @roaster = current_api_v1_user.build_roaster(roaster_params)
     if @roaster.save
       current_api_v1_user.save
-      render formats: :json
+      render 'show', formats: :json
     else
       render json: { messages: @roaster.errors.full_messages }, status: :unprocessable_entity
     end
@@ -21,7 +21,7 @@ class Api::V1::RoastersController < Api::ApplicationController
 
   def update
     if @roaster.update(roaster_params)
-      render formats: :json
+      render 'show', formats: :json
     else
       render json: { messages: @roaster.errors.full_messages }, status: :unprocessable_entity
     end
@@ -36,8 +36,9 @@ class Api::V1::RoastersController < Api::ApplicationController
   end
 
   def followers
-    @users = @roaster.followers
-    render formats: :json
+    pagy, @users = pagy(@roaster.followers)
+    pagy_headers_merge(pagy)
+    render 'api/v1/users/index', formats: :json
   end
 
   def offers
@@ -45,7 +46,7 @@ class Api::V1::RoastersController < Api::ApplicationController
     offers&.map(&:update_status)
     pagy, @offers = pagy(offers.includes(:roaster, bean: :bean_images))
     pagy_headers_merge(pagy)
-    render formats: :json
+    render 'api/v1/offers/index', formats: :json
   end
 
   private

@@ -3,15 +3,14 @@ import { useState } from 'react'
 import type { Offer } from '@/features/offers/types'
 import { getOffersByRoaster as getOffersByRoasterRequest } from '@/features/roasters/api/getOffersByRoaster'
 import { useMessage } from '@/hooks/useMessage'
+import { usePagination } from '@/hooks/usePagination'
 
 export const useGetOffersByRoaster = () => {
   const { showMessage } = useMessage()
 
   const [offersByRoaster, setOffersByRoaster] = useState<Array<Offer>>([])
   const [loading, setLoading] = useState(false)
-  const [currentPage, setCurrentPage] = useState<number>()
-  const [totalPage, setTotalPage] = useState<number>()
-
+  const { setPagination } = usePagination()
   type GetOffers = {
     id: string
     page: string | null
@@ -21,10 +20,7 @@ export const useGetOffersByRoaster = () => {
     getOffersByRoasterRequest({ id, page })
       .then((response) => {
         setOffersByRoaster(response.data)
-        const newCurrentPage = parseInt(response.headers['current-page'], 10)
-        const newTotalPage = parseInt(response.headers['total-pages'], 10)
-        setCurrentPage(newCurrentPage)
-        setTotalPage(newTotalPage)
+        setPagination({ headers: response.headers })
       })
       .catch(() => {
         showMessage({ message: 'オファーの取得に失敗しました', type: 'error' })
@@ -34,5 +30,5 @@ export const useGetOffersByRoaster = () => {
       })
   }
 
-  return { offersByRoaster, getOffersByRoaster, currentPage, totalPage, loading }
+  return { offersByRoaster, getOffersByRoaster, loading }
 }

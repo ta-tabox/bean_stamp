@@ -10,11 +10,13 @@ import { Head } from '@/components/Head'
 import { OfferContentCard } from '@/features/offers'
 import { useCurrentRoaster } from '@/features/roasters/hooks/useCurrentRoaster'
 import { useGetOffersByRoaster } from '@/features/roasters/hooks/useGetOffersByRoaster'
+import { usePagination } from '@/hooks/usePagination'
 
 export const RoasterHome: FC = memo(() => {
   const { currentRoaster } = useCurrentRoaster()
   const [searchParams] = useSearchParams()
-  const { offersByRoaster: offers, getOffersByRoaster, loading, currentPage, totalPage } = useGetOffersByRoaster()
+  const { offersByRoaster: offers, getOffersByRoaster, loading } = useGetOffersByRoaster()
+  const { currentPage, totalPage } = usePagination()
 
   useEffect(() => {
     // オファー 一覧を取得
