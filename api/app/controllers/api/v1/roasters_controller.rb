@@ -36,7 +36,8 @@ class Api::V1::RoastersController < Api::ApplicationController
   end
 
   def followers
-    @users = @roaster.followers
+    pagy, @users = pagy(@roaster.followers)
+    pagy_headers_merge(pagy)
     render formats: :json
   end
 

@@ -1,22 +1,30 @@
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { getUsersWantedToOffer as getUsersWantedToOfferRequest } from '@/features/offers/api/getUsersWantedToOffer'
 import type { User } from '@/features/users'
 import { useMessage } from '@/hooks/useMessage'
+import { usePagination } from '@/hooks/usePagination'
 
 export const useGetUsersWantedToOffer = () => {
   const navigate = useNavigate()
   const { showMessage } = useMessage()
   const [usersWantedToOffer, setUsersWantedToOffer] = useState<Array<User>>([])
+  const { setPagination } = usePagination()
 
   const [loading, setLoading] = useState(false)
 
-  const getUsersWantedToOffer = useCallback((id: string) => {
+  type GetUsersWantedToOffer = {
+    id: string
+    page: string | null
+  }
+
+  const getUsersWantedToOffer = ({ id, page }: GetUsersWantedToOffer) => {
     setLoading(true)
-    getUsersWantedToOfferRequest({ id })
+    getUsersWantedToOfferRequest({ id, page })
       .then((response) => {
         setUsersWantedToOffer(response.data)
+        setPagination({ headers: response.headers })
       })
       .catch(() => {
         navigate('/')
@@ -25,7 +33,7 @@ export const useGetUsersWantedToOffer = () => {
       .finally(() => {
         setLoading(false)
       })
-  }, [])
+  }
 
   return { usersWantedToOffer, getUsersWantedToOffer, loading }
 }
