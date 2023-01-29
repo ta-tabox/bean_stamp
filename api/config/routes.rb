@@ -97,6 +97,13 @@ Rails.application.routes.draw do
           get 'wanted_users'
         end
       end
+
+      resources :wants, only: %i[index show create destroy] do
+        member do
+          patch 'receipt', to: 'wants#receipt'
+          patch 'rate', to: 'wants#rate'
+        end
+      end
     end
   end
 end
