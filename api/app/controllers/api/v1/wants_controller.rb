@@ -8,9 +8,15 @@ class Api::V1::WantsController < Api::ApplicationController
   before_action :required_want_is_not_rated, only: :rate
 
   def index
-    wants = current_api_v1_user.wants.includes(:offer)
-    wants&.map { |want| want.offer.update_status } # NOTE: ステータス更新
-    pagy, @wants = pagy(wants.includes(offer: [:roaster, { bean: %i[roast_level country] }]).recent.active)
+    status = params[:search]
+    all_wants = current_api_v1_user.wants.includes(:offer)
+    all_wants&.map { |want| want.offer.update_status } # NOTE: ステータス更新
+    wants = if status.blank?
+              all_wants.active.recent
+            else
+              all_wants.search_status(status)
+            end
+    pagy, @wants = pagy(wants.includes(offer: [:roaster, { bean: %i[roast_level country] }]))
     pagy_headers_merge(pagy)
     render formats: :json
   end
@@ -40,17 +46,6 @@ class Api::V1::WantsController < Api::ApplicationController
     render 'show', formats: :json
   end
 
-  # def search
-  #   status = params[:search]
-  #   wants = if status.blank?
-  #             current_api_v1_user.wants.includes(offer: [:roaster, { bean: %i[roast_level country] }]).active.recent
-  #           else
-  #             current_api_v1_user.wants.includes(offer: [:roaster, { bean: %i[roast_level country] }]).search_status(status)
-  #           end
-  #   @pagy, @wants = pagy(wants)
-  #   render 'index'
-  # end
-
   def rate
     @want.update(want_params)
     render 'show', formats: :json
@@ -59,7 +54,7 @@ class Api::V1::WantsController < Api::ApplicationController
   private
 
   def want_params
-    params.require(:want).permit(:rate)
+    params.require(:want).permit(:offer_id, :rate)
   end
 
   def user_had_want_required_and_set_want
@@ -70,7 +65,7 @@ class Api::V1::WantsController < Api::ApplicationController
   end
 
   def set_offer_and_required_before_the_receipted_ended_at
-    @offer = Offer.find(params[:offer_id])
+    @offer = Offer.find(want_params[:offer_id])
     return unless @offer.ended_at.before? Date.current
 
     render json: { messages: ['オファーは終了しました'] }, status: :method_not_allowed
