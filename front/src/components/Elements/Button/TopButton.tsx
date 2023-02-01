@@ -1,7 +1,8 @@
-import { useSignedInUser } from '@/features/auth'
 import type { FC } from 'react'
 import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
+
+import { useSignedInUser } from '@/features/auth'
 
 export const TopButton: FC = memo(() => {
   const navigate = useNavigate()

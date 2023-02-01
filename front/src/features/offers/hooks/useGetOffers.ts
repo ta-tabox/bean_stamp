@@ -38,10 +38,6 @@ export const useGetOffers = () => {
 
     setOffers(response.data)
     setPagination({ headers: response.headers })
-    // const newCurrentPage = parseInt(response.headers['current-page'], 10)
-    // const newTotalPage = parseInt(response.headers['total-pages'], 10)
-    // setCurrentPage(newCurrentPage)
-    // setTotalPage(newTotalPage)
   }
 
   return { offers, getOffers, loading }

@@ -3,25 +3,24 @@ import { useNavigate } from 'react-router-dom'
 
 import { SecondaryButton } from '@/components/Elements/Button'
 import { Card } from '@/components/Elements/Card'
-import { BeanDetail, BeanThumbnail } from '@/features/beans'
-import { OfferPricePerWeight } from '@/features/offers/components/molecules/OfferPricePerWeight'
-import { OfferSchedule } from '@/features/offers/components/molecules/OfferSchedule'
-import { OfferStatusTag } from '@/features/offers/components/molecules/OfferStatusTag'
-import { OfferWantedUserStats } from '@/features/offers/components/molecules/OfferWantedUserStats'
-import type { Offer } from '@/features/offers/types'
+import { BeanDetail } from '@/features/beans'
+import { OfferPricePerWeight, OfferSchedule, OfferStatusTag } from '@/features/offers'
+import { RoasterNameLink, RoasterThumbnail } from '@/features/roasters'
+import type { Want } from '@/features/wants/type'
 
 type Props = {
-  offer: Offer
+  want: Want
 }
 
-export const IndexOfferCard: FC<Props> = (props) => {
-  const { offer } = props
-  const { id, status, roaster, amount, price, weight, wantCount, bean } = offer
+export const IndexWantCard: FC<Props> = (props) => {
+  const { want } = props
+  const { offer } = want
+  const { status, roaster, price, weight, bean } = offer
 
   const navigate = useNavigate()
 
   const onClickShow = () => {
-    navigate(`/offers/${offer.id}`)
+    navigate(`/wants/${want.id}`)
   }
 
   return (
@@ -29,11 +28,15 @@ export const IndexOfferCard: FC<Props> = (props) => {
       <div className="px-8">
         <div className="w-11/12 mx-auto">
           <div className="flex justify-center -mt-16 md:justify-end items-end">
-            <BeanThumbnail name={bean.name} thumbnailUrl={bean.thumbnailUrl} />
+            <RoasterThumbnail name={roaster.name} thumbnailUrl={roaster.thumbnailUrl} />
           </div>
           <div className="flex justify-between items-end mb-2">
             <OfferStatusTag status={status} />
-            <OfferWantedUserStats offerId={id} roasterId={roaster.id} count={wantCount} amount={amount} />
+            {/* TODO 受け取り完了バッジ */}
+            <OfferStatusTag status={status} />
+            <div className="flex-1 w-2/3 md:w-1/3 ml-auto">
+              <RoasterNameLink id={roaster.id} name={roaster.name} />
+            </div>
           </div>
           <div className="md:flex items-baseline">
             <h1 className="md:mt-2 text-xl lg:text-2xl font-medium text-gray-800 lg:mt-0">{bean.name}</h1>

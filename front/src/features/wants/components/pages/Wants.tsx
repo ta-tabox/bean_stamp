@@ -1,43 +1,34 @@
 import type { FC } from 'react'
 import { useEffect } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
-import { PrimaryButton } from '@/components/Elements/Button'
 import { ContentHeader, ContentHeaderTitle } from '@/components/Elements/Content'
 import { Link } from '@/components/Elements/Link'
 import { Pagination } from '@/components/Elements/Pagination'
 import { Spinner } from '@/components/Elements/Spinner'
 import { Head } from '@/components/Head'
-import { IndexOfferCard } from '@/features/offers/components/organisms/IndexOfferCard'
-import { OfferStatusFilterForm } from '@/features/offers/components/organisms/OfferStatusFilterForm'
-import { useGetOffers } from '@/features/offers/hooks/useGetOffers'
+import { OfferStatusFilterForm } from '@/features/offers'
+import { IndexWantCard } from '@/features/wants/components/organisms/IndexWantCard'
+import { useGetWants } from '@/features/wants/hooks/useGetWants'
 import { usePagination } from '@/hooks/usePagination'
 
-export const Offers: FC = () => {
-  const navigate = useNavigate()
+export const Wants: FC = () => {
   const [searchParams] = useSearchParams()
-
-  const { offers, getOffers, loading } = useGetOffers()
+  const { wants, getWants, loading } = useGetWants()
   const { currentPage, totalPage } = usePagination()
 
   useEffect(() => {
-    // オファー 一覧を取得
-    void getOffers({ page: searchParams.get('page'), status: searchParams.get('status') })
+    // ウォンツ 一覧を取得
+    void getWants({ page: searchParams.get('page'), status: searchParams.get('status') })
   }, [searchParams])
-
-  const onClickNew = () => {
-    navigate('/beans')
-  }
 
   return (
     <>
-      <Head title="オファー 一覧" />
+      <Head title="ウォンツ一覧" />
       <ContentHeader>
         <div className="h-full flex justify-between items-end">
-          <ContentHeaderTitle title="オファー 一覧" />
+          <ContentHeaderTitle title="ウォンツ一覧" />
           <OfferStatusFilterForm />
-          {/* TODO レスポンシブでスタイルが崩れる。横幅がきつい */}
-          <PrimaryButton onClick={onClickNew}>コーヒー豆をオファーする</PrimaryButton>
         </div>
       </ContentHeader>
 
@@ -50,15 +41,15 @@ export const Offers: FC = () => {
 
       {!loading && (
         <>
-          {/* オファー 一覧 */}
-          {offers && (
+          {/* ウォンツ一覧 */}
+          {wants && (
             <section className="mt-4">
-              {offers.length ? (
+              {wants.length ? (
                 <>
                   <ol>
-                    {offers.map((offer) => (
-                      <li key={offer.id} className="mt-16">
-                        <IndexOfferCard offer={offer} />
+                    {wants.map((want) => (
+                      <li key={want.id} className="mt-16">
+                        <IndexWantCard want={want} />
                       </li>
                     ))}
                   </ol>
@@ -66,8 +57,9 @@ export const Offers: FC = () => {
                 </>
               ) : (
                 <div className="text-center text-gray-400">
-                  <p>オファーがありません</p>
-                  <Link to="/beans">オファーを作成する</Link>
+                  <p>ウォンツがありません</p>
+                  {/* TODO オファー検索へのリンク */}
+                  <Link to="/search">オファーを探す</Link>
                 </div>
               )}
             </section>
