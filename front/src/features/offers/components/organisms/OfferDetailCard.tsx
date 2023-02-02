@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Card } from '@/components/Elements/Card'
@@ -8,7 +9,7 @@ import { OfferSchedule } from '@/features/offers/components/molecules/OfferSched
 import { OfferStatusTag } from '@/features/offers/components/molecules/OfferStatusTag'
 import { OfferWantedUserStats } from '@/features/offers/components/molecules/OfferWantedUserStats'
 import type { Offer } from '@/features/offers/types'
-import { RoasterNameLink, RoasterThumbnail } from '@/features/roasters'
+import { RoasterNameLink, RoasterThumbnail, useCurrentRoaster } from '@/features/roasters'
 import { WantUnWantButton } from '@/features/wants'
 
 type Props = {
@@ -17,7 +18,11 @@ type Props = {
 
 export const OfferDetailCard: FC<Props> = (props) => {
   const { offer } = props
-  const { id, status, roaster, amount, price, weight, wantCount } = offer
+  const { id, status, amount, price, weight, roaster, want } = offer
+  const { currentRoaster } = useCurrentRoaster()
+
+  const [wantId, setWantId] = useState<number | null>(want.id || null)
+  const [wantCount, setWantCount] = useState<number>(want.count)
 
   return (
     <Card>
@@ -35,10 +40,20 @@ export const OfferDetailCard: FC<Props> = (props) => {
             </div>
           </div>
           <div className="flex justify-between items-end">
-            {/* TODO want likeボタン */}
+            {/* TODO likeボタン */}
             <div className="flex space-x-2">
-              <WantUnWantButton />
-              <LikeUnLikeButton />
+              {roaster.id !== currentRoaster?.id && (
+                <>
+                  <WantUnWantButton
+                    offerId={id}
+                    wantId={wantId}
+                    setWantId={setWantId}
+                    wantCount={wantCount}
+                    setWantCount={setWantCount}
+                  />
+                  <LikeUnLikeButton />
+                </>
+              )}
             </div>
             <div className="mr-4">
               <OfferWantedUserStats offerId={id} roasterId={roaster.id} count={wantCount} amount={amount} />

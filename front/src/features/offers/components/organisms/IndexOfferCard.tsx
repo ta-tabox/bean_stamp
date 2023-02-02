@@ -16,7 +16,7 @@ type Props = {
 
 export const IndexOfferCard: FC<Props> = (props) => {
   const { offer } = props
-  const { id, status, roaster, amount, price, weight, wantCount, bean } = offer
+  const { id, status, roaster, amount, price, weight, bean, want } = offer
 
   const navigate = useNavigate()
 
@@ -33,7 +33,7 @@ export const IndexOfferCard: FC<Props> = (props) => {
           </div>
           <div className="flex justify-between items-end mb-2">
             <OfferStatusTag status={status} />
-            <OfferWantedUserStats offerId={id} roasterId={roaster.id} count={wantCount} amount={amount} />
+            <OfferWantedUserStats offerId={id} roasterId={roaster.id} count={want.count} amount={amount} />
           </div>
           <div className="md:flex items-baseline">
             <h1 className="md:mt-2 text-xl lg:text-2xl font-medium text-gray-800 lg:mt-0">{bean.name}</h1>

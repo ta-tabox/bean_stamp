@@ -231,7 +231,6 @@ RSpec.describe 'Api::V1::Wants', type: :request do
         it { is_expected.to_not(change { Want.find(want.id).receipted_at }) }
         it 'returns method_not_allowed and message by json' do
           subject.call
-          json = JSON.parse(response.body)
           expect(response).to have_http_status(:method_not_allowed)
         end
       end
