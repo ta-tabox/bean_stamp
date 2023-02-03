@@ -10,8 +10,7 @@ json.bean do
   json.partial! 'api/v1/beans/bean', bean: offer.bean
 end
 json.want do
-  # TODO Rubocopエラー
-  if want = current_api_v1_user.wants.find_by(offer_id: offer.id)
+  if (want = current_api_v1_user.wants.find_by(offer_id: offer.id))
     json.is_wanted true
     json.id want.id
   else

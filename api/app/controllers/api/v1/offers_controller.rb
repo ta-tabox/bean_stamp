@@ -14,7 +14,7 @@ class Api::V1::OffersController < Api::ApplicationController
              else
                all_offers.search_status(status)
              end
-    pagy, @offers = pagy(offers.includes(:roaster, { bean: %i[roast_level bean_images] }))
+    pagy, @offers = pagy(offers.includes(:roaster, :wanted_users, { bean: %i[roast_level bean_images] }))
     pagy_headers_merge(pagy)
     render formats: :json
   end
