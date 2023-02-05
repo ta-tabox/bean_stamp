@@ -288,10 +288,11 @@
 }
 
 /* offerアイテム */
-/* TODO icon */
-.icon-text {
+/*  icon */
+/*.icon-text {
   @apply absolute -bottom-1 inset-x-0 text-xs text-center;
 }
+*/
 
 /* offer status */
 /*.on_offering {

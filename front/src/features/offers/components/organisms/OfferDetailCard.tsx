@@ -45,7 +45,7 @@ export const OfferDetailCard: FC<Props> = (props) => {
               {roaster.id !== currentRoaster?.id && (
                 <>
                   <WantUnWantButton
-                    offerId={id}
+                    offer={offer}
                     wantId={wantId}
                     setWantId={setWantId}
                     wantCount={wantCount}
