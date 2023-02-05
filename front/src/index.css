@@ -311,14 +311,13 @@
   @apply bg-gray-700 text-white;
 }*/
 
-/* TODO want receipted_badge */
-.unreceipted {
+/*.unreceipted {
   @apply bg-indigo-500 text-white;
 }
 
 .receipted {
   @apply bg-gray-700 text-white;
-}
+} */
 
 /* badge */
 /* .badge {

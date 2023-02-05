@@ -4,8 +4,8 @@ export type Want = {
   id: number
   userId: number
   offerId: number
-  rate: string
-  receiptedAt: WantRate
+  rate: WantRate
+  receiptedAt: string
   offer: Offer
 }
 

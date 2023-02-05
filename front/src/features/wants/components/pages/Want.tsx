@@ -8,7 +8,9 @@ import { Link } from '@/components/Elements/Link'
 import { Head } from '@/components/Head'
 import { BeanCard } from '@/features/beans'
 import { OfferDetailCard } from '@/features/offers'
+import { patchWantByReceipt } from '@/features/wants/api/patchWantByReceipt'
 import { useGetWant } from '@/features/wants/hooks/useGetWant'
+import { useMessage } from '@/hooks/useMessage'
 import { useModal } from '@/hooks/useModal'
 import { isNumber } from '@/utils/regexp'
 
@@ -16,8 +18,9 @@ export const Want: FC = () => {
   const urlParams = useParams<{ id: string }>()
   const navigate = useNavigate()
 
-  const { want, getWant } = useGetWant()
+  const { want, getWant, setWant } = useGetWant()
   const { isOpen: isOpenDelete, onOpen: onOpenDelete, onClose: onCloseDelete } = useModal()
+  const { showMessage } = useMessage()
 
   useEffect(() => {
     if (urlParams.id && isNumber(urlParams.id)) {
@@ -28,7 +31,16 @@ export const Want: FC = () => {
   }, [urlParams.id])
 
   const onClickReceive = () => {
-    alert('受け取り処理と評価')
+    if (want) {
+      patchWantByReceipt({ id: want.id })
+        .then((response) => {
+          setWant(response.data)
+          showMessage({ message: '受け取りを完了しました', type: 'success' })
+        })
+        .catch(() => {
+          showMessage({ message: 'すでに受け取りが完了しています', type: 'error' })
+        })
+    }
   }
 
   return (
@@ -40,13 +52,17 @@ export const Want: FC = () => {
           <Link to="/wants">一覧へ戻る</Link>
         </div>
       </ContentHeader>
-
       <section className="mt-8 mb-20">
         {want && (
           <>
             {/* TODO 評価モーダル */}
             <div className="text-center">
-              <PrimaryButton onClick={onClickReceive}>受け取り完了</PrimaryButton>
+              <PrimaryButton onClick={onClickReceive} disabled={!!want.receiptedAt}>
+                {want.receiptedAt ? '受け取り済み' : '受け取りました！'}
+              </PrimaryButton>
+              {/* <PrimaryButton onClick={onClickReceive} disabled={want.rate !== 'unrated'}>
+                {want.rate !== 'unrated' ? '評価済み' : '評価する'}
+              </PrimaryButton> */}
             </div>
             <section className="mt-16">
               <OfferDetailCard offer={want.offer} />
