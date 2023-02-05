@@ -20,7 +20,7 @@ export const useGetWant = () => {
       })
       .catch(() => {
         navigate('/')
-        showMessage({ message: 'ウォンツが存在しません', type: 'error' })
+        showMessage({ message: 'ウォントが存在しません', type: 'error' })
       })
       .finally(() => {
         setLoading(false)

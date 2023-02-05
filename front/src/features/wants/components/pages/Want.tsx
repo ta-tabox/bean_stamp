@@ -33,10 +33,10 @@ export const Want: FC = () => {
 
   return (
     <>
-      <Head title="ウォンツ詳細" />
+      <Head title="ウォント詳細" />
       <ContentHeader>
         <div className="h-full flex flex-col sm:flex-row justify-between sm:items-end">
-          <ContentHeaderTitle title="ウォンツ詳細" />
+          <ContentHeaderTitle title="ウォント詳細" />
           <Link to="/wants">一覧へ戻る</Link>
         </div>
       </ContentHeader>

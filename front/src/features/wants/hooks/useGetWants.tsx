@@ -30,7 +30,7 @@ export const useGetWants = () => {
       }
     } catch {
       navigate('/')
-      showMessage({ message: 'ウォンツの取得に失敗しました', type: 'error' })
+      showMessage({ message: 'ウォントの取得に失敗しました', type: 'error' })
       return
     } finally {
       setLoading(false)

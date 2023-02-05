@@ -8,7 +8,7 @@ import { RequireNotIsRoaster } from '@/router/RequireNotIsRoaster'
 
 export const WantRoutes: FC = memo(() => (
   <Routes>
-    {/* ウォンツはロースターはアクセスできない */}
+    {/* ウォントはロースターはアクセスできない */}
     <Route element={<RequireNotIsRoaster />}>
       <Route index element={<Wants />} />
       <Route path=":id">

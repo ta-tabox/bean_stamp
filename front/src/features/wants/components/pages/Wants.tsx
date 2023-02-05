@@ -18,16 +18,16 @@ export const Wants: FC = () => {
   const { currentPage, totalPage } = usePagination()
 
   useEffect(() => {
-    // ウォンツ 一覧を取得
+    // ウォント 一覧を取得
     void getWants({ page: searchParams.get('page'), status: searchParams.get('status') })
   }, [searchParams])
 
   return (
     <>
-      <Head title="ウォンツ一覧" />
+      <Head title="ウォント一覧" />
       <ContentHeader>
         <div className="h-full flex justify-between items-end">
-          <ContentHeaderTitle title="ウォンツ一覧" />
+          <ContentHeaderTitle title="ウォント一覧" />
           <OfferStatusFilterForm />
         </div>
       </ContentHeader>
@@ -41,7 +41,7 @@ export const Wants: FC = () => {
 
       {!loading && (
         <>
-          {/* ウォンツ一覧 */}
+          {/* ウォント一覧 */}
           {wants && (
             <section className="mt-4">
               {wants.length ? (
@@ -57,7 +57,7 @@ export const Wants: FC = () => {
                 </>
               ) : (
                 <div className="text-center text-gray-400">
-                  <p>ウォンツがありません</p>
+                  <p>ウォントがありません</p>
                   {/* TODO オファー検索へのリンク */}
                   <Link to="/search">オファーを探す</Link>
                 </div>

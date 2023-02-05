@@ -30,7 +30,7 @@ export const WantedUsers: FC = memo(() => {
     }
   }, [urlParams.id])
 
-  // urlからオファーをウォンツしているユーザー一覧を取得
+  // urlからオファーをウォントしているユーザー一覧を取得
   useEffect(() => {
     // urlParams.idが数値かどうか評価
     if (urlParams.id && isNumber(urlParams.id)) {
@@ -44,10 +44,10 @@ export const WantedUsers: FC = memo(() => {
 
   return (
     <>
-      <Head title="ウォンツしたユーザー" />
+      <Head title="ウォントしたユーザー" />
       <ContentHeader>
         <div className="h-full flex justify-start items-end">
-          <ContentHeaderTitle title="ウォンツしたユーザー" />
+          <ContentHeaderTitle title="ウォントしたユーザー" />
         </div>
       </ContentHeader>
 
@@ -67,7 +67,7 @@ export const WantedUsers: FC = memo(() => {
             </section>
           )}
 
-          {/* ウォンツしているユーザー一覧 */}
+          {/* ウォントしているユーザー一覧 */}
           {users && (
             <section className="mt-4 mb-20 py-4 text-gray-600">
               {users.length ? (
@@ -85,7 +85,7 @@ export const WantedUsers: FC = memo(() => {
                 </>
               ) : (
                 <div className="text-center text-gray-400">
-                  <p>ウォンツしているユーザーがいません</p>
+                  <p>ウォントしているユーザーがいません</p>
                 </div>
               )}
             </section>

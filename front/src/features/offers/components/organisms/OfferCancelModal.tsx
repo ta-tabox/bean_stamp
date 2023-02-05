@@ -50,7 +50,7 @@ export const OfferCancelModal: FC<Props> = memo((props) => {
             <br />
             この操作は取り消すことができません。
             <br />
-            ＊ウォンツされているオファーを削除することはできません。
+            ＊ウォントされているオファーを削除することはできません。
           </>
         </ModalText>
         <div className="flex items-center justify-center mt-4 space-x-4 sm:space-x-8">
