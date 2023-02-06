@@ -10,6 +10,7 @@ import { BeansRoutes } from '@/features/beans/routes'
 import { OffersRoutes } from '@/features/offers/routes'
 import { RoastersRoutes } from '@/features/roasters/routes'
 import { UsersRoutes } from '@/features/users/routes'
+import { WantRoutes } from '@/features/wants/routes'
 import { ProtectedRoute } from '@/router/ProtectedRoute'
 import { RequireSignedOutRoute } from '@/router/RequireSignedOutRoute'
 
@@ -39,6 +40,7 @@ export const AppRouter: FC = () => {
           <Route path="roasters/*" element={<RoastersRoutes />} />
           <Route path="beans/*" element={<BeansRoutes />} />
           <Route path="offers/*" element={<OffersRoutes />} />
+          <Route path="wants/*" element={<WantRoutes />} />
         </Route>
       </Route>
       <Route path="*" element={<Page404 />} />

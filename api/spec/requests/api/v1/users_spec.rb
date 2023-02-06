@@ -59,7 +59,7 @@ RSpec.describe 'Api::V1::Users', type: :request do
     end
   end
 
-  describe 'GET #current_offers', focus: true do
+  describe 'GET #current_offers' do
     subject { get current_offers_api_v1_users_path, headers: auth_tokens }
 
     context 'when a user is signed out' do

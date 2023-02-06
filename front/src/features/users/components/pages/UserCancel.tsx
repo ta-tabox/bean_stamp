@@ -24,7 +24,7 @@ export const UserCancel: FC = memo(() => {
             <p className="text-center text-xs text-gray-400">
               アカウントの削除後はユーザー名、コメントは表示されなくなります。
               <br />
-              同アカウントによるウォンツやフォローなどのデータは全て失われます。
+              同アカウントによるウォントやフォローなどのデータは全て失われます。
             </p>
             <div className="flex items-center justify-center mt-4">
               <PrimaryButton onClick={onClickCancel}>退会する</PrimaryButton>

@@ -14,7 +14,7 @@ export const usePagination = () => {
     headers: AxiosResponseHeaders
   }
 
-  const setPagination = ({ headers }: SetPage) => {
+  const setPagination = ({ headers }: SetPage): void => {
     const newCurrentPage = parseInt(headers['current-page'], 10)
     const newTotalPage = parseInt(headers['total-pages'], 10)
     setCurrentPage(newCurrentPage)

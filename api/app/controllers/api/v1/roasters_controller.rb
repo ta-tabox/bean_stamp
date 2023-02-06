@@ -44,7 +44,7 @@ class Api::V1::RoastersController < Api::ApplicationController
   def offers
     offers = @roaster.offers.recent
     offers&.map(&:update_status)
-    pagy, @offers = pagy(offers.includes(:roaster, bean: :bean_images))
+    pagy, @offers = pagy(offers.includes(:roaster, :wanted_users, bean: :bean_images))
     pagy_headers_merge(pagy)
     render 'api/v1/offers/index', formats: :json
   end

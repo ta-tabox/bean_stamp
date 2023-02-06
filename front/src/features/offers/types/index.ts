@@ -13,9 +13,13 @@ export type Offer = {
   receiptEndedAt: string
   status: OfferStatus
   createdAt: string
-  wantCount: number
   roaster: Pick<Roaster, 'id' | 'name' | 'thumbnailUrl'>
   bean: Bean
+  want: {
+    count: number
+    isWanted: boolean
+    id?: number
+  }
 }
 
 export type OfferStatus = 'on_offering' | 'on_roasting' | 'on_preparing' | 'on_selling' | 'end_of_sales'

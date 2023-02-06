@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Card } from '@/components/Elements/Card'
@@ -9,7 +10,7 @@ import { OfferPricePerWeight } from '@/features/offers/components/molecules/Offe
 import { OfferStatusTag } from '@/features/offers/components/molecules/OfferStatusTag'
 import { OfferWantedUserStats } from '@/features/offers/components/molecules/OfferWantedUserStats'
 import type { Offer } from '@/features/offers/types'
-import { RoasterNameLink, RoasterThumbnail } from '@/features/roasters'
+import { RoasterNameLink, RoasterThumbnail, useCurrentRoaster } from '@/features/roasters'
 import { WantUnWantButton } from '@/features/wants'
 
 type Props = {
@@ -18,7 +19,12 @@ type Props = {
 
 export const OfferContentCard: FC<Props> = (props) => {
   const { offer } = props
-  const { id, status, roaster, amount, price, weight, wantCount, bean } = offer
+  const { id, status, amount, price, weight, bean, roaster, want } = offer
+
+  const { currentRoaster } = useCurrentRoaster()
+
+  const [wantId, setWantId] = useState<number | null>(want.id || null)
+  const [wantCount, setWantCount] = useState<number>(want.count)
 
   return (
     <article className="text-gray-600">
@@ -48,8 +54,18 @@ export const OfferContentCard: FC<Props> = (props) => {
             </Link>
             <div className="flex justify-between items-end">
               <div className="flex space-x-2">
-                <WantUnWantButton />
-                <LikeUnLikeButton />
+                {roaster.id !== currentRoaster?.id && (
+                  <>
+                    <WantUnWantButton
+                      offer={offer}
+                      wantId={wantId}
+                      setWantId={setWantId}
+                      wantCount={wantCount}
+                      setWantCount={setWantCount}
+                    />
+                    <LikeUnLikeButton />
+                  </>
+                )}
               </div>
               <div className="mr-4">
                 <OfferWantedUserStats offerId={id} roasterId={roaster.id} count={wantCount} amount={amount} />

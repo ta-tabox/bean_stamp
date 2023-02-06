@@ -93,7 +93,7 @@ RSpec.describe 'Wants', type: :request do
         end
       end
 
-      # 本日がoffer.ended_at以降の日だったらwantを作成しない
+      # 本日がoffer.ended_at当日だったらwantを作成する
       context 'when today is offer ended at day' do
         let(:offer_ended_at_today) { create(:offer, ended_at: Date.current, bean: bean) }
         let(:offer) { offer_ended_at_today }
