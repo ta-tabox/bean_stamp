@@ -36,8 +36,6 @@ class Api::V1::WantsController < Api::ApplicationController
   def destroy
     @offer = Want.find(params[:id]).offer
     current_api_v1_user.want_offers.delete(@offer)
-    # 何か返却する必要があるか？
-    # render formats: :json
   end
 
   def receipt

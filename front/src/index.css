@@ -231,7 +231,7 @@
   @apply text-gray-300 cursor-default bg-gray-50;
 }
 
-/* TODO rating  */
+/* rating  */
 .radio-tile-group {
   @apply flex justify-center;
 

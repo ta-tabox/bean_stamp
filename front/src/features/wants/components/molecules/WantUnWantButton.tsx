@@ -31,7 +31,7 @@ export const WantUnWantButton: FC<Props> = (props) => {
 
   const onClickUnWant = useCallback(() => {
     if (wantId) {
-      deleteWant({ id: wantId.toString() })
+      deleteWant({ id: wantId })
         .then(() => {
           setWantId(null) // want削除に伴うりセット
           setWantCount(wantCount - 1) // OfferCardで使用するfollower数

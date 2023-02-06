@@ -8,6 +8,7 @@ import { OfferPricePerWeight, OfferSchedule, OfferStatusTag } from '@/features/o
 import { RoasterNameLink, RoasterThumbnail } from '@/features/roasters'
 import { WantReceiptedTag } from '@/features/wants/components/molecules/WantReceiptedTag'
 import type { Want } from '@/features/wants/type'
+import { isAfterReceiptStartedAt } from '@/features/wants/utils/isAfterReceiptStartedAt'
 
 type Props = {
   want: Want
@@ -24,12 +25,6 @@ export const IndexWantCard: FC<Props> = (props) => {
     navigate(`/wants/${want.id}`)
   }
 
-  const isAfterReceiptStartedAt = () => {
-    const now = new Date()
-    const receiptStartedAt = new Date(offer.receiptStartedAt)
-    return now >= receiptStartedAt
-  }
-
   return (
     <Card>
       <div className="px-8">
@@ -39,7 +34,7 @@ export const IndexWantCard: FC<Props> = (props) => {
           </div>
           <div className="flex justify-between items-end mb-2">
             <OfferStatusTag status={status} />
-            {isAfterReceiptStartedAt() && <WantReceiptedTag isReceipted={!!want.receiptedAt} />}
+            {isAfterReceiptStartedAt({ offer }) && <WantReceiptedTag isReceipted={!!want.receiptedAt} />}
             <div className="flex-1 w-2/3 md:w-1/3 ml-auto">
               <RoasterNameLink id={roaster.id} name={roaster.name} />
             </div>
