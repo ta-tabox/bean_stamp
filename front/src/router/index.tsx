@@ -7,6 +7,7 @@ import { About, Help, Home, Page404 } from '@/components/Pages'
 import { useLoadUser } from '@/features/auth'
 import { AuthRoutes } from '@/features/auth/routes'
 import { BeansRoutes } from '@/features/beans/routes'
+import { LikeRoutes } from '@/features/likes/routes'
 import { OffersRoutes } from '@/features/offers/routes'
 import { RoastersRoutes } from '@/features/roasters/routes'
 import { UsersRoutes } from '@/features/users/routes'
@@ -41,6 +42,7 @@ export const AppRouter: FC = () => {
           <Route path="beans/*" element={<BeansRoutes />} />
           <Route path="offers/*" element={<OffersRoutes />} />
           <Route path="wants/*" element={<WantRoutes />} />
+          <Route path="likes/*" element={<LikeRoutes />} />
         </Route>
       </Route>
       <Route path="*" element={<Page404 />} />
