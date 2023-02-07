@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { getWant as getWantRequest } from '@/features/wants/api/getWant'
-import type { Want } from '@/features/wants/type'
+import type { Want } from '@/features/wants/types'
 import { useMessage } from '@/hooks/useMessage'
 
 export const useGetWant = () => {

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { getWants as getWantsRequest } from '@/features/wants/api/getWants'
 import { getWantsWithSearch } from '@/features/wants/api/getWantsWithSearch'
-import type { Want } from '@/features/wants/type'
+import type { Want } from '@/features/wants/types'
 import { useMessage } from '@/hooks/useMessage'
 import { usePagination } from '@/hooks/usePagination'
 

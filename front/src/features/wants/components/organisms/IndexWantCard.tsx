@@ -7,7 +7,7 @@ import { BeanDetail } from '@/features/beans'
 import { OfferPricePerWeight, OfferSchedule, OfferStatusTag } from '@/features/offers'
 import { RoasterNameLink, RoasterThumbnail } from '@/features/roasters'
 import { WantReceiptedTag } from '@/features/wants/components/molecules/WantReceiptedTag'
-import type { Want } from '@/features/wants/type'
+import type { Want } from '@/features/wants/types'
 import { isAfterReceiptStartedAt } from '@/features/wants/utils/isAfterReceiptStartedAt'
 
 type Props = {

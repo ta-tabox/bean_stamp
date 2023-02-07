@@ -1,4 +1,4 @@
-import type { Want } from '@/features/wants/type'
+import type { Want } from '@/features/wants/types'
 import { BackendApiWithAuth } from '@/lib/axios'
 
 type Props = {

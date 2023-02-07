@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 
 import { WantRateIcon } from '@/features/wants/components/molecules/WantRateIcon'
-import type { WantRate } from '@/features/wants/type'
+import type { WantRate } from '@/features/wants/types'
 
 import type { UseFormRegister } from 'react-hook-form'
 
