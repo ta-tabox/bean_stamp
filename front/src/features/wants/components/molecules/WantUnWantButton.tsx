@@ -1,5 +1,5 @@
 import type { Dispatch, FC } from 'react'
-import React, { useCallback } from 'react'
+import React from 'react'
 
 import type { Offer } from '@/features/offers'
 import { createWant } from '@/features/wants/api/createWant'
@@ -23,24 +23,26 @@ export const WantUnWantButton: FC<Props> = (props) => {
       .then((response) => {
         setWantId(response.data.id) // deleteリクエストで使用するurl: /wants/:idに使用
         setWantCount(wantCount + 1) // OfferCardで使用するfollower数
+        showMessage({ message: `${offer.bean.name}をウォントしました`, type: 'success' })
       })
       .catch(() => {
         showMessage({ message: 'ウォントに失敗しました', type: 'error' })
       })
   }
 
-  const onClickUnWant = useCallback(() => {
+  const onClickUnWant = () => {
     if (wantId) {
       deleteWant({ id: wantId })
         .then(() => {
           setWantId(null) // want削除に伴うりセット
           setWantCount(wantCount - 1) // OfferCardで使用するfollower数
+          showMessage({ message: `${offer.bean.name}のウォントを取り消しました`, type: 'success' })
         })
         .catch(() => {
           showMessage({ message: 'ウォントの削除に失敗しました', type: 'error' })
         })
     }
-  }, [wantId, wantCount])
+  }
 
   const isMaxAmount = () => wantCount === offer.amount
   const isAfterEndedAt = () => {

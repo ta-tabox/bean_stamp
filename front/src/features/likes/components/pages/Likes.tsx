@@ -7,19 +7,19 @@ import { Link } from '@/components/Elements/Link'
 import { Pagination } from '@/components/Elements/Pagination'
 import { Spinner } from '@/components/Elements/Spinner'
 import { Head } from '@/components/Head'
+import { IndexLikeCard } from '@/features/likes/components/organisms/IndexLikeCard'
+import { useGetLikes } from '@/features/likes/hooks/useGetLikes'
 import { OfferStatusFilterForm } from '@/features/offers'
-import { IndexWantCard } from '@/features/wants/components/organisms/IndexWantCard'
-import { useGetWants } from '@/features/wants/hooks/useGetWants'
 import { usePagination } from '@/hooks/usePagination'
 
 export const Likes: FC = () => {
   const [searchParams] = useSearchParams()
-  const { wants, getWants, loading } = useGetWants()
+  const { likes, getLikes, loading } = useGetLikes()
   const { currentPage, totalPage } = usePagination()
 
   useEffect(() => {
-    // ウォント 一覧を取得
-    void getWants({ page: searchParams.get('page'), status: searchParams.get('status') })
+    // お気に入り 一覧を取得
+    void getLikes({ page: searchParams.get('page'), status: searchParams.get('status') })
   }, [searchParams])
 
   return (
@@ -44,14 +44,14 @@ export const Likes: FC = () => {
       {!loading && (
         <>
           {/* お気に入り一覧 */}
-          {wants && (
+          {likes && (
             <section className="mt-4">
-              {wants.length ? (
+              {likes.length ? (
                 <>
                   <ol>
-                    {wants.map((want) => (
-                      <li key={want.id} className="mt-16">
-                        <IndexWantCard want={want} />
+                    {likes.map((like) => (
+                      <li key={like.id} className="mt-16">
+                        <IndexLikeCard like={like} />
                       </li>
                     ))}
                   </ol>
@@ -59,7 +59,7 @@ export const Likes: FC = () => {
                 </>
               ) : (
                 <div className="text-center text-gray-400">
-                  <p>ウォントがありません</p>
+                  <p>お気に入りがありません</p>
                   {/* TODO オファー検索へのリンク */}
                   <Link to="/search">オファーを探す</Link>
                 </div>

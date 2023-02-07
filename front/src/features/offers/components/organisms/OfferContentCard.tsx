@@ -19,11 +19,12 @@ type Props = {
 
 export const OfferContentCard: FC<Props> = (props) => {
   const { offer } = props
-  const { id, status, amount, price, weight, bean, roaster, want } = offer
+  const { id, status, amount, price, weight, bean, roaster, want, like } = offer
 
   const { currentRoaster } = useCurrentRoaster()
 
   const [wantId, setWantId] = useState<number | null>(want.id || null)
+  const [likeId, setLikeId] = useState<number | null>(like.id || null)
   const [wantCount, setWantCount] = useState<number>(want.count)
 
   return (
@@ -53,7 +54,7 @@ export const OfferContentCard: FC<Props> = (props) => {
               <h1 className="inline-block mb-2 text-gray-800 text-lg md:text-2xl title-font">{bean.name}</h1>
             </Link>
             <div className="flex justify-between items-end">
-              <div className="flex space-x-2">
+              <div className="flex space-x-1">
                 {roaster.id !== currentRoaster?.id && (
                   <>
                     <WantUnWantButton
@@ -63,7 +64,7 @@ export const OfferContentCard: FC<Props> = (props) => {
                       wantCount={wantCount}
                       setWantCount={setWantCount}
                     />
-                    <LikeUnLikeButton />
+                    <LikeUnLikeButton offer={offer} likeId={likeId} setLikeId={setLikeId} />
                   </>
                 )}
               </div>

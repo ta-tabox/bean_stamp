@@ -11,7 +11,8 @@ class Api::V1::LikesController < Api::ApplicationController
             else
               all_likes.search_status(status).recent
             end
-    @pagy, @likes = pagy(likes.includes(offer: [:roaster, :wanted_users, :wants, { bean: %i[roast_level country] }]))
+    pagy, @likes = pagy(likes.includes(offer: [:roaster, :wanted_users, :wants, { bean: %i[roast_level country] }]))
+    pagy_headers_merge(pagy)
     render formats: :json
   end
 

@@ -1,10 +1,8 @@
 import type { Offer } from '@/features/offers'
 
-export type Want = {
+export type Like = {
   id: number
   userId: number
   offerId: number
   offer: Offer
 }
-
-export type WantRate = 'unrated' | 'bad' | 'so_so' | 'good' | 'excellent'
