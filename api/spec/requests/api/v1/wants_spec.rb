@@ -36,7 +36,7 @@ RSpec.describe 'Api::V1::Wants', type: :request do
   end
 
   # ウォンツフィルタリング
-  describe 'GET #index with status params' do
+  describe 'GET #index with search params' do
     let(:bean) { create(:bean, :with_image_and_tags) }
     let(:offering_offer) { create(:offer, bean: bean) }
     let(:preparing_offer) { create(:offer, :on_preparing, bean: bean) }
@@ -53,10 +53,10 @@ RSpec.describe 'Api::V1::Wants', type: :request do
       user.want_offers.push(offering_offer, roasting_offer, preparing_offer, selling_offer, sold_offer)
     end
 
-    # ロースト中のウォンツをsearch
+    # ロースト中のウォンツを検索する
     context 'when search for on_offering' do
       let(:status) { 'on_roasting' }
-      it 'returns offers on_roasting by json' do
+      it 'returns wants on_roasting by json' do
         subject
         json = JSON.parse(response.body)
         expect(response).to have_http_status(:success)
@@ -173,9 +173,7 @@ RSpec.describe 'Api::V1::Wants', type: :request do
   describe 'DELET #destroy' do
     let(:want) { user.wants.find_by(offer_id: offer.id) }
     subject { proc { delete api_v1_want_path(want), headers: auth_tokens } }
-    before do
-      user.want_offers << offer
-    end
+    before { user.want_offers << offer }
 
     context 'when the user is signed out' do
       let(:auth_tokens) { { 'client' => '', 'access-token' => '', 'uid' => '' } }
