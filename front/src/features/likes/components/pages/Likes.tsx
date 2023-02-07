@@ -26,9 +26,11 @@ export const Likes: FC = () => {
     <>
       <Head title="お気に入り一覧" />
       <ContentHeader>
-        <div className="h-full flex justify-between items-end">
+        <div className="h-full flex flex-col sm:flex-row justify-between sm:items-end">
           <ContentHeaderTitle title="お気に入り一覧" />
-          <OfferStatusFilterForm />
+          <div className="text-left ml-auto sm:ml-0">
+            <OfferStatusFilterForm />
+          </div>
         </div>
       </ContentHeader>
 

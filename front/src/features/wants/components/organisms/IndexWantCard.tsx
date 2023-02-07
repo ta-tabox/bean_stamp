@@ -32,9 +32,11 @@ export const IndexWantCard: FC<Props> = (props) => {
           <div className="flex justify-center -mt-16 md:justify-end items-end">
             <RoasterThumbnail name={roaster.name} thumbnailUrl={roaster.thumbnailUrl} />
           </div>
-          <div className="flex justify-between items-end mb-2">
-            <OfferStatusTag status={status} />
-            {isAfterReceiptStartedAt({ offer }) && <WantReceiptedTag isReceipted={!!want.receiptedAt} />}
+          <div className="flex justify-between mb-2">
+            <div className="flex flex-col md:flex-row space-y-1 md:space-y-0 md:space-x-2">
+              <OfferStatusTag status={status} />
+              {isAfterReceiptStartedAt({ offer }) && <WantReceiptedTag isReceipted={!!want.receiptedAt} />}
+            </div>
             <div className="flex-1 w-2/3 md:w-1/3 ml-auto">
               <RoasterNameLink id={roaster.id} name={roaster.name} />
             </div>

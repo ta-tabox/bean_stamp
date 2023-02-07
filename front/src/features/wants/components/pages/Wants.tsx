@@ -26,9 +26,11 @@ export const Wants: FC = () => {
     <>
       <Head title="ウォント一覧" />
       <ContentHeader>
-        <div className="h-full flex justify-between items-end">
+        <div className="h-full flex flex-col sm:flex-row justify-between sm:items-end">
           <ContentHeaderTitle title="ウォント一覧" />
-          <OfferStatusFilterForm />
+          <div className="text-left ml-auto sm:ml-0">
+            <OfferStatusFilterForm />
+          </div>
         </div>
       </ContentHeader>
 

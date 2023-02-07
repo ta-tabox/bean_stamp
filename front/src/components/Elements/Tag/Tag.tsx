@@ -16,7 +16,7 @@ export const Tag: FC<Props> = (props) => {
   } = props
   return (
     <div
-      className={`border rounded-full text-center px-4 py-2 md:py-1 text-xs md:text-sm font-light tracking-tighter md:tracking-tight capitalize ${backgroundColorClass} ${textColorClass} ${borderColorClass}`}
+      className={`border rounded-full text-center px-3 py-1 sm:px-4 text-xs sm:text-sm font-light tracking-tighter sm:tracking-tight capitalize ${backgroundColorClass} ${textColorClass} ${borderColorClass}`}
     >
       {children}
     </div>
