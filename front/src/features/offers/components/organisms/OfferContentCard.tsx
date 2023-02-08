@@ -1,7 +1,8 @@
 import type { FC } from 'react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
+import { SecondaryButton } from '@/components/Elements/Button'
 import { Card } from '@/components/Elements/Card'
 import { BeanImagesSwiper, BeanTasteTags } from '@/features/beans'
 import { LikeUnLikeButton } from '@/features/likes'
@@ -20,12 +21,17 @@ type Props = {
 export const OfferContentCard: FC<Props> = (props) => {
   const { offer } = props
   const { id, status, amount, price, weight, bean, roaster, want, like } = offer
+  const navigate = useNavigate()
 
   const { currentRoaster } = useCurrentRoaster()
 
   const [wantId, setWantId] = useState<number | null>(want.id || null)
   const [likeId, setLikeId] = useState<number | null>(like.id || null)
   const [wantCount, setWantCount] = useState<number>(want.count)
+
+  const onClickShow = () => {
+    navigate(`/offers/${offer.id}`)
+  }
 
   return (
     <article className="text-gray-600">
@@ -50,9 +56,14 @@ export const OfferContentCard: FC<Props> = (props) => {
                 <RoasterNameLink id={roaster.id} name={roaster.name} />
               </div>
             </div>
-            <Link to={`/offers/${id}`}>
-              <h1 className="inline-block mb-2 text-gray-800 text-lg md:text-2xl title-font">{bean.name}</h1>
-            </Link>
+            <div className="md:flex items-baseline">
+              <h1 className="md:mt-2 text-lg md:text-2xl title-font text-gray-800 lg:mt-0">{bean.name}</h1>
+              <div className="md:ml-4 text-right">
+                <SecondaryButton onClick={onClickShow}>
+                  <div className="w-16 md:w-auto">詳細</div>
+                </SecondaryButton>
+              </div>
+            </div>
             <div className="flex justify-between items-end">
               <div className="flex space-x-1">
                 {roaster.id !== currentRoaster?.id && (

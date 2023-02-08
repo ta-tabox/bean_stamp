@@ -1,5 +1,5 @@
 import type { Dispatch, FC } from 'react'
-import React from 'react'
+import React, { memo } from 'react'
 
 import type { Offer } from '@/features/offers'
 import { createWant } from '@/features/wants/api/createWant'
@@ -14,7 +14,7 @@ type Props = {
   setWantCount: Dispatch<React.SetStateAction<number>>
 }
 
-export const WantUnWantButton: FC<Props> = (props) => {
+export const WantUnWantButton: FC<Props> = memo((props) => {
   const { offer, wantId, setWantId, setWantCount, wantCount } = props
   const { showMessage } = useMessage()
 
@@ -69,4 +69,4 @@ export const WantUnWantButton: FC<Props> = (props) => {
       <p className="absolute -bottom-2 inset-x-0 text-xs tracking-tighter">{wantId ? 'ウォント中' : 'ウォント'}</p>
     </div>
   )
-}
+})

@@ -1,5 +1,5 @@
 import type { Dispatch, FC } from 'react'
-import React from 'react'
+import React, { memo } from 'react'
 
 import { createLike } from '@/features/likes/api/createLike'
 import { deleteLike } from '@/features/likes/api/deleteLike'
@@ -12,7 +12,7 @@ type Props = {
   setLikeId: Dispatch<React.SetStateAction<number | null>>
 }
 
-export const LikeUnLikeButton: FC<Props> = (props) => {
+export const LikeUnLikeButton: FC<Props> = memo((props) => {
   const { offer, likeId, setLikeId } = props
   const { showMessage } = useMessage()
 
@@ -58,4 +58,4 @@ export const LikeUnLikeButton: FC<Props> = (props) => {
       <p className="absolute -bottom-2 inset-x-0 text-xs tracking-tighter">{likeId ? 'ライク中' : 'ライク'}</p>
     </div>
   )
-}
+})

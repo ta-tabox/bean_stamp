@@ -7,9 +7,8 @@ import { Link } from '@/components/Elements/Link'
 import { Pagination } from '@/components/Elements/Pagination'
 import { Spinner } from '@/components/Elements/Spinner'
 import { Head } from '@/components/Head'
-import { IndexLikeCard } from '@/features/likes/components/organisms/IndexLikeCard'
 import { useGetLikes } from '@/features/likes/hooks/useGetLikes'
-import { OfferStatusFilterForm } from '@/features/offers'
+import { OfferContentCard, OfferStatusFilterForm } from '@/features/offers'
 import { usePagination } from '@/hooks/usePagination'
 
 export const Likes: FC = () => {
@@ -50,8 +49,8 @@ export const Likes: FC = () => {
                 <>
                   <ol>
                     {likes.map((like) => (
-                      <li key={like.id} className="mt-16">
-                        <IndexLikeCard like={like} />
+                      <li key={like.id} className="mt-20">
+                        <OfferContentCard offer={like.offer} />
                       </li>
                     ))}
                   </ol>
