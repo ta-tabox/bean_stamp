@@ -2,11 +2,10 @@ import type { FC } from 'react'
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-import { SecondaryButton } from '@/components/Elements/Button'
+import { LoadingButton } from '@/components/Elements/Button'
 import { ContentHeader, ContentHeaderTitle } from '@/components/Elements/Content'
 import { Link } from '@/components/Elements/Link'
 import { Pagination } from '@/components/Elements/Pagination'
-import { Spinner } from '@/components/Elements/Spinner'
 import { Head } from '@/components/Head'
 import { useGetLikes } from '@/features/likes/hooks/useGetLikes'
 import { OfferContentCard, OfferStatusFilterForm } from '@/features/offers'
@@ -40,17 +39,7 @@ export const Likes: FC = () => {
       </ContentHeader>
 
       {/* お気に入り更新ボタン */}
-      <div className="flex justify-center">
-        <SecondaryButton onClick={onClickReload}>
-          {loading ? (
-            <Spinner />
-          ) : (
-            <svg className="h-6 w-6 text-gray-500">
-              <use xlinkHref="#arrow-path" />
-            </svg>
-          )}
-        </SecondaryButton>
-      </div>
+      <LoadingButton onClick={onClickReload} loading={loading} />
 
       {!loading && (
         <>

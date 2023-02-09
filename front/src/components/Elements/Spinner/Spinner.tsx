@@ -1,10 +1,18 @@
+import type { FC } from 'react'
 import { memo } from 'react'
 
-export const Spinner = memo(() => (
-  // <div className="animate-spin h-6 w-6 border-2 border-gray-400 rounded-full border-t-transparent" />
-  <div className="animate-spin">
-    <svg className="h-6 w-6 text-gray-500">
-      <use xlinkHref="#arrow-path" />
-    </svg>
-  </div>
-))
+type Props = {
+  loading?: boolean
+  color?: string
+}
+
+export const Spinner: FC<Props> = memo((props) => {
+  const { loading = true, color = 'text-gray-500' } = props
+  return (
+    <div className={`mx-auto h-6 w-6 ${loading ? `animate-spin` : ''}`}>
+      <svg className={`h-full w-full ${color}`}>
+        <use xlinkHref="#arrow-path" />
+      </svg>
+    </div>
+  )
+})

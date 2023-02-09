@@ -11,9 +11,10 @@ import { OfferStatusFilterForm } from '@/features/offers'
 import { IndexWantCard } from '@/features/wants/components/organisms/IndexWantCard'
 import { useGetWants } from '@/features/wants/hooks/useGetWants'
 import { usePagination } from '@/hooks/usePagination'
+import { LoadingButton } from '@/components/Elements/Button'
 
 export const Wants: FC = () => {
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const { wants, getWants, loading } = useGetWants()
   const { currentPage, totalPage } = usePagination()
 
@@ -21,6 +22,11 @@ export const Wants: FC = () => {
     // ウォント 一覧を取得
     void getWants({ page: searchParams.get('page'), status: searchParams.get('status') })
   }, [searchParams])
+
+  const onClickReload = () => {
+    void getWants({ page: null })
+    setSearchParams({})
+  }
 
   return (
     <>
@@ -34,12 +40,8 @@ export const Wants: FC = () => {
         </div>
       </ContentHeader>
 
-      {/* ローディング */}
-      {loading && (
-        <div className="flex justify-center">
-          <Spinner />
-        </div>
-      )}
+      {/* ウォント更新ボタン */}
+      <LoadingButton onClick={onClickReload} loading={loading} />
 
       {!loading && (
         <>
@@ -50,7 +52,7 @@ export const Wants: FC = () => {
                 <>
                   <ol>
                     {wants.map((want) => (
-                      <li key={want.id} className="mt-16">
+                      <li key={want.id} className="mt-20">
                         <IndexWantCard want={want} />
                       </li>
                     ))}
