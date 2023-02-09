@@ -2,6 +2,7 @@ import type { FC } from 'react'
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
+import { SecondaryButton } from '@/components/Elements/Button'
 import { ContentHeader, ContentHeaderTitle } from '@/components/Elements/Content'
 import { Link } from '@/components/Elements/Link'
 import { Pagination } from '@/components/Elements/Pagination'
@@ -12,7 +13,7 @@ import { OfferContentCard, OfferStatusFilterForm } from '@/features/offers'
 import { usePagination } from '@/hooks/usePagination'
 
 export const Likes: FC = () => {
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const { likes, getLikes, loading } = useGetLikes()
   const { currentPage, totalPage } = usePagination()
 
@@ -20,6 +21,11 @@ export const Likes: FC = () => {
     // お気に入り 一覧を取得
     void getLikes({ page: searchParams.get('page'), status: searchParams.get('status') })
   }, [searchParams])
+
+  const onClickReload = () => {
+    void getLikes({ page: null })
+    setSearchParams({})
+  }
 
   return (
     <>
@@ -33,12 +39,18 @@ export const Likes: FC = () => {
         </div>
       </ContentHeader>
 
-      {/* ローディング */}
-      {loading && (
-        <div className="flex justify-center">
-          <Spinner />
-        </div>
-      )}
+      {/* お気に入り更新ボタン */}
+      <div className="flex justify-center">
+        <SecondaryButton onClick={onClickReload}>
+          {loading ? (
+            <Spinner />
+          ) : (
+            <svg className="h-6 w-6 text-gray-500">
+              <use xlinkHref="#arrow-path" />
+            </svg>
+          )}
+        </SecondaryButton>
+      </div>
 
       {!loading && (
         <>

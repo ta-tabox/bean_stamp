@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { getLikes as getLikesRequest } from '@/features/likes/api/getLikes'
 import { getLikesWithSearch } from '@/features/likes/api/getLikesWithSearch'
-import type { Like } from '@/features/likes/types'
+import { useLikes } from '@/features/likes/hooks/useLikes'
 import { useMessage } from '@/hooks/useMessage'
 import { usePagination } from '@/hooks/usePagination'
 
@@ -11,9 +11,10 @@ export const useGetLikes = () => {
   const navigate = useNavigate()
   const { showMessage } = useMessage()
 
-  const [likes, setLikes] = useState<Array<Like>>([])
   const [loading, setLoading] = useState(false)
   const { setPagination } = usePagination()
+
+  const { likes, setLikes } = useLikes()
 
   type GetLikes = {
     page: string | null
@@ -39,5 +40,5 @@ export const useGetLikes = () => {
     setPagination({ headers: response.headers })
   }
 
-  return { likes, getLikes, loading }
+  return { likes, getLikes, setLikes, loading }
 }
