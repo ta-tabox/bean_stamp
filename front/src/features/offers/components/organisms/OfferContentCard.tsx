@@ -35,7 +35,7 @@ export const OfferContentCard: FC<Props> = (props) => {
 
   return (
     <Card>
-      <header>
+      <section>
         <div className="w-11/12 mb-2 mx-auto">
           <div className="flex justify-center -mt-16 lg:justify-end">
             <Link to={`/roasters/${roaster.id}`}>
@@ -81,9 +81,9 @@ export const OfferContentCard: FC<Props> = (props) => {
             </div>
           </div>
         </div>
-      </header>
+      </section>
 
-      <body>
+      <section>
         <div className="w-11/12 mx-auto flex flex-wrap mt-4">
           <div className="w-full lg:w-1/2 lg:pr-4 mb-4 lg:mb-0">
             {/* タブコンテンツ */}
@@ -100,7 +100,7 @@ export const OfferContentCard: FC<Props> = (props) => {
             <BeanImagesSwiper beanName={bean.name} imageUrls={bean.imageUrls} />
           </div>
         </div>
-      </body>
+      </section>
     </Card>
   )
 }

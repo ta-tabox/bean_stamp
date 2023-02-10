@@ -4,6 +4,7 @@ import React, { memo } from 'react'
 import type { Offer } from '@/features/offers'
 import { createWant } from '@/features/wants/api/createWant'
 import { deleteWant } from '@/features/wants/api/deleteWant'
+import { isAfterEndedAt } from '@/features/wants/utils/isAfterEndedAt'
 import { useMessage } from '@/hooks/useMessage'
 
 type Props = {
@@ -45,23 +46,22 @@ export const WantUnWantButton: FC<Props> = memo((props) => {
   }
 
   const isMaxAmount = () => wantCount === offer.amount
-  const isAfterEndedAt = () => {
-    const now = new Date()
-    const endedAt = new Date(offer.endedAt)
-    return now >= endedAt
-  }
 
   return (
     <div className="relative w-16 text-center">
       {wantId ? (
-        <button type="button" onClick={onClickUnWant} disabled={isAfterEndedAt()}>
-          <svg className={`w-10 h-10 text-indigo-500 ${isAfterEndedAt() ? 'opacity-50' : ''}`}>
+        <button type="button" onClick={onClickUnWant} disabled={isAfterEndedAt({ offer })}>
+          <svg className={`w-10 h-10 text-indigo-500 ${isAfterEndedAt({ offer }) ? 'opacity-50' : ''}`}>
             <use xlinkHref="#check-circle-solid" />
           </svg>
         </button>
       ) : (
-        <button type="button" onClick={onClickWant} disabled={isMaxAmount() || isAfterEndedAt()}>
-          <svg className={`w-10 h-10 mx-auto text-indigo-600 ${isMaxAmount() || isAfterEndedAt() ? 'opacity-50' : ''}`}>
+        <button type="button" onClick={onClickWant} disabled={isMaxAmount() || isAfterEndedAt({ offer })}>
+          <svg
+            className={`w-10 h-10 mx-auto text-indigo-600 ${
+              isMaxAmount() || isAfterEndedAt({ offer }) ? 'opacity-50' : ''
+            }`}
+          >
             <use xlinkHref="#check-circle" />
           </svg>
         </button>
