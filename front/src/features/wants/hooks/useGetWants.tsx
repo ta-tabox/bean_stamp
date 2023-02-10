@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { getWants as getWantsRequest } from '@/features/wants/api/getWants'
 import { getWantsWithSearch } from '@/features/wants/api/getWantsWithSearch'
-import type { Want } from '@/features/wants/types'
+import { useWants } from '@/features/wants/hooks/useWants'
 import { useMessage } from '@/hooks/useMessage'
 import { usePagination } from '@/hooks/usePagination'
 
@@ -11,9 +11,10 @@ export const useGetWants = () => {
   const navigate = useNavigate()
   const { showMessage } = useMessage()
 
-  const [wants, setWants] = useState<Array<Want>>([])
   const [loading, setLoading] = useState(false)
   const { setPagination } = usePagination()
+
+  const { wants, setWants } = useWants()
 
   type GetWants = {
     page: string | null

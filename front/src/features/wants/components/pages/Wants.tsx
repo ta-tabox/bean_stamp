@@ -2,16 +2,15 @@ import type { FC } from 'react'
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
+import { LoadingButton } from '@/components/Elements/Button'
 import { ContentHeader, ContentHeaderTitle } from '@/components/Elements/Content'
 import { Link } from '@/components/Elements/Link'
 import { Pagination } from '@/components/Elements/Pagination'
-import { Spinner } from '@/components/Elements/Spinner'
 import { Head } from '@/components/Head'
 import { OfferStatusFilterForm } from '@/features/offers'
 import { IndexWantCard } from '@/features/wants/components/organisms/IndexWantCard'
 import { useGetWants } from '@/features/wants/hooks/useGetWants'
 import { usePagination } from '@/hooks/usePagination'
-import { LoadingButton } from '@/components/Elements/Button'
 
 export const Wants: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams()
