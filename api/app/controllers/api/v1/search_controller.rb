@@ -14,7 +14,8 @@ class Api::V1::SearchController < Api::ApplicationController
     query_params = { 'bean_roaster_prefecture_code_eq' => offers_query_params[:prefecture_code], 'bean_country_id_eq' => offers_query_params[:country_id],
                      'bean_roast_level_id_eq' => offers_query_params[:roast_level_id], 'bean_taste_tags_id_eq' => offers_query_params[:taste_tag_id] }
 
-    query = Offer.active.ransack(query_params) # ransackによる検索
+    # オファー中のもののみ検索
+    query = Offer.where('ended_at >= ?', Date.current).ransack(query_params) # ransackによる検索
 
     offers = query.result(distinct: true)
     offers&.map(&:update_status) # NOTE: status更新

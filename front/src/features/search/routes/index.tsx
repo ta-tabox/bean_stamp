@@ -8,8 +8,7 @@ import { SearchedRoasters } from '@/features/search/components/Pages/SearchedRoa
 
 export const SearchRoutes: FC = memo(() => (
   <Routes>
-    <Route element={<Search />}>
-      <Route index />
+    <Route path="/" element={<Search />}>
       <Route path="roasters" element={<SearchedRoasters />} />
       <Route path="offers" element={<SearchedOffers />} />
     </Route>
