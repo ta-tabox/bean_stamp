@@ -104,6 +104,8 @@ Rails.application.routes.draw do
           patch 'rate', to: 'wants#rate'
         end
       end
+
+      resources :likes, only: %i[index create destroy]
     end
   end
 end

@@ -1,13 +1,16 @@
 import type { FC } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
 
 import { SecondaryButton } from '@/components/Elements/Button'
 import { Card } from '@/components/Elements/Card'
-import { BeanDetail } from '@/features/beans'
-import { OfferPricePerWeight, OfferSchedule, OfferStatusTag } from '@/features/offers'
-import { RoasterNameLink, RoasterThumbnail } from '@/features/roasters'
+import { BeanImagesSwiper, BeanTasteTags } from '@/features/beans'
+import { LikeUnLikeButton } from '@/features/likes'
+import { OfferContentTab, OfferPricePerWeight, OfferStatusTag, OfferWantedUserStats } from '@/features/offers'
+import { RoasterNameLink, RoasterThumbnail, useCurrentRoaster } from '@/features/roasters'
 import { WantReceiptedTag } from '@/features/wants/components/molecules/WantReceiptedTag'
-import type { Want } from '@/features/wants/type'
+import { WantUnWantButton } from '@/features/wants/components/molecules/WantUnWantButton'
+import type { Want } from '@/features/wants/types'
 import { isAfterReceiptStartedAt } from '@/features/wants/utils/isAfterReceiptStartedAt'
 
 type Props = {
@@ -17,46 +20,92 @@ type Props = {
 export const IndexWantCard: FC<Props> = (props) => {
   const { want } = props
   const { offer } = want
-  const { status, roaster, price, weight, bean } = offer
+  const { status, amount, price, weight, bean, roaster, like } = offer
 
   const navigate = useNavigate()
+  const { currentRoaster } = useCurrentRoaster()
+
+  const [wantId, setWantId] = useState<number | null>(want.id || null)
+  const [likeId, setLikeId] = useState<number | null>(like.id || null)
+  const [wantCount, setWantCount] = useState<number>(offer.want.count)
 
   const onClickShow = () => {
-    navigate(`/wants/${want.id}`)
+    if (wantId) {
+      navigate(`/wants/${wantId}`)
+    } else {
+      navigate(`/offers/${offer.id}`)
+    }
   }
 
   return (
     <Card>
-      <div className="px-8">
-        <div className="w-11/12 mx-auto">
-          <div className="flex justify-center -mt-16 md:justify-end items-end">
-            <RoasterThumbnail name={roaster.name} thumbnailUrl={roaster.thumbnailUrl} />
+      <section>
+        <div className="w-11/12 mb-2 mx-auto">
+          <div className="flex justify-center -mt-16 lg:justify-end">
+            <Link to={`/roasters/${roaster.id}`}>
+              <RoasterThumbnail name={roaster.name} thumbnailUrl={roaster.thumbnailUrl} />
+            </Link>
           </div>
-          <div className="flex justify-between items-end mb-2">
-            <OfferStatusTag status={status} />
+
+          <div className="flex justify-between items-start my-1">
             {isAfterReceiptStartedAt({ offer }) && <WantReceiptedTag isReceipted={!!want.receiptedAt} />}
-            <div className="flex-1 w-2/3 md:w-1/3 ml-auto">
+            <div className="w-2/3 md:w-1/3 ml-auto">
               <RoasterNameLink id={roaster.id} name={roaster.name} />
             </div>
           </div>
-          <div className="md:flex items-baseline">
-            <h1 className="md:mt-2 text-xl lg:text-2xl font-medium text-gray-800 lg:mt-0">{bean.name}</h1>
+          <div className="flex justify-start items-start mt-1 mb-2 space-x-1">
+            <OfferStatusTag status={status} />
+            <BeanTasteTags tastes={bean.taste.names} />
+          </div>
+
+          <div className="md:flex items-center">
+            <h1 className="text-xl md:text-2xl title-font text-gray-800">{bean.name}</h1>
             <div className="md:ml-4 text-right">
-              <SecondaryButton onClick={onClickShow}>
-                <div className="w-16 md:w-auto">詳細</div>
+              <SecondaryButton onClick={onClickShow} sizeClass="w-20 md:w-16">
+                詳細
               </SecondaryButton>
             </div>
           </div>
-        </div>
-        <div className="mt-4 lg:grid content-between grid-cols-2">
-          {/* NOTE モバイルで見にくいのでタブ表示にしてもいいかも */}
-          <BeanDetail bean={bean} />
-          <OfferSchedule offer={offer} />
-          <div className="col-span-2 w-11/12 lg:w-full mx-auto pr-2 flex justify-end">
-            <OfferPricePerWeight price={price} weight={weight} />
+          <div className="flex justify-between items-end">
+            <div className="flex space-x-1">
+              {roaster.id !== currentRoaster?.id && (
+                <>
+                  <WantUnWantButton
+                    offer={offer}
+                    wantId={wantId}
+                    setWantId={setWantId}
+                    wantCount={wantCount}
+                    setWantCount={setWantCount}
+                  />
+                  <LikeUnLikeButton offer={offer} likeId={likeId} setLikeId={setLikeId} />
+                </>
+              )}
+            </div>
+            <div className="mr-4">
+              <OfferWantedUserStats offerId={offer.id} roasterId={roaster.id} count={wantCount} amount={amount} />
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      <section>
+        <div className="w-11/12 mx-auto flex flex-wrap mt-4">
+          <div className="w-full lg:w-1/2 lg:pr-4 mb-4 lg:mb-0">
+            {/* タブコンテンツ */}
+            <OfferContentTab offer={offer} />
+
+            {/* 価格 */}
+            <div className="pt-4 flex justify-end">
+              <OfferPricePerWeight price={price} weight={weight} />
+            </div>
+          </div>
+
+          {/* 画像  */}
+          <div className="w-full lg:w-1/2 h-64 md:h-96 lg:h-auto">
+            <BeanImagesSwiper beanName={bean.name} imageUrls={bean.imageUrls} />
+          </div>
+        </div>
+      </section>
     </Card>
   )
 }

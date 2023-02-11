@@ -18,10 +18,11 @@ type Props = {
 
 export const OfferDetailCard: FC<Props> = (props) => {
   const { offer } = props
-  const { id, status, amount, price, weight, roaster, want } = offer
+  const { id, status, amount, price, weight, roaster, want, like } = offer
   const { currentRoaster } = useCurrentRoaster()
 
   const [wantId, setWantId] = useState<number | null>(want.id || null)
+  const [likeId, setLikeId] = useState<number | null>(like.id || null)
   const [wantCount, setWantCount] = useState<number>(want.count)
 
   return (
@@ -40,8 +41,7 @@ export const OfferDetailCard: FC<Props> = (props) => {
             </div>
           </div>
           <div className="flex justify-between items-end">
-            {/* TODO likeボタン */}
-            <div className="flex space-x-2">
+            <div className="flex space-x-1">
               {roaster.id !== currentRoaster?.id && (
                 <>
                   <WantUnWantButton
@@ -51,7 +51,7 @@ export const OfferDetailCard: FC<Props> = (props) => {
                     wantCount={wantCount}
                     setWantCount={setWantCount}
                   />
-                  <LikeUnLikeButton />
+                  <LikeUnLikeButton offer={offer} likeId={likeId} setLikeId={setLikeId} />
                 </>
               )}
             </div>

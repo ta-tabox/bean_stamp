@@ -14,7 +14,7 @@ class Api::V1::WantsController < Api::ApplicationController
     wants = if status.blank?
               all_wants.active.recent
             else
-              all_wants.search_status(status)
+              all_wants.search_status(status).recent
             end
     pagy, @wants = pagy(wants.includes(offer: [:roaster, :wanted_users, :wants, { bean: %i[roast_level country] }]))
     pagy_headers_merge(pagy)

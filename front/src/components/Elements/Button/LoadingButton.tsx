@@ -1,10 +1,21 @@
 import type { FC } from 'react'
 import { memo } from 'react'
 
-export const LoadingButton: FC = memo(() => (
-  <button type="button" className="btn bg-white border-gray-200 text-gray-600 w-16 h-auto">
+import { SecondaryButton } from '@/components/Elements/Button/SecondaryButton'
+import { Spinner } from '@/components/Elements/Spinner'
+
+type Props = {
+  onClick: () => void
+  loading: boolean
+}
+
+export const LoadingButton: FC<Props> = memo((props) => {
+  const { onClick, loading } = props
+  return (
     <div className="flex justify-center">
-      <div className="animate-spin h-4 w-4 border-2 border-gray-400 rounded-full border-t-transparent" />
+      <SecondaryButton onClick={onClick} sizeClass="w-16">
+        <Spinner loading={loading} />
+      </SecondaryButton>
     </div>
-  </button>
-))
+  )
+})

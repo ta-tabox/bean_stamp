@@ -7,52 +7,51 @@ import { ContentHeader, ContentHeaderTitle } from '@/components/Elements/Content
 import { Link } from '@/components/Elements/Link'
 import { Pagination } from '@/components/Elements/Pagination'
 import { Head } from '@/components/Head'
-import { OfferStatusFilterForm } from '@/features/offers'
-import { IndexWantCard } from '@/features/wants/components/organisms/IndexWantCard'
-import { useGetWants } from '@/features/wants/hooks/useGetWants'
+import { useGetLikes } from '@/features/likes/hooks/useGetLikes'
+import { OfferContentCard, OfferStatusFilterForm } from '@/features/offers'
 import { usePagination } from '@/hooks/usePagination'
 
-export const Wants: FC = () => {
+export const Likes: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams()
-  const { wants, getWants, loading } = useGetWants()
+  const { likes, getLikes, loading } = useGetLikes()
   const { currentPage, totalPage } = usePagination()
 
   useEffect(() => {
-    // ウォント 一覧を取得
-    void getWants({ page: searchParams.get('page'), status: searchParams.get('status') })
+    // お気に入り 一覧を取得
+    void getLikes({ page: searchParams.get('page'), status: searchParams.get('status') })
   }, [searchParams])
 
   const onClickReload = () => {
-    void getWants({ page: null })
+    void getLikes({ page: null })
     setSearchParams({})
   }
 
   return (
     <>
-      <Head title="ウォント一覧" />
+      <Head title="お気に入り一覧" />
       <ContentHeader>
         <div className="h-full flex flex-col sm:flex-row justify-between sm:items-end">
-          <ContentHeaderTitle title="ウォント一覧" />
+          <ContentHeaderTitle title="お気に入り一覧" />
           <div className="text-left ml-auto sm:ml-0">
             <OfferStatusFilterForm />
           </div>
         </div>
       </ContentHeader>
 
-      {/* ウォント更新ボタン */}
+      {/* お気に入り更新ボタン */}
       <LoadingButton onClick={onClickReload} loading={loading} />
 
       {!loading && (
         <>
-          {/* ウォント一覧 */}
-          {wants && (
+          {/* お気に入り一覧 */}
+          {likes && (
             <section className="mt-4">
-              {wants.length ? (
+              {likes.length ? (
                 <>
                   <ol>
-                    {wants.map((want) => (
-                      <li key={want.id} className="mt-20">
-                        <IndexWantCard want={want} />
+                    {likes.map((like) => (
+                      <li key={like.id} className="mt-20">
+                        <OfferContentCard offer={like.offer} />
                       </li>
                     ))}
                   </ol>
@@ -60,7 +59,7 @@ export const Wants: FC = () => {
                 </>
               ) : (
                 <div className="text-center text-gray-400">
-                  <p>ウォントがありません</p>
+                  <p>お気に入りがありません</p>
                   {/* TODO オファー検索へのリンク */}
                   <Link to="/search">オファーを探す</Link>
                 </div>

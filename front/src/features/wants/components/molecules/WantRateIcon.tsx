@@ -4,7 +4,7 @@ import { Bad } from '@/features/wants/components/atoms/Bad'
 import { Excellent } from '@/features/wants/components/atoms/Excellent'
 import { Good } from '@/features/wants/components/atoms/Good'
 import { SoSo } from '@/features/wants/components/atoms/SoSo'
-import type { WantRate } from '@/features/wants/type'
+import type { WantRate } from '@/features/wants/types'
 
 type Props = {
   rate: WantRate

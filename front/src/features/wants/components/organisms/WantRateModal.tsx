@@ -7,7 +7,7 @@ import { Modal } from '@/components/Elements/Modal'
 import { FormContainer, FormTitle } from '@/components/Form'
 import { patchWantByRate } from '@/features/wants/api/patchWantByRate'
 import { WantRateRadioButton } from '@/features/wants/components/molecules/WantRateRadioButton'
-import type { Want } from '@/features/wants/type'
+import type { Want } from '@/features/wants/types'
 import { useMessage } from '@/hooks/useMessage'
 
 import type { SubmitHandler } from 'react-hook-form'

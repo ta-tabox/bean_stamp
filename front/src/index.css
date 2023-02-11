@@ -31,7 +31,8 @@
 /* components */
 /* button, link */
 .btn {
-  @apply py-1 px-3 border rounded disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed inline-block text-center text-sm font-medium;
+  @apply h-8 py-1 px-3 border rounded disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed inline-block text-center text-sm font-medium
+  shadow-sm hover:shadow-md active:shadow-sm;
 }
 
 /* want rate  */
@@ -116,7 +117,7 @@
   @apply flex;
 }
 .react-tabs__tab {
-  @apply flex-grow border-b-2 border-gray-200 list-none cursor-pointer pt-1 pb-2 px-1 text-lg e-font;
+  @apply flex-grow border-b-2 border-gray-200 list-none cursor-pointer pt-1 pb-2 px-1 text-lg e-font outline-none;
 }
 .react-tabs__tab--selected {
   @apply border-l-2 text-indigo-500 border-indigo-500;
@@ -133,9 +134,9 @@
 }
 
 .search__button {
-  @apply p-2 bg-white rounded-l-full text-gray-600 border-r border-gray-200 disabled:opacity-50 inline-flex items-center focus:outline-none cursor-default;
+  @apply p-2 text-xs sm:text-base bg-white rounded-l-full text-gray-600 border-r border-gray-200 disabled:opacity-50 inline-flex items-center focus:outline-none cursor-default;
 }
 
 .search__control {
-  @apply appearance-none bg-transparent pl-2 mr-2 focus:outline-none w-44 text-xs md:text-sm flex-wrap flex cursor-pointer;
+  @apply appearance-none bg-transparent pl-2 mr-2 focus:outline-none w-40 sm:w-44 text-xs sm:text-sm flex-wrap flex cursor-pointer;
 }

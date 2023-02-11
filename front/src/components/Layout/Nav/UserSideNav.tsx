@@ -56,7 +56,7 @@ export const UserSideNav: FC<Props> = memo((props) => {
           </svg>
         </SideNavLink>
       </li>
-      {/* TODO お気に入りリンク */}
+      {/* お気に入りリンク */}
       <li className="mb-2">
         <SideNavLink title="Likes" to="/likes">
           <svg className="h-8 w-8">

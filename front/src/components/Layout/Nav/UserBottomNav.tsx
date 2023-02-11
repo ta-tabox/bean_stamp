@@ -34,8 +34,8 @@ export const UserBottomNav: FC = memo(() => (
       </BottomNavItem>
     </Link>
 
-    {/* TODO お気に入りリンク */}
-    <Link to="/link">
+    {/* お気に入りリンク */}
+    <Link to="/likes">
       <BottomNavItem>
         <svg className="w-8 h-8">
           <use xlinkHref="#heart-solid" />

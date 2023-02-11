@@ -20,6 +20,10 @@ export type Offer = {
     isWanted: boolean
     id?: number
   }
+  like: {
+    isLiked: boolean
+    id?: number
+  }
 }
 
 export type OfferStatus = 'on_offering' | 'on_roasting' | 'on_preparing' | 'on_selling' | 'end_of_sales'

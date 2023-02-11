@@ -1,4 +1,4 @@
-import type { Want, WantRate } from '@/features/wants/type'
+import type { Want, WantRate } from '@/features/wants/types'
 import { BackendApiWithAuth } from '@/lib/axios'
 
 type Options = {

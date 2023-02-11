@@ -33,7 +33,7 @@ export const OfferStatusFilterForm: FC = () => {
   return (
     <div className="search__form">
       <div className="search__button">
-        <svg className="w-6 h-6 text-gray-400">
+        <svg className="w-4 h-4 sm:w-6 sm:h-6 text-gray-400">
           <use xlinkHref="#search" />
         </svg>
         検索

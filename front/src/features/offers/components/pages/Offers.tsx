@@ -33,13 +33,17 @@ export const Offers: FC = () => {
     <>
       <Head title="オファー 一覧" />
       <ContentHeader>
-        <div className="h-full flex justify-between items-end">
+        <div className="h-full flex flex-col sm:flex-row justify-between sm:items-end">
           <ContentHeaderTitle title="オファー 一覧" />
-          <OfferStatusFilterForm />
-          {/* TODO レスポンシブでスタイルが崩れる。横幅がきつい */}
-          <PrimaryButton onClick={onClickNew}>コーヒー豆をオファーする</PrimaryButton>
+          <div className="text-left ml-auto sm:ml-0">
+            <OfferStatusFilterForm />
+          </div>
         </div>
       </ContentHeader>
+
+      <div className="text-center pt-4 pb-8">
+        <PrimaryButton onClick={onClickNew}>コーヒー豆をオファーする</PrimaryButton>
+      </div>
 
       {/* ローディング */}
       {loading && (

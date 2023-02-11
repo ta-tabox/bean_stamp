@@ -18,3 +18,11 @@ json.want do
   end
   json.count offer.wanted_users.length
 end
+json.like do
+  if (like = current_api_v1_user.likes.find_by(offer_id: offer.id))
+    json.is_liked true
+    json.id like.id
+  else
+    json.is_liked false
+  end
+end
