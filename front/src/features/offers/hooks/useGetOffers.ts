@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { getOffers as getOffersRequest } from '@/features/offers/api/getOffers'
-import { getOffersWithSearch } from '@/features/offers/api/getOffersWithSearch'
+import { getOffersWithStatus } from '@/features/offers/api/getOffersWithStatus'
 import type { Offer } from '@/features/offers/types'
 import { useMessage } from '@/hooks/useMessage'
 import { usePagination } from '@/hooks/usePagination'
@@ -24,7 +24,7 @@ export const useGetOffers = () => {
     let response
     try {
       if (status) {
-        response = await getOffersWithSearch({ page, status })
+        response = await getOffersWithStatus({ page, status })
       } else {
         response = await getOffersRequest({ page })
       }
