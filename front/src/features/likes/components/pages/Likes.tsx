@@ -60,8 +60,7 @@ export const Likes: FC = () => {
               ) : (
                 <div className="text-center text-gray-400">
                   <p>お気に入りがありません</p>
-                  {/* TODO オファー検索へのリンク */}
-                  <Link to="/search">オファーを探す</Link>
+                  <Link to="/search/offers">オファーを探す</Link>
                 </div>
               )}
             </section>

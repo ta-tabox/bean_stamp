@@ -14,6 +14,7 @@ import { UsersRoutes } from '@/features/users/routes'
 import { WantRoutes } from '@/features/wants/routes'
 import { ProtectedRoute } from '@/router/ProtectedRoute'
 import { RequireSignedOutRoute } from '@/router/RequireSignedOutRoute'
+import { SearchRoutes } from '@/features/search/routes'
 
 export const AppRouter: FC = () => {
   const { loadUser } = useLoadUser()
@@ -43,6 +44,7 @@ export const AppRouter: FC = () => {
           <Route path="offers/*" element={<OffersRoutes />} />
           <Route path="wants/*" element={<WantRoutes />} />
           <Route path="likes/*" element={<LikeRoutes />} />
+          <Route path="search/*" element={<SearchRoutes />} />
         </Route>
       </Route>
       <Route path="*" element={<Page404 />} />

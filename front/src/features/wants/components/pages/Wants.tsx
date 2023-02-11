@@ -61,8 +61,7 @@ export const Wants: FC = () => {
               ) : (
                 <div className="text-center text-gray-400">
                   <p>ウォントがありません</p>
-                  {/* TODO オファー検索へのリンク */}
-                  <Link to="/search">オファーを探す</Link>
+                  <Link to="/search/offers">オファーを探す</Link>
                 </div>
               )}
             </section>

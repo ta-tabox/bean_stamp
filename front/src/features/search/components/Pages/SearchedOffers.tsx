@@ -9,7 +9,7 @@ import { useGetOffersByRoaster } from '@/features/roasters/hooks/useGetOffersByR
 import { usePagination } from '@/hooks/usePagination'
 import { isNumber } from '@/utils/regexp'
 
-export const RoasterOffers: FC = memo(() => {
+export const SearchedOffers: FC = memo(() => {
   const urlParams = useParams<{ id: string }>()
   const [searchParams] = useSearchParams()
   const { offersByRoaster: offers, getOffersByRoaster, loading } = useGetOffersByRoaster()
@@ -31,7 +31,7 @@ export const RoasterOffers: FC = memo(() => {
     <>
       {/* ローディング */}
       {loading && (
-        <div className="flex justify-center mt-16">
+        <div className="flex justify-center">
           <Spinner />
         </div>
       )}

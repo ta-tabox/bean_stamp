@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import defaultRoasterImage from '@/features/roasters/assets/defaultRoaster.png'
 import type { Roaster } from '@/features/roasters/types'
@@ -6,16 +7,22 @@ import { translatePrefectureCodeToName } from '@/utils/prefecture'
 
 type Props = {
   roaster: Roaster
-  onClick: (id: number) => void
 }
 
 export const RoasterItem: FC<Props> = (props) => {
-  const { roaster, onClick } = props
+  const { roaster } = props
   const { id, name, prefectureCode, address, describe, imageUrl } = roaster
+
+  const navigate = useNavigate()
+
   const area = translatePrefectureCodeToName({ prefectureCode })
 
+  const onClickRoaster = () => {
+    navigate(`/roasters/${id}`)
+  }
+
   return (
-    <button type="button" className="block w-full" onClick={() => onClick(id)}>
+    <button type="button" className="block w-full" onClick={onClickRoaster}>
       <div
         id={`roaster-${id}`}
         className="flex flex-col items-center justify-between p-4 duration-300 border-b border-gray-100 sm:border-0 sm:flex-row sm:py-4 px-4 sm:px-8 hover:bg-gray-100"

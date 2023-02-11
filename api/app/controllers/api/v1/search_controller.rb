@@ -26,10 +26,10 @@ class Api::V1::SearchController < Api::ApplicationController
   private
 
   def roasters_query_params
-    params.permit(:name, :prefecture_code)
+    params.permit(:name, :prefecture_code, :page)
   end
 
   def offers_query_params
-    params.permit(:prefecture_code, :country_id, :roast_level_id, :taste_tag_id)
+    params.permit(:prefecture_code, :country_id, :roast_level_id, :taste_tag_id, :page)
   end
 end

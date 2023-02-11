@@ -64,7 +64,8 @@ export const UserSideNav: FC<Props> = memo((props) => {
           </svg>
         </SideNavLink>
       </li>
-      {/* TODO 検索リンク */}
+      {/* 共通 */}
+      {/* 検索リンク */}
       <li className="mb-2">
         <SideNavLink title="Search" to="/search">
           <svg className="h-8 w-8">
@@ -72,7 +73,6 @@ export const UserSideNav: FC<Props> = memo((props) => {
           </svg>
         </SideNavLink>
       </li>
-      {/* 共通 */}
       {/* ヘルプリンク */}
       <li className="mb-2">
         <SideNavLink title="Help" to="/help">

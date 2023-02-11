@@ -16,7 +16,7 @@ export const UserBottomNav: FC = memo(() => (
       </BottomNavItem>
     </Link>
 
-    {/* TODO Searchリンク */}
+    {/* Searchリンク */}
     <Link to="/search">
       <BottomNavItem>
         <svg className="w-8 h-8">
