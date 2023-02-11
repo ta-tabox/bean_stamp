@@ -10,6 +10,7 @@ import { BeansRoutes } from '@/features/beans/routes'
 import { LikeRoutes } from '@/features/likes/routes'
 import { OffersRoutes } from '@/features/offers/routes'
 import { RoastersRoutes } from '@/features/roasters/routes'
+import { SearchRoutes } from '@/features/search/routes'
 import { UsersRoutes } from '@/features/users/routes'
 import { WantRoutes } from '@/features/wants/routes'
 import { ProtectedRoute } from '@/router/ProtectedRoute'
@@ -43,6 +44,7 @@ export const AppRouter: FC = () => {
           <Route path="offers/*" element={<OffersRoutes />} />
           <Route path="wants/*" element={<WantRoutes />} />
           <Route path="likes/*" element={<LikeRoutes />} />
+          <Route path="search/*" element={<SearchRoutes />} />
         </Route>
       </Route>
       <Route path="*" element={<Page404 />} />

@@ -6,5 +6,5 @@ type Props = {
   status: string
 }
 
-export const getOffersWithSearch = ({ page, status }: Props) =>
+export const getOffersWithStatus = ({ page, status }: Props) =>
   BackendApiWithAuth.get<Array<Offer>>(`/offers?page=${page ?? 1}&search=${status}`)

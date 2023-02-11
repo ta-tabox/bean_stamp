@@ -53,6 +53,14 @@ export const RoasterSideNav: FC<Props> = memo((props) => {
         </SideNavLink>
       </li>
       {/* 共通 */}
+      {/* 検索リンク */}
+      <li className="mb-2">
+        <SideNavLink title="Search" to="/search">
+          <svg className="h-8 w-8">
+            <use xlinkHref="#search" />
+          </svg>
+        </SideNavLink>
+      </li>
       {/* ヘルプリンク */}
       <li className="mb-2">
         <SideNavLink title="Help" to="/help">

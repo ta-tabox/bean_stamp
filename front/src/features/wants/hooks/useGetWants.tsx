@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { getWants as getWantsRequest } from '@/features/wants/api/getWants'
-import { getWantsWithSearch } from '@/features/wants/api/getWantsWithSearch'
+import { getWantsWithStatus } from '@/features/wants/api/getWantsWithStatus'
 import { useWants } from '@/features/wants/hooks/useWants'
 import { useMessage } from '@/hooks/useMessage'
 import { usePagination } from '@/hooks/usePagination'
@@ -25,7 +25,7 @@ export const useGetWants = () => {
     let response
     try {
       if (status) {
-        response = await getWantsWithSearch({ page, status })
+        response = await getWantsWithStatus({ page, status })
       } else {
         response = await getWantsRequest({ page })
       }

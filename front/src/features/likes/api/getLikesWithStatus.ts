@@ -6,5 +6,5 @@ type Props = {
   status: string
 }
 
-export const getLikesWithSearch = ({ page, status }: Props) =>
+export const getLikesWithStatus = ({ page, status }: Props) =>
   BackendApiWithAuth.get<Array<Like>>(`/likes?page=${page ?? 1}&search=${status}`)

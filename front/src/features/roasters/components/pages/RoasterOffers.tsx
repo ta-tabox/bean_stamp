@@ -31,7 +31,7 @@ export const RoasterOffers: FC = memo(() => {
     <>
       {/* ローディング */}
       {loading && (
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-16">
           <Spinner />
         </div>
       )}

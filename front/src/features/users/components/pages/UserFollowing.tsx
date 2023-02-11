@@ -1,10 +1,10 @@
 import type { FC } from 'react'
 import { useEffect, memo } from 'react'
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 
 import { Card } from '@/components/Elements/Card'
 import { ContentHeader, ContentHeaderTitle } from '@/components/Elements/Content'
-import { SearchLink } from '@/components/Elements/Link'
+import { Link } from '@/components/Elements/Link'
 import { Pagination } from '@/components/Elements/Pagination'
 import { Spinner } from '@/components/Elements/Spinner'
 import { Head } from '@/components/Head'
@@ -17,7 +17,6 @@ import { isNumber } from '@/utils/regexp'
 
 export const UserFollowing: FC = memo(() => {
   const urlParams = useParams<{ id: string }>()
-  const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const { user, getUser, loading: userLoading } = useGetUser()
   const { roasters, getRoastersFollowedByUser } = useGetRoastersFollowedByUser()
@@ -36,10 +35,6 @@ export const UserFollowing: FC = memo(() => {
       getRoastersFollowedByUser({ id: urlParams.id, page: searchParams.get('page') })
     }
   }, [urlParams.id, searchParams])
-
-  const onClickRoaster = (id: number) => {
-    navigate(`/roasters/${id}`)
-  }
 
   return (
     <>
@@ -73,7 +68,7 @@ export const UserFollowing: FC = memo(() => {
                 <ol>
                   {roasters.map((roaster) => (
                     <li key={roaster.id}>
-                      <RoasterItem roaster={roaster} onClick={onClickRoaster} />
+                      <RoasterItem roaster={roaster} />
                     </li>
                   ))}
                 </ol>
@@ -84,7 +79,7 @@ export const UserFollowing: FC = memo(() => {
             <div className="text-center text-gray-400">
               <p>フォローしているロースターがいません</p>
               <div className="mt-4 w-1/2 sm:w-1/3 mx-auto">
-                <SearchLink type="roaster" />
+                <Link to="/search/roasters">ロースターを探す</Link>
               </div>
             </div>
           )}

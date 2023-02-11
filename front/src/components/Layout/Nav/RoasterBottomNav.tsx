@@ -22,10 +22,12 @@ export const RoasterBottomNav: FC<Props> = memo((props) => {
           </svg>
         </BottomNavItem>
       </Link>
-      {/* ロースターページリンク */}
-      <Link to={`/roasters/${roaster.id}`}>
+      {/* Searchリンク */}
+      <Link to="/search">
         <BottomNavItem>
-          <i className="fa-solid fa-mug-saucer fa-xl" />
+          <svg className="w-8 h-8">
+            <use xlinkHref="#search-solid" />
+          </svg>
         </BottomNavItem>
       </Link>
       {/* Offersリンク */}

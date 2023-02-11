@@ -13,10 +13,11 @@ type InputProps = {
   label: string
   control: Control<any> // eslint-disable-line @typescript-eslint/no-explicit-any
   error?: FieldError
+  require?: boolean
 }
 
 export const PrefectureSelect: FC<InputProps> = (props) => {
-  const { label, control, error } = props
+  const { label, control, error, require = true } = props
 
   return (
     <>
@@ -25,7 +26,7 @@ export const PrefectureSelect: FC<InputProps> = (props) => {
         <Controller
           name={label}
           control={control}
-          rules={{ required: validation.required }}
+          rules={require ? { required: validation.required } : {}}
           render={({ field }) => (
             <Select
               {...field}

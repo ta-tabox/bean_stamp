@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { getLikes as getLikesRequest } from '@/features/likes/api/getLikes'
-import { getLikesWithSearch } from '@/features/likes/api/getLikesWithSearch'
+import { getLikesWithStatus } from '@/features/likes/api/getLikesWithStatus'
 import { useLikes } from '@/features/likes/hooks/useLikes'
 import { useMessage } from '@/hooks/useMessage'
 import { usePagination } from '@/hooks/usePagination'
@@ -25,7 +25,7 @@ export const useGetLikes = () => {
     let response
     try {
       if (status) {
-        response = await getLikesWithSearch({ page, status })
+        response = await getLikesWithStatus({ page, status })
       } else {
         response = await getLikesRequest({ page })
       }

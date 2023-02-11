@@ -6,5 +6,5 @@ type Props = {
   status: string
 }
 
-export const getWantsWithSearch = ({ page, status }: Props) =>
+export const getWantsWithStatus = ({ page, status }: Props) =>
   BackendApiWithAuth.get<Array<Want>>(`/wants?page=${page ?? 1}&search=${status}`)

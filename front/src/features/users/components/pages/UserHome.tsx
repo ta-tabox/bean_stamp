@@ -66,7 +66,7 @@ export const UserHome: FC = memo(() => {
               ) : (
                 <div className="text-center text-gray-400">
                   <p>オファーがありません</p>
-                  <Link to="/search">ロースターをフォローしてオファーを受け取る</Link>
+                  <Link to="/search/roasters">ロースターをフォローしてオファーを受け取る</Link>
                 </div>
               )}
             </section>
