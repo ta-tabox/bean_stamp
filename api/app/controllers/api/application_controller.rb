@@ -1,10 +1,10 @@
 class Api::ApplicationController < ActionController::API
   include DeviseTokenAuth::Concerns::SetUserByToken # tokenによる認証をONにする
-  # skip_before_action :verify_authenticity_token いらない気がする
-  # helper_method :current_user, :user_signed_in? そもそもViewがないのにhelper_methodがいるのか？
 
   # Pagyによるpaginationモジュールを読み込む
   include Pagy::Backend
+  # pagy情報をheadersに追加する
+  after_action { pagy_headers_merge(@pagy) if @pagy }
 
   private
 
