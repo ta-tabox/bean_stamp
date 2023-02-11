@@ -36,17 +36,23 @@ class Api::V1::RoastersController < Api::ApplicationController
   end
 
   def followers
-    pagy, @users = pagy(@roaster.followers)
-    pagy_headers_merge(pagy)
+    @pagy, @users = pagy(@roaster.followers)
     render 'api/v1/users/index', formats: :json
   end
 
   def offers
     offers = @roaster.offers.recent
     offers&.map(&:update_status)
-    pagy, @offers = pagy(offers.includes(:roaster, :wanted_users, bean: :bean_images))
-    pagy_headers_merge(pagy)
+    @pagy, @offers = pagy(offers.includes(:roaster, :wanted_users, bean: :bean_images))
     render 'api/v1/offers/index', formats: :json
+  end
+
+  def search
+    query = Roaster.ransack(params[:query])
+    # flash.now[:alert] = 'ロースターが見つかりませんでした' unless query.result.any?
+    @pagy, @roasters = pagy(query.result(distinct: true))
+    @active_tab = 'roaster'
+    render 'index'
   end
 
   private

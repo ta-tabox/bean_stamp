@@ -16,8 +16,7 @@ class Api::V1::WantsController < Api::ApplicationController
             else
               all_wants.search_status(status).recent
             end
-    pagy, @wants = pagy(wants.includes(offer: [:roaster, :wanted_users, :wants, { bean: %i[roast_level country] }]))
-    pagy_headers_merge(pagy)
+    @pagy, @wants = pagy(wants.includes(offer: [:roaster, :wanted_users, :wants, { bean: %i[roast_level country] }]))
     render formats: :json
   end
 

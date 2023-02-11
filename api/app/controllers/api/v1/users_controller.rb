@@ -7,8 +7,7 @@ class Api::V1::UsersController < Api::ApplicationController
   end
 
   def roasters_followed_by_user
-    pagy, @roasters = pagy(@user.following_roasters)
-    pagy_headers_merge(pagy)
+    @pagy, @roasters = pagy(@user.following_roasters)
     render 'api/v1/roasters/index', formats: :json
   end
 
@@ -17,8 +16,7 @@ class Api::V1::UsersController < Api::ApplicationController
     # statusが更新されていないものを取ることがある→where文でended_atを直接参照するようにした
     offers = Offer.where('ended_at >= ?', Date.current).following_by(current_api_v1_user).recent
     offers&.map(&:update_status)
-    pagy, @offers = pagy(offers.includes(:roaster, :wanted_users, :wants, bean: %i[bean_images roast_level]))
-    pagy_headers_merge(pagy)
+    @pagy, @offers = pagy(offers.includes(:roaster, :wanted_users, :wants, bean: %i[bean_images roast_level]))
     render 'api/v1/offers/index', formats: :json
   end
 
