@@ -1,34 +1,49 @@
 import type { FC } from 'react'
-import { useEffect, memo } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 import { Pagination } from '@/components/Elements/Pagination'
 import { Spinner } from '@/components/Elements/Spinner'
+import { Head } from '@/components/Head'
+import type { Offer } from '@/features/offers'
 import { OfferContentCard } from '@/features/offers'
-import { useGetOffersByRoaster } from '@/features/roasters/hooks/useGetOffersByRoaster'
+import { getOffersWithSearch } from '@/features/search/api/getOffersWithSearch'
+import { useMessage } from '@/hooks/useMessage'
 import { usePagination } from '@/hooks/usePagination'
-import { isNumber } from '@/utils/regexp'
 
-export const SearchedOffers: FC = memo(() => {
-  const urlParams = useParams<{ id: string }>()
+export const SearchedOffers: FC = () => {
+  const { currentPage, totalPage, setPagination } = usePagination()
+  const [searchedOffers, setSearchedOffers] = useState<Array<Offer>>([])
+
   const [searchParams] = useSearchParams()
-  const { offersByRoaster: offers, getOffersByRoaster, loading } = useGetOffersByRoaster()
-  const { currentPage, totalPage } = usePagination()
+  const { showMessage } = useMessage()
+
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    const fetchData = (id: string, page: string | null) => {
-      // urlからユーザーがフォローしているロースターを取得
-      getOffersByRoaster({ id, page })
-    }
-
-    // urlParams.idが数値かどうか評価
-    if (urlParams.id && isNumber(urlParams.id)) {
-      fetchData(urlParams.id, searchParams.get('page'))
-    }
-  }, [urlParams.id, searchParams])
+    setLoading(true)
+    getOffersWithSearch({ page: searchParams.get('page'), query: searchParams.toString() })
+      .then((response) => {
+        if (response.data.length === 0) {
+          showMessage({ message: 'オファーが見つかりませんでした', type: 'error' })
+          setSearchedOffers([])
+        } else {
+          setSearchedOffers(response.data)
+        }
+        setPagination({ headers: response.headers })
+      })
+      .catch(() => {
+        showMessage({ message: 'オファーが見つかりません', type: 'error' })
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [searchParams])
 
   return (
     <>
+      <Head title="オファーを探す" />
+
       {/* ローディング */}
       {loading && (
         <div className="flex justify-center">
@@ -36,31 +51,28 @@ export const SearchedOffers: FC = memo(() => {
         </div>
       )}
 
-      {!loading && (
-        <>
-          {/* オファー 一覧 */}
-          {offers && (
-            <section className="mt-4">
-              {offers.length ? (
-                <>
-                  <ol>
-                    {offers.map((offer) => (
-                      <li key={offer.id} className="mt-16">
-                        <OfferContentCard offer={offer} />
-                      </li>
-                    ))}
-                  </ol>
-                  {currentPage && totalPage && <Pagination currentPage={currentPage} totalPage={totalPage} />}
-                </>
-              ) : (
-                <div className="text-center text-gray-400">
-                  <p>オファーがありません</p>
-                </div>
-              )}
-            </section>
+      {/* オファー検索結果 */}
+      {!loading && searchedOffers && (
+        <section className="text-gray-600">
+          {searchedOffers.length ? (
+            <>
+              <ol>
+                {searchedOffers.map((offer) => (
+                  <li key={offer.id} className="mt-20">
+                    <OfferContentCard offer={offer} />
+                  </li>
+                ))}
+              </ol>
+              {currentPage && totalPage && <Pagination currentPage={currentPage} totalPage={totalPage} />}
+            </>
+          ) : (
+            <div className="text-center text-gray-400">
+              <p>オファーが見つかりませんでした</p>
+              <p>検索条件を変えてお試しください</p>
+            </div>
           )}
-        </>
+        </section>
       )}
     </>
   )
-})
+}

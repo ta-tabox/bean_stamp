@@ -15,8 +15,12 @@ export const Search: FC = () => (
     </ContentHeader>
 
     <section>
-      <SearchFormTab />
-      <Outlet />
+      <div className="">
+        <SearchFormTab />
+      </div>
+      <div className="pt-8">
+        <Outlet />
+      </div>
     </section>
   </>
 )

@@ -46,14 +46,14 @@ export const SearchedRoasters: FC = () => {
 
       {/* ローディング */}
       {loading && (
-        <div className="flex justify-center mt-16">
+        <div className="flex justify-center">
           <Spinner />
         </div>
       )}
 
       {/* ロースター検索結果 */}
-      {searchedRoasters && (
-        <section className="mb-20 py-4 text-gray-600">
+      {!loading && searchedRoasters && (
+        <section className="text-gray-600">
           {searchedRoasters.length ? (
             <>
               <Card>
@@ -69,7 +69,6 @@ export const SearchedRoasters: FC = () => {
             </>
           ) : (
             <div className="text-center text-gray-400">
-              <p>ロースターが見つかりませんでした</p>
               <p>検索条件を変えてお試しください</p>
             </div>
           )}

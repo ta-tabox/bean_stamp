@@ -10,11 +10,11 @@ import { BeansRoutes } from '@/features/beans/routes'
 import { LikeRoutes } from '@/features/likes/routes'
 import { OffersRoutes } from '@/features/offers/routes'
 import { RoastersRoutes } from '@/features/roasters/routes'
+import { SearchRoutes } from '@/features/search/routes'
 import { UsersRoutes } from '@/features/users/routes'
 import { WantRoutes } from '@/features/wants/routes'
 import { ProtectedRoute } from '@/router/ProtectedRoute'
 import { RequireSignedOutRoute } from '@/router/RequireSignedOutRoute'
-import { SearchRoutes } from '@/features/search/routes'
 
 export const AppRouter: FC = () => {
   const { loadUser } = useLoadUser()
