@@ -22,6 +22,7 @@ export const SearchedRoasters: FC = () => {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
+    setLoading(true)
     getRoastersWithSearch({ page: searchParams.get('page'), query: searchParams.toString() })
       .then((response) => {
         if (response.data.length === 0) {
@@ -69,6 +70,7 @@ export const SearchedRoasters: FC = () => {
             </>
           ) : (
             <div className="text-center text-gray-400">
+              <p>ロースターが見つかりませんでした</p>
               <p>検索条件を変えてお試しください</p>
             </div>
           )}

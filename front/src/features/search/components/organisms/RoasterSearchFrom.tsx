@@ -26,9 +26,12 @@ export const RoasterSearchForm: FC = () => {
   }
 
   const onSubmit: SubmitHandler<RoasterSearchFormData> = (data) => {
+    const name = data.name && { name: data.name }
+    const prefectureCode = data.prefectureOption && { prefecture_code: data.prefectureOption.value.toString() }
+
     const query = createSearchParams({
-      name: data.name || '',
-      prefecture_code: data.prefectureOption?.value.toString() || '',
+      ...name,
+      ...prefectureCode,
     }).toString()
 
     navigate(`/search/roasters?${query}`)
