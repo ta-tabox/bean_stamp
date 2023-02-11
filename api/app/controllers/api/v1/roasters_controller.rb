@@ -47,14 +47,6 @@ class Api::V1::RoastersController < Api::ApplicationController
     render 'api/v1/offers/index', formats: :json
   end
 
-  def search
-    query = Roaster.ransack(params[:query])
-    # flash.now[:alert] = 'ロースターが見つかりませんでした' unless query.result.any?
-    @pagy, @roasters = pagy(query.result(distinct: true))
-    @active_tab = 'roaster'
-    render 'index'
-  end
-
   private
 
   def roaster_params

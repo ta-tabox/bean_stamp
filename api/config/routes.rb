@@ -106,6 +106,10 @@ Rails.application.routes.draw do
       end
 
       resources :likes, only: %i[index create destroy]
+
+      # serach_controller.rbへのルーティング
+      get 'search/roasters', to: 'search#roasters'
+      get 'search/offers', to: 'search#offers'
     end
   end
 end
