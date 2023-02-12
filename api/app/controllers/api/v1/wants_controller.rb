@@ -1,6 +1,5 @@
 class Api::V1::WantsController < Api::ApplicationController
   before_action :authenticate_api_v1_user!
-  # TODO: before_action :set_recommended_offers, only: %i[index show search] ユーザーのおすすめのオファーをセットする
   before_action :user_had_want_required_and_set_want, only: %i[show receipt rate]
   before_action :set_offer_and_required_before_the_receipted_ended_at, only: :create
   before_action :want_required_less_than_the_max_amount, only: :create
