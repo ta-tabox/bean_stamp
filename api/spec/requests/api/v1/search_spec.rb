@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Api::V1::Search', focus: true do
+RSpec.describe 'Api::V1::Search' do
   let(:user) { create(:user) }
   let!(:roaster) { create(:roaster) }
   let!(:bean) { create(:bean, :with_image, :with_3_taste_tags, roaster: roaster) }

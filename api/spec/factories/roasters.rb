@@ -21,5 +21,11 @@ FactoryBot.define do
     trait :update do
       name { 'アップデートロースター' }
     end
+
+    trait :at_where do
+      name { 'どこかのロースター' }
+      prefecture_code { '1' }
+    end
+
   end
 end
