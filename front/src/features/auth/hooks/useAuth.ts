@@ -20,7 +20,7 @@ export const useAuth = () => {
   const { showMessage } = useMessage()
   const [loading, setLoading] = useState(false)
 
-  const { signedInUser, setIsSignedIn, setSignedInUser } = useSignedInUser()
+  const { signedInUser, setIsSignedIn } = useSignedInUser()
   const { setAuthCookies, removeAuthCookies } = useAuthCookies()
   const { setErrorNotifications } = useErrorNotification()
 
@@ -35,9 +35,9 @@ export const useAuth = () => {
     await signUpWithSignUpParams({ params })
       .then((res) => {
         // 認証情報をcookieにセット
-        setAuthCookies({ res })
+        setAuthCookies({ res }) // authCookiesを元にloadUser()でセットするように変更
         setIsSignedIn(true)
-        setSignedInUser(res.data.data) // グローバルステートにUserの値をセット
+        // setSignedInUser(res.data.data) // TODO エラーが無ければこのコードを消す グローバルステートにUserの値をセット
         return Promise.resolve(signedInUser)
       })
       .catch((err: AxiosError<DeviseErrorResponse>) => {
@@ -62,9 +62,9 @@ export const useAuth = () => {
     setLoading(true)
     await signInWithEmailAndPassword({ params })
       .then((res) => {
-        setAuthCookies({ res, isRememberMe })
+        setAuthCookies({ res, isRememberMe }) // authCookiesを元にloadUser()でセットするように変更
         setIsSignedIn(true)
-        setSignedInUser(res.data.data) // グローバルステートにUserの値をセット
+        // setSignedInUser(res.data.data) // TODO エラーが無ければこのコードを消す グローバルステートにUserの値をセット
         return Promise.resolve(signedInUser)
       })
       .catch((err: AxiosError<{ errors: Array<string> }>) => {
