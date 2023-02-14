@@ -9,5 +9,5 @@ export const useRandomSelectRecommendedOffers = () => {
       setRecommendedOffers(selectedOffers)
     }
   }
-  return { recommendedOffers, randomSelectRecommendedOffers }
+  return { recommendedOffers, randomSelectRecommendedOffers, recommendedOffersPool }
 }

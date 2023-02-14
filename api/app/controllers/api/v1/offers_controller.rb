@@ -66,7 +66,7 @@ class Api::V1::OffersController < Api::ApplicationController
     unless offers.any?
       offers = Offer.on_offering.near_for(current_api_v1_user)
     end
-    @offers = offers.includes(:roaster, :wanted_users, { bean: %i[roast_level bean_images country bean_taste_tags] }).sample(10)
+    @offers = offers.includes(:roaster, :wanted_users, { bean: %i[roast_level bean_images country taste_tags] }).sample(10)
 
     render 'index', formats: :json
   end

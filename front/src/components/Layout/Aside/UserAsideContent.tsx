@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { useEffect } from 'react'
+import { useLayoutEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { Copyright } from '@/components/Elements/Copyright'
@@ -9,23 +9,23 @@ import { useRandomSelectRecommendedOffers, RecommendedOfferItem, useGetRecommend
 
 export const UserAsideContent: FC = () => {
   const location = useLocation()
-  const { recommendedOffers, randomSelectRecommendedOffers } = useRandomSelectRecommendedOffers()
+  const { recommendedOffers, randomSelectRecommendedOffers, recommendedOffersPool } = useRandomSelectRecommendedOffers()
 
   const { getRecommendedOffers } = useGetRecommendedOffers()
   const { signedInUser } = useSignedInUser()
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (signedInUser) {
       getRecommendedOffers()
     }
   }, [signedInUser])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     randomSelectRecommendedOffers()
-  }, [location])
+  }, [location, recommendedOffersPool])
 
   return (
-    <div id="user-aside" className="min-h-screen h-auto w-full flex flex-col items-center">
+    <div className="min-h-screen h-auto w-full flex flex-col items-center">
       <div className="w-full sticky top-0 bg-gray-50 z-50">
         <div className="w-44 mt-10 mx-auto">
           <SearchLink type="offer" />
@@ -37,26 +37,31 @@ export const UserAsideContent: FC = () => {
         </section>
         <h1 className="w-full pt-4 text-md bg-gray-50 text-gray-600 text-center e-font">Recommendation</h1>
       </div>
-      <section className="w-full flex flex-col justify-center items-center space-y-1 pt-4">
-        <div id="user-recommendation" className="px-2">
-          {/* TODO リコメンデーションを表示、どのようにおすすめしているかわかりやすいように */}
-          {/* render partial: 'shared/recommended_offer', collection: @recommended_offers, as: :offer */}
-          {/* オファー 一覧 */}
-          <section className="mt-4">
-            {recommendedOffers.length ? (
-              <ol>
+      <section className="w-full flex flex-col justify-center items-center space-y-1 mt-2">
+        <div className="px-2">
+          {/* おすすめのオファー 一覧 */}
+          {/* TODO おすすめのオファーのタイプで表示を変える 風味 or 近い
+          apiより選択条件を返す */}
+          {recommendedOffers.length ? (
+            <>
+              <h2 className="text-sm text-gray-500 mx-4 text-center">
+                あなたの好きな風味の
+                <br />
+                コーヒーはいかがですか？
+              </h2>
+              <ol className="mt-2">
                 {recommendedOffers.map((offer) => (
-                  <li key={offer.id} className="mt-20">
+                  <li key={offer.id} className="mb-4">
                     <RecommendedOfferItem offer={offer} />
                   </li>
                 ))}
               </ol>
-            ) : (
-              <div className="text-center text-gray-400">
-                <p>オファーがありません</p>
-              </div>
-            )}
-          </section>
+            </>
+          ) : (
+            <div className="text-center text-gray-400">
+              <p>おすすめのオファーがありません</p>
+            </div>
+          )}
         </div>
       </section>
       <div className="pb-4 mt-auto">
