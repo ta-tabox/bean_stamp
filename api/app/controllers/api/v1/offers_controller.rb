@@ -61,11 +61,12 @@ class Api::V1::OffersController < Api::ApplicationController
   def recommend
     # おすすめのオファーを10件返す
     # ユーザーが好むテイストタグを持つオファーを選定
-    @offers = Offer.on_offering.recommended_for(current_api_v1_user).sample(10)
+    offers = Offer.on_offering.recommended_for(current_api_v1_user)
     # 無ければユーザーの登録地域と近いオファーを選定
-    unless @offers.any?
-      @offers = Offer.on_offering.near_for(current_api_v1_user).sample(10)
+    unless offers.any?
+      offers = Offer.on_offering.near_for(current_api_v1_user)
     end
+    @offers = offers.includes(:roaster, :wanted_users, { bean: %i[roast_level bean_images country bean_taste_tags] }).sample(10)
 
     render 'index', formats: :json
   end

@@ -26,6 +26,5 @@ FactoryBot.define do
       name { 'どこかのロースター' }
       prefecture_code { '1' }
     end
-
   end
 end
