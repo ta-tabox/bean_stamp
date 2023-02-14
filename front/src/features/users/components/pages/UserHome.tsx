@@ -7,7 +7,6 @@ import { ContentHeader, ContentHeaderTitle } from '@/components/Elements/Content
 import { Link } from '@/components/Elements/Link'
 import { Pagination } from '@/components/Elements/Pagination'
 import { Head } from '@/components/Head'
-import { useLoadUser } from '@/features/auth'
 import { useSignedInUser } from '@/features/auth/hooks/useSignedInUser'
 import { OfferContentCard } from '@/features/offers'
 import { useGetCurrentOffers } from '@/features/users/hooks/useGetCurrentOffers'
@@ -15,15 +14,10 @@ import { usePagination } from '@/hooks/usePagination'
 
 export const UserHome: FC = memo(() => {
   const { signedInUser } = useSignedInUser()
-  const { loadUser } = useLoadUser()
-  const { currentOffers, getCurrentOffers, loading } = useGetCurrentOffers()
   const { currentPage, totalPage } = usePagination()
   const [searchParams, setSearchParams] = useSearchParams()
 
-  // NOTE サインイン直後のユーザー＆ロースター情報の更新はここでOKか？
-  useEffect(() => {
-    void loadUser()
-  }, [])
+  const { currentOffers, getCurrentOffers, loading } = useGetCurrentOffers()
 
   useEffect(() => {
     // フォローしているロースターのオファー一覧を取得

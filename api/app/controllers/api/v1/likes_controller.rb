@@ -1,6 +1,5 @@
 class Api::V1::LikesController < Api::ApplicationController
   before_action :authenticate_api_v1_user!
-  # TODO: before_action :set_recommended_offers, only: %i[index]
 
   def index
     status = params[:search]

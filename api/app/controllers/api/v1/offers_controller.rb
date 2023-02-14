@@ -1,9 +1,8 @@
 class Api::V1::OffersController < Api::ApplicationController
   before_action :authenticate_api_v1_user!
-  before_action :user_belonged_to_roaster_required, except: %i[show]
+  before_action :user_belonged_to_roaster_required, except: %i[show recommend]
   before_action :roaster_had_bean_requierd, only: %i[create]
   before_action :roaster_had_offer_requierd_and_set_offer, only: %i[update destroy wanted_users]
-  # TODO: before_action :set_recommended_offers ユーザーのおすすめのオファーをセットする
 
   def index
     status = params[:search]
@@ -57,6 +56,19 @@ class Api::V1::OffersController < Api::ApplicationController
   def wanted_users
     @pagy, @users = pagy(@offer.wanted_users)
     render 'api/v1/users/index', formats: :json
+  end
+
+  def recommend
+    # おすすめのオファーを10件返す
+    # ユーザーが好むテイストタグを持つオファーを選定
+    offers = Offer.on_offering.recommended_for(current_api_v1_user)
+    # 無ければユーザーの登録地域と近いオファーを選定
+    unless offers.any?
+      offers = Offer.on_offering.near_for(current_api_v1_user)
+    end
+    @offers = offers.includes(:roaster, :wanted_users, { bean: %i[roast_level bean_images country taste_tags] }).sample(10)
+
+    render 'index', formats: :json
   end
 
   private

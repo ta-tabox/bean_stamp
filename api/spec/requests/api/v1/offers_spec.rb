@@ -355,7 +355,7 @@ RSpec.describe 'Api::V1::Offers', type: :request do
     end
   end
 
-  # オファーにwantしたユーザー一覧
+  # オファーにwantしたユ-ザー一覧
   describe 'GET #wanted_users' do
     let(:wanted_user) { create(:user) }
 
@@ -405,6 +405,28 @@ RSpec.describe 'Api::V1::Offers', type: :request do
         expect(response).to have_http_status(:success)
         expect(json.length).to eq 1
         expect(json[0]['name']).to eq wanted_user.name
+      end
+    end
+  end
+
+  # おすすめのオファー一覧
+  describe 'GET #recommend' do
+    let(:roaster_at_where) { create(:roaster, :at_where) }
+    let(:bean_at_where) { create(:bean, :with_image_and_tags, roaster: roaster_at_where) }
+    let(:offer_at_where) { create(:offer, bean: bean_at_where) }
+
+    subject { get recommend_api_v1_offers_path, headers: auth_tokens }
+
+    context 'when the user signed in and not belonging to roaster' do
+      let(:auth_tokens) { sign_in_with_token(user) }
+
+      it 'returns offers had by the roaster by json' do
+        subject
+        json = JSON.parse(response.body)
+        expect(response).to have_http_status(:success)
+        expect(json.length).to eq 1
+        expect(json[0]['roaster']['name']).to eq offer.roaster.name
+        expect(json[0]['roaster']['name']).not_to eq roaster_at_where.name
       end
     end
   end
