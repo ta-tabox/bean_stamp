@@ -98,6 +98,7 @@ Rails.application.routes.draw do
       end
 
       resources :wants, only: %i[index show create destroy] do
+        collection { get 'stats', to: 'wants#stats' }
         member do
           patch 'receipt', to: 'wants#receipt'
           patch 'rate', to: 'wants#rate'

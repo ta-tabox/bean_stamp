@@ -10,3 +10,12 @@ export type Want = {
 }
 
 export type WantRate = 'unrated' | 'bad' | 'so_so' | 'good' | 'excellent'
+
+export type WantsStats = {
+  onOffering: number
+  onRoasting: number
+  onPreparing: number
+  onSelling: number
+  endOfSales: number
+  notReceipted: number
+}

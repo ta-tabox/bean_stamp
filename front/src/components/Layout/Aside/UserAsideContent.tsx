@@ -6,6 +6,7 @@ import { Copyright } from '@/components/Elements/Copyright'
 import { SearchLink } from '@/components/Elements/Link'
 import { useSignedInUser } from '@/features/auth'
 import { useRandomSelectRecommendedOffers, RecommendedOfferItem, useGetRecommendedOffers } from '@/features/offers'
+import { useGetWantsStats } from '@/features/wants'
 
 export const UserAsideContent: FC = () => {
   const location = useLocation()
@@ -13,6 +14,7 @@ export const UserAsideContent: FC = () => {
 
   const { getRecommendedOffers } = useGetRecommendedOffers()
   const { signedInUser } = useSignedInUser()
+  const { wantsStats, getWantsStats } = useGetWantsStats()
 
   useLayoutEffect(() => {
     if (signedInUser) {
@@ -24,6 +26,10 @@ export const UserAsideContent: FC = () => {
     randomSelectRecommendedOffers()
   }, [location, recommendedOffersPool])
 
+  useLayoutEffect(() => {
+    getWantsStats()
+  }, [signedInUser])
+
   return (
     <div className="min-h-screen h-auto w-full flex flex-col items-center">
       <div className="w-full sticky top-0 bg-gray-50 z-50">
@@ -33,7 +39,8 @@ export const UserAsideContent: FC = () => {
         <section className="h-28 w-full px-6 mt-8 bg-gray-50 flex flex-col justify-start space-y-1 text-center">
           <h1 className="text-md text-gray-600 e-font">Notification</h1>
           {/* TODO 通知を表示する */}
-          <div id="user-notification">{/* render 'shared/user_notification' */}通知</div>
+          <div>{/* render 'shared/user_notification' */}</div>
+          <div>{wantsStats?.onOffering}</div>
         </section>
         <h1 className="w-full pt-4 text-md bg-gray-50 text-gray-600 text-center e-font">Recommendation</h1>
       </div>
