@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { PrimaryButton } from '@/components/Elements/Button'
 import { Modal } from '@/components/Elements/Modal'
 import { FormContainer, FormTitle } from '@/components/Form'
+import { useGetRecommendedOffers } from '@/features/offers'
 import { patchWantByRate } from '@/features/wants/api/patchWantByRate'
 import { WantRateRadioButton } from '@/features/wants/components/molecules/WantRateRadioButton'
 import type { Want } from '@/features/wants/types'
@@ -23,6 +24,7 @@ type Props = {
 export const WantRateModal: FC<Props> = (props) => {
   const { isOpen, onClose, wantId, beanName, setWant } = props
   const { showMessage } = useMessage()
+  const { getRecommendedOffers } = useGetRecommendedOffers()
 
   const {
     register,
@@ -34,6 +36,7 @@ export const WantRateModal: FC<Props> = (props) => {
     patchWantByRate({ id: wantId, rate: data.rate })
       .then((response) => {
         setWant(response.data)
+        getRecommendedOffers() // おすすめのオファーを再計算・取得する
         showMessage({ message: 'コーヒー豆を評価しました', type: 'success' })
       })
       .catch(() => {

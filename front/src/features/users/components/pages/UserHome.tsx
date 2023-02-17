@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { useEffect, memo } from 'react'
+import { useLayoutEffect, memo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { LoadingButton } from '@/components/Elements/Button'
@@ -19,7 +19,7 @@ export const UserHome: FC = memo(() => {
 
   const { currentOffers, getCurrentOffers, loading } = useGetCurrentOffers()
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // フォローしているロースターのオファー一覧を取得
     getCurrentOffers({ page: searchParams.get('page') })
   }, [searchParams])

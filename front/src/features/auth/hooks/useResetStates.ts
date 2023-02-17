@@ -1,11 +1,13 @@
 import { useSignedInUser } from '@/features/auth/hooks/useSignedInUser'
 import { useRecommendedOffers } from '@/features/offers/hooks/useRecommendedOffers'
 import { useCurrentRoaster } from '@/features/roasters'
+import { useWantsStats } from '@/features/wants'
 
 export const useResetStates = () => {
   const { setIsSignedIn, setSignedInUser, setIsBelongingToRoaster } = useSignedInUser()
   const { setCurrentRoaster, setIsRoaster } = useCurrentRoaster()
   const { setRecommendedOffers, setRecommendedOffersPool } = useRecommendedOffers()
+  const { setWantsStats } = useWantsStats()
 
   const resetStates = () => {
     setIsSignedIn(false) // IsSignedInStateを初期化
@@ -15,6 +17,7 @@ export const useResetStates = () => {
     setIsRoaster(false) // IsRoasterStateを初期化
     setRecommendedOffers([]) // おすすめのオファーを初期化
     setRecommendedOffersPool([]) // おすすめのオファーのプールを初期化
+    setWantsStats(null) // サインインユーザーのウォント統計を初期化
     // TODO recoil管理下のステートを追加する
   }
 
