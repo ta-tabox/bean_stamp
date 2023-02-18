@@ -31,8 +31,7 @@ export const SideNavRoasterToggleButton: FC<Props> = memo((props) => {
   const roasterImageUrl = roaster.imageUrl ? `${roaster.imageUrl}` : defaultRoasterImage
 
   return (
-    <div>
-      {/* TODO スタイル整える 感覚的に変更するのがわかるようにする */}
+    <div className="text-center">
       <button type="submit" onClick={onClick}>
         <img
           src={isRoaster ? userImageUrl : roasterImageUrl}
@@ -40,11 +39,21 @@ export const SideNavRoasterToggleButton: FC<Props> = memo((props) => {
           className="object-cover w-20 h-20 rounded-full border-2 border-indigo-500"
         />
       </button>
-      <p className="mx-auto text-center font-light">{isRoaster ? 'TO USER' : 'TO ROASTER'}</p>
-
-      <svg className="h-6 w-6 mx-auto text-gray-600 mt-2">
-        <use xlinkHref="#switch-horizontal" />
-      </svg>
+      <div className="mx-auto font-light text-xs">
+        {isRoaster ? (
+          <p>
+            ユーザーへ
+            <br />
+            切り替える
+          </p>
+        ) : (
+          <p>
+            ロースターへ
+            <br />
+            切り替える
+          </p>
+        )}
+      </div>
     </div>
   )
 })

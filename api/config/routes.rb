@@ -93,14 +93,18 @@ Rails.application.routes.draw do
       resources :beans, only: %i[index show create update destroy]
 
       resources :offers, only: %i[index show create update destroy] do
-        collection { get 'recommend' }
+        collection do
+          get 'recommend'
+          get 'stats'
+        end
         member { get 'wanted_users' }
       end
 
       resources :wants, only: %i[index show create destroy] do
+        collection { get 'stats' }
         member do
-          patch 'receipt', to: 'wants#receipt'
-          patch 'rate', to: 'wants#rate'
+          patch 'receipt'
+          patch 'rate'
         end
       end
 

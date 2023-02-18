@@ -430,4 +430,23 @@ RSpec.describe 'Api::V1::Offers', type: :request do
       end
     end
   end
+
+  # カレントロースターのオファー統計
+  describe 'GET #stats' do
+    subject { get stats_api_v1_offers_path, headers: auth_tokens }
+    context 'when the roaster has a offer' do
+      let(:auth_tokens) { sign_in_with_token(user_with_a_offer) } # ログインとトークンの取得
+
+      it 'returns offers stats had by the roaster by json' do
+        subject
+        json = JSON.parse(response.body)
+        expect(response).to have_http_status(:success)
+        expect(json['on_offering']).to eq 1
+        expect(json['on_roasting']).to eq 0
+        expect(json['on_preparing']).to eq 0
+        expect(json['on_selling']).to eq 0
+        expect(json['end_of_sales']).to eq 0
+      end
+    end
+  end
 end

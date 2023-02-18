@@ -47,6 +47,19 @@ class Api::V1::WantsController < Api::ApplicationController
     render 'show', formats: :json
   end
 
+  # サインインユーザーのウォントのステータスを集計
+  def stats
+    wants = current_api_v1_user.wants.includes(:offer)
+    on_offering_count = wants.count { |want| want.offer.on_offering? == true }
+    on_roasting_count = wants.count { |want| want.offer.on_roasting? == true }
+    on_preparing_count = wants.count { |want| want.offer.on_preparing? == true }
+    on_selling_count = wants.count { |want| want.offer.on_selling? == true }
+    end_of_sales_count = wants.count { |want| want.offer.end_of_sales? == true }
+    not_recipted_count = wants.count { |want| want.receipted_at? == false && want.offer.on_selling? }
+    render json: { on_offering: on_offering_count, on_roasting: on_roasting_count, on_preparing: on_preparing_count, on_selling: on_selling_count,
+                   end_of_sales: end_of_sales_count, not_receipted: not_recipted_count }
+  end
+
   private
 
   def want_params

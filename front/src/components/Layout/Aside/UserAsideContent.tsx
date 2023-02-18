@@ -1,25 +1,31 @@
 import type { FC } from 'react'
-import { useLayoutEffect } from 'react'
+import { memo, useLayoutEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { Copyright } from '@/components/Elements/Copyright'
 import { SearchLink } from '@/components/Elements/Link'
+import { UserAsideNotification } from '@/components/Layout/Aside/UserAsideNotification'
 import { useSignedInUser } from '@/features/auth'
 import { useRandomSelectRecommendedOffers, RecommendedOfferItem, useGetRecommendedOffers } from '@/features/offers'
+import { useGetWantsStats } from '@/features/wants'
 
-export const UserAsideContent: FC = () => {
+export const UserAsideContent: FC = memo(() => {
   const location = useLocation()
-  const { recommendedOffers, randomSelectRecommendedOffers, recommendedOffersPool } = useRandomSelectRecommendedOffers()
 
-  const { getRecommendedOffers } = useGetRecommendedOffers()
   const { signedInUser } = useSignedInUser()
+  const { recommendedOffers, randomSelectRecommendedOffers, recommendedOffersPool } = useRandomSelectRecommendedOffers()
+  const { getRecommendedOffers } = useGetRecommendedOffers()
+  const { wantsStats, getWantsStats } = useGetWantsStats()
 
+  // リロード時にAPIを叩く
   useLayoutEffect(() => {
-    if (signedInUser) {
-      getRecommendedOffers()
+    if (!signedInUser) {
+      getRecommendedOffers() // おすすめのオファーを取得
+      getWantsStats() // 通知用のウォント統計を取得
     }
-  }, [signedInUser])
+  }, [])
 
+  // locationが変わるたびに表示するおすすめのオファーをシャッフルする
   useLayoutEffect(() => {
     randomSelectRecommendedOffers()
   }, [location, recommendedOffersPool])
@@ -30,16 +36,16 @@ export const UserAsideContent: FC = () => {
         <div className="w-44 mt-10 mx-auto">
           <SearchLink type="offer" />
         </div>
+        {/* 通知 */}
         <section className="h-28 w-full px-6 mt-8 bg-gray-50 flex flex-col justify-start space-y-1 text-center">
           <h1 className="text-md text-gray-600 e-font">Notification</h1>
-          {/* TODO 通知を表示する */}
-          <div id="user-notification">{/* render 'shared/user_notification' */}通知</div>
+          <UserAsideNotification wantsStats={wantsStats} />
         </section>
         <h1 className="w-full pt-4 text-md bg-gray-50 text-gray-600 text-center e-font">Recommendation</h1>
       </div>
+      {/* おすすめのオファー 一覧 */}
       <section className="w-full flex flex-col justify-center items-center space-y-1 mt-2">
         <div className="px-2">
-          {/* おすすめのオファー 一覧 */}
           {/* TODO おすすめのオファーのタイプで表示を変える 風味 or 近い
           apiより選択条件を返す */}
           {recommendedOffers.length ? (
@@ -69,4 +75,4 @@ export const UserAsideContent: FC = () => {
       </div>
     </div>
   )
-}
+})

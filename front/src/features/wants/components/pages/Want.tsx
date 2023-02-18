@@ -12,6 +12,7 @@ import { patchWantByReceipt } from '@/features/wants/api/patchWantByReceipt'
 import { WantRateIcon } from '@/features/wants/components/molecules/WantRateIcon'
 import { WantRateModal } from '@/features/wants/components/organisms/WantRateModal'
 import { useGetWant } from '@/features/wants/hooks/useGetWant'
+import { useGetWantsStats } from '@/features/wants/hooks/useGetWantsStats'
 import { isAfterReceiptStartedAt } from '@/features/wants/utils/isAfterReceiptStartedAt'
 import { useMessage } from '@/hooks/useMessage'
 import { useModal } from '@/hooks/useModal'
@@ -22,6 +23,7 @@ export const Want: FC = () => {
   const navigate = useNavigate()
 
   const { want, getWant, setWant } = useGetWant()
+  const { getWantsStats } = useGetWantsStats()
   const { isOpen: isOpenRate, onOpen: onOpenRate, onClose: onCloseRate } = useModal()
   const { showMessage } = useMessage()
 
@@ -38,6 +40,7 @@ export const Want: FC = () => {
       patchWantByReceipt({ id: want.id })
         .then((response) => {
           setWant(response.data)
+          getWantsStats() // サインインユーザーのウォントの統計を再取得
           showMessage({ message: '受け取りを完了しました', type: 'success' })
         })
         .catch(() => {

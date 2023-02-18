@@ -270,4 +270,35 @@ RSpec.describe 'Api::V1::Wants', type: :request do
       end
     end
   end
+
+  # サインインユーザーのウォント統計
+  describe 'GET #stats' do
+    subject { get stats_api_v1_wants_path, headers: auth_tokens }
+
+    context 'when the user is signed out' do
+      let(:auth_tokens) { { 'client' => '', 'access-token' => '', 'uid' => '' } }
+
+      it 'returns status of unauthorized' do
+        subject
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context 'when the user is signed in and has a want' do
+      let(:auth_tokens) { sign_in_with_token(user) } # ログインとトークンの取得
+      before { user.want_offers << offer }
+
+      it 'returns wants stats had by the user by json' do
+        subject
+        json = JSON.parse(response.body)
+        expect(response).to have_http_status(:success)
+        expect(json['on_offering']).to eq 1
+        expect(json['on_roasting']).to eq 0
+        expect(json['on_preparing']).to eq 0
+        expect(json['on_selling']).to eq 0
+        expect(json['end_of_sales']).to eq 0
+        expect(json['not_receipted']).to eq 0
+      end
+    end
+  end
 end

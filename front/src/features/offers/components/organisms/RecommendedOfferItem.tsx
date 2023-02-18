@@ -7,7 +7,7 @@ type Props = {
   offer: Offer
 }
 
-// TODO コンポーネント分割
+// NOTE コンポーネント分割した方がいい？
 export const RecommendedOfferItem: FC<Props> = (props) => {
   const { offer } = props
   const { id, roaster, bean } = offer

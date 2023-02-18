@@ -1,4 +1,4 @@
-import type { Offer } from '@/features/offers'
+import type { Offer, OffersStats } from '@/features/offers'
 
 export type Want = {
   id: number
@@ -10,3 +10,7 @@ export type Want = {
 }
 
 export type WantRate = 'unrated' | 'bad' | 'so_so' | 'good' | 'excellent'
+
+export type WantsStats = OffersStats & {
+  notReceipted: number
+}

@@ -32,3 +32,11 @@ export type OfferCreateUpdateData = Pick<
   Offer,
   'beanId' | 'price' | 'weight' | 'amount' | 'endedAt' | 'roastedAt' | 'receiptStartedAt' | 'receiptEndedAt'
 >
+
+export type OffersStats = {
+  onOffering: number
+  onRoasting: number
+  onPreparing: number
+  onSelling: number
+  endOfSales: number
+}
