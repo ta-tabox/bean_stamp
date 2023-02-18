@@ -1,5 +1,6 @@
 import { useSignedInUser } from '@/features/auth/hooks/useSignedInUser'
 import { useLikes } from '@/features/likes'
+import { useOffersStats } from '@/features/offers/hooks/useOffersStats'
 import { useRecommendedOffers } from '@/features/offers/hooks/useRecommendedOffers'
 import { useCurrentRoaster, useUsersFollowingToRoaster } from '@/features/roasters'
 import { useWants, useWantsStats } from '@/features/wants'
@@ -12,6 +13,7 @@ export const useResetStates = () => {
   const { setWants } = useWants()
   const { setWantsStats } = useWantsStats()
   const { setLikes } = useLikes()
+  const { setOffersStats } = useOffersStats()
 
   const resetStates = () => {
     setIsSignedIn(false) // IsSignedInStateを初期化
@@ -25,6 +27,7 @@ export const useResetStates = () => {
     setWants(null) // wantsStateの初期化
     setWantsStats(null) // サインインユーザーのウォント統計を初期化
     setLikes(null) // likesStateの初期化
+    setOffersStats(null) // カレントロースターのオファー統計を初期化
   }
 
   return { resetStates }

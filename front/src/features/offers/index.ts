@@ -1,6 +1,7 @@
 export * from './types'
 export * from './hooks/useGetRecommendedOffers'
 export * from './hooks/useRandomSelectRecommendedOffers'
+export * from './hooks/useGetOffersStats'
 export * from './components/molecules/OfferSchedule'
 export * from './components/molecules/OfferPricePerWeight'
 export * from './components/molecules/OfferStatusTag'

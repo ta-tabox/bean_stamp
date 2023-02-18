@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { useLayoutEffect } from 'react'
+import { memo, useLayoutEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { Copyright } from '@/components/Elements/Copyright'
@@ -9,12 +9,12 @@ import { useSignedInUser } from '@/features/auth'
 import { useRandomSelectRecommendedOffers, RecommendedOfferItem, useGetRecommendedOffers } from '@/features/offers'
 import { useGetWantsStats } from '@/features/wants'
 
-export const UserAsideContent: FC = () => {
+export const UserAsideContent: FC = memo(() => {
   const location = useLocation()
-  const { recommendedOffers, randomSelectRecommendedOffers, recommendedOffersPool } = useRandomSelectRecommendedOffers()
 
-  const { getRecommendedOffers } = useGetRecommendedOffers()
   const { signedInUser } = useSignedInUser()
+  const { recommendedOffers, randomSelectRecommendedOffers, recommendedOffersPool } = useRandomSelectRecommendedOffers()
+  const { getRecommendedOffers } = useGetRecommendedOffers()
   const { wantsStats, getWantsStats } = useGetWantsStats()
 
   // リロード時とログイン時にAPIを叩く
@@ -84,4 +84,4 @@ export const UserAsideContent: FC = () => {
       </div>
     </div>
   )
-}
+})
