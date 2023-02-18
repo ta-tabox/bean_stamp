@@ -18,10 +18,10 @@ export const RoasterAsideNotification: FC<Props> = (props) => {
           )}
 
           {offersStats.onRoasting !== 0 && (
-            <Link to="/offers?status=on_roasting">{`ロースト期間のウォントが${offersStats.onRoasting}件あります`}</Link>
+            <Link to="/offers?status=on_roasting">{`ロースト期間のオファーが${offersStats.onRoasting}件あります`}</Link>
           )}
           {offersStats.onSelling !== 0 && (
-            <Link to="/offers?status=on_selling">{`受け取り期間のウォントが${offersStats.onSelling}件あります`}</Link>
+            <Link to="/offers?status=on_selling">{`受け取り期間のオファーが${offersStats.onSelling}件あります`}</Link>
           )}
         </>
       )}

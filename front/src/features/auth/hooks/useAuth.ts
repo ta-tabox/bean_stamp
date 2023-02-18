@@ -37,7 +37,6 @@ export const useAuth = () => {
         // 認証情報をcookieにセット
         setAuthCookies({ res }) // authCookiesを元にloadUser()でセットするように変更
         setIsSignedIn(true)
-        // setSignedInUser(res.data.data) // TODO エラーが無ければこのコードを消す グローバルステートにUserの値をセット
         return Promise.resolve(signedInUser)
       })
       .catch((err: AxiosError<DeviseErrorResponse>) => {
@@ -64,7 +63,6 @@ export const useAuth = () => {
       .then((res) => {
         setAuthCookies({ res, isRememberMe }) // authCookiesを元にloadUser()でセットするように変更
         setIsSignedIn(true)
-        // setSignedInUser(res.data.data) // TODO エラーが無ければこのコードを消す グローバルステートにUserの値をセット
         return Promise.resolve(signedInUser)
       })
       .catch((err: AxiosError<{ errors: Array<string> }>) => {
