@@ -71,6 +71,18 @@ class Api::V1::OffersController < Api::ApplicationController
     render 'index', formats: :json
   end
 
+  # 現在のロースターのオファーのステータスを集計
+  def stats
+    offers = current_api_v1_roaster.offers
+    on_offering_count = offers.count(&:on_offering?)
+    on_roasting_count = offers.count(&:on_roasting?)
+    on_preparing_count = offers.count(&:on_preparing?)
+    on_selling_count = offers.count(&:on_selling?)
+    end_of_sales_count = offers.count(&:end_of_sales?)
+    render json: { on_offering: on_offering_count, on_roasting: on_roasting_count, on_preparing: on_preparing_count, on_selling: on_selling_count,
+                   end_of_sales: end_of_sales_count }
+  end
+
   private
 
   def offer_params
