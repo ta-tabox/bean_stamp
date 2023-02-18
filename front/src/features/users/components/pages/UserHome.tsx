@@ -8,8 +8,9 @@ import { Link } from '@/components/Elements/Link'
 import { Pagination } from '@/components/Elements/Pagination'
 import { Head } from '@/components/Head'
 import { useSignedInUser } from '@/features/auth/hooks/useSignedInUser'
-import { OfferContentCard } from '@/features/offers'
+import { OfferContentCard, useGetRecommendedOffers } from '@/features/offers'
 import { useGetCurrentOffers } from '@/features/users/hooks/useGetCurrentOffers'
+import { useGetWantsStats } from '@/features/wants'
 import { usePagination } from '@/hooks/usePagination'
 
 export const UserHome: FC = memo(() => {
@@ -18,11 +19,21 @@ export const UserHome: FC = memo(() => {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const { currentOffers, getCurrentOffers, loading } = useGetCurrentOffers()
+  const { getRecommendedOffers } = useGetRecommendedOffers()
+  const { getWantsStats } = useGetWantsStats()
 
   useLayoutEffect(() => {
     // フォローしているロースターのオファー一覧を取得
     getCurrentOffers({ page: searchParams.get('page') })
   }, [searchParams])
+
+  // ログイン時、ホームアクセス時にAPIを叩く
+  useLayoutEffect(() => {
+    if (signedInUser) {
+      getRecommendedOffers() // おすすめのオファーを取得
+      getWantsStats() // 通知用のウォント統計を取得
+    }
+  }, [])
 
   const onClickReload = () => {
     getCurrentOffers({ page: null })

@@ -17,27 +17,18 @@ export const UserAsideContent: FC = memo(() => {
   const { getRecommendedOffers } = useGetRecommendedOffers()
   const { wantsStats, getWantsStats } = useGetWantsStats()
 
-  // リロード時とログイン時にAPIを叩く
+  // リロード時にAPIを叩く
   useLayoutEffect(() => {
-    if (signedInUser) {
-      getRecommendedOffers()
-      getWantsStats()
+    if (!signedInUser) {
+      getRecommendedOffers() // おすすめのオファーを取得
+      getWantsStats() // 通知用のウォント統計を取得
     }
-  }, [signedInUser])
+  }, [])
 
   // locationが変わるたびに表示するおすすめのオファーをシャッフルする
   useLayoutEffect(() => {
     randomSelectRecommendedOffers()
   }, [location, recommendedOffersPool])
-
-  // ユーザーホームにアクセスしたときにAPIを叩く
-  // リロード時とログイン時はsignedInUserがnullのため実行しない
-  useLayoutEffect(() => {
-    if (signedInUser && location.pathname === '/users/home') {
-      getRecommendedOffers()
-      getWantsStats()
-    }
-  }, [location])
 
   return (
     <div className="min-h-screen h-auto w-full flex flex-col items-center">
