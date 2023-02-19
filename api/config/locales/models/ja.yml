@@ -1,0 +1,63 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+      roaster: ロースター
+      bean: コーヒー豆
+      bean_image: コーヒー豆イメージ
+      offer: オファー
+      mst_taste_tag: タグ
+      bean_taste_tags_mst_taste_tag: フレーバー
+    attributes:
+      user:
+        name: 名前
+        prefecture_code: エリア
+        describe: 自己紹介
+        image: サムネイル
+      roaster:
+        name: 店舗名
+        phone_number: 電話番号
+        prefecture_code: 都道府県
+        address: 住所
+        describe: 店舗紹介
+        image: サムネイル
+      bean:
+        name: タイトル
+        country: 生産国
+        roast_level_id: 焙煎度
+        roast_level: 焙煎度
+        subregion: 地域
+        farm: 農園
+        variety: 品種
+        elevation: 標高
+        process: 精製方法
+        cropped_at: 収穫時期
+        describe: コーヒー紹介
+        bean_images: イメージ
+        taste_tags: Flavor
+        acidity: 酸味
+        flavor: フレーバー
+        body: ボディ
+        bitterness: 苦味
+        sweetness: 甘味
+      bean_image:
+        image: イメージ
+        images: 紹介画像
+      bean_taste_tags:
+        mst_taste_tag: フレーバー
+      offer:
+        ended_at: オファー終了日
+        roasted_at: 焙煎日
+        receipt_started_at: 受け取り開始日
+        receipt_ended_at: 受け取り終了日
+        price: 販売価格
+        weight: 内容量
+        amount: 数量
+  enums:
+    offer:
+      status:
+        on_offering: オファー中
+        on_roasting: ロースト期間
+        on_preparing: 準備中
+        on_selling: 受け取り期間
+        end_of_sales: 受け取り終了
