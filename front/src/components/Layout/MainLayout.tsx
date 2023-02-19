@@ -30,7 +30,7 @@ export const MainLayout: FC = memo(() => (
         </main>
       </div>
       {/* サイドコンテンツ */}
-      <div className="w-3/12 hidden lg:block">
+      <div className="w-3/12 hidden lg:block bg-gray-100">
         <AsideContent />
       </div>
     </div>
