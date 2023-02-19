@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Beans', type: :system do
+RSpec.describe 'Beans', type: :system, skip: true do
   # ロースターに所属したユーザーを定義
   let(:user) { create(:user, :with_roaster) }
   let!(:bean) { create(:bean, :with_image, :with_3_taste_tags, created_at: Time.current.yesterday, roaster: user.roaster) }

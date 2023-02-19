@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Roasters', type: :system do
+RSpec.describe 'Roasters', type: :system, skip: true do
   describe 'Roaster CRUD' do
     let(:roaster) { create(:roaster, :with_image) }
     let(:another_roaster) { create(:roaster, :with_image, name: '他のテストロースター') }

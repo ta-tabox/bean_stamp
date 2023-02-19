@@ -60,17 +60,13 @@
   @apply py-1 px-3 border rounded disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed inline-block text-center text-sm font-medium;
 }
 
-/*
 .btn-primary {
   @apply bg-indigo-500 border-indigo-600 text-white hover:bg-indigo-600 active:bg-indigo-700;
 }
-*/
 
-/*
 .btn-secondary {
   @apply bg-white border-gray-200 text-gray-600 hover:bg-gray-100 active:bg-gray-200;
 }
-*/
 
 .btn-pop {
   @apply shadow-md hover:shadow-lg transition transform hover:-translate-y-0.5;

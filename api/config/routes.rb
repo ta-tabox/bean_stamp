@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
+
+  # Rails単体アプリケーション時のルーティング
+  # rails_admin使用時はノーマルのdeviseを利用してログインする必要がある
   root 'static_pages#home'
   get 'home', to: 'static_pages#home', as: 'home'
   get 'help', to: 'static_pages#help', as: 'help'

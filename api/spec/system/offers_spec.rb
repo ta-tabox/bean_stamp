@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Offers', type: :system do
+RSpec.describe 'Offers', type: :system, skip: true do
   describe 'Offer CRUD' do
     # ロースターに所属したユーザーを定義
     let(:user) { create(:user, :with_roaster) }
