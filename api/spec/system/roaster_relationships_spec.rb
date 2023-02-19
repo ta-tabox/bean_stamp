@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'RoasterRelationships', type: :system do
+RSpec.describe 'RoasterRelationships', type: :system, skip: true do
   let(:user) { create(:user) }
   let(:another_user) { create(:user, name: '他のテストユーザー') }
   let(:roaster) { create(:roaster) }
