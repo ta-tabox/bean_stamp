@@ -3,7 +3,7 @@ import type { FC } from 'react'
 import { Helmet } from 'react-helmet-async'
 
 import favicon from '@/assets/images/favicon.png'
-import { APP_NAME, FRONT_HOST } from '@/config'
+import { APP_NAME, FRONT_ORIGIN } from '@/config'
 
 type HeadProps = {
   title?: string
@@ -17,7 +17,7 @@ export const Head: FC<HeadProps> = (props) => {
   return (
     <Helmet title={title ? `${title} | ${APP_NAME}` : undefined} defaultTitle={`${APP_NAME}`}>
       <meta name="description" content={description ?? 'Bean Stampはコーヒー愛好家とロースターを繋ぐサービスです。'} />
-      <link rel="canonical" href={`${FRONT_HOST}/${path ?? ''}`} />
+      <link rel="canonical" href={`${FRONT_ORIGIN}/${path ?? ''}`} />
 
       {/* TODO アイコン変更する */}
       <link rel="icon" type="image/svg+xml" href={favicon} />

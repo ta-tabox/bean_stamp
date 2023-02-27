@@ -2,7 +2,7 @@ import Axios from 'axios'
 import applyCaseMiddleware from 'axios-case-converter'
 import { Cookies } from 'react-cookie'
 
-import { API_HOST } from '@/config'
+import { API_ORIGIN } from '@/config'
 
 // applyCaseMiddleware:
 // axiosで受け取ったレスポンスの値をスネークケース→キャメルケースに変換
@@ -17,7 +17,7 @@ const createAxiosInstance = () => {
   const axiosInstance = applyCaseMiddleware(
     Axios.create({
       // apiのURLを指定
-      baseURL: `${API_HOST}/api/v1`,
+      baseURL: `${API_ORIGIN}/api/v1`,
       headers: {
         'Content-Type': 'application/json',
       },

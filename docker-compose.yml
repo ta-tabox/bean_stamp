@@ -31,8 +31,8 @@ services:
     stdin_open: true # -itオプションと同等の効果
     tty: true
     environment:
-      FRONT_DOMAIN: "localhost:$FRONT_PORT" # corsで許可するorigin
-      API_HOST: "http://localhost:$API_PORT" # FRONTから画像のURLを参照する
+      FRONT_ORIGIN: "localhost:$FRONT_PORT" # corsで許可するorigin
+      API_ORIGIN: "http://localhost:$API_PORT" # FRONTから画像のURLを参照する
       SELENIUM_DRIVER_URL: http://selenium_chrome:4444/wd/hub
       WEBPACKER_DEV_SERVER_HOST: webpacker
 
@@ -66,8 +66,8 @@ services:
       args:
         WORKDIR: $WORKDIR
         CONTAINER_PORT: $CONTAINER_PORT
-        API_HOST: "http://localhost:$API_PORT/"
-        FRONT_HOST: "http://localhost:$FRONT_PORT"
+        API_ORIGIN: "http://localhost:$API_PORT/"
+        FRONT_ORIGIN: "http://localhost:$FRONT_PORT"
     volumes:
       - ./front:/$WORKDIR
     command: sh -c "yarn run dev"

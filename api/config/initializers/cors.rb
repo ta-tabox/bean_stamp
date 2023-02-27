@@ -3,7 +3,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     # developmentとproductionで環境変数を変える
     # developmentはdocker-compose.ymlに記述
     # productionはECSなどの環境変数で設定する
-    origins ENV['FRONT_DOMAIN'] || ''
+    origins ENV['FRONT_ORIGIN'] || ''
 
     resource '*', # 全てのリソースに以下を許可
              headers: :any, # APIサーバに対するリクエストにどんなヘッダでもつけることを許可
