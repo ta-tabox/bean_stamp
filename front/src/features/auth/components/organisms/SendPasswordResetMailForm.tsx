@@ -34,7 +34,7 @@ export const SendPasswordResetMailForm: FC = () => {
   } = useForm<SendResetMailType>({ criteriaMode: 'all' })
 
   const onSubmitSendResetMail: SubmitHandler<SendResetMailType> = (data) => {
-    const redirectUrl = `${FRONT_HOST}/auth/password_reset`
+    const redirectUrl = `${FRONT_HOST}/auth/password_reset` // パスワード再設定メールのリンクに使用するURL
     const params = {
       email: data.email,
       redirect_url: redirectUrl,

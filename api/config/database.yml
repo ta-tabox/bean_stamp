@@ -16,10 +16,6 @@ test:
 production:
   <<: *default
   database: bean_stamp_production
-  # heroku configにて設定
-  # database: <%= ENV['DATABASE_URL'] %>
-  # username: <%= ENV['DB_USERNAME'] %>
-  # password: <%= ENV['DB_PASSWORD'] %>
 
   # AWSの設定
   username: <%= Rails.application.credentials.dig(:aws, :db_username) %>
