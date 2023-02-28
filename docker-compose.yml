@@ -24,15 +24,15 @@ services:
       - bundle:/usr/local/bundle
       - uploads:/$WORKDIR/public/uploads # carrierwaveによる画像保存先をボリュームとしてマウント
     ports:
-      - "$API_PORT:$CONTAINER_PORT"
+      - "3000:3000" # localhost:3000でアクセス
     depends_on:
       - db
       - selenium_chrome
     stdin_open: true # -itオプションと同等の効果
     tty: true
     environment:
-      FRONT_ORIGIN: "localhost:$FRONT_PORT" # corsで許可するorigin
-      API_ORIGIN: "http://localhost:$API_PORT" # FRONTから画像のURLを参照する
+      FRONT_ORIGIN: "localhost:5173" # corsで許可するorigin
+      API_ORIGIN: "http://localhost:3000" # FRONTから画像のURLを参照する
       SELENIUM_DRIVER_URL: http://selenium_chrome:4444/wd/hub
       WEBPACKER_DEV_SERVER_HOST: webpacker
 
@@ -65,16 +65,14 @@ services:
       dockerfile: ./containers/Dockerfile
       args:
         WORKDIR: $WORKDIR
-        CONTAINER_PORT: $CONTAINER_PORT
-        API_ORIGIN: "http://localhost:$API_PORT/"
-        FRONT_ORIGIN: "http://localhost:$FRONT_PORT"
+        CONTAINER_PORT: 3000
     volumes:
       - ./front:/$WORKDIR
     command: sh -c "yarn run dev"
     depends_on:
       - api
     ports:
-      - "$FRONT_PORT:$CONTAINER_PORT"
+      - "5173:3000" # ブラウザ用アクセス用 localhost:5173
       - "4173:4173" # vite preview用
     tty: true #コンテナが勝手に終了しないための設定
     stdin_open: true #標準入出力とエラー出力をコンテナに結びつける設定
