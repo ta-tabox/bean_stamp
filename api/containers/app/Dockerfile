@@ -5,8 +5,7 @@ ENV RAILS_MASTER_KEY ${RAILS_MASTER_KEY}
 ARG RAILS_ENV
 ENV RAILS_ENV ${RAILS_ENV}
 
-ENV HOME="/bean_stamp" \
-    LANG=C.UTF-8 \
+ENV LANG=C.UTF-8 \
     TZ=Asia/Tokyo
 
 # yarnパッケージ管理ツールをインストール
@@ -22,11 +21,11 @@ RUN apt-get update -qq && apt-get install -y \
     default-mysql-client \
     imagemagick
 
-WORKDIR ${HOME}
-COPY Gemfile ${HOME}/Gemfile
-COPY Gemfile.lock ${HOME}/Gemfile.lock
+WORKDIR /app
+COPY Gemfile ./Gemfile
+COPY Gemfile.lock ./Gemfile.lock
 RUN bundle install
-COPY . ${HOME}
+COPY . .
 
 RUN yarn install --check-files
 RUN bundle exec rails webpacker:compile
@@ -40,7 +39,7 @@ EXPOSE 3000
 RUN mkdir -p tmp/sockets
 RUN mkdir -p tmp/pids
 
-VOLUME /${HOME}/public
-VOLUME /${HOME}/tmp
+VOLUME /app/public
+VOLUME /app/tmp
 
 CMD /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma/production.rb"

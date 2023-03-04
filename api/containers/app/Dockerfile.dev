@@ -1,9 +1,6 @@
 FROM ruby:3.0.4
-ARG WORKDIR
-ARG CONTAINER_PORT
 
-ENV HOME=/${WORKDIR} \
-    LANG=C.UTF-8 \
+ENV LANG=C.UTF-8 \
     TZ=Asia/Tokyo \
     RAILS_ENV=development
 
@@ -21,11 +18,11 @@ RUN apt-get update -qq && apt-get install -y \
     default-mysql-client \
     imagemagick
 
-WORKDIR ${HOME}
-COPY Gemfile ${HOME}/Gemfile
-COPY Gemfile.lock ${HOME}/Gemfile.lock
+WORKDIR /app
+COPY Gemfile ./Gemfile
+COPY Gemfile.lock ./Gemfile.lock
 RUN bundle install
-COPY . ${HOME}
+COPY . .
 
 RUN yarn install --check-files
 RUN bundle exec rails webpacker:compile
@@ -34,7 +31,7 @@ RUN bundle exec rails webpacker:compile
 COPY containers/app/entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
-EXPOSE ${CONTAINER_PORT}
+EXPOSE 3000
 
 # Rails サーバ起動
 CMD ["rails", "server", "-b", "0.0.0.0"]

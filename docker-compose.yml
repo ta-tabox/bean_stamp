@@ -17,12 +17,12 @@ services:
       context: api
       dockerfile: ./containers/app/Dockerfile.dev
       args:
-        WORKDIR: $WORKDIR
+        WORKDIR: app
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
-      - ./api/:/$WORKDIR # ルートディレクトリをbindマウント
+      - ./api/:/app # ルートディレクトリをbindマウント
       - bundle:/usr/local/bundle
-      - uploads:/$WORKDIR/public/uploads # carrierwaveによる画像保存先をボリュームとしてマウント
+      - uploads:/app/public/uploads # carrierwaveによる画像保存先をボリュームとしてマウント
     ports:
       - "3000:3000" # localhost:3000でアクセス
     depends_on:
@@ -64,10 +64,10 @@ services:
       context: front
       dockerfile: ./containers/Dockerfile
       args:
-        WORKDIR: $WORKDIR
+        WORKDIR: app
         CONTAINER_PORT: 3000
     volumes:
-      - ./front:/$WORKDIR
+      - ./front:/app
     command: sh -c "yarn run dev"
     depends_on:
       - api
