@@ -116,6 +116,7 @@ workflows:
             branches:
               only: develop # TODO 無事にできたらmainに変更する
           path: ./api # apiをビルドコンテキストに指定
+          build-path: ./api
           create-repo: true # ECRにリポジトリがなかったら作るか？
           dockerfile: containers/app/Dockerfile # pathからの相対
           repo: "${MY_APP_PREFIX}-prod-api" # ECRリポジトリ名
