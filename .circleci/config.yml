@@ -114,7 +114,7 @@ workflows:
             - api_test
           filters:
             branches:
-              only: main
+              only: develop # TODO 無事にできたらmainに変更する
           create-repo: true # ECRにリポジトリがなかったら作るか？
           dockerfile: ./api/containers/app/Dockerfile
           repo: "${MY_APP_PREFIX}-prod-api" # ECRリポジトリ名
