@@ -4,7 +4,7 @@ orbs:
   ruby: circleci/ruby@1.8.0
   node: circleci/node@5.1.0
   aws-cli: circleci/aws-cli@3.1.4
-  aws-ecr: circleci/aws-ecr@8.2.1
+  aws-ecr: circleci/aws-ecr@8.1.2
   aws-ecs: circleci/aws-ecs@3.2.0
   # ruby: circleci/ruby@1.7.1
   # node: circleci/node@5.0.2
@@ -116,7 +116,6 @@ workflows:
             branches:
               only: develop # TODO 無事にできたらmainに変更する
           path: ./api # apiをビルドコンテキストに指定
-          build-path: ./api
           create-repo: true # ECRにリポジトリがなかったら作るか？
           dockerfile: containers/app/Dockerfile # pathからの相対
           repo: "${MY_APP_PREFIX}-prod-api" # ECRリポジトリ名
