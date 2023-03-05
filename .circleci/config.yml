@@ -121,7 +121,7 @@ jobs:
       - attach_workspace:
           at: dist
       - aws-s3/sync:
-          from: dist
+          from: dist/*
           to: "s3://${AWS_S3_WEB_BUCKET}"
 
 workflows:
