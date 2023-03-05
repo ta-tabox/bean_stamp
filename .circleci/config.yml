@@ -119,7 +119,7 @@ jobs:
       - checkout:
           path: "~/repo"
       - attach_workspace:
-          at: front/dist
+          at: dist
       - aws-s3/sync:
           from: dist
           to: "s3://${AWS_S3_WEB_BUCKET}"
@@ -162,3 +162,5 @@ workflows:
           filters:
             branches:
               only: develop # TODO 無事にできたらmainに変更する
+
+# TODO FRONT側の環境変数を渡す
