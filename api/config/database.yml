@@ -1,0 +1,24 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: root
+  host: db
+
+development:
+  <<: *default
+  database: bean_stamp_development
+
+test:
+  <<: *default
+  database: bean_stamp_test
+
+production:
+  <<: *default
+  database: bean_stamp_production
+
+  # AWSの設定
+  username: <%= Rails.application.credentials.dig(:aws, :db_username) %>
+  host: <%= Rails.application.credentials.dig(:aws, :db_host) %>
+  password: <%= Rails.application.credentials.dig(:aws, :db_password) %>
+  socket: /tmp/mysql.sock
