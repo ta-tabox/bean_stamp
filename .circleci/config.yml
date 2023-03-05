@@ -1,11 +1,16 @@
 version: 2.1
 
 orbs:
-  ruby: circleci/ruby@1.7.1
-  node: circleci/node@5.0.2
-  aws-cli: circleci/aws-cli@3.1.1
-  aws-ecr: circleci/aws-ecr@8.1.2
-  aws-ecs: circleci/aws-ecs@2.3.0
+  ruby: circleci/ruby@1.8.0
+  node: circleci/node@5.1.0
+  aws-cli: circleci/aws-cli@3.1.4
+  aws-ecr: circleci/aws-ecr@8.2.1
+  aws-ecs: circleci/aws-ecs@3.2.0
+  # ruby: circleci/ruby@1.7.1
+  # node: circleci/node@5.0.2
+  # aws-cli: circleci/aws-cli@3.1.1
+  # aws-ecr: circleci/aws-ecr@8.1.2
+  # aws-ecs: circleci/aws-ecs@2.3.0
 
 jobs:
   api_build:
@@ -74,6 +79,8 @@ jobs:
           include: spec/**/*_spec.rb
 
   # 正しく更新されたか検証する
+  # 環境変数としてデフォルトで以下を要求 AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY AWS_DEFAULT_REGION, AWS_ECR_REGISTRY_ID
+
   verify-deployment:
     executor: aws-cli/default
     steps:
@@ -83,14 +90,14 @@ jobs:
           # タスク定義名を指定
           command: >
             TASK_DEFINITION_ARN=$(aws ecs describe-task-definition \
-                --task-definition ${MY_APP_PREFIX}-prod-task \
+                --task-definition ${MY_APP_PREFIX}-prod-task-api \
                 --output text \
                 --query 'taskDefinition.taskDefinitionArn')
             echo "export TASK_DEFINITION_ARN='${TASK_DEFINITION_ARN}'" >>
             $BASH_ENV
       - aws-ecs/verify-revision-is-deployed:
           family: "${MY_APP_PREFIX}-prod-service"
-          cluster-name: "${MY_APP_PREFIX}-prod-cluster"
+          cluster: "${MY_APP_PREFIX}-prod-cluster"
           task-definition-arn: "${TASK_DEFINITION_ARN}"
 
 workflows:
@@ -109,17 +116,16 @@ workflows:
             branches:
               only: main
           create-repo: true # ECRにリポジトリがなかったら作るか？
-          dockerfile: .api/containers/app/Dockerfile
-          repo: "${MY_APP_PREFIX}-ror" # ECRリポジトリ名
+          dockerfile: ./api/containers/app/Dockerfile
+          repo: "${MY_APP_PREFIX}-prod-api" # ECRリポジトリ名
           tag: "latest,${CIRCLE_SHA1}" # latestタグ＋ハッシュ
           extra-build-args: "--build-arg RAILS_MASTER_KEY=${RAILS_MASTER_KEY} --build-arg RAILS_ENV=${RAILS_ENV}" # コンテナビルド時に使用する環境変数を渡す
       - aws-ecs/deploy-service-update:
           requires:
             - aws-ecr/build-and-push-image
-          family: "${MY_APP_PREFIX}-prod-task" # ECSタスク定義名
-          cluster-name: "${MY_APP_PREFIX}-prod-cluster" # ECSクラスタ名 or ARNフルパス
-          service-name: "${MY_APP_PREFIX}-prod-service" # サービス名
-          container-image-name-updates: "container=${MY_APP_PREFIX}-ror,tag=${CIRCLE_SHA1}" # containerはタスク定義で設定したコンテナ名
+          family: "${MY_APP_PREFIX}-prod-service" # サービス名
+          cluster: "${MY_APP_PREFIX}-prod-cluster" # ECSクラスタ名 or ARNフルパス
+          container-image-name-updates: "container=${MY_APP_PREFIX}-prod-api,tag=${CIRCLE_SHA1}" # containerはタスク定義で設定したコンテナ名
       - verify-deployment: # コンテナデプロイの検証
           requires:
             - aws-ecs/deploy-service-update
