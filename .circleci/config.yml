@@ -76,7 +76,6 @@ jobs:
 
   # 正しく更新されたか検証する
   # 環境変数としてデフォルトで以下を要求 AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY AWS_DEFAULT_REGION, AWS_ECR_REGISTRY_ID
-
   verify-deployment:
     executor: aws-cli/default
     steps:
@@ -106,7 +105,7 @@ jobs:
       - node/install-packages: # Node Orb を使ってパッケージをインストール
           pkg-manager: yarn
       - run: yarn build
-      - persist_to_workspace:
+      - persist_to_workspace: # front-deployで使用できるようにビルドファイルをworkspaceに保存
           root: .
           paths:
             - dist
@@ -119,7 +118,7 @@ jobs:
       - checkout:
           path: "~/repo"
       - attach_workspace:
-          at: dist
+          at: dist # workspaceからビルドファイルをアタッチ
       - aws-s3/sync:
           from: dist/*
           to: "s3://${AWS_S3_WEB_BUCKET}"
@@ -136,6 +135,7 @@ workflows:
       - aws-ecr/build-and-push-image:
           requires:
             - api-test
+            - front-build
           filters:
             branches:
               only: main
@@ -159,8 +159,7 @@ workflows:
       - front-deploy:
           requires:
             - front-build
+            - api-test
           filters:
             branches:
-              only: develop # TODO 無事にできたらmainに変更する
-
-# TODO FRONT側の環境変数を渡す
+              only: main
