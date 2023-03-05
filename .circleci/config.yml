@@ -115,9 +115,9 @@ workflows:
           filters:
             branches:
               only: develop # TODO 無事にできたらmainに変更する
-          path: ./api # apiをビルドコンテキストに指定
+          path: "./api" # apiをビルドコンテキストに指定
           create-repo: true # ECRにリポジトリがなかったら作るか？
-          dockerfile: ./containers/app/Dockerfile # pathからの相対
+          dockerfile: "containers/app/Dockerfile" # pathからの相対
           repo: "${MY_APP_PREFIX}-prod-api" # ECRリポジトリ名
           tag: "latest,${CIRCLE_SHA1}" # latestタグ＋ハッシュ
           extra-build-args: "--build-arg RAILS_MASTER_KEY=${RAILS_MASTER_KEY} --build-arg RAILS_ENV=${RAILS_ENV}" # コンテナビルド時に使用する環境変数を渡す
