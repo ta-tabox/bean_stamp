@@ -96,7 +96,7 @@ export const OfferContentCard: FC<Props> = (props) => {
           </div>
 
           {/* 画像  */}
-          <div className="w-full lg:w-1/2 h-64 md:h-96 lg:h-auto">
+          <div className="w-full lg:w-1/2 h-64 md:h-96 mt-auto">
             <BeanImagesSwiper beanName={bean.name} imageUrls={bean.imageUrls} />
           </div>
         </div>
