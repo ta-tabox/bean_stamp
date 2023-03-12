@@ -159,7 +159,7 @@ workflows:
       - front-deploy:
           requires:
             - front-build
-            - api-test
+            - aws-ecr/build-and-push-image
           filters:
             branches:
               only: main
