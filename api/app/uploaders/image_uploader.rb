@@ -13,7 +13,7 @@ class ImageUploader < CarrierWave::Uploader::Base
     self.asset_host = if Rails.env.production?
                         Rails.application.credentials.dig(:aws, :s3_host)
                       else
-                        (ENV['API_ORIGIN']).to_s # http://localhost:API_PORT を指定
+                        (ENV['API_ORIGIN']).to_s # docker-composeにて指定
                       end
   end
 
