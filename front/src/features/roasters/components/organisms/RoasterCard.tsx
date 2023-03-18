@@ -43,18 +43,17 @@ export const RoasterCard: FC<Props> = memo((props) => {
   return (
     <Card>
       <CardContainer>
-        <div className="items-center flex flex-col lg:flex-row">
+        <div className="flex flex-col lg:flex-row">
           <div className="lg:w-1/2 lg:mx-4 text-center lg:text-left">
-            <div className="lg:flex lg:items-end">
-              <ReactLink to={`/roasters/${roaster.id}`}>
-                <div className="text-2xl font-medium text-gray-800">{roaster.name}</div>
-              </ReactLink>
-              {roaster.id === currentRoaster?.id ? (
-                <div className="mt-2 lg:mt-0 lg:ml-4">
-                  <Link to="/roasters/edit">編集</Link>
-                </div>
-              ) : null}
-            </div>
+            <ReactLink to={`/roasters/${roaster.id}`}>
+              <div className="text-2xl font-medium text-gray-800">{roaster.name}</div>
+            </ReactLink>
+            {roaster.id === currentRoaster?.id ? (
+              <div className="mt-2 lg:mt-0 lg:text-right lg:mr-4">
+                <Link to="/roasters/edit">編集</Link>
+              </div>
+            ) : null}
+
             <div className="mt-2 flex items-baseline justify-around lg:justify-start">
               <LinkToRoasterFollower roasterId={roaster.id} followersCount={followersCount} />
 

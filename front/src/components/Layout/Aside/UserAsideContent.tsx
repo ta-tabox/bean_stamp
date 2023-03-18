@@ -64,7 +64,7 @@ export const UserAsideContent: FC = memo(() => {
               </ol>
             </>
           ) : (
-            <div className="text-center text-gray-400">
+            <div className="text-sm text-gray-500 text-center">
               <p>おすすめのオファーがありません</p>
             </div>
           )}
