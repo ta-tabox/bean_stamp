@@ -20,18 +20,16 @@ export const UserCard: FC<Props> = memo((props) => {
   return (
     <Card>
       <CardContainer>
-        <div className="items-center flex flex-col lg:flex-row">
+        <div className="flex flex-col lg:flex-row">
           <div className="lg:w-1/2 lg:mx-4 text-center lg:text-left">
-            <div className="lg:flex lg:items-end">
-              <ReactLink to={`/users/${user.id}`}>
-                <div className="text-2xl font-medium text-gray-800">{user.name}</div>
-              </ReactLink>
-              {user.id === signedInUser?.id ? (
-                <div className="ml-4">
-                  <Link to="/users/edit">編集</Link>
-                </div>
-              ) : null}
-            </div>
+            <ReactLink to={`/users/${user.id}`}>
+              <div className="text-2xl font-medium text-gray-800 inline-block">{user.name}</div>
+            </ReactLink>
+            {user.id === signedInUser?.id ? (
+              <div className="mt-2 lg:mt-0 lg:text-right lg:mr-4">
+                <Link to="/users/edit">編集</Link>
+              </div>
+            ) : null}
 
             <div className="mt-4 text-gray-500 lg:max-w-md">
               <div>@ {translatePrefectureCodeToName({ prefectureCode: user.prefectureCode })}</div>
