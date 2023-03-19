@@ -11,6 +11,12 @@ module.exports = {
       maxHeight: {
         '128': '32rem',
       },
+      // prettier-ignore
+      width: {
+        '128': '32rem',
+        '144': '36rem',
+        '160': '40rem'
+      },
     },
   },
   variants: {

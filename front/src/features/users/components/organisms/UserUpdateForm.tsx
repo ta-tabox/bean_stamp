@@ -131,7 +131,14 @@ export const UserUpdateForm: FC<Props> = (props) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {/* プレビューフィールド */}
-      {previewImage && <ImagePreview imageUrls={previewImage} />}
+      {previewImage && (
+        <>
+          <h2 className="e-font text-gray-500 text-center text-sm">〜 Preview 〜</h2>
+          <div className="my-2">
+            <ImagePreview imageUrls={previewImage} />
+          </div>
+        </>
+      )}
 
       {/* ファイル */}
       <UserImageInput label="image" register={register} error={errors.image} onChange={onChangeImage} />

@@ -98,18 +98,26 @@ export const BeanForm: FC<Props> = (props) => {
 
   return (
     <>
-      <h2 className="e-font text-gray-500 text-center text-sm">〜 Images 〜</h2>
-      {/* 既存画像のカルーセル */}
-      {bean && (
-        <div className="my-2 h-64 lg:h-96">
-          <BeanImagesSwiper imageUrls={bean.imageUrls} beanName={bean.name} />
-        </div>
-      )}
+      {bean &&
+        (!previewImage ? (
+          <>
+            {/* 既存画像のカルーセル */}
+            <h2 className="e-font text-gray-500 text-center text-sm">〜 Images 〜</h2>
+            <div className="my-2 h-64 lg:h-96">
+              <BeanImagesSwiper imageUrls={bean.imageUrls} beanName={bean.name} />
+            </div>
+          </>
+        ) : (
+          <>
+            {/* プレビューフィールド */}
+            <h2 className="e-font text-gray-500 text-center text-sm">〜 Preview 〜</h2>
+            <div className="my-2">
+              <ImagePreview imageUrls={previewImage} />
+            </div>
+          </>
+        ))}
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* プレビューフィールド */}
-        {previewImage && <ImagePreview imageUrls={previewImage} />}
-
         {/* 画像インプット */}
         <BeanImageInput label="images[]" register={register} onChange={onChangeImage} error={errors.images} />
 
