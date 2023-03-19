@@ -19,7 +19,6 @@ export const BeanImagesSwiper: FC<Props> = (props) => {
       modules={[Navigation, Pagination, Scrollbar, A11y]}
       navigation
       pagination={{ clickable: true, dynamicBullets: true }}
-      scrollbar={{ draggable: true }}
       className="w-full h-full"
     >
       {imageUrls.map((imageUrl) => (
@@ -27,7 +26,7 @@ export const BeanImagesSwiper: FC<Props> = (props) => {
           <img
             src={imageUrl}
             alt={`${beanName}の画像`}
-            className="swiper-slide w-full h-full object-cover object-center rounded-lg"
+            className="swiper-slide object-cover object-center rounded-lg"
           />
         </SwiperSlide>
       ))}
