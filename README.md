@@ -18,10 +18,8 @@ Bean Stamp はコーヒー豆とコーヒー愛好家を繋ぐマッチングサ
 ロースター：コーヒー豆登録画面
 !["コーヒー豆登録画面"](https://user-images.githubusercontent.com/67009309/226169647-893eb6a9-533c-4a22-9dbf-d0dfc2b77e47.png)
 
-<!-- TODO GIF SPA用に変更する -->
-
-ユーザー：コーヒー豆受け取り完了 → 評価 デモ
-!["評価機能デモ"](https://user-images.githubusercontent.com/67009309/181269105-9cc94f8f-e568-4f4f-b742-c3be171bc7aa.gif)
+ユーザー：コーヒー豆受け取り完了 → 評価
+![コーヒー評価デモ](https://user-images.githubusercontent.com/67009309/226931274-fc79374f-73b5-4096-936d-0bc05858cff9.gif)
 
 ## 背景
 
