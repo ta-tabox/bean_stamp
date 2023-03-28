@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { useLayoutEffect, memo } from 'react'
+import { useEffect, memo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { ContentHeader, ContentHeaderTitle } from '@/components/Elements/Content'
@@ -19,15 +19,15 @@ export const RoasterHome: FC = memo(() => {
   const { getOffersStats } = useGetOffersStats()
   const { currentPage, totalPage } = usePagination()
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     // オファー 一覧を取得
     if (currentRoaster) {
       getOffersByRoaster({ id: currentRoaster.id.toString(), page: searchParams.get('page') })
     }
   }, [currentRoaster, searchParams])
 
-  // ログイン時、ホームアクセス時にAPIを叩く
-  useLayoutEffect(() => {
+  // ホームアクセス時にAPIを叩く
+  useEffect(() => {
     if (currentRoaster) {
       getOffersStats() // 通知用のオファー統計
     }
