@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { useLayoutEffect, memo } from 'react'
+import { useEffect, memo } from 'react'
 
 import { Copyright } from '@/components/Elements/Copyright'
 import { SearchLink } from '@/components/Elements/Link'
@@ -12,11 +12,11 @@ export const RoasterAsideContent: FC = memo(() => {
   const { currentRoaster } = useCurrentRoaster()
 
   // リロード時にAPIを叩く
-  useLayoutEffect(() => {
-    if (!currentRoaster) {
+  useEffect(() => {
+    if (currentRoaster) {
       getOffersStats() // 通知用のオファー統計
     }
-  }, [])
+  }, [currentRoaster])
 
   return (
     <div id="roaster-aside" className="min-h-screen flex flex-col items-center">

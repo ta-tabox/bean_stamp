@@ -4,6 +4,7 @@ import React, { memo } from 'react'
 import type { Offer } from '@/features/offers'
 import { createWant } from '@/features/wants/api/createWant'
 import { deleteWant } from '@/features/wants/api/deleteWant'
+import { useGetWantsStats } from '@/features/wants/hooks/useGetWantsStats'
 import { isAfterEndedAt } from '@/features/wants/utils/isAfterEndedAt'
 import { useMessage } from '@/hooks/useMessage'
 
@@ -18,12 +19,14 @@ type Props = {
 export const WantUnWantButton: FC<Props> = memo((props) => {
   const { offer, wantId, setWantId, setWantCount, wantCount } = props
   const { showMessage } = useMessage()
+  const { getWantsStats } = useGetWantsStats()
 
   const onClickWant = () => {
     createWant({ offerId: offer.id })
       .then((response) => {
         setWantId(response.data.id) // deleteリクエストで使用するurl: /wants/:idに使用
         setWantCount(wantCount + 1) // OfferCardで使用するfollower数
+        getWantsStats() // サインインユーザーのウォントの統計を再取得
         showMessage({ message: `${offer.bean.name}をウォントしました`, type: 'success' })
       })
       .catch(() => {
@@ -37,6 +40,7 @@ export const WantUnWantButton: FC<Props> = memo((props) => {
         .then(() => {
           setWantId(null) // want削除に伴うりセット
           setWantCount(wantCount - 1) // OfferCardで使用するfollower数
+          getWantsStats() // サインインユーザーのウォントの統計を再取得
           showMessage({ message: `${offer.bean.name}のウォントを取り消しました`, type: 'success' })
         })
         .catch(() => {
