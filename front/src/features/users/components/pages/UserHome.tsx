@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { useLayoutEffect, memo } from 'react'
+import { useEffect, memo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { LoadingButton } from '@/components/Elements/Button'
@@ -22,13 +22,13 @@ export const UserHome: FC = memo(() => {
   const { getRecommendedOffers } = useGetRecommendedOffers()
   const { getWantsStats } = useGetWantsStats()
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     // フォローしているロースターのオファー一覧を取得
     getCurrentOffers({ page: searchParams.get('page') })
   }, [searchParams])
 
-  // ログイン時、ホームアクセス時にAPIを叩く
-  useLayoutEffect(() => {
+  // ホームアクセス時にAPIを叩く
+  useEffect(() => {
     if (signedInUser) {
       getRecommendedOffers() // おすすめのオファーを取得
       getWantsStats() // 通知用のウォント統計を取得

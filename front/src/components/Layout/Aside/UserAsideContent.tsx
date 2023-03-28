@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { memo, useLayoutEffect } from 'react'
+import { useEffect, memo } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { Copyright } from '@/components/Elements/Copyright'
@@ -17,16 +17,16 @@ export const UserAsideContent: FC = memo(() => {
   const { getRecommendedOffers } = useGetRecommendedOffers()
   const { wantsStats, getWantsStats } = useGetWantsStats()
 
-  // リロード時にAPIを叩く
-  useLayoutEffect(() => {
-    if (!signedInUser) {
+  // ログイン時とリロード時にAPIを叩く
+  useEffect(() => {
+    if (signedInUser) {
       getRecommendedOffers() // おすすめのオファーを取得
       getWantsStats() // 通知用のウォント統計を取得
     }
-  }, [])
+  }, [signedInUser])
 
   // locationが変わるたびに表示するおすすめのオファーをシャッフルする
-  useLayoutEffect(() => {
+  useEffect(() => {
     randomSelectRecommendedOffers()
   }, [location, recommendedOffersPool])
 
