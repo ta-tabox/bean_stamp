@@ -4,6 +4,7 @@ import { memo } from 'react'
 import { SideNavLink } from '@/components/Elements/Link'
 import { useAuth } from '@/features/auth'
 import type { User } from '@/features/users'
+import { useWantsStats } from '@/features/wants'
 
 type Props = {
   user: User
@@ -13,6 +14,7 @@ type Props = {
 export const UserSideNav: FC<Props> = memo((props) => {
   const { user } = props
   const { signOut } = useAuth()
+  const { activeWantsStats } = useWantsStats()
 
   const onClickSignOut = () => {
     signOut()
@@ -50,7 +52,7 @@ export const UserSideNav: FC<Props> = memo((props) => {
       </li>
       {/* ウォントリンク */}
       <li className="mb-2">
-        <SideNavLink title="Wants" to="/wants" badgeNumber={2}>
+        <SideNavLink title="Wants" to="/wants" badgeNumber={activeWantsStats}>
           <svg className="h-8 w-8">
             <use xlinkHref="#shopping-bag" />
           </svg>
