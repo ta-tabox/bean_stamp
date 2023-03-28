@@ -27,7 +27,7 @@ export const UserBottomNav: FC = memo(() => (
 
     {/* Wantsリンク */}
     <Link to="/wants">
-      <BottomNavItem>
+      <BottomNavItem badgeNumber={1}>
         <svg className="w-8 h-8">
           <use xlinkHref="#shopping-bag-solid" />
         </svg>

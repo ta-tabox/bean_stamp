@@ -50,7 +50,7 @@ export const UserSideNav: FC<Props> = memo((props) => {
       </li>
       {/* ウォントリンク */}
       <li className="mb-2">
-        <SideNavLink title="Wants" to="/wants">
+        <SideNavLink title="Wants" to="/wants" badgeNumber={2}>
           <svg className="h-8 w-8">
             <use xlinkHref="#shopping-bag" />
           </svg>
