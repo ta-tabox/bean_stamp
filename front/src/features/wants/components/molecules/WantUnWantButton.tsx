@@ -7,6 +7,7 @@ import { deleteWant } from '@/features/wants/api/deleteWant'
 import { useGetWantsStats } from '@/features/wants/hooks/useGetWantsStats'
 import { isAfterEndedAt } from '@/features/wants/utils/isAfterEndedAt'
 import { useMessage } from '@/hooks/useMessage'
+import { formattedToJaDate } from '@/utils/date'
 
 type Props = {
   offer: Offer
@@ -27,7 +28,12 @@ export const WantUnWantButton: FC<Props> = memo((props) => {
         setWantId(response.data.id) // deleteリクエストで使用するurl: /wants/:idに使用
         setWantCount(wantCount + 1) // OfferCardで使用するfollower数
         getWantsStats() // サインインユーザーのウォントの統計を再取得
-        showMessage({ message: `${offer.bean.name}をウォントしました`, type: 'success' })
+        showMessage({
+          message: `${offer.bean.name}をウォントしました!「${formattedToJaDate(
+            offer.receiptStartedAt
+          )}」からお受け取りできます`,
+          type: 'success',
+        })
       })
       .catch(() => {
         showMessage({ message: 'ウォントに失敗しました', type: 'error' })
