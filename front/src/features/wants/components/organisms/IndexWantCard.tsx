@@ -12,6 +12,7 @@ import { WantReceiptedTag } from '@/features/wants/components/molecules/WantRece
 import { WantUnWantButton } from '@/features/wants/components/molecules/WantUnWantButton'
 import type { Want } from '@/features/wants/types'
 import { isAfterReceiptStartedAt } from '@/features/wants/utils/isAfterReceiptStartedAt'
+import { getNumberOfDaysFromTodayTo } from '@/utils/date'
 
 type Props = {
   want: Want
@@ -20,7 +21,7 @@ type Props = {
 export const IndexWantCard: FC<Props> = (props) => {
   const { want } = props
   const { offer } = want
-  const { status, amount, price, weight, bean, roaster, like } = offer
+  const { status, receiptStartedAt, amount, price, weight, bean, roaster, like } = offer
 
   const navigate = useNavigate()
   const { currentRoaster } = useCurrentRoaster()
@@ -57,8 +58,14 @@ export const IndexWantCard: FC<Props> = (props) => {
             <OfferStatusTag status={status} />
             <BeanTasteTags tastes={bean.taste.names} />
           </div>
+          {status === 'end_of_sales' ||
+            (status === 'on_selling' ? null : (
+              <p className="text-right text-gray-400">{`受け取り開始日まであと${getNumberOfDaysFromTodayTo(
+                receiptStartedAt
+              )}日です`}</p>
+            ))}
 
-          <div className="md:flex items-center">
+          <div className="md:flex items-center pt-1">
             <h1 className="text-xl md:text-2xl title-font text-gray-800">{bean.name}</h1>
             <div className="md:ml-4 text-right">
               <SecondaryButton onClick={onClickShow} sizeClass="w-20 md:w-16">

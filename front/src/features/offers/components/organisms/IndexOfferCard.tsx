@@ -9,6 +9,7 @@ import { OfferSchedule } from '@/features/offers/components/molecules/OfferSched
 import { OfferStatusTag } from '@/features/offers/components/molecules/OfferStatusTag'
 import { OfferWantedUserStats } from '@/features/offers/components/molecules/OfferWantedUserStats'
 import type { Offer } from '@/features/offers/types'
+import { getNumberOfDaysFromTodayTo } from '@/utils/date'
 
 type Props = {
   offer: Offer
@@ -16,7 +17,7 @@ type Props = {
 
 export const IndexOfferCard: FC<Props> = (props) => {
   const { offer } = props
-  const { id, status, roaster, amount, price, weight, bean, want } = offer
+  const { id, status, roaster, roastedAt, amount, price, weight, bean, want } = offer
 
   const navigate = useNavigate()
 
@@ -35,6 +36,9 @@ export const IndexOfferCard: FC<Props> = (props) => {
             <OfferStatusTag status={status} />
             <OfferWantedUserStats offerId={id} roasterId={roaster.id} count={want.count} amount={amount} />
           </div>
+          {status === 'on_offering' && (
+            <p className="text-right text-gray-400">{`焙煎まであと${getNumberOfDaysFromTodayTo(roastedAt)}日です`}</p>
+          )}
           <div className="md:flex items-baseline">
             <h1 className="md:mt-2 text-xl lg:text-2xl font-medium text-gray-800 lg:mt-0">{bean.name}</h1>
             <div className="md:ml-4 text-right">
