@@ -31,3 +31,11 @@ export const getNextMonthToday = ({ next }: GetNextMonthToDate) => {
   const formattedNextMonthDate = formattedDate(nextMonthDate)
   return formattedNextMonthDate
 }
+
+export const getNumberOfDaysFromTodayTo = (strDate: string) => {
+  const someday = new Date(strDate)
+  const now = new Date()
+  const diff = someday.getTime() - now.getTime()
+  const numberOfDaysFromTodayToSomeday = diff / (1000 * 60 * 60 * 24)
+  return Math.ceil(numberOfDaysFromTodayToSomeday)
+}
