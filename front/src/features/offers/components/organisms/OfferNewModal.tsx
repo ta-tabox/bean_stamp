@@ -13,6 +13,7 @@ import type { OfferCreateUpdateData } from '@/features/offers/types'
 import { useErrorNotification } from '@/hooks/useErrorNotification'
 import { useMessage } from '@/hooks/useMessage'
 import type { ApplicationMessagesResponse } from '@/types'
+import { formattedToJaDate } from '@/utils/date'
 
 import type { SubmitHandler } from 'react-hook-form'
 
@@ -37,9 +38,13 @@ export const OfferNewModal: FC<Props> = memo((props) => {
     createOffer({ data })
       .then((response) => {
         const offerId = response.data.id
+        const { roastedAt } = response.data
         onClose()
         setIsError(false)
-        showMessage({ message: 'オファーを作成しました', type: 'success' })
+        showMessage({
+          message: `オファーを作成しました! 焙煎予定日は「${formattedToJaDate(roastedAt)}」です`,
+          type: 'success',
+        })
         navigate(`/offers/${offerId}`)
       })
       .catch((error) => {
