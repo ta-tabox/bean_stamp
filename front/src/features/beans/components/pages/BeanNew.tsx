@@ -28,9 +28,13 @@ export const BeanNew: FC = memo(() => {
   const onSubmit: SubmitHandler<BeanCreateUpdateData> = useCallback(async (data) => {
     const formData = createBeanFormData(data)
 
+    let beanId: number | undefined
+
     try {
       setLoading(true)
-      await createBean({ formData })
+      await createBean({ formData }).then((response) => {
+        beanId = response.data.id
+      })
       setIsError(false)
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -47,9 +51,10 @@ export const BeanNew: FC = memo(() => {
       setLoading(false)
     }
 
-    showMessage({ message: 'コーヒー豆を作成しました', type: 'success' })
-    // WARNING 遷移先はコーヒー豆詳細ページが望ましい。createリクエストの返却値としてidを入手したい
-    navigate('/beans/')
+    showMessage({ message: 'コーヒー豆を登録しました。早速オファーを作成しましょう!', type: 'success' })
+    if (typeof beanId === 'number') {
+      navigate(`/beans/${beanId}`)
+    }
   }, [])
 
   return (
