@@ -44,7 +44,7 @@ class User < ApplicationRecord
   end
 
   # ユーザーの好みのtaste_groupをids_count個のid一覧で返す
-  # 今後より処理が複雑になる場合はバッチでスコア化して扱うように検討する
+  # NOTE 今後より処理が複雑になる場合はバッチでスコア化して扱うように検討する
   def favorite_taste_group_ids(ids_count)
     # 評価済みのwantを取得
     wants = self.wants.where.not(rate: :unrated).includes(bean: :taste_tags)
@@ -65,11 +65,13 @@ class User < ApplicationRecord
   private
 
   # taste_group_idとrateのハッシュのリストを受け取り、taste_group_id別の合計値を配列で返す
+  # [[{:taste_group_id=>1, :rate=>1}, {:taste_group_id=>6, :rate=>2}], [{:taste_group_id=>1, :rate=>2}, {:taste_group_id=>6, :rate=>2}]]
+  # -> [{ taste_group_id: 1, rate_sum: 3 }, { taste_group_id: 6, rate_sum: 4 }]
   def merge_taste_rating_hash(*rating_list)
     rating_list
-      .flatten
-      .map(&:values)
-      .each_with_object(Hash.new(0)) { |(id, num), hash| hash[id] += num }
-      .map { |id, num| { taste_group_id: id, rate_sum: num } }
+      .flatten # ハッシュの配列の配列を同階層に変換 [[{},{}], [{}, {}]] -> [{},{},{},{}]
+      .map(&:values) # {:taste_group_id=>1, :rate=>1} -> [1, 1] ハッシュをvalueの配列に変換
+      .each_with_object(Hash.new(0)) { |(id, num), hash| hash[id] += num } # 空のハッシュに対して hash[id] += numを繰り返す、結果としてid毎にnumの合計値が得られる
+      .map { |id, num| { taste_group_id: id, rate_sum: num } } # {[1, 3], [6, 4]} -> [{ taste_group_id: 1, rate_sum: 3 }, { taste_group_id: 6, rate_sum: 4 }]
   end
 end
