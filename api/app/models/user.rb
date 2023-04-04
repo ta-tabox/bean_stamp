@@ -58,7 +58,7 @@ class User < ApplicationRecord
     end
     # 評価データリストをtaste_group_id毎に集計する
     sum_rating_list = merge_taste_rating_hash(rating_list)
-    # 評価データの上位ids_count個文を取得する
+    # 評価データの上位ids_count個分を取得する
     sum_rating_list.sort_by { |x| -x[:rate_sum] }.take(ids_count).map { |rate| rate[:taste_group_id] }
   end
 
