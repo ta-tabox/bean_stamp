@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Card } from '@/components/Elements/Card'
@@ -24,6 +24,13 @@ export const OfferDetailCard: FC<Props> = (props) => {
   const [wantId, setWantId] = useState<number | null>(want.id || null)
   const [likeId, setLikeId] = useState<number | null>(like.id || null)
   const [wantCount, setWantCount] = useState<number>(want.count)
+
+  // offerが変わった際にウォントとライクの情報を更新する
+  useEffect(() => {
+    setWantId(want.id || null)
+    setLikeId(like.id || null)
+    setWantCount(want.count)
+  }, [offer])
 
   return (
     <Card>
