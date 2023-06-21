@@ -7,7 +7,12 @@ import { SecondaryButton } from '@/components/Elements/Button'
 import { useAuth } from '@/features/auth/hooks/useAuth'
 import { useMessage } from '@/hooks/useMessage'
 
-export const GuestSignInButton: FC = () => {
+type Props = {
+  sizeClass?: string
+}
+
+export const GuestSignInButton: FC<Props> = (props) => {
+  const { sizeClass } = props
   const { signIn } = useAuth()
   const { showMessage } = useMessage()
   const navigate = useNavigate()
@@ -27,5 +32,9 @@ export const GuestSignInButton: FC = () => {
       }
     }
   }
-  return <SecondaryButton onClick={onClickGuestSignIn}>ゲストユーザーでサインイン</SecondaryButton>
+  return (
+    <SecondaryButton onClick={onClickGuestSignIn} sizeClass={sizeClass}>
+      ゲストユーザーでサインイン
+    </SecondaryButton>
+  )
 }
