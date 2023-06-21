@@ -1,4 +1,4 @@
-import type { Dispatch, FC } from 'react'
+import { type Dispatch, type FC } from 'react'
 
 import Drawer from 'react-modern-drawer'
 
@@ -21,10 +21,14 @@ type Props = {
 export const DrawerNav: FC<Props> = (props) => {
   const { user, roaster, isOpen, setIsOpen } = props
   const { isRoaster } = useCurrentRoaster()
-
   const { signOut } = useAuth()
+
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState)
+  }
+
+  const onClose = () => {
+    setIsOpen(false)
   }
 
   const onClickSignOut = () => {
@@ -39,26 +43,26 @@ export const DrawerNav: FC<Props> = (props) => {
             <>
               {/* ロースター用 */}
               <li>
-                <DrawerNavLink to={`/roasters/${roaster.id}`} title="マイロースター" />
+                <DrawerNavLink to={`/roasters/${roaster.id}`} title="マイロースター" onClose={onClose} />
               </li>
             </>
           ) : (
             <>
               {/* ユーザー用 */}
               <li>
-                <DrawerNavLink to={`/users/${user.id}`} title="マイページ" />
+                <DrawerNavLink to={`/users/${user.id}`} title="マイページ" onClose={onClose} />
               </li>
               <li>
-                <DrawerNavLink to={`/users/${user.id}/following`} title="フォロー" />
+                <DrawerNavLink to={`/users/${user.id}/following`} title="フォロー" onClose={onClose} />
               </li>
             </>
           )}
           <li>
-            <DrawerNavLink to="/help" title="ヘルプ" />
+            <DrawerNavLink to="/help" title="ヘルプ" onClose={onClose} />
           </li>
           <li>
             <button type="button" onClick={onClickSignOut} className="w-full text-left">
-              <DrawerNavLink to="#" title="サインアウト" />
+              <DrawerNavLink to="#" title="サインアウト" onClose={onClose} />
             </button>
           </li>
         </ul>
