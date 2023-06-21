@@ -37,7 +37,7 @@ export const DrawerNav: FC<Props> = (props) => {
 
   return (
     <Drawer open={isOpen} onClose={toggleDrawer} direction="right" size={170}>
-      <div className="absolute bottom-0 inset-x-0">
+      <div className="h-full flex flex-col justify-end">
         <ul className="flex flex-col w-full text-left ml-auto">
           {isRoaster && roaster ? (
             <>
