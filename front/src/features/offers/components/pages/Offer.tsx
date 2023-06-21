@@ -11,12 +11,15 @@ import { OfferDetailCard } from '@/features/offers/components/organisms/OfferDet
 import { OfferEditModal } from '@/features/offers/components/organisms/OfferEditModal'
 import { useGetOffer } from '@/features/offers/hooks/useGetOffer'
 import { useCurrentRoaster } from '@/features/roasters'
+import { useMessage } from '@/hooks/useMessage'
 import { useModal } from '@/hooks/useModal'
+import { getToday } from '@/utils/date'
 import { isNumber } from '@/utils/regexp'
 
 export const Offer: FC = () => {
   const urlParams = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const { showMessage } = useMessage()
   const { offer, getOffer, setOffer } = useGetOffer()
   const { currentRoaster } = useCurrentRoaster()
   const { isOpen: isOpenDelete, onOpen: onOpenDelete, onClose: onCloseDelete } = useModal()
@@ -32,7 +35,11 @@ export const Offer: FC = () => {
 
   const onClickEdit = () => {
     if (offer) {
-      onOpenOfferEdit()
+      if (getToday() >= offer.endedAt) {
+        showMessage({ message: 'オファー終了日後は編集できません', type: 'error' })
+      } else {
+        onOpenOfferEdit()
+      }
     }
   }
 

@@ -35,18 +35,18 @@ export const Home: FC = memo(() => {
                 <br />
                 探していきませんか？
               </h2>
-              <h1 className="text-gray-800 text-3xl sm:text-5xl text-center mt-2 mb-4 sm:mb-10 font-bold logo-font">
-                Bean Stamp
-              </h1>
+              <h1 className="text-gray-800 text-4xl sm:text-5xl text-center my-4 font-bold logo-font">Bean Stamp</h1>
               <Link
                 to="/auth/signup"
-                className="text-center hover:text-gray-300 bg-yellow-800 text-white hover:bg-black w-40 sm:w-56 p-4 text-2xl font-medium rounded shadow-md hover:shadow-lg transition transform hover:-translate-y-0.5"
+                className="text-center hover:text-gray-300 bg-yellow-800 text-white hover:bg-black w-52 my-2 sm:my-4 sm:w-56 p-2 sm:p-3 text-2xl font-medium rounded shadow-md hover:shadow-lg transition transform hover:-translate-y-0.5"
               >
                 登録する
               </Link>
-              <div className="py-4 sm:y-8 flex flex-col md:flex-row md:space-x-4 space-y-2 md:space-y-0">
-                <PrimaryButton onClick={onClickSignIn}>サインイン</PrimaryButton>
-                <GuestSignInButton />
+              <div className="py-4 flex flex-col space-y-2">
+                <PrimaryButton onClick={onClickSignIn} sizeClass="w-52 sm:w-56">
+                  サインイン
+                </PrimaryButton>
+                <GuestSignInButton sizeClass="w-52 sm:w-56" />
               </div>
             </div>
           </section>
