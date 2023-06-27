@@ -43,22 +43,25 @@ class User < ApplicationRecord
     roaster == offer.roaster
   end
 
+  # NOTE: 今後より処理が複雑になる場合はバッチ処理でスコア化して扱うように検討する
   # ユーザーの好みのtaste_groupをids_count個のid一覧で返す
-  # NOTE 今後より処理が複雑になる場合はバッチでスコア化して扱うように検討する
   def favorite_taste_group_ids(ids_count)
     # 評価済みのwantを取得
     wants = self.wants.where.not(rate: :unrated).includes(bean: :taste_tags)
     rating_list = []
 
-    # want毎に評価をもとにコーヒー豆のtaste_tagsに点数をつける
-    # taste_tagsは上位グループのtaste_group_idに変換する
+    # 評価済みのコーヒー豆から[{id: 1, rate: 2}, ...]の形式で風味グループのidと点数の組み合わせの配列を作成
     wants.each do |want|
+      # コーヒー豆の風味タグから風味グループのid一覧を取得
       taste_group_ids = want.bean.taste_tags.map(&:taste_group_id)
+      # 風味グループのidとwant.rateの組み合わせをリストに追加
       rating_list << taste_group_ids.map { |id| { id: id, rate: Want.rates[want.rate] } }
     end
+
     # 評価データリストをtaste_group_id毎に集計する
     sum_rating_list = merge_taste_rating_hash(rating_list)
-    # 評価データの上位ids_count個分を取得する
+
+    # 評価データの上位ids_count個分の風味グループのidを返却
     sum_rating_list.sort_by { |x| -x[:rate_sum] }.take(ids_count).map { |rate| rate[:taste_group_id] }
   end
 
