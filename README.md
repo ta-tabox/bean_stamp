@@ -92,7 +92,7 @@ Bean Stamp はコーヒー豆とコーヒー愛好家を繋ぐマッチングサ
 
 ## ER 図
 
-![Beans Stamp ER図(SPA)](https://user-images.githubusercontent.com/67009309/226169804-cdde1779-de3c-4bc3-905b-ae6fc96a6c10.png)
+![Beans Stamp ER図(SPA)](https://github.com/tanktabox/bean_stamp/assets/67009309/6c82cda1-971a-40e3-9002-e9a88ddb6346)
 
 ## インフラ構成図
 
