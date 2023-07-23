@@ -1,6 +1,7 @@
 import { useRecommendedOffers } from '@/features/offers/hooks/useRecommendedOffers'
 import { randomSelectFromArray } from '@/utils/randomSelectFromArray'
 
+// signedInUserへおすすめのオファーを3つセレクトする
 export const useRandomSelectRecommendedOffers = () => {
   const { recommendedOffersPool, recommendedOffers, setRecommendedOffers } = useRecommendedOffers()
   const randomSelectRecommendedOffers = () => {

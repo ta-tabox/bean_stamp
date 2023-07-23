@@ -25,9 +25,9 @@ export const useGetLikes = () => {
     let response
     try {
       if (status) {
-        response = await getLikesWithStatus({ page, status })
+        response = await getLikesWithStatus({ page, status }) // statusがある場合はstatusで絞り込んで取得
       } else {
-        response = await getLikesRequest({ page })
+        response = await getLikesRequest({ page }) // statusがない場合はそのまま取得
       }
     } catch {
       navigate('/')

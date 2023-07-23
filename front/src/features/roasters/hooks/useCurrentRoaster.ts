@@ -11,7 +11,7 @@ export const useCurrentRoaster = () => {
   const currentRoaster = useRecoilValue(currentRoasterState) // Getterを定義
   const setCurrentRoaster: SetterOrUpdater<Roaster | null> = useSetRecoilState(currentRoasterState) // Setter, Updaterを定義
 
-  // SignInの状態を保持
+  // ロースターページかどうかの状態を保持
   const isRoaster = useRecoilValue(isRoasterState)
   const setIsRoaster = useSetRecoilState(isRoasterState)
 
