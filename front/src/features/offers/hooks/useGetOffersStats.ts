@@ -2,6 +2,7 @@ import { getOffersStats as getOffersStatsRequest } from '@/features/offers/api/g
 import { useOffersStats } from '@/features/offers/hooks/useOffersStats'
 import { useMessage } from '@/hooks/useMessage'
 
+// CurrentRoasterの保持するオファーの統計を取得→アサイドコンテンツなどの通知に使用
 export const useGetOffersStats = () => {
   const { showMessage } = useMessage()
   const { offersStats, setOffersStats } = useOffersStats()

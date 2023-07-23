@@ -37,7 +37,7 @@ export const FollowUnFollowButton: FC<Props> = (props) => {
     if (roasterRelationshipId) {
       deleteRoasterRelationship({ id: roasterRelationshipId.toString() })
         .then(() => {
-          setRoasterRelationshipId(null) // roaster_relationship削除に伴うりセット
+          setRoasterRelationshipId(null) // roaster_relationship削除に伴うリセット
           setFollowersCount(followersCount - 1) // RoasterCardで使用するfollower数
           getUsersFollowingToRoaster({ id: roasterId.toString(), page: null }) // API:RoasterのFollower情報を更新 RoasterFollowerコンポーネントで表示
         })

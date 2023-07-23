@@ -24,9 +24,9 @@ export const useGetOffers = () => {
     let response
     try {
       if (status) {
-        response = await getOffersWithStatus({ page, status })
+        response = await getOffersWithStatus({ page, status }) // statusの指定があった場合は、statusで絞り込み
       } else {
-        response = await getOffersRequest({ page })
+        response = await getOffersRequest({ page }) // statusがない場合そのまま取得
       }
     } catch {
       navigate('/')

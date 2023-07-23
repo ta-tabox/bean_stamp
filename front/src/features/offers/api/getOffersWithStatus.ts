@@ -6,5 +6,6 @@ type Props = {
   status: string
 }
 
+// オファーのステータスによる絞り込み用
 export const getOffersWithStatus = ({ page, status }: Props) =>
   BackendApiWithAuth.get<Array<Offer>>(`/offers?page=${page ?? 1}&search=${status}`)

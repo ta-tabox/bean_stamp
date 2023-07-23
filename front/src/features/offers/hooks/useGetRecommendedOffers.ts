@@ -7,6 +7,7 @@ export const useGetRecommendedOffers = () => {
   const [loading, setLoading] = useState(false)
   const { setRecommendedOffersPool } = useRecommendedOffers()
 
+  // signedInUserへのおすすめのオファーを取得する
   const getRecommendedOffers = () => {
     setLoading(true)
     getRecommendedOffersRequest()
