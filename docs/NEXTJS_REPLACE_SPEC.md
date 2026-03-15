@@ -114,22 +114,22 @@ mkdir -p migration-export/db
 mkdir -p migration-export/infra
 
 # 1) フロント写し（HTML/CSS相当: JSX + Tailwind + CSS）
-rsync -av front/src/components migration-export/frontend-src/
-rsync -av front/src/features migration-export/frontend-src/
-rsync -av front/src/router migration-export/frontend-src/
+cp -R front/src/components migration-export/frontend-src/
+cp -R front/src/features migration-export/frontend-src/
+cp -R front/src/router migration-export/frontend-src/
 cp front/src/index.css migration-export/frontend-src/index.css
 cp front/tailwind.config.cjs migration-export/frontend-src/
 cp front/postcss.config.cjs migration-export/frontend-src/
 
 # 2) API仕様写し
-rsync -av api/app/views/api migration-export/api-spec/views-api/
-rsync -av api/app/controllers/api/v1 migration-export/api-spec/controllers-v1/
+cp -R api/app/views/api migration-export/api-spec/views-api
+cp -R api/app/controllers/api/v1 migration-export/api-spec/controllers-v1
 cp api/config/routes.rb migration-export/api-spec/routes.rb
 cp api/app/controllers/api/application_controller.rb migration-export/api-spec/api_application_controller.rb
 
 # 3) DB
 cp api/db/schema.rb migration-export/db/schema.rb
-rsync -av api/db/fixtures migration-export/db/fixtures/
+cp -R api/db/fixtures migration-export/db/fixtures
 
 # 4) CI/CD / インフラ関連
 cp .circleci/config.yml migration-export/infra/circleci_config.yml
@@ -143,18 +143,16 @@ cp README.md migration-export/infra/readme_architecture.md
 
 `migration-export` を作成しただけでは不十分なので、以下を必ず実行する。
 
-#### 手順A: 旧リポジトリ側でアーカイブ化
+#### 手順A: 旧リポジトリ側でアーカイブ化（単一PCコピー前提）
 
 ```bash
 # 旧リポジトリ直下で実行
 tar -czf migration-export.tar.gz migration-export
-shasum -a 256 migration-export.tar.gz > migration-export.sha256
 ```
 
 生成物:
 
 - `migration-export.tar.gz`
-- `migration-export.sha256`
 
 #### 手順B: 新リポジトリへ受け渡し
 
@@ -164,13 +162,12 @@ shasum -a 256 migration-export.tar.gz > migration-export.sha256
 # 新リポジトリ直下で実行
 mkdir -p docs
 cp /path/to/old-repo/migration-export.tar.gz ./docs/
-cp /path/to/old-repo/migration-export.sha256 ./docs/
 ```
 
 リモートで受け渡す場合（例: scp）:
 
 ```bash
-scp migration-export.tar.gz migration-export.sha256 <new-repo-host>:/path/to/new-repo/docs/
+scp migration-export.tar.gz <new-repo-host>:/path/to/new-repo/docs/
 ```
 
 #### 手順C: 新リポジトリで展開・検証
@@ -178,7 +175,6 @@ scp migration-export.tar.gz migration-export.sha256 <new-repo-host>:/path/to/new
 ```bash
 # 新リポジトリ直下で実行
 cd docs
-shasum -a 256 -c migration-export.sha256
 tar -xzf migration-export.tar.gz
 mv migration-export migration-resources
 cd ..
@@ -194,7 +190,7 @@ cd ..
 #### 手順D: 新リポジトリで初回コミット
 
 ```bash
-git add docs/migration-resources docs/migration-export.sha256
+git add docs/migration-resources
 git commit -m "chore: import migration resources from legacy repo"
 ```
 
